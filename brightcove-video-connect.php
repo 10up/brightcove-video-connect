@@ -81,3 +81,11 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 
 // Add WP-CLI Support (should be before init)
 require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-setup.php' );
+
+// Check Brightcove status if is_admin().
+if ( is_admin() ) {
+
+	require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-status-warning.php' );
+	new BC_Status_Warning();
+
+}
