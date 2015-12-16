@@ -9,23 +9,19 @@ Stable tag:        1.0.9
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
-Brightcove integration plugin, manage your Brightcove video cloud from within
-WordPress, using latest APIs
+Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs
 
 == Description ==
 
-Are you looking to handle your Brightcove Video and Playlist library natively
-from within WordPress?
+Are you looking to handle your Brightcove Video and Playlist library natively from within WordPress?
 
-With this plugin, developed by 10up.com, you have the power to handle
-multiple accounts and video libraries, upload videos and add them to
-playlists, render shortcodes with your videos and all from within the
-WordPress admin interface.
+With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within theWordPress admin interface.
 
-=== Support Notice ===
+== Support Notice ==
 
-Video Connect for Wordpress is an open source plugin. Because customer implementations of Wordpress and their environments vary, Brightcove can not fully support the plugin. However we love our customers and will do our best to help you resolve your issues.
-Brightcove customers experiencing issues with Video Connect for Wordpress may submit a ticket to the Support team.
+Birghtcove Video Connect for WordPress is an open source plugin. Because customer implementations of WordPress and their environments vary, Brightcove can not fully support the plugin. However we love our customers and will do our best to help you resolve your issues.
+
+Brightcove customers experiencing issues with Video Connect for WordPress may submit a ticket to the Support team.
 
 == Installation ==
 
@@ -36,7 +32,7 @@ Brightcove customers experiencing issues with Video Connect for Wordpress may su
 
 == Usage ==
 
-Refer to screenshots for walkthrough of the usage of the plugin.
+Refer to screenshots for a walkthrough of the usage of the plugin.
 
 = I want to put a new video into a post =
 As a writer for my WordPress-powered publication, I  would like to upload a video to Brightcove and render it in an article I am writing.
@@ -88,13 +84,13 @@ While in Visual mode, the video is rendered in the editor.
 Publish!
 
 = I want to put a playlist into a post =
+
 Open Edit Post Page > Brightcove Media button > Playlists Tab.
 Select the playlist which you want to insert into post.
 Click "Insert Into Post" button on the right bottom.
 In order to create a new playlist you need to login to http://videocloud.brightcove.com/.
 
-== I want to edit a video ==
-
+= I want to edit a video =
 
 From your [WordPress dashboard](https://en.support.wordpress.com/dashboard/), click the Brightcove widget from the dashboard menu. You will see the Brightcove dashboard with a list of recent videos.
 Click on a video thumbnail from the videos list. You will see more information and actions for this video.
@@ -104,6 +100,7 @@ Once finished, click the **Save and Sync Changes** button. The video will be upd
 To leave the edit screen, click the **Back** button. You will be returned to the Brightcove dashboard with a list of recent videos.
 
 = I want to edit a playlist =
+
 N.B. If you want to create or delete a playlist, that can only be performed via the studio: http://videocloud.brightcove.com/
 
 Open Brightcove Menu > Playlists or
@@ -118,6 +115,7 @@ Playlist Name can be changed via the text field at the top.
 No need to save anything as all changes are synchronized to Brightcove automatically.
 
 = I want to add an account =
+
 Create your API credentials via http://docs.brightcove.com/en/video-cloud/studio/managing-accounts/managing-api-credentials.html
 Visit the settings page, Brightcove Menu > Settings.
 Input a memorable name to differentiate your source from all other sources.
@@ -128,14 +126,9 @@ We don't recommend adding more than one source for a particular ID.
 == Frequently Asked Questions ==
 
 = Can I run the plugin on a WordPress install that isn't publicly accessible? =
-Yes you can, however video ingestion will NOT work as Brightcove can not reach
-your uploaded video assets to ingest them. Make sure you add this line to your
-wp-config.php
-define( 'BRIGHTCOVE_FORCE_SYNC', true );
+Yes, it will work whether it is public or not however features requiring a call-back to your site such as status updates, etc will be unavailable.
 
 = Are there any filters for plugin/theme developers? =
-brightcove_videos_per_page =  100; // Number of videos to
-fetch at a time when we're performing a sync.
 brightcove_account_actions = [edit, delete]; // What actions are available when manipulating a Brightcove source.
 
 = Will this work on multisite? =
@@ -145,7 +138,7 @@ Yes it will.
 Yes, you can add sources from many Brightcove accounts if you want.
 
 = How does sync work? =
-Brightcove has a notifications API that lets your WordPress site know when a video has been ingested, and also if any video metadata has changed. We use that as a chance to ensure our library matches Brightcove's, so they're both showing the same content.
+The plugin simply pulls information directly from the Brightcove API for display and does not sync videos locally.
 
 = How can I increase Maximum upload file size? =
 Maximum file size is determined by your webserver and PHP configuration. You need to set the value of upload_max_filesize and post_max_size in your php.ini. php_ini_loaded_file() can help you find where your PHP.ini is located.
@@ -239,5 +232,3 @@ http://sample-videos.com/
 
 = 1.0.0 =
 First Release
-
-
