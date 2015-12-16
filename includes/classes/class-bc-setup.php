@@ -210,7 +210,7 @@ class BC_Setup {
 			'wp_version'  => $wp_version,
 		);
 
-		wp_register_script( 'brightcove', '//admin.brightcove.com/js/BrightcoveExperiences.js' );
+		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
 
 		$playlist_enabled_players_for_accounts = array();
 		$accounts = $bc_accounts->get_sanitized_all_accounts();
