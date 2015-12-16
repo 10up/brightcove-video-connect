@@ -1,8 +1,10 @@
+define(['jquery', 'underscore', 'backbone', 'views/brightcove'], function($, _, Backbone, BrightcoveView) {
+
     /**
      * This is the toolbar to handle sorting, filtering, searching and grid/list view toggles.
      * State is captured in the brightcove-media-manager model.
      */
-    var ToolbarView = BrightcoveView.extend({
+    var Toolbar = BrightcoveView.extend({
         tagName: 'div',
         className: 'media-toolbar wp-filter',
         template:  wp.template('brightcove-media-toolbar'),
@@ -84,3 +86,5 @@
 
     });
 
+    return Toolbar;
+});

@@ -269,7 +269,7 @@ class BC_Admin_Media_API {
 			}
 			foreach( $account_ids as $key => $account_id ) {
 				$bc_accounts->set_current_account_by_id( $account_id );
-				$account_results = $this->cms_api->video_list($posts_per_page, $posts_per_page * ($initial_page - 1), $query_string, sanitize_text_field( $sort_order ));
+				$account_results = $this->cms_api->video_list($posts_per_page, $posts_per_page * ($initial_page - 1), $query_string, 'updated_at');
 				// Not enough account results returned, so we assume there are no more results to fetch.
 				if (count($account_results) < $posts_per_page) {
 					unset( $account_ids[ $key ] );

@@ -41,14 +41,6 @@ class BC_Utility {
 		return is_string( $numeric_string) ?  sanitize_text_field( preg_replace( '/\D/', '', $numeric_string ) ) : "";
 	}
 
-	/**
-	 * @param $date_string
-	 * @return string containing integers only
-	 */
-	public static function sanitize_date( $date_string ) {
-		return is_string( $date_string) ?  sanitize_text_field( preg_replace( '/[^0-9-]/', '', $date_string ) ) : "";
-	}
-
 	public static function sanitize_subscription_id( $subscription_id ) {
 		return is_string( $subscription_id) ?  sanitize_text_field( preg_replace( '/[^0-9a-f-]/', '', $subscription_id ) ) : "";
 	}

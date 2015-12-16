@@ -1,4 +1,5 @@
-    var MediaDetailsView = BrightcoveView.extend({
+define([ 'wp', 'wpbc', 'underscore', 'jquery', 'views/brightcove'], function(wp, wpbc, _, $, BrightcoveView) {
+    var MediaDetails = BrightcoveView.extend({
         tagName:   'div',
         className: 'media-details',
 
@@ -68,3 +69,5 @@
 
     });
 
+    return MediaDetails;
+});

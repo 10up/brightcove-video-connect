@@ -3,7 +3,7 @@
  * Plugin Name: Brightcove Video Connect
  * Plugin URI:  https://wordpress.org/plugins/brightcove-video-connect/
  * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version:     1.0.9
+ * Version:     1.0.4
  * Author:      10up
  * Author URI:  http://10up.com
  * License:     GPLv2+
@@ -29,7 +29,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  021.0.2301  USA
  */
 
-define( 'BRIGHTCOVE_VERSION', '1.0.9' );
+define( 'BRIGHTCOVE_VERSION', '1.0.4' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
@@ -54,18 +54,17 @@ function brightcove_deactivate() {
 
 // Wireup actions
 global $pagenow;
-if (in_array($pagenow, array('admin-ajax.php', 'admin.php', 'post-new.php', 'edit.php', 'post.php'))) {
-    add_action( 'init', array( 'BC_Setup', 'action_init' ) );
-    add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
-} else {
+
     require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php');
     require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php');
     require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php');
+    require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-menu.php');
     require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php');
     global $bc_accounts;
     $bc_accounts = new BC_Accounts();
+    new BC_Admin_Menu();
     add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
-}
+
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ) );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ) );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); //ensures the menu is loaded on all pages

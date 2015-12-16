@@ -1,3 +1,5 @@
+define(['jquery', 'underscore', 'backbone'], function( $, _, Backbone) {
+
     /**
      * Media model for Media CPT
      */
@@ -52,3 +54,5 @@
 
     });
 
+    return BrightcoveModalModel;
+});

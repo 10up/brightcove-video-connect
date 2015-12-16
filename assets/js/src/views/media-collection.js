@@ -1,3 +1,5 @@
+define(['jquery', 'underscore', 'backbone', 'views/media', 'views/brightcove', 'models/media-collection'], function($, _, Backbone, MediaView, BrightcoveView, MediaCollection) {
+
     var MediaCollectionView = BrightcoveView.extend({
         tagName: 'ul',
         className: 'brightcove-media attachments',
@@ -271,3 +273,5 @@
 
     });
 
+    return MediaCollectionView;
+});

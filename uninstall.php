@@ -14,8 +14,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) || ! WP_UNINSTALL_PLUGIN ) {
 	exit();
 }
 
-if ( ! class_exists( 'BC_Utility' ) ) {
-	require( dirname( __FILE__ ) . '/includes/classes/class-bc-utility.php' );
-}
-
 BC_Utility::uninstall_plugin();

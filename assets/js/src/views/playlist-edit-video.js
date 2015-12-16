@@ -1,4 +1,5 @@
-    var PlaylistEditVideoView = BrightcoveView.extend({
+define(['jquery', 'underscore', 'backbone', 'models/media', 'views/brightcove'], function ($, _, Backbone, MediaModel, BrightcoveView) {
+    var VideoEditView = BrightcoveView.extend({
         tagName: 'div',
         className: '',
         template: wp.template('brightcove-playlist-edit'),
@@ -15,3 +16,5 @@
 
     });
 
+    return VideoEditView;
+});

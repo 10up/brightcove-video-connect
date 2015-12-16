@@ -1,4 +1,6 @@
-    var UploadView = BrightcoveView.extend({
+define(['jquery', 'underscore', 'backbone', 'wp', 'wpbc', 'views/brightcove'], function($, _, Backbone, wp, wpbc, BrightcoveView) {
+
+    return BrightcoveView.extend({
         className: 'brightcove-pending-upload',
         tagName: 'tr',
         template: wp.template('brightcove-pending-upload'),
@@ -111,3 +113,4 @@
             }
         }
     });
+});

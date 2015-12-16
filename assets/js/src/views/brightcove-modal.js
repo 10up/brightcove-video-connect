@@ -1,3 +1,4 @@
+define(['jquery', 'underscore', 'backbone', 'views/brightcove-media-manager', 'views/video-preview', 'models/brightcove-modal', 'views/brightcove'], function ($, _, Backbone, BrightcoveMediaManagerView, VideoPreviewView, BrightcoveModalModel, BrightcoveView) {
     var BrightcoveModalView = BrightcoveView.extend({
         tagName: 'div',
         className: 'media-modal brightcove',
@@ -76,3 +77,5 @@
 
     });
 
+    return BrightcoveModalView;
+});

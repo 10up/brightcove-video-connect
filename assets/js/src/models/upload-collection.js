@@ -1,8 +1,10 @@
+define(['jquery', 'underscore', 'backbone', 'models/upload'], function( $, _, Backbone, UploadModel) {
+
     /**
      * Collection model to contain pending uploads
      */
 
-    var UploadModelCollection = Backbone.Collection.extend({
+    var UploadCollection = Backbone.Collection.extend({
 
         initialize: function(options) {
             this.listenTo(wpbc.broadcast, 'uploader:queuedFilesAdded', this.queuedFilesAdded);
@@ -17,3 +19,5 @@
 
     });
 
+    return UploadCollection;
+});

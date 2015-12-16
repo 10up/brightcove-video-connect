@@ -1,5 +1,6 @@
+define(['jquery', 'underscore', 'backbone', 'models/upload-collection', 'views/upload', 'wp', 'wpbc', 'views/upload-window', 'views/upload-details', 'views/brightcove'], function($, _, Backbone, UploadModelCollection, UploadView, wp, wpbc, UploadWindowView, UploadDetailsView, BrightcoveView) {
 
-    var UploadVideoManagerView = BrightcoveView.extend({
+    return BrightcoveView.extend({
         className: "brightcove-file-uploader",
 
         events: {
@@ -104,3 +105,4 @@
             }
         }
     });
+});

@@ -1,8 +1,10 @@
+define(['jquery', 'underscore', 'backbone'], function( $, _, Backbone) {
+
     /**
      * Media model for Media CPT
      */
 
-    var MediaModel = Backbone.Model.extend({
+    var Media = Backbone.Model.extend({
 
         /**
          * Copied largely from WP Attachment sync function
@@ -202,3 +204,6 @@
             wpbc.broadcast.trigger('spinner:off');
         }
     });
+
+    return Media;
+});

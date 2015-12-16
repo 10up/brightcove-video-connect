@@ -1,3 +1,4 @@
+define(['models/media', 'jquery', 'underscore', 'backbone', 'wp'], function( MediaModel, $, _, Backbone, wp) {
     var MediaCollection = Backbone.Collection.extend({
         model: MediaModel,
         /**
@@ -65,7 +66,7 @@
 
                 this.tag = tag;
                 this.fetch();
-
+                
             });
 
             this.listenTo(wpbc.broadcast, 'change:date', function(date) {
@@ -281,3 +282,5 @@
         }
     });
 
+    return MediaCollection;
+});

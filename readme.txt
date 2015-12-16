@@ -1,11 +1,11 @@
 === Brightcove Video Connect ===
 
-Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein
+Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to:      4.4
-Stable tag:        1.0.9
+Tested up to:      4.3
+Stable tag:        1.0.4
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,11 +21,6 @@ With this plugin, developed by 10up.com, you have the power to handle
 multiple accounts and video libraries, upload videos and add them to
 playlists, render shortcodes with your videos and all from within the
 WordPress admin interface.
-
-=== Support Notice ===
-
-Video Connect for Wordpress is an open source plugin. Because customer implementations of Wordpress and their environments vary, Brightcove can not fully support the plugin. However we love our customers and will do our best to help you resolve your issues.
-Brightcove customers experiencing issues with Video Connect for Wordpress may submit a ticket to the Support team.
 
 == Installation ==
 
@@ -192,24 +187,6 @@ http://sample-videos.com/
 
 == Changelog ==
 
-= 1.0.9 =
-* Fix: Fixed fatal error on uninstall
-* Fix: Fixed smart playlist display
-* Fix: Remove an error that could happen when adding an acount with empty playlists
-
-= 1.0.8 =
-* Fix: Default sort for videos is now "newest first" for all screens listing videos.
-* Fix: Playlists now display properly
-
-= 1.0.7 =
-* Fix: Fixed the edit button for playlists
-
-= 1.0.6 =
-* Fix: JavaScript has been greatly cleaned up and should no longer conflict on the post editor or other screens.
-
-= 1.0.5 =
-* Refactored and cleaned up to meet WordPress VIP guidelines.
-
 = 1.0.4 =
 * Fix: Fixed a PHP Fatal error that could occur when the connection to the Brightcove API failed.
 
@@ -227,15 +204,6 @@ http://sample-videos.com/
 * First release
 
 == Upgrade Notice ==
-
-= 1.0.9 =
-1.0.9 is an important bugfix and is recommended for all users
-
-= 1.0.8 =
-1.0.8 is an important bugfix and is recommended for all users
-
-= 1.0.6 =
-1.0.6 is a major bugfix and is recommended for all users
 
 = 1.0.0 =
 First Release

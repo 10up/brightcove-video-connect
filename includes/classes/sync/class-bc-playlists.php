@@ -72,7 +72,7 @@ class BC_Playlists {
 				return true;
 			}
 
-			$error_message = esc_html__( 'The Playlist failed to sync with WordPress', 'brightcove' );
+			$error_message = esc_html__('The Playlist failed to sync with WordPress', 'brightcove' );
 			BC_Logging::log( sprintf( 'WORDPRESS PLAYLIST SYNC: %s', $error_message ) );
 
 			return new WP_Error( 'playlist-wp-sync-error', $error_message );
@@ -177,14 +177,14 @@ class BC_Playlists {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool $is_cli whether the call is coming via WP_CLI
+	 * @param bool   $is_cli     whether the call is coming via WP_CLI
 	 *
 	 * @return bool True on success or false
 	 */
 	public function handle_initial_sync( $is_cli = false ) {
 
 		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__( 'Starting Playlist Sync', 'brightcove' ) );
+			WP_CLI::line( esc_html__('Starting Playlist Sync', 'brightcove' ) );
 		}
 
 		global $bc_accounts;
@@ -223,7 +223,7 @@ class BC_Playlists {
 		BC_Utility::store_hash( 'playlists', $playlists, $this->cms_api->account_id );
 
 		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__( 'Playlist Sync Complete', 'brightcove' ) );
+			WP_CLI::line( esc_html__('Playlist Sync Complete', 'brightcove' ) );
 		}
 
 		return true;
@@ -302,14 +302,10 @@ class BC_Playlists {
 		update_post_meta( $post_id, '_brightcove_account_id', BC_Utility::sanitize_id( $playlist['account_id'] ) );
 		update_post_meta( $post_id, '_brightcove_playlist_object', $playlist );
 
-		if ( isset( $playlist['video_ids'] ) ) {
+		$video_ids = BC_Utility::sanitize_payload_item( $playlist['video_ids'] );
 
-			$video_ids = BC_Utility::sanitize_payload_item( $playlist['video_ids'] );
-
-			foreach ( $video_ids as $video_id ) {
-				update_post_meta( $post_id, '_brightcove_video_id', $video_id );
-			}
-
+		foreach ( $video_ids as $video_id ) {
+			update_post_meta( $post_id, '_brightcove_video_id', $video_id );
 		}
 
 		$meta      = array();

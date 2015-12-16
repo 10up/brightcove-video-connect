@@ -1,8 +1,10 @@
+define(['jquery', 'underscore', 'backbone'], function( $, _, Backbone) {
+
     /**
      * Model to contain pending upload
      */
 
-    var UploadModel = Backbone.Model.extend({
+    var Upload = Backbone.Model.extend({
 
         initialize: function(options) {
         },
@@ -19,3 +21,6 @@
         }
 
     });
+
+    return Upload;
+});

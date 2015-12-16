@@ -597,7 +597,7 @@ class BC_CMS_API extends BC_API {
 			$args['offset'] = absint( $offset );
 		}
 
-		if ( 'updated_at' != sanitize_text_field( $sort ) ) {
+		if ( '-updated_at' != sanitize_text_field( $sort ) ) {
 			$args['sort'] = sanitize_text_field( $sort );
 		}
 

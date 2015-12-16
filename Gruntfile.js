@@ -6,9 +6,7 @@ module.exports = function ( grunt ) {
 	grunt.initConfig (
 		{
 
-			clean : {
-				files: ["assets/css/*", "assets/js/brightcove*"]
-			},
+			clean : ["assets/css/*", "assets/js/brightcove.*"],
 
 			autoprefixer : {
 
@@ -30,12 +28,12 @@ module.exports = function ( grunt ) {
 				target : {
 
 					files : [{
-						expand : true,
-						cwd    : 'assets/css',
-						src    : ['*.css'],
-						dest   : 'assets/css',
-						ext    : '.min.css'
-					}]
+						         expand : true,
+						         cwd    : 'assets/css',
+						         src    : ['*.css'],
+						         dest   : 'assets/css',
+						         ext    : '.min.css'
+					         }]
 
 				}
 
@@ -68,44 +66,12 @@ module.exports = function ( grunt ) {
 						preserveComments : false,
 						mangle           : {
 							except : ['jQuery']
-						},
-						separator: ';\n',
-
-						// Wrap our scripts to limit their scope.
-						banner: '( function( $ ){\n',
-						footer: '\n} )( jQuery );'
+						}
 					},
 
 					files : {
-						'assets/js/brightcove-admin.min.js' : [
-							// MODELS
-							'assets/js/src/models/media.js',
-							'assets/js/src/models/media-collection.js',
-							'assets/js/src/models/brightcove-media-manager.js',
-							'assets/js/src/models/brightcove-modal.js',
-							'assets/js/src/models/upload-collection.js',
-							'assets/js/src/models/upload.js',
-
-							// VIEWS
-							'assets/js/src/views/brightcove.js',
-							'assets/js/src/views/toolbar.js',
-							'assets/js/src/views/upload-video-manager.js',
-							'assets/js/src/views/brightcove-media-manager.js',
-							'assets/js/src/views/brightcove-modal.js',
-							'assets/js/src/views/media-details.js',
-							'assets/js/src/views/media.js',
-							'assets/js/src/views/playlist-edit-video.js',
-							'assets/js/src/views/playlist-edit.js',
-							'assets/js/src/views/upload-details.js',
-							'assets/js/src/views/upload-window.js',
-							'assets/js/src/views/upload.js',
-							'assets/js/src/views/video-edit.js',
-							'assets/js/src/views/video-preview.js',
-							'assets/js/src/views/media-collection.js',
-							'assets/js/src/app.js'
-						],
-						'assets/js/bc-status.min.js' : [
-							'assets/js/src/bc-status.js'
+						'assets/js/brightcove.min.js' : [
+							'assets/js/src/video-page.js'
 						]
 					}
 
@@ -114,55 +80,16 @@ module.exports = function ( grunt ) {
 				development : {
 
 					options : {
-						beautify:          true,
-						separator:       ';\n',
-						banner:            '(function($){\n',
-						footer:            '\n})(jQuery);',
+						beautify         : true,
 						preserveComments : true
 					},
 
 					files : {
-						'assets/js/brightcove-admin.js' : [
-							// MODELS
-							'assets/js/src/models/media.js',
-							'assets/js/src/models/media-collection.js',
-							'assets/js/src/models/brightcove-media-manager.js',
-							'assets/js/src/models/brightcove-modal.js',
-							'assets/js/src/models/upload-collection.js',
-							'assets/js/src/models/upload.js',
-
-							// VIEWS
-							'assets/js/src/views/brightcove.js',
-							'assets/js/src/views/toolbar.js',
-							'assets/js/src/views/upload-video-manager.js',
-							'assets/js/src/views/brightcove-media-manager.js',
-							'assets/js/src/views/brightcove-modal.js',
-							'assets/js/src/views/media-details.js',
-							'assets/js/src/views/media.js',
-							'assets/js/src/views/playlist-edit-video.js',
-							'assets/js/src/views/playlist-edit.js',
-							'assets/js/src/views/upload-details.js',
-							'assets/js/src/views/upload-window.js',
-							'assets/js/src/views/upload.js',
-							'assets/js/src/views/video-edit.js',
-							'assets/js/src/views/video-preview.js',
-							'assets/js/src/views/media-collection.js',
-							'assets/js/src/app.js'
+						'assets/js/brightcove.js' : [
+							'assets/js/src/video-page.js'
 						]
 					}
 
-				}
-
-			},
-
-			makepot : {
-
-				target : {
-					options : {
-						type       : 'wp-plugin',
-						domainPath : '/languages',
-						mainFile   : 'brightcove-video-connect.php'
-					}
 				}
 
 			},
@@ -199,6 +126,6 @@ module.exports = function ( grunt ) {
 	);
 
 	// A very basic default task.
-	grunt.registerTask ( 'default', ['clean', 'sass', 'autoprefixer', 'cssmin', 'uglify:development', 'uglify:production', 'makepot'] );
+	grunt.registerTask ( 'default', ['clean', 'sass', 'autoprefixer', 'cssmin', 'uglify:development', 'uglify:production', 'watch'] );
 
 };
