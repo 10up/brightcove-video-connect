@@ -1,0 +1,112 @@
+.bc-page-icon {
+	padding-right : 10px;
+}
+
+.brightcove.media-frame-content, .brightcove-media.playlist {
+	border-bottom : none;
+	border-right: 1px solid #ddd;
+	border-top    : none;
+	position      : static;
+	height: 600px;
+    width: calc(100% - 370px);
+	float: left;
+	margin-right: 30px;
+	padding-right: 20px;
+
+	.video-preview {
+		padding-bottom: 56.25%;
+		position: relative;
+
+		iframe {
+			height: 100%;
+			position: absolute;
+			width: 100%;
+		}
+	}
+    .brightcove-buttons{
+        float: right;
+        margin-top: 20px;
+    }
+    &.edit-view{
+        width: calc(100% - 20px);
+        border-right: none;
+    }
+    .video-edit{
+        max-width: 721px;
+    }
+}
+
+.brightcove-buttons{
+    .delete{
+        color: #a00;
+        padding-top: 6px;
+        display: inline-block;
+        &:hover{
+            color: red;
+        }
+    }
+}
+
+.brightcove.media-frame-router {
+	position: relative;
+	left : 0;
+	top: auto;
+	height: auto;
+}
+
+.brightcove.media-frame-menu {
+	left  : inherit;
+	width : 300px;
+	position: relative;
+  padding-top: 0;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+  float: left;
+
+	.brightcove-buttons {
+		&::after {
+			clear: both;
+			content: "";
+			display: table;
+		}
+	}
+
+	.more-actions {
+		float: right;
+	}
+}
+
+.brightcove.media-toolbar {
+
+	padding : 0;
+
+	.wp-filter {
+		padding : 0 16px;
+	}
+
+	.media-toolbar-secondary {
+		margin : 8px;
+	}
+
+}
+
+@media screen and (max-width : 780px) {
+
+	.brightcove.media-toolbar {
+
+		.brightcove.media-toolbar-secondary {
+			margin : 4px;
+		}
+	}
+
+}
+
+@media screen and (min-width : 1500px) {
+	.brightcove.media-frame-content, .brightcove-media.playlist {
+		.video-preview {
+			padding-bottom: 43.25%;
+		}
+	}
+}

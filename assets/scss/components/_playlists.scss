@@ -1,0 +1,67 @@
+.playlist-edit.brightcove.attachment-details {
+	width: 100%;
+	height: auto;
+	margin-right: 0;
+	float: none;
+	overflow: hidden;
+	padding: 20px;
+	box-sizing: border-box;
+
+	.settings {
+		max-width: 50%;
+		margin-bottom: 20px;
+	}
+
+	.playlist-name {
+		font-weight: bold;
+		span {
+			display: inline-block;
+			margin-right: 20px;
+			margin-left: 10px;
+		}
+		input {
+			width: 65%;
+		}
+	}
+
+	.playlist-videos-list {
+		border-right: 1px solid #ddd;
+		clear: both;
+	}
+
+	.playlist-add-videos-list,
+	.playlist-videos-list {
+		width: 50%;
+		float: left;
+		box-sizing: border-box;
+		h2 {
+			margin-bottom: 0;
+			padding-bottom: 10px;
+			padding-left: 10px;
+			border-bottom: 1px solid #ddd;
+		}
+		ul {
+			height: 450px;
+			overflow: auto;
+		}
+		.attachment {
+			width: 100% !important;
+		}
+		.thumbnail {
+			width: 162px;
+			float: left;
+		}
+		.bc-info {
+			clear: none;
+		  float: left;
+		  margin-left: 10px;
+		}
+		.row-actions {
+			visibility: visible;
+			clear: both;
+			display: block;
+			text-align: left;
+		}
+	}
+
+}

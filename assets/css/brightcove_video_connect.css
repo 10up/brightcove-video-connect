@@ -1,0 +1,465 @@
+div.brightcove-message {
+  text-align: left; }
+  .brightcove-uploader div.brightcove-message.updated {
+    margin-top: 20px; }
+
+.brightcove-file-uploader {
+  text-align: center; }
+
+.brightcove-upload-queued-files {
+  display: table;
+  width: -webkit-calc(100% - 20px);
+  width: calc(100% - 20px);
+  border: 1px solid #ddd; }
+
+.brightcove-pending-upload td {
+  cursor: pointer; }
+  .brightcove-pending-upload td:nth-child(1) {
+    width: 35%; }
+  .brightcove-pending-upload td:nth-child(2) {
+    width: 10%; }
+  .brightcove-pending-upload td:nth-child(3) {
+    width: 20%; }
+  .brightcove-pending-upload td:nth-child(4) {
+    width: 35%; }
+
+.brightcove-pending-upload.selected {
+  background-color: #35A3CA;
+  /* copied from sidebar menu */ }
+  .brightcove-pending-upload.selected td {
+    color: #fff; }
+
+.ingest-success {
+  background-color: #00ADFF;
+  /* just for display to see if it worked */ }
+
+.upload-success {
+  color: #003148;
+  /* nuke me with better styling */ }
+
+.brightcove-pending-upload-details {
+  width: 30%;
+  display: table-cell;
+  padding: 20px;
+  background-color: #f3f3f3;
+  text-align: left;
+  vertical-align: top; }
+
+.pending-uploads {
+  display: table-cell;
+  width: 70%;
+  text-align: left;
+  vertical-align: top;
+  background-color: #fff; }
+  .pending-uploads table.widefat {
+    border: 0; }
+  .pending-uploads .brightcove-start-upload {
+    margin-left: 10px;
+    margin-bottom: 10px; }
+
+.brightcove-media .spinner,
+.brightcove-media-videos .spinner {
+  float: none;
+  margin: 5px 0;
+  vertical-align: top; }
+
+.brightcove-modal .media-frame-title,
+.brightcove-modal .media-frame-router,
+.brightcove-modal .media-frame-content,
+.brightcove-modal .media-frame-toolbar {
+  left: 0; }
+
+.brightcove-modal .brightcove-media {
+  overflow: hidden; }
+
+.brightcove-modal .brightcove .wp-filter {
+  border: 0;
+  box-shadow: none;
+  right: 0;
+  width: 100%;
+  margin: 0; }
+
+.brightcove-modal .brightcove .media-toolbar-secondary {
+  padding: 0;
+  min-width: 280px; }
+
+.brightcove-modal .brightcove .media-toolbar-primary.search-form input[type=search] {
+  float: left; }
+
+.brightcove-modal .pending-uploads {
+  width: -webkit-calc(100% - 40px);
+  width: calc(100% - 40px);
+  display: block;
+  margin: 20px; }
+
+.brightcove-modal .brightcove-upload-queued-files {
+  border: 0;
+  width: 100%; }
+
+.brightcove-modal .brightcove.media-frame-content {
+  padding: 0 20px;
+  width: 100%; }
+  @media screen and (min-width: 700px) {
+    .brightcove-modal .brightcove.media-frame-content {
+      width: -webkit-calc(100% - 390px);
+      width: calc(100% - 390px); } }
+
+.brightcove-modal .brightcove.video-preview {
+  margin-top: 20px; }
+
+.brightcove-modal .video-preview-frame .brightcove.media-frame-content {
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #ddd;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+.brightcove-modal .video-preview-frame .brightcove.brightcove.media-frame-menu {
+  padding-top: 20px; }
+
+@media screen and (max-width: 900px) {
+  .media-frame:not(.hide-menu) .media-frame-menu {
+    width: 300px; } }
+
+.bc-page-icon {
+  padding-right: 10px; }
+
+.brightcove.media-frame-content, .brightcove-media.playlist {
+  border-bottom: none;
+  border-right: 1px solid #ddd;
+  border-top: none;
+  position: static;
+  height: 600px;
+  width: -webkit-calc(100% - 370px);
+  width: calc(100% - 370px);
+  float: left;
+  margin-right: 30px;
+  padding-right: 20px; }
+  .brightcove.media-frame-content .video-preview, .brightcove-media.playlist .video-preview {
+    padding-bottom: 56.25%;
+    position: relative; }
+    .brightcove.media-frame-content .video-preview iframe, .brightcove-media.playlist .video-preview iframe {
+      height: 100%;
+      position: absolute;
+      width: 100%; }
+  .brightcove.media-frame-content .brightcove-buttons, .brightcove-media.playlist .brightcove-buttons {
+    float: right;
+    margin-top: 20px; }
+  .brightcove.media-frame-content.edit-view, .brightcove-media.playlist.edit-view {
+    width: -webkit-calc(100% - 20px);
+    width: calc(100% - 20px);
+    border-right: none; }
+  .brightcove.media-frame-content .video-edit, .brightcove-media.playlist .video-edit {
+    max-width: 721px; }
+
+.brightcove-buttons .delete {
+  color: #a00;
+  padding-top: 6px;
+  display: inline-block; }
+  .brightcove-buttons .delete:hover {
+    color: red; }
+
+.brightcove.media-frame-router {
+  position: relative;
+  left: 0;
+  top: auto;
+  height: auto; }
+
+.brightcove.media-frame-menu {
+  left: inherit;
+  width: 300px;
+  position: relative;
+  padding-top: 0;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+  float: left; }
+  .brightcove.media-frame-menu .brightcove-buttons::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .brightcove.media-frame-menu .more-actions {
+    float: right; }
+
+.brightcove.media-toolbar {
+  padding: 0; }
+  .brightcove.media-toolbar .wp-filter {
+    padding: 0 16px; }
+  .brightcove.media-toolbar .media-toolbar-secondary {
+    margin: 8px; }
+
+@media screen and (max-width: 780px) {
+  .brightcove.media-toolbar .brightcove.media-toolbar-secondary {
+    margin: 4px; } }
+
+@media screen and (min-width: 1500px) {
+  .brightcove.media-frame-content .video-preview, .brightcove-media.playlist .video-preview {
+    padding-bottom: 43.25%; } }
+
+.brightcove .media-toolbar {
+  position: relative;
+  right: 10px;
+  width: -webkit-calc(100% - 10px);
+  width: calc(100% - 10px);
+  height: auto; }
+  @media screen and (min-width: 782px) {
+    .brightcove .media-toolbar {
+      right: 20px;
+      width: -webkit-calc(100% - 20px);
+      width: calc(100% - 20px); } }
+
+.brightcove .media-toolbar-secondary {
+  padding: 12px 0;
+  box-sizing: border-box; }
+
+.wp-core-ui .brightcove.attachment {
+  float: none; }
+
+.wp-core-ui .brightcove.attachment:focus,
+.wp-core-ui .selected.brightcove.attachment:focus,
+.wp-core-ui .brightcove.attachment.details:focus {
+  box-shadow: none; }
+
+.brightcove.media-frame-content, .playlist-edit-container {
+  background-color: transparent; }
+  .brightcove.media-frame-content .menu-visible .highlighted .thumbnail, .playlist-edit-container .menu-visible .highlighted .thumbnail {
+    box-shadow: 0 0 2px 5px #5b9dd9;
+    outline: none; }
+  .brightcove.media-frame-content ul, .playlist-edit-container ul {
+    text-align: justify; }
+  .brightcove.media-frame-content .attachment, .playlist-edit-container .attachment {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    word-wrap: break-word;
+    padding: 10px;
+    width: 100%; }
+    @media screen and (min-width: 700px) {
+      .brightcove.media-frame-content .attachment, .playlist-edit-container .attachment {
+        width: 50%; } }
+    @media screen and (min-width: 1000px) {
+      .brightcove.media-frame-content .attachment, .playlist-edit-container .attachment {
+        width: 33%; } }
+    @media screen and (min-width: 1200px) {
+      .brightcove.media-frame-content .attachment, .playlist-edit-container .attachment {
+        width: 25%; } }
+    .brightcove.media-frame-content .attachment .attachment-preview, .playlist-edit-container .attachment .attachment-preview {
+      background-color: transparent;
+      box-shadow: none; }
+      .brightcove.media-frame-content .attachment .attachment-preview:before, .playlist-edit-container .attachment .attachment-preview:before {
+        display: none; }
+    .brightcove.media-frame-content .attachment .thumbnail, .playlist-edit-container .attachment .thumbnail {
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 10px; }
+      .brightcove.media-frame-content .attachment .thumbnail:after, .playlist-edit-container .attachment .thumbnail:after {
+        display: none; }
+      .brightcove.media-frame-content .attachment .thumbnail img, .playlist-edit-container .attachment .thumbnail img {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: auto; }
+      .brightcove.media-frame-content .attachment .thumbnail .duration,
+      .brightcove.media-frame-content .attachment .thumbnail .video-count, .playlist-edit-container .attachment .thumbnail .duration,
+      .playlist-edit-container .attachment .thumbnail .video-count {
+        background-color: #fff;
+        bottom: 0;
+        padding: 3px;
+        position: absolute;
+        right: 0;
+        width: auto;
+        z-index: 1000; }
+    .brightcove.media-frame-content .attachment .bc-info, .playlist-edit-container .attachment .bc-info {
+      clear: both;
+      display: block;
+      height: auto;
+      padding: 1px;
+      position: relative; }
+      .brightcove.media-frame-content .attachment .bc-info .bc-name, .playlist-edit-container .attachment .bc-info .bc-name {
+        background-color: transparent;
+        box-shadow: none !important;
+        clear: both;
+        display: inline;
+        float: left;
+        font-weight: bold;
+        height: auto;
+        text-align: left !important;
+        top: 95px;
+        word-break: break-word; }
+        .brightcove.media-frame-content .attachment .bc-info .bc-name div, .playlist-edit-container .attachment .bc-info .bc-name div {
+          padding: 0; }
+      .brightcove.media-frame-content .attachment .bc-info .bc-updated, .playlist-edit-container .attachment .bc-info .bc-updated {
+        clear: both;
+        color: #999;
+        float: left;
+        font-weight: normal;
+        height: 100%; }
+    .brightcove.media-frame-content .attachment .media-actions, .playlist-edit-container .attachment .media-actions {
+      clear: both;
+      text-align: right; }
+      .brightcove.media-frame-content .attachment .media-actions .button, .playlist-edit-container .attachment .media-actions .button {
+        margin-left: 1em; }
+      @media screen and (min-width: 700px) {
+        .brightcove.media-frame-content .attachment .media-actions, .playlist-edit-container .attachment .media-actions {
+          display: none; } }
+
+.brightcove.media-frame-menu {
+  height: 100%;
+  box-sizing: border-box; }
+  .brightcove.media-frame-menu .attachment-detail .thumbnail {
+    clear: both;
+    position: relative; }
+    .brightcove.media-frame-menu .attachment-detail .thumbnail img {
+      display: block;
+      max-width: 100%;
+      height: auto; }
+    .brightcove.media-frame-menu .attachment-detail .thumbnail .detail-duration,
+    .brightcove.media-frame-menu .attachment-detail .thumbnail .detail-video-count {
+      bottom: 0;
+      padding: 0;
+      position: absolute;
+      right: 0;
+      z-index: 1000; }
+      .brightcove.media-frame-menu .attachment-detail .thumbnail .detail-duration span,
+      .brightcove.media-frame-menu .attachment-detail .thumbnail .detail-video-count span {
+        background-color: #fff;
+        float: right;
+        padding: 3px; }
+  .brightcove.media-frame-menu .attachment-detail .video-info,
+  .brightcove.media-frame-menu .attachment-detail .playlist-info {
+    margin: 10px 0;
+    overflow: hidden; }
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-name,
+    .brightcove.media-frame-menu .attachment-detail .video-info .playlist-name,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-name,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-name {
+      clear: both;
+      float: left;
+      font-size: 130%;
+      font-weight: bold;
+      margin: 5px 0 10px 0;
+      word-break: break-word; }
+    .brightcove.media-frame-menu .attachment-detail .video-info .bc-video-section,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .bc-video-section {
+      display: block;
+      float: left;
+      height: auto;
+      margin-bottom: 20px;
+      width: 100%; }
+    .brightcove.media-frame-menu .attachment-detail .video-info .account-name,
+    .brightcove.media-frame-menu .attachment-detail .video-info .created-date,
+    .brightcove.media-frame-menu .attachment-detail .video-info .playlist-id,
+    .brightcove.media-frame-menu .attachment-detail .video-info .playlist-type,
+    .brightcove.media-frame-menu .attachment-detail .video-info .updated-date,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-created,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-long-description,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-description,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-id,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-source,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-updated,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .account-name,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .created-date,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-id,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-type,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .updated-date,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-created,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-long-description,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-description,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-id,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-source,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated {
+      clear: both;
+      display: block;
+      color: #999;
+      float: left; }
+      .brightcove.media-frame-menu .attachment-detail .video-info .account-name .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .created-date .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .playlist-id .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .playlist-type .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .updated-date .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-created .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-long-description .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-description .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-id .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-source .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-updated .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .account-name .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .created-date .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-id .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-type .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .updated-date .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-created .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-long-description .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-description .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-id .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-source .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated .title {
+        margin-right: 5px; }
+
+@media screen and (max-width: 700px) {
+  .brightcove.media-frame-content {
+    border-right-width: 0;
+    margin-right: 0;
+    padding-right: 0;
+    width: auto; } }
+
+@media screen and (max-width: 412px) {
+  .brightcove.media-frame-content .attachment {
+    padding: 20px 10px; } }
+
+.playlist-edit.brightcove.attachment-details {
+  width: 100%;
+  height: auto;
+  margin-right: 0;
+  float: none;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box; }
+  .playlist-edit.brightcove.attachment-details .settings {
+    max-width: 50%;
+    margin-bottom: 20px; }
+  .playlist-edit.brightcove.attachment-details .playlist-name {
+    font-weight: bold; }
+    .playlist-edit.brightcove.attachment-details .playlist-name span {
+      display: inline-block;
+      margin-right: 20px;
+      margin-left: 10px; }
+    .playlist-edit.brightcove.attachment-details .playlist-name input {
+      width: 65%; }
+  .playlist-edit.brightcove.attachment-details .playlist-videos-list {
+    border-right: 1px solid #ddd;
+    clear: both; }
+  .playlist-edit.brightcove.attachment-details .playlist-add-videos-list,
+  .playlist-edit.brightcove.attachment-details .playlist-videos-list {
+    width: 50%;
+    float: left;
+    box-sizing: border-box; }
+    .playlist-edit.brightcove.attachment-details .playlist-add-videos-list h2,
+    .playlist-edit.brightcove.attachment-details .playlist-videos-list h2 {
+      margin-bottom: 0;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      border-bottom: 1px solid #ddd; }
+    .playlist-edit.brightcove.attachment-details .playlist-add-videos-list ul,
+    .playlist-edit.brightcove.attachment-details .playlist-videos-list ul {
+      height: 450px;
+      overflow: auto; }
+    .playlist-edit.brightcove.attachment-details .playlist-add-videos-list .attachment,
+    .playlist-edit.brightcove.attachment-details .playlist-videos-list .attachment {
+      width: 100% !important; }
+    .playlist-edit.brightcove.attachment-details .playlist-add-videos-list .thumbnail,
+    .playlist-edit.brightcove.attachment-details .playlist-videos-list .thumbnail {
+      width: 162px;
+      float: left; }
+    .playlist-edit.brightcove.attachment-details .playlist-add-videos-list .bc-info,
+    .playlist-edit.brightcove.attachment-details .playlist-videos-list .bc-info {
+      clear: none;
+      float: left;
+      margin-left: 10px; }
+    .playlist-edit.brightcove.attachment-details .playlist-add-videos-list .row-actions,
+    .playlist-edit.brightcove.attachment-details .playlist-videos-list .row-actions {
+      visibility: visible;
+      clear: both;
+      display: block;
+      text-align: left; }

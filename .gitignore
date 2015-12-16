@@ -1,0 +1,5 @@
+.idea/
+.editorconfig
+node_modules
+release
+.sass-cache

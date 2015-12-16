@@ -1,0 +1,73 @@
+.brightcove-modal {
+	.media-frame-title,
+	.media-frame-router,
+	.media-frame-content,
+	.media-frame-toolbar {
+		left: 0;
+	}
+
+	.brightcove-media {
+		overflow: hidden;
+	}
+
+	.brightcove {
+		.wp-filter {
+			border: 0;
+		  box-shadow: none;
+		  right: 0;
+		  width: 100%;
+		  margin: 0;
+		}
+		.media-toolbar-secondary {
+			padding: 0;
+            min-width: 280px;
+		}
+        .media-toolbar-primary.search-form{
+            input[type=search]{
+                float: left;
+            }
+        }
+	}
+
+	.pending-uploads {
+		width: calc(100% - 40px);
+		display: block;
+		margin: 20px;
+	}
+
+	.brightcove-upload-queued-files {
+		border: 0;
+		width: 100%;
+	}
+
+	.brightcove.media-frame-content {
+		padding: 0 20px;
+        width: 100%;
+        @media screen and (min-width: 700px){
+            width: calc(100% - 390px);
+        }
+	}
+
+	.brightcove.video-preview {
+		margin-top: 20px;
+	}
+
+	.video-preview-frame {
+		.brightcove {
+			&.media-frame-content {
+				padding: 20px;
+			  box-sizing: border-box;
+			  border-right: 1px solid #ddd;
+			  transform: translate3d(0,0,0);
+			}
+			&.brightcove.media-frame-menu {
+				padding-top: 20px;
+			}
+		}
+	}
+}
+.media-frame:not(.hide-menu) .media-frame-menu{
+    @media screen and (max-width: 900px){
+        width: 300px;
+    }
+}
