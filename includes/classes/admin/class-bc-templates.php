@@ -455,13 +455,13 @@ class BC_Admin_Templates {
 					</select>
 
 					<# if (data.mediaType === 'videos') { #>
-						<label for="media-attachment-date-filters" class="screen-reader-text">Filter by date</label>
+						<!-- <label for="media-attachment-date-filters" class="screen-reader-text">Filter by date</label>
 						<select id="brightcove-media-dates" class="brightcove-media-dates attachment-filters">
 							<option value="all">All dates</option>
 							<# _.each(data.dates, function (date) { #>
 								<option value="{{ date.code }}">{{ date.value }}</option>
 								<# }); #>
-						</select>
+						</select> -->
 
 						<label for="media-attachment-tags-filters" class="screen-reader-text">Filter by tag</label>
 						<select id="media-attachment-tags-filters" class="brightcove-media-tags attachment-filters">
