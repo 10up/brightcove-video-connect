@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Brightcove Video Connect
- * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
- * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version: 1.1.0
- * Author: 10up
- * Author URI: http://10up.com
- * License: GPLv2+
- * Text Domain: brightcove
- * Domain Path: /languages
+Plugin Name: Brightcove Video Connect
+Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
+Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
+Version: 1.1.0
+Author: 10up
+Author URI: http://10up.com
+License: GPLv2+
+Text Domain: brightcove
+Domain Path: /languages
  */
 
 /**
