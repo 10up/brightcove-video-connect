@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.4
-Stable tag:        1.0.9
+Stable tag:        1.1.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,14 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.1.0 =
+* Enhancement: Brightcove Video Connect will now warn users when a part of the Brightcove API system is down that might affect plugin or video behavior.
+* Enhancement: The playlist page will now display an error if no playlist compatible player exists
+* Fix: Date filters have been removed from playlists and videos as they were unusable
+* Fix: The Brightcove URL has been fixed to better support HTTP and HTTPS operations
+* Fix: Fix row-action issues in playlists introduced since WordPress 4.4
+* Miscellaneous minor fixes and corrections to copy throughout the plugin.
+
 = 1.0.9 =
 * Fix: Fixed fatal error on uninstall
 * Fix: Fixed smart playlist display
@@ -220,6 +228,9 @@ http://sample-videos.com/
 * First release
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+1.1.0 is a bugfix and new feature update that is recommended for all users
 
 = 1.0.9 =
 1.0.9 is an important bugfix and is recommended for all users
