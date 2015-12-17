@@ -283,7 +283,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			}
 
-			var newMessage = $( '<p>' + message + '</p>' );
+			var newMessage = $( '<p></p>' );
+			newMessage.text( message );
 
 			messages.append( newMessage );
 			messages.removeClass( 'hidden' );

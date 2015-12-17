@@ -564,8 +564,8 @@ var MediaModel = Backbone.Model.extend({
         var d = this.$el.find(".brightcove-message");
         "success" === b ? (d.addClass("updated"), d.removeClass("error")) : "error" === b && (d.addClass("error"), 
         d.removeClass("updated"));
-        var e = $("<p>" + a + "</p>");
-        d.append(e), d.removeClass("hidden"), c ? (wpbc.permanentMessage && wpbc.permanentMessage.remove(), 
+        var e = $("<p></p>");
+        e.text(a), d.append(e), d.removeClass("hidden"), c ? (wpbc.permanentMessage && wpbc.permanentMessage.remove(), 
         wpbc.permanentMessage = e) : e.fadeOut(6e3, function() {
             $(this).remove(), d.addClass("hidden");
         });
