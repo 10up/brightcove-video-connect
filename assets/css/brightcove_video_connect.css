@@ -462,4 +462,6 @@ div.brightcove-message {
       visibility: visible;
       clear: both;
       display: block;
-      text-align: left; }
+      text-align: left;
+      position: relative;
+      left: auto; }
