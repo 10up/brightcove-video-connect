@@ -92,7 +92,7 @@ class BC_Player_Management_API extends BC_API {
 	 * @return array|bool array of the player configuration retrieved or false if error
 	 */
 	public function player_get( $player_id, $branch = false ) {
-		
+
 		global $bc_accounts;
 
 		$player_id = sanitize_title_with_dashes( $player_id );
@@ -207,6 +207,34 @@ class BC_Player_Management_API extends BC_API {
 		}
 
 		return $this->send_request( $url, 'PATCH', (array) $data );
+	}
+
+	/**
+	 * Lists playlist enabled players
+	 *
+	 * Retrieves the matching players that provide playlist capabilities
+	 *
+	 * @param string $player_id ID of parent if looking for child players
+	 *
+	 * @return array|bool Array of available players or false if error
+	 */
+	public function player_list_playlist_enabled( $player_id = '' ) {
+		$all_players = $this->player_list( $player_id );
+		$players = array();
+		if ( ! is_wp_error( $all_players ) && is_array( $all_players ) && isset( $all_players['items'] ) ) {
+			foreach( $all_players['items'] as $key => $player ) {
+				$is_playlist_enabled = ( isset( $player['branches']['master']['configuration']['playlist'] ) && true === $player['branches']['master']['configuration']['playlist'] ) ? true : false;
+				if ( true === $is_playlist_enabled ) {
+					$players[] = $player;
+				}
+			}
+		} else {
+			return $all_players;
+		}
+		$all_players['items'] = $players;
+		$all_players['item_count'] = count( $players );
+
+		return $all_players;
 	}
 
 }
