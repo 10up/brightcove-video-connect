@@ -210,20 +210,4 @@ class BC_Videos {
 
 	}
 
-	public function get_video_hash_by_id( $video_id ) {
-
-		$video = $this->get_video_by_id( $video_id );
-
-		if ( ! $video ) {
-
-			return false;
-
-		} else {
-
-			return get_post_meta( $video->ID, '_brightcove_hash', true );
-
-		}
-
-	}
-
 }
