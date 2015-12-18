@@ -81,7 +81,7 @@ class BC_Playlists {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool $retry whether this is a 2nd attempt or not
+	 * @param bool $retry whether this is a 2nd attempt or not.
 	 *
 	 * @return bool True on success or false
 	 */
@@ -120,11 +120,10 @@ class BC_Playlists {
 
 					} else {
 
+						// Something happened. we retried, we failed.
 						return false;
-						// Something happened we retried, we failed
 
 					}
-
 				}
 
 				$playlists = $this->sort_api_response( $playlists );
