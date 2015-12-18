@@ -2,9 +2,6 @@
 
 class BC_Utility {
 
-	private function __construct() {
-	}
-
 	/**
 	 * Returns a string of the video ID
 	 *
