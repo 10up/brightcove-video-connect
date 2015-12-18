@@ -14,7 +14,6 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-upload.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-playlists.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-videos.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-players.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-cms-api.php' );
@@ -70,7 +69,6 @@ class BC_Setup {
 
 		new BC_Playlists();
 		new BC_Videos();
-		new BC_Players();
 
 		add_action( 'admin_enqueue_scripts', array( 'BC_Setup', 'admin_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
