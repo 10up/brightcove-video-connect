@@ -24,15 +24,17 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
+
 		load_textdomain( 'brightcove', WP_LANG_DIR . '/brightcove/brightcove-' . $locale . '.mo' );
 		load_plugin_textdomain( 'brightcove', false, 'languages' );
 
 		// Preload Errors Class First.
 		new BC_Errors();
 		new BC_Callbacks();
-		$bc_accounts = new BC_Accounts();
 
-		$players = get_option( '_bc_player_playlist_ids_' . $bc_accounts->get_account_id() );
+		$bc_accounts = new BC_Accounts();
+		$players     = get_option( '_bc_player_playlist_ids_' . $bc_accounts->get_account_id() );
+
 		if ( false === $players || ! is_array( $players ) ) {
 			define( 'BRIGHTCOVE_FORCE_SYNC', true );
 		}
@@ -53,6 +55,7 @@ class BC_Setup {
 
 				$cms_api = new BC_CMS_API();
 				new BC_Notifications( $cms_api );
+
 			}
 
 			new BC_Admin_Media_API();
@@ -76,6 +79,7 @@ class BC_Setup {
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
+
 	}
 
 	/**
@@ -114,6 +118,7 @@ class BC_Setup {
 	public static function add_brightcove_media_modal_container() {
 
 		global $pagenow;
+
 		if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
 			echo '<div tabindex="0" class="brightcove-modal supports-drag-drop"></div>';
 		}
@@ -122,6 +127,7 @@ class BC_Setup {
 	public static function preload_params() {
 
 		global $bc_accounts;
+
 		$tags = new BC_Tags();
 
 		$params = array();
@@ -134,26 +140,38 @@ class BC_Setup {
 
 			$cms_api         = new BC_CMS_API();
 			$admin_media_api = new BC_Admin_Media_API();
+
 			if ( false !== strpos( $uri, BC_Admin_Menu::get_videos_page_uri_component() ) ) {
+
 				$params['videos'] = $admin_media_api->fetch_all( 'videos' );
+
 			} else if ( false !== strpos( $uri, BC_Admin_Menu::get_playlists_page_uri_component() ) ) {
+
 				$type                = 'playlists';
 				$params['playlists'] = $cms_api->playlist_list();
+
 			} else {
+
 				global $pagenow;
+
 				if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
+
 					// Preload both videos and playlists for the post pages because the modal
 					// has tabs to alternate between the two views.
 					$params['videos']    = $admin_media_api->fetch_all( 'videos' );
 					$params['playlists'] = $cms_api->playlist_list();
+
 				} else {
+
 					// What weird page are we on?
 					return false;
+
 				}
 			}
 		} else {
 			return false;
 		}
+
 		$params['dates'] = array( $type => BC_Utility::get_video_playlist_dates_for_display( $type ) );
 		$params['nonce'] = wp_create_nonce( '_bc_ajax_search_nonce' );
 		$params['tags']  = $tags->get_tags();
@@ -194,25 +212,28 @@ class BC_Setup {
 		$params['defaultAccount'] = $defaultAccount['hash'];
 
 		return $params;
+
 	}
 
 	public static function admin_enqueue_scripts() {
 
 		global $wp_version;
 		global $bc_accounts;
+
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$js_variable = array(
-			'path'        => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
-			'preload'     => BC_Setup::preload_params(),
-			'wp_version'  => $wp_version,
+			'path'       => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
+			'preload'    => BC_Setup::preload_params(),
+			'wp_version' => $wp_version,
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
 
 		$playlist_enabled_players_for_accounts = array();
 		$accounts                              = $bc_accounts->get_sanitized_all_accounts();
+
 		foreach ( $accounts as $account ) {
 			$playlist_enabled_players_for_accounts[ $account['account_id'] ] = get_option( '_bc_player_playlist_ids_' . $account['account_id'] );
 		}
@@ -244,6 +265,7 @@ class BC_Setup {
 
 		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array() );
 		wp_enqueue_style( 'brightcove-video-connect' );
+
 	}
 
 	public static function frontend_enqueue_scripts() {
@@ -253,35 +275,44 @@ class BC_Setup {
 
 		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array() );
 		wp_enqueue_style( 'brightcove-playlist' );
+
 	}
 
 	public static function mime_types( $mime_types ) {
 
 		$bc_mime_types = BC_Utility::get_all_brightcove_mimetypes();
+
 		foreach ( $bc_mime_types as $ext => $mime_type ) {
 
 			// If, for instance, video/mp4 pre-exists exists, we still need to check extensions as many mime types have multiple extensions.
 			if ( in_array( $mime_type, $mime_types ) ) {
+
 				// The mime type does exist, but does it exist with the given extension? If not, add it to the list.
 				if ( ! array_key_exists( $ext, $mime_types ) ) {
 					$mime_types[ $ext ] = $mime_type;
 				}
 			} else {
+
 				// The mime type does not exist, so we can safely add it to the list.
 				$mime_types[ $ext ] = $mime_type;
+
 			}
 		}
 
 		return $mime_types;
+
 	}
 
 	public static function bc_activation_admin_notices() {
 
 		global $bc_accounts;
+
 		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 ) {
+
 			delete_option( '_brightcove_plugin_activated' );
 
-			return false;
+			return;
+
 		}
 
 		if ( get_option( '_brightcove_plugin_activated' ) !== false
@@ -289,6 +320,7 @@ class BC_Setup {
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-sources'
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
 		) {
+
 			$notices[] = array(
 				'message' => sprintf(
 					'%s <a href="%s"><strong>%s</strong></a>',
@@ -298,25 +330,31 @@ class BC_Setup {
 				),
 				'type'    => 'updated',
 			);
+
 			BC_Utility::admin_notice_messages( $notices );
+
 		}
 	}
 
 	public static function bc_check_minimum_wp_version() {
 
 		if ( version_compare( get_bloginfo( 'version' ), '3.9.2', '<=' ) ) {
+
 			if ( current_user_can( 'manage_options' ) ) {
+
 				add_action( 'admin_init', 'bc_plugin_deactivate' );
 				add_action( 'admin_notices', 'bc_plugin_incompatible_admin_notice' );
 
 				function bc_plugin_deactivate() {
 
 					deactivate_plugins( BRIGHTCOVE_BASENAME );
+
 				}
 
 				function bc_plugin_incompatible_admin_notice() {
 
 					echo wp_kses_post( sprintf( __( '<div class="error"><p><strong>Brightcove Video Cloud Enhanced</strong> has been <strong>deactivated</strong> because it\'s incompatibale with WordPress version %s! The minimum compatible WordPress version is <strong>4.0</strong></p></div>', 'brightcove' ), esc_html( get_bloginfo( 'version' ) ) ) );
+
 					if ( isset( $_GET['activate'] ) ) {
 						unset( $_GET['activate'] );
 					}
