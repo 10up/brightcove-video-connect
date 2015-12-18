@@ -21,7 +21,6 @@ class BC_Accounts {
 
 	protected $options_key = '_brightcove_accounts';
 	protected $current_account;
-	protected $option_key_initial_sync_complete = '_brightcove_sync_complete';
 
 	/**
 	 * The original or default user account
@@ -62,18 +61,6 @@ class BC_Accounts {
 		return $this->current_account ? $this->current_account['hash'] : false;
 	}
 
-	/**
-	 * @param $account_id
-	 *
-	 * @return bool Whether the initial sync for the account ID is completed
-	 */
-	public function is_initial_sync_complete( $account_id ) {
-
-		$completed_accounts               = get_option( $this->option_key_initial_sync_complete, array() );
-
-		return array_key_exists( $account_id, $completed_accounts ) && $completed_accounts[ $account_id ];
-	}
-
 	public function get_sync_type( $account_id ) {
 
 		$option_key_sync_type = '_brightcove_sync_type_' . BC_Utility::sanitize_id( $account_id );
@@ -92,38 +79,6 @@ class BC_Accounts {
 		}
 
 		return update_option( $option_key_sync_type, $sync_val );
-	}
-
-	/**
-	 * Set the initial sync $status for $account_id
-	 *
-	 * @param      $account_id
-	 * @param bool $status
-	 *
-	 * @return mixed
-	 */
-	public function set_initial_sync_status( $account_id, $status = false ) {
-
-		$completed_accounts = get_option( $this->option_key_initial_sync_complete, array() );
-
-		$completed_accounts[ $account_id ] = $status;
-
-		return update_option( $this->option_key_initial_sync_complete, $completed_accounts );
-	}
-
-	/**
-	 * @return array|bool of account IDs with incomplete initial sync
-	 */
-	public function get_initial_sync_status() {
-
-		$completed_accounts               = get_option( $this->option_key_initial_sync_complete, array() );
-		$incomplete_accounts              = array();
-		foreach ( $completed_accounts as $account_id => $sync_status ) {
-			if ( ! $sync_status ) {
-				$incomplete_accounts[] = $account_id;
-			}
-		}
-		return count( $incomplete_accounts ) ? $incomplete_accounts : false;
 	}
 
 	public function add_account( $account_id, $client_id, $client_secret, $account_name = 'New Account', $set_default = '', $allow_update = true ) {
@@ -182,10 +137,6 @@ class BC_Accounts {
 
 		if ( $cli ) {
 			$this->set_sync_type( $account_id, 'full' );
-		}
-
-		if ( ! $this->is_initial_sync_complete( $account_id ) ) {
-			$this->set_initial_sync_status( $account_id, false );
 		}
 
 		$this->set_current_account( $account_hash );
@@ -261,7 +212,6 @@ class BC_Accounts {
 			BC_Utility::remove_all_media_objects_for_account_id( $account_id );
 			$notifications = new BC_Notifications();
 			$notifications->remove_subscription( $hash );
-			$this->set_initial_sync_status( $account_id, false );
 
 		}
 

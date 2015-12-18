@@ -1242,15 +1242,7 @@ var UploadView = BrightcoveView.extend({
     load: function() {
         wpbc.requests = [], wpbc.responses = {}, wpbc.broadcast = _.extend({}, Backbone.Events), 
         // pubSub object
-        wpbc.selfSync = function() {
-            $.get(ajaxurl, {
-                action: "bc_initial_sync"
-            }, function(a) {
-                a.success ? wpbc.broadcast.trigger("remove:permanentMessage") : // At most every ten seconds.
-                _.delay(wpbc.selfSync, 1e4);
-            });
-        }, /* If we have to finish our inital sync, then lets help it along*/
-        wpbc.initialSync && wpbc.selfSync(), /* Wait until the window is loaded and the anchor element exists in the DOM */
+        /* Wait until the window is loaded and the anchor element exists in the DOM */
         $(window).load(this.loaded), /* If we're on the videos/playlists pages, sometimes the $(window).load has already fired
 			we test for this and fire up the app anyway.
 			 */

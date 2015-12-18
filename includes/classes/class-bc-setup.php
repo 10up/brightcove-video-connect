@@ -204,7 +204,6 @@ class BC_Setup {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$js_variable = array(
-			'initialSync' => $bc_accounts->get_initial_sync_status(),
 			'path'        => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'     => BC_Setup::preload_params(),
 			'wp_version'  => $wp_version,

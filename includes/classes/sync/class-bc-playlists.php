@@ -66,65 +66,6 @@ class BC_Playlists {
 	}
 
 	/**
-	 * Initial playlist sync
-	 *
-	 * Retrieve all playlists and create/update when necessary.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool $is_cli whether the call is coming via WP_CLI
-	 *
-	 * @return bool True on success or false
-	 */
-	public function handle_initial_sync( $is_cli = false ) {
-
-		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__( 'Starting Playlist Sync', 'brightcove' ) );
-		}
-
-		global $bc_accounts;
-
-		$playlists = $this->cms_api->playlist_list();
-
-		if ( ! is_array( $playlists ) ) {
-			return false;
-		}
-
-		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__( sprintf( 'There are %d playlists to sync for this account. Please be patient.', sizeof( $playlists ) ), 'brightcove' ) );
-		}
-
-		$playlists = $this->sort_api_response( $playlists );
-
-		$playlist_ids_to_keep = array(); // for deleting outdated playlists
-		$playlist_dates       = array();
-		/* process all playlists */
-
-		foreach ( $playlists as $playlist ) {
-
-			$playlist_ids_to_keep[]     = BC_Utility::sanitize_and_generate_meta_video_id( $playlist['id'] );
-			$yyyy_mm                    = substr( preg_replace( '/[^0-9-]/', '', $playlist['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
-			$playlist_dates[ $yyyy_mm ] = $yyyy_mm;
-
-		}
-
-		ksort( $playlist_dates );
-
-		$playlist_dates = array_keys( $playlist_dates ); // Only interested in the dates
-
-		BC_Utility::set_video_playlist_dates( 'playlists', $playlist_dates, $bc_accounts->get_account_id() );
-
-		BC_Utility::store_hash( 'playlists', $playlists, $this->cms_api->account_id );
-
-		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__( 'Playlist Sync Complete', 'brightcove' ) );
-		}
-
-		return true;
-
-	}
-
-	/**
 	 * Returns playlist ids
 	 *
 	 * Returns a list of playlist ids from the last add_update operations.

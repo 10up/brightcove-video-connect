@@ -16,55 +16,6 @@ class BC_Players {
 	}
 
 	/**
-	 * Initial player sync
-	 *
-	 * Retrieve all player and create/update when necessary.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool $is_cli whether the call is coming via WP_CLI
-	 *
-	 * @return bool True on success or false
-	 */
-	public function handle_initial_sync( $is_cli = false ) {
-
-		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__('Starting Player Sync', 'brightcove' ) );
-		}
-
-		$players = $this->players_api->player_list();
-		$players = $this->sort_api_response( $players );
-
-		if ( ! is_array( $players ) ) {
-			return false;
-		}
-
-		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__( sprintf( 'There are %d players to sync for this account. Please be patient.', sizeof( $players ) ), 'brightcove' ) );
-		}
-
-		$player_ids_to_keep = array(); // for deleting outdated players
-
-		/* process all players */
-		foreach ( $players as $player ) {
-
-			$this->add_or_update_wp_player( $player );
-			$player_ids_to_keep[] = BC_Utility::sanitize_subscription_id( $player['id'] );
-
-		}
-
-		BC_Utility::remove_deleted_players( $player_ids_to_keep );
-
-		BC_Utility::store_hash( 'players', $players, $this->cms_api->account_id );
-
-		if ( true === $is_cli ) {
-			WP_CLI::line( esc_html__('Player Sync Complete', 'brightcove' ) );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Retrieve all players and create/update when necessary
 	 *
 	 * @return bool

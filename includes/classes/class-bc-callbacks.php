@@ -8,27 +8,6 @@ class BC_Callbacks {
 		add_action( 'wp_ajax_nopriv_bc_ingest', array( $this, 'ingest_callback' ) );
 		add_action( 'wp_ajax_nopriv_bc_notifications', array( $this, 'video_notification' ) );
 		/* Can only be self invoked from admin */
-		add_action( 'wp_ajax_bc_initial_sync', array( $this, 'initial_sync' ) );
-	}
-
-	private function set_time_limit( $time = 300 ) {
-
-		set_time_limit( $time );
-	}
-
-	public function initial_sync() {
-
-		$this->set_time_limit();
-		$start_time = time();
-		global $bc_accounts;
-		$sync_status = $bc_accounts->get_initial_sync_status();
-		if ( false !== $sync_status ) {
-			$videos = new BC_Videos();
-			$videos->handle_initial_sync( $sync_status[0], $start_time );
-		} else {
-			wp_send_json_success( 'no vids left' );
-		}
-		wp_send_json_error( time() - $start_time );
 	}
 
 	/**

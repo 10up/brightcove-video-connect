@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2015-12-17 19:34:26+00:00\n"
+"POT-Creation-Date: 2015-12-18 16:48:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,7 +28,7 @@ msgid "Type is not specified"
 msgstr ""
 
 #: includes/classes/admin/api/class-bc-admin-media-api.php:86
-#: includes/classes/admin/api/class-bc-admin-media-api.php:147
+#: includes/classes/admin/api/class-bc-admin-media-api.php:156
 msgid "No such account exists"
 msgstr ""
 
@@ -44,35 +44,35 @@ msgstr ""
 msgid "Failed to update "
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:122
+#: includes/classes/admin/api/class-bc-admin-media-api.php:133
 msgid "Type is not specified!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:136
+#: includes/classes/admin/api/class-bc-admin-media-api.php:149
 msgid "Wrong type is specified!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:160
+#: includes/classes/admin/api/class-bc-admin-media-api.php:172
 msgid "Unable to remove video from Brightcove!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:162
+#: includes/classes/admin/api/class-bc-admin-media-api.php:176
 msgid "Successfully deleted your video."
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:169
+#: includes/classes/admin/api/class-bc-admin-media-api.php:186
 msgid "Unable to remove playlist from Brightcove!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:171
+#: includes/classes/admin/api/class-bc-admin-media-api.php:190
 msgid "Successfully deleted your playlist."
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:246
+#: includes/classes/admin/api/class-bc-admin-media-api.php:262
 msgid "Unable to process file, does it have a valid extension?"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:329
+#: includes/classes/admin/api/class-bc-admin-media-api.php:397
 msgid "Invalid Search Type"
 msgstr ""
 
@@ -462,49 +462,49 @@ msgstr ""
 msgid "oAuth API did not return us an access token"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:158
+#: includes/classes/class-bc-accounts.php:113
 msgid ""
 "Account credentials are invalid. Please ensure you are using all the "
 "correct information from Brightcove Video Cloud Studio to secure a token."
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:176
+#: includes/classes/class-bc-accounts.php:131
 msgid "Unable to update this account via WP-CLI."
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:237
+#: includes/classes/class-bc-accounts.php:188
 msgid "The specified Brightcove Account has not been configured in WordPress"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:532
+#: includes/classes/class-bc-accounts.php:482
 msgid "Supplied account can not create videos"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:540
+#: includes/classes/class-bc-accounts.php:490
 msgid "Supplied account can not update videos"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:546
+#: includes/classes/class-bc-accounts.php:496
 msgid "Supplied account cannot create playlists"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:555
+#: includes/classes/class-bc-accounts.php:505
 msgid "Supplied account cannot modify playlists"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:560
+#: includes/classes/class-bc-accounts.php:510
 msgid "Supplied playlist cannot delete playlists"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:566
+#: includes/classes/class-bc-accounts.php:516
 msgid "Supplied account can not delete videos"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:574
+#: includes/classes/class-bc-accounts.php:524
 msgid "Supplied account can not fetch players"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:605
+#: includes/classes/class-bc-accounts.php:555
 msgid "Invalid account credentials"
 msgstr ""
 
@@ -530,7 +530,7 @@ msgid ""
 "Writing to the syslog instead."
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:109
+#: includes/classes/class-bc-setup.php:110
 msgid "Brightcove Media"
 msgstr ""
 
@@ -560,24 +560,20 @@ msgid ""
 "again."
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:296
+#: includes/classes/class-bc-setup.php:295
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:298
+#: includes/classes/class-bc-setup.php:297
 msgid "here"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:320
+#: includes/classes/class-bc-setup.php:319
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "
 "WordPress version %s! The minimum compatible WordPress version is "
 "<strong>4.0</strong></p></div>"
-msgstr ""
-
-#: includes/classes/class-bc-video-shortcode.php:99
-msgid "No video was found"
 msgstr ""
 
 #: includes/classes/class-bc-video-upload.php:36
@@ -590,34 +586,6 @@ msgstr ""
 
 #: includes/classes/class-bc-video-upload.php:70
 msgid "Unable to create a video on brightcove side"
-msgstr ""
-
-#: includes/classes/sync/class-bc-players.php:32
-msgid "Starting Player Sync"
-msgstr ""
-
-#: includes/classes/sync/class-bc-players.php:61
-msgid "Player Sync Complete"
-msgstr ""
-
-#: includes/classes/sync/class-bc-playlists.php:75
-msgid "The Playlist failed to sync with WordPress"
-msgstr ""
-
-#: includes/classes/sync/class-bc-playlists.php:187
-msgid "Starting Playlist Sync"
-msgstr ""
-
-#: includes/classes/sync/class-bc-playlists.php:226
-msgid "Playlist Sync Complete"
-msgstr ""
-
-#: includes/classes/sync/class-bc-videos.php:391
-msgid "The video has not been created in WordPress"
-msgstr ""
-
-#: includes/classes/sync/class-bc-videos.php:398
-msgid "BC WORDPRESS: Video with ID #%d has been created"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
