@@ -137,10 +137,10 @@ class BC_Playlists {
 
 					foreach ( $playlists as $playlist ) {
 
-						$this->add_or_update_wp_playlist( $playlist );
 						$playlist_ids_to_keep[]     = BC_Utility::sanitize_and_generate_meta_video_id( $playlist['id'] );
 						$yyyy_mm                    = substr( preg_replace( '/[^0-9-]/', '', $playlist['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
 						$playlist_dates[ $yyyy_mm ] = $yyyy_mm;
+
 					}
 
 					ksort( $playlist_dates );
