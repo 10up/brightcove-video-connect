@@ -64,31 +64,4 @@ class BC_Videos {
 
 		return true;
 	}
-
-	protected function have_enough_time( $start_time, $buffer_time = 15, $max_time = false ) {
-
-		if ( ! $max_time ) {
-			$max_time = (int) ini_get( 'max_execution_time' );
-			$max_time = $max_time > 0 ? $max_time : 30; // If we can't get max_time, we assume it's 30s
-		}
-
-		return ( ( time() + $buffer_time - $start_time ) <= $max_time );
-	}
-
-	public function sort_api_response( $videos ) {
-
-		foreach ( $videos as $key => $video ) {
-
-			$id            = BC_Utility::sanitize_and_generate_meta_video_id( $video['id'] );
-			$videos[ $id ] = $video;
-			unset( $videos[ $key ] );
-
-		}
-
-		ksort( $videos );
-
-		return $videos;
-
-	}
-
 }
