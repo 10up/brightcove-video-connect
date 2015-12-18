@@ -60,11 +60,6 @@ class BC_Utility {
 		return is_string( $date_string ) ? sanitize_text_field( preg_replace( '/[^0-9-]/', '', $date_string ) ) : "";
 	}
 
-	public static function sanitize_subscription_id( $subscription_id ) {
-
-		return is_string( $subscription_id ) ? sanitize_text_field( preg_replace( '/[^0-9a-f-]/', '', $subscription_id ) ) : "";
-	}
-
 	/**
 	 * Removes a pending ingestion request (anything over 1 hour old) and any
 	 * $video_id that has been supplied.
@@ -125,21 +120,6 @@ class BC_Utility {
 	}
 
 	/**
-	 * Create a key for the account ID or video ID to prevent third party from sending
-	 * spoofed callback requests.
-	 *
-	 * @param $video_id
-	 *
-	 * @return string containing hash
-	 */
-	public static function get_auth_key_for_id( $video_id ) {
-
-		$hash = hash( 'sha256', BC_Utility::salt() . $video_id );
-
-		return substr( $hash, 0, 8 );
-	}
-
-	/**
 	 * @param $account array containing an account id, client id and client secret
 	 *
 	 * @return string hash for the account
@@ -160,24 +140,6 @@ class BC_Utility {
 		$hash = substr( $hash, 0, 16 );
 
 		return $hash;
-	}
-
-	/**
-	 * This salt replaces wp_salt for scenarios where wp_salt changes
-	 * It's slightly less secure, but does allow for callbacks on video
-	 * notifications to continue
-	 */
-	public static function salt() {
-
-		$key_name = '_brightcove_salt';
-		$salt     = get_option( $key_name );
-		if ( false !== $salt ) {
-			$salt = hash( 'sha256', wp_salt() . mt_rand() . wp_salt( 'secure_auth' ) );
-			update_option( $key_name, $salt );
-
-		}
-
-		return $salt;
 	}
 
 	/**

@@ -475,19 +475,13 @@ class BC_CMS_API extends BC_API {
 	 * @param string $video_id  the ID of the video we're adding the master to
 	 * @param string $video_url the url of the video stored locally
 	 * @param string $profile   the profile to use for processing
-	 * @param bool   $callback  true to specify a local callback url or false
 	 *
 	 * @return string|bool the id of the ingest request or false on failure
 	 */
-	public function video_upload( $video_id, $video_url, $profile = 'balanced-high-definition', $callback = true ) {
+	public function video_upload( $video_id, $video_url, $profile = 'balanced-high-definition' ) {
 
 		$data           = array( 'profile' => sanitize_text_field( $profile ) );
 		$data['master'] = array( 'url' => esc_url_raw( $video_url ) );
-
-		if ( true === $callback ) {
-			$auth              = BC_Utility::get_auth_key_for_id( $video_id );
-			$data['callbacks'] = array( get_admin_url() . 'admin-ajax.php?action=bc_ingest&id=' . $video_id . '&auth=' . $auth );
-		}
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
 	}

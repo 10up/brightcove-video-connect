@@ -145,41 +145,10 @@ class BC_Accounts {
 		if ( count( $all_accounts ) <= 1 ) {
 			update_option( '_brightcove_default_account', $account_hash );
 		}
-		$notifications = new BC_Notifications();
-		$notifications->subscribe_if_not_subscribed();
-
-		$this->trigger_sync_via_callback();
 
 		$this->restore_default_account();
 
 		return true;
-	}
-
-	/**
-	 * Sync is called via callbacks from the brightcove API.
-	 * Problem: How to get the initial library of the user?
-	 * Solutions:
-	 * 1. Force a sync from the user's request, which increases the amount of time for the page load.
-	 * 2. Trigger a notification event from brightcove, let their API see the long response time.
-	 *
-	 * We opt for option 2 as it provides for better UX.
-	 *
-	 */
-	public function trigger_sync_via_callback() {
-
-		$cms_api        = new BC_CMS_API();
-		$video_creation = $cms_api->video_add( 'Brightcove WordPress plugin test sync video' );
-		if ( ! is_array( $video_creation ) || ! array_key_exists( 'id', $video_creation ) ) {
-			return false;
-		}
-
-		$video_id = $video_creation['id'];
-
-		// Update a video
-		$renamed_title = 'Brightcove WordPress plugin test sync video renamed';
-		$cms_api->video_update( $video_id, array( 'name' => $renamed_title ) );
-
-		$cms_api->video_delete( $video_id );
 	}
 
 	public function delete_account( $hash ) {
@@ -192,11 +161,6 @@ class BC_Accounts {
 
 		$account_id = $all_accounts[ $hash ]['account_id'];
 
-		/**
-		 * If there is only one instance of account ID, then when we delete it we
-		 * also need to get rid of all custom posts and the subscriptions.
-		 */
-
 		$account_id_in_accounts_list = false;
 
 		foreach ( $all_accounts as $account ) {
@@ -204,14 +168,11 @@ class BC_Accounts {
 			if ( $account_id === $account['account_id'] ) {
 				$account_id_in_accounts_list = true;
 			}
-
 		}
 
 		if ( $account_id_in_accounts_list ) { //only run deletion for the provided account ID if it is actually an active account.
 
 			BC_Utility::remove_all_media_objects_for_account_id( $account_id );
-			$notifications = new BC_Notifications();
-			$notifications->remove_subscription( $hash );
 
 		}
 
