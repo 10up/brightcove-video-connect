@@ -10,49 +10,6 @@ class BC_Players {
 		$this->cms_api     = new BC_CMS_API();
 		$this->players_api = new BC_Player_Management_API();
 
-		if ( defined( 'BRIGHTCOVE_FORCE_SYNC' ) && BRIGHTCOVE_FORCE_SYNC ) {
-			add_action( 'admin_init', array( $this, 'sync_players' ) );
-		}
-	}
-
-	/**
-	 * Retrieve all players and create/update when necessary
-	 *
-	 * @return bool
-	 */
-	public function sync_players( $retry = false ) {
-
-		$force_sync = false;
-		if ( defined( 'BRIGHTCOVE_FORCE_SYNC' ) && BRIGHTCOVE_FORCE_SYNC ) {
-			$force_sync = true;
-		}
-
-		$players = $this->players_api->player_list();
-
-		if ( ! is_array( $players ) ) {
-			if ( ! $retry ) {
-				return $this->sync_players( true );
-			} else {
-				return false; // Something happened we retried, we failed.
-			}
-		}
-
-		$players = $this->sort_api_response( $players );
-
-		if ( $force_sync || BC_Utility::hash_changed( 'players', $players, $this->cms_api->account_id ) ) {
-			$player_ids_to_keep = array(); // for deleting outdated players
-			/* process all players */
-			foreach ( $players as $player ) {
-				$this->add_or_update_wp_player( $player );
-				$player_ids_to_keep[] = BC_Utility::sanitize_subscription_id( $player['id'] );
-			}
-
-			BC_Utility::remove_deleted_players( $player_ids_to_keep );
-
-			BC_Utility::store_hash( 'players', $players, $this->cms_api->account_id );
-		}
-
-		return true;
 	}
 
 	function sort_api_response( $players ) {
