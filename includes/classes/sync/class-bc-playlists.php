@@ -68,14 +68,7 @@ class BC_Playlists {
 		}
 
 		if ( is_array( $request ) && isset( $request['id'] ) ) {
-			if ( true === $this->add_or_update_wp_playlist( $request ) ) {
-				return true;
-			}
-
-			$error_message = esc_html__( 'The Playlist failed to sync with WordPress', 'brightcove' );
-			BC_Logging::log( sprintf( 'WORDPRESS PLAYLIST SYNC: %s', $error_message ) );
-
-			return new WP_Error( 'playlist-wp-sync-error', $error_message );
+			return true;
 		}
 
 		return true;
