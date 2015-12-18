@@ -1,7 +1,9 @@
 <?php
 
 class BC_Callbacks {
+
 	public function __construct() {
+
 		add_action( 'wp_ajax_bc_ingest', array( $this, 'ingest_callback' ) );
 		add_action( 'wp_ajax_nopriv_bc_ingest', array( $this, 'ingest_callback' ) );
 		add_action( 'wp_ajax_nopriv_bc_notifications', array( $this, 'video_notification' ) );
@@ -9,11 +11,13 @@ class BC_Callbacks {
 		add_action( 'wp_ajax_bc_initial_sync', array( $this, 'initial_sync' ) );
 	}
 
-	private function set_time_limit( $time = 300) {
+	private function set_time_limit( $time = 300 ) {
+
 		set_time_limit( $time );
 	}
 
 	public function initial_sync() {
+
 		$this->set_time_limit();
 		$start_time = time();
 		global $bc_accounts;
@@ -22,37 +26,42 @@ class BC_Callbacks {
 			$videos = new BC_Videos();
 			$videos->handle_initial_sync( $sync_status[0], $start_time );
 		} else {
-			wp_send_json_success('no vids left');
+			wp_send_json_success( 'no vids left' );
 		}
-		wp_send_json_error(time() - $start_time);
+		wp_send_json_error( time() - $start_time );
 	}
 
 	/**
 	 * Function for processing a callback notification from Brightcove
 	 *
-     * Valid callback URI: /wp-admin/admin-post.php?bc_auth=4455f75b
-     * Valid callback JSON:
-     * {"timestamp":1427307045995,"account_id":"4089003419001","event":"video-change","video":"4133902975001","version":0}
-     **/
+	 * Valid callback URI: /wp-admin/admin-post.php?bc_auth=4455f75b
+	 * Valid callback JSON:
+	 * {"timestamp":1427307045995,"account_id":"4089003419001","event":"video-change","video":"4133902975001","version":0}
+	 *
+	 * @since 1.0
+	 *
+	 * @return void
+	 **/
 	public function video_notification() {
-		if ( ! isset( $_GET[ 'bc_auth'] ) ) {
+
+		if ( ! isset( $_GET['bc_auth'] ) ) {
 			return;
 		}
 
 		$auth = $_GET['bc_auth'];
 
-		$json = file_get_contents('php://input');
-		$decoded = json_decode($json, true);
+		$json    = file_get_contents( 'php://input' );
+		$decoded = json_decode( $json, true );
 
 		if ( ! is_array( $decoded ) ) {
 			return;
 		}
 
-		if ( ! isset( $decoded[ 'account_id' ] ) || ! isset( $decoded[ 'video' ] ) ) {
+		if ( ! isset( $decoded['account_id'] ) || ! isset( $decoded['video'] ) ) {
 			return;
 		}
 
-		$account_id = BC_Utility::sanitize_id( $decoded[ 'account_id' ] );
+		$account_id = BC_Utility::sanitize_id( $decoded['account_id'] );
 		$valid_auth = BC_Utility::get_auth_key_for_id( $account_id );
 
 		if ( $valid_auth !== $auth ) {
@@ -60,7 +69,7 @@ class BC_Callbacks {
 			return;
 		}
 
-        $video_id = BC_Utility::sanitize_id( $decoded[ 'video' ] );
+		$video_id = BC_Utility::sanitize_id( $decoded['video'] );
 
 		if ( ! $video_id ) {
 			wp_send_json_error( 'missing video id' ); // Some sort of error occurred with the callback and we have no video_id.
@@ -82,7 +91,7 @@ class BC_Callbacks {
 
 		$videos = new BC_Videos();
 
-		$video_update =  $videos->add_or_update_wp_video( $video_details );
+		$video_update = $videos->add_or_update_wp_video( $video_details );
 
 		$bc_accounts->restore_default_account();
 
@@ -102,33 +111,34 @@ class BC_Callbacks {
 	 * $_GET['id'] must contain the video ID
 	 * $_GET['auth'] must contain the anti spoof hash.
 	 */
-    public function ingest_callback() {
-        $json = file_get_contents('php://input');
-        $decoded = json_decode($json, true);
+	public function ingest_callback() {
 
-		if (  !isset( $decoded[ 'entity' ] ) ||
-			!isset( $_GET[ 'id' ] ) ||
-			!isset( $_GET[ 'auth' ] ) ||
-			"SUCCESS" !== $decoded[ 'status' ]
+		$json    = file_get_contents( 'php://input' );
+		$decoded = json_decode( $json, true );
+
+		if ( ! isset( $decoded['entity'] ) ||
+		     ! isset( $_GET['id'] ) ||
+		     ! isset( $_GET['auth'] ) ||
+		     "SUCCESS" !== $decoded['status']
 		) {
 			exit;
 		}
 
-		$video_id = BC_Utility::sanitize_and_generate_meta_video_id( $_GET[ 'id' ] );
+		$video_id   = BC_Utility::sanitize_and_generate_meta_video_id( $_GET['id'] );
 		$valid_auth = BC_Utility::get_auth_key_for_id( $video_id );
 
-		if ( BC_Utility::sanitize_and_generate_meta_video_id( $decoded[ 'entity' ] ) !== $video_id ) {
+		if ( BC_Utility::sanitize_and_generate_meta_video_id( $decoded['entity'] ) !== $video_id ) {
 			// We get lots of callbacks so we want to make sure that it's not
 			// one of the transcodes that has completed, but rather this video.
 			exit;
 		}
 
-		if ( $valid_auth !== $_GET[ 'auth' ] ) {
+		if ( $valid_auth !== $_GET['auth'] ) {
 			// Someone was spoofing callbacks?
 			exit;
 		}
 
-        BC_Utility::remove_pending_uploads( $video_id );
+		BC_Utility::remove_pending_uploads( $video_id );
 		// @todo: Set video uploaded state as complete.
 		$this->trigger_background_fetch();
 		exit;
