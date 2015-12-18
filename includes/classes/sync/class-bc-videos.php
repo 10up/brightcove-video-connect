@@ -15,14 +15,16 @@ class BC_Videos {
 	/**
 	 * Updates Metadata to the Brightcove API
 	 *
-	 * @param array $sanitized_post_data . This should be sanitized POST data
+	 * @param array $sanitized_post_data This should be sanitized POST data.
 	 *
 	 * @return bool|WP_Error
 	 */
 	public function update_bc_video( $sanitized_post_data ) {
 
 		global $bc_accounts;
-		$video_id = BC_Utility::sanitize_id( $sanitized_post_data['video_id'] );
+
+		$video_id    = BC_Utility::sanitize_id( $sanitized_post_data['video_id'] );
+		$update_data = array();
 
 		if ( array_key_exists( 'name', $sanitized_post_data ) && '' !== $sanitized_post_data['name'] ) {
 			$update_data['name'] = utf8_uri_encode( sanitize_text_field( $sanitized_post_data['name'] ) );
@@ -37,8 +39,10 @@ class BC_Videos {
 		}
 
 		if ( array_key_exists( 'tags', $sanitized_post_data ) && ! empty( $sanitized_post_data['tags'] ) ) {
+
 			// Convert tags string to an array.
 			$update_data['tags'] = array_map( 'trim', explode( ',', $sanitized_post_data['tags'] ) );
+
 		}
 
 		$bc_accounts->set_current_account( $sanitized_post_data['account'] );
@@ -51,14 +55,16 @@ class BC_Videos {
 		 * If we had any tags in the update, add them to the tags collection if we don't already track them.
 		 */
 		if ( array_key_exists( 'tags', $update_data ) && is_array( $update_data['tags'] ) && count( $update_data['tags'] ) ) {
+
 			$existing_tags = $this->tags->get_tags();
 			$new_tags      = array_diff( $update_data['tags'], $existing_tags );
+
 			if ( count( $new_tags ) ) {
 				$this->tags->add_tags( $new_tags );
 			}
 		}
 
-		if ( is_wp_error( $request ) || $request === false ) {
+		if ( is_wp_error( $request ) || false === $request ) {
 			return false;
 		}
 
