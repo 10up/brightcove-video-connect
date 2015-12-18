@@ -91,8 +91,6 @@ class BC_Callbacks {
 
 		$bc_accounts->restore_default_account();
 
-		$this->trigger_background_fetch();
-
 		wp_send_json_success( 'video successfully updated' );
 
 	}
@@ -131,17 +129,7 @@ class BC_Callbacks {
 
 		BC_Utility::remove_pending_uploads( $video_id );
 		// @todo: Set video uploaded state as complete.
-		$this->trigger_background_fetch();
 		exit;
 
-	}
-
-	public function trigger_background_fetch() {
-
-		$this->set_time_limit();
-		$videos = new BC_Videos();
-		$videos->sync_videos();
-		$playlists = new BC_Playlists();
-		$playlists->sync_playlists();
 	}
 }
