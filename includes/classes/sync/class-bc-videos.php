@@ -297,7 +297,6 @@ class BC_Videos {
 						/* process all videos */
 						foreach ( $videos as $video ) {
 
-							$this->add_or_update_wp_video( $video );
 							if ( 'full' === $sync_type ) {
 								$video_ids_to_keep[] = BC_Utility::sanitize_and_generate_meta_video_id( $video['id'] );
 							}
