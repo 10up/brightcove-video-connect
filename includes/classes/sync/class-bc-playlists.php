@@ -32,7 +32,7 @@ class BC_Playlists {
 	/**
 	 * Updates Metadata to the Brightcove API
 	 *
-	 * @param array $sanitized_post_data . This should be sanitized POST data
+	 * @param array $sanitized_post_data This should be sanitized POST data.
 	 *
 	 * @return bool|WP_Error
 	 */
@@ -63,7 +63,7 @@ class BC_Playlists {
 
 		$bc_accounts->restore_default_account();
 
-		if ( is_wp_error( $request ) || $request === false ) {
+		if ( is_wp_error( $request ) || false === $request ) {
 			return false;
 		}
 
