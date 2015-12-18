@@ -108,14 +108,25 @@ class BC_Admin_Media_API {
 		}
 	}
 
+	/**
+	 * Delete video or playlist
+	 *
+	 * Process call to delete video or playlist which is sent to the Brightcove API
+	 *
+	 * @since 1.0
+	 *
+	 * @return void
+	 */
 	public function bc_ajax_delete_video_or_playlist() {
+
+		global $bc_accounts;
 
 		// Call this to check if we are allowed to continue.
 		$this->bc_helper_check_ajax();
-		$type          = sanitize_key( $_POST['type'] );
-		$type_msg      = '';
-		$id            = BC_Utility::sanitize_id( $_POST['id'] );
-		$existing_post = null;
+
+		$type     = sanitize_key( $_POST['type'] );
+		$type_msg = '';
+		$id       = BC_Utility::sanitize_id( $_POST['id'] );
 
 		// Get type brightcove-playlist or brightcove-video.
 		if ( ! in_array( $type, array( 'playlists', 'videos' ) ) ) {
@@ -124,25 +135,23 @@ class BC_Admin_Media_API {
 
 		// Try to get the existing post based on id.
 		if ( 'playlists' === $type ) {
+
 			// Get playlist.
-			$existing_post = $this->playlists->get_playlist_by_id( $id );
-			$type_msg      = 'playlist';
-		} elseif ( $type === 'videos' ) {
+			$type_msg = 'playlist';
+
+		} elseif ( 'videos' === $type ) {
 
 			// Find existing video.
-			$existing_post = $this->videos->get_video_by_id( $id );
-			$type_msg      = 'video';
+			$type_msg = 'video';
+
 		} else {
+
 			wp_send_json_error( esc_html__( 'Wrong type is specified!', 'brightcove' ) );
-		}
 
-		if ( ! is_a( $existing_post, 'WP_Post' ) ) {
-			wp_send_json_error( esc_html__( ucfirst( $type_msg ) . ' doesn\'t exist', 'brightcove' ) );
 		}
-
-		global $bc_accounts;
 
 		$hash = sanitize_text_field( $_POST['account'] );
+
 		if ( false === $bc_accounts->get_account_by_hash( $hash ) ) {
 			wp_send_json_error( __( 'No such account exists', 'brightcove' ) );
 		}
@@ -152,23 +161,36 @@ class BC_Admin_Media_API {
 		// Remove from Brightcove.
 		$delete_status  = false;
 		$delete_message = '';
+
 		if ( 'videos' === $type ) {
+
 			$delete_status = $this->cms_api->video_delete( $id );
+
 			if ( ! $delete_status ) {
+
 				// We were not able to delete video from Brightcove, so force a resync to get back our media object.
 				$this->videos->sync_videos();
 				$delete_message = esc_html__( 'Unable to remove video from Brightcove!', 'brightcove' );
+
 			} else {
+
 				$delete_message = esc_html__( 'Successfully deleted your video.', 'brightcove' );
+
 			}
 		} elseif ( 'playlists' === $type ) {
+
 			$delete_status = $this->cms_api->playlist_delete( $id );
+
 			if ( ! $delete_status ) {
+
 				// We were not able to delete playlist from Brightcove, so force a resync to get back our media object.
 				$this->playlists->sync_playlists();
 				$delete_message = esc_html__( 'Unable to remove playlist from Brightcove!', 'brightcove' );
+
 			} else {
+
 				$delete_message = esc_html__( 'Successfully deleted your playlist.', 'brightcove' );
+
 			}
 		}
 
@@ -176,23 +198,24 @@ class BC_Admin_Media_API {
 		BC_Utility::clear_cached_api_requests( $bc_accounts->get_account_id() );
 		$bc_accounts->restore_default_account();
 
-		if ( $delete_status ) {
-			$deleted_obj = BC_Utility::delete_object( $existing_post->ID );
-			if ( ! $deleted_obj || 0 === $deleted_obj ) {
-				$delete_message = esc_html__( 'Unable to remove ' . $type_msg . ' from WordPress!', 'brightcove' );
-				// We couldn't delete the post, lets try a sync and hopefully that clears it up for us.
-				if ( 'videos' === $type ) {
-					$this->videos->sync_videos();
-				} else {
-					$this->playlists->sync_playlists();
-				}
-			}
+		if ( 'videos' === $type ) {
+
+			$this->videos->sync_videos();
+
+		} else {
+
+			$this->playlists->sync_playlists();
+
 		}
 
 		if ( $delete_status ) {
+
 			wp_send_json_success( $delete_message );
+
 		} else {
+
 			wp_send_json_error( $delete_message );
+
 		}
 	}
 

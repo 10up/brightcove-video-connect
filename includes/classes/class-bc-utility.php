@@ -88,7 +88,7 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param $account_id all or account_id or null for ALL accounts
+	 * @param string $account_id All or account_id or null for ALL accounts.
 	 */
 	public static function clear_cached_api_requests( $account_id ) {
 		global $wpdb;
@@ -450,15 +450,6 @@ class BC_Utility {
 		} else {
 			return wp_delete_post( $id, true );
 		}
-	}
-
-	/**
-	 * Used for deleting a post as initiated by a user action to delete a video/playlist.
-	 * @param $id post_id
-	 * @return mixed
-	 */
-	public static function delete_object( $id ) {
-		return wp_delete_post( $id, true );
 	}
 
 	public static function admin_notice_messages( $notices ) {
