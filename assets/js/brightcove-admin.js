@@ -1242,13 +1242,7 @@ var UploadView = BrightcoveView.extend({
     load: function() {
         wpbc.requests = [], wpbc.responses = {}, wpbc.broadcast = _.extend({}, Backbone.Events), 
         // pubSub object
-        /* Wait until the window is loaded and the anchor element exists in the DOM */
-        $(window).load(this.loaded), /* If we're on the videos/playlists pages, sometimes the $(window).load has already fired
-			we test for this and fire up the app anyway.
-			 */
-        window.location.href.indexOf("page-brightcove") && _.delay(_.bind(function() {
-            wpbc.triggerModal || this.loaded();
-        }, this), 100);
+        this.loaded();
     },
     loaded: function() {
         var a = $(".brightcove-modal");
