@@ -7,7 +7,6 @@ class BC_Setup {
 		global $bc_accounts;
 
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-errors.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-callbacks.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-logging.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php' );
@@ -19,7 +18,6 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-cms-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-oauth.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-player-management-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-notifications.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
@@ -29,7 +27,6 @@ class BC_Setup {
 
 		// Preload Errors Class First.
 		new BC_Errors();
-		new BC_Callbacks();
 
 		$bc_accounts = new BC_Accounts();
 		$players     = get_option( '_bc_player_playlist_ids_' . $bc_accounts->get_account_id() );
@@ -50,13 +47,6 @@ class BC_Setup {
 			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-templates.php' );
 
 			// Load Brightcove API resources.
-			if ( $bc_accounts->get_account_details_for_user() ) {
-
-				$cms_api = new BC_CMS_API();
-				new BC_Notifications( $cms_api );
-
-			}
-
 			new BC_Admin_Media_API();
 			new BC_Admin_Settings_Page();
 			new BC_Admin_Playlists_Page();

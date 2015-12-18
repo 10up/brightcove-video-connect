@@ -97,16 +97,16 @@ class BC_Accounts {
 			foreach ( $is_valid_account as $wp_error ) {
 				if ( is_wp_error( $wp_error ) ) {
 					BC_Utility::admin_notice_messages( array(
-						array(
-							'message' => $wp_error->get_error_message(),
-							'type'    => 'error'
-						)
-					) );
+						                                   array(
+							                                   'message' => $wp_error->get_error_message(),
+							                                   'type'    => 'error',
+						                                   ),
+					                                   ) );
 				}
 			}
 
 			return false;
- 		}
+		}
 
 		if ( true !== $is_valid_account ) {
 			if ( $cli ) {
@@ -119,13 +119,13 @@ class BC_Accounts {
 		$operation = $allow_update ? 'update' : 'add';
 
 		$account_hash = $this->make_account_change( array(
-			'account_id'    => $account_id,
-			'account_name'  => $account_name,
-			'client_id'     => $client_id,
-			'client_secret' => $client_secret,
-			'set_default'   => $set_default,
-			'operation'     => $operation,
-		) );
+			                                            'account_id'    => $account_id,
+			                                            'account_name'  => $account_name,
+			                                            'client_id'     => $client_id,
+			                                            'client_secret' => $client_secret,
+			                                            'set_default'   => $set_default,
+			                                            'operation'     => $operation,
+		                                            ) );
 
 		if ( $cli && false === $account_hash ) {
 			return new WP_Error( 'brightcove-account-exists', esc_html__( 'Unable to update this account via WP-CLI.', 'brightcove' ) );
@@ -142,7 +142,7 @@ class BC_Accounts {
 		$this->set_current_account( $account_hash );
 		$all_accounts = $this->get_all_accounts();
 		//If this is the first account, make it the default
-		if(count($all_accounts) <=1 ){
+		if ( count( $all_accounts ) <= 1 ) {
 			update_option( '_brightcove_default_account', $account_hash );
 		}
 		$notifications = new BC_Notifications();
@@ -222,8 +222,8 @@ class BC_Accounts {
 			if ( ! empty( $all_accounts ) ) {
 
 				$remaining_accounts = $all_accounts;
-			    // The deleted account was the default. Now set the default to be the first account in the remaining list, if there is a remaining account
-			    $default_account = array_shift( $remaining_accounts );
+				// The deleted account was the default. Now set the default to be the first account in the remaining list, if there is a remaining account
+				$default_account     = array_shift( $remaining_accounts );
 				$new_default_account = $default_account['hash'];
 
 			} else {
@@ -420,7 +420,6 @@ class BC_Accounts {
 
 		$attributes = array( 'account_id', 'account_name', 'client_id', 'client_secret', 'set_default', 'operation' );
 
-
 		foreach ( $attributes as $key ) {
 			if ( ! is_string( $account[ $key ] ) && $account['operation'] !== 'update' ) {
 				return false;
@@ -556,7 +555,6 @@ class BC_Accounts {
 		} else if ( $check_access ) {
 			$errors = array_merge( $errors, $this->check_permissions_level() );
 		}
-
 
 		// Restore current account transient (if exists).
 		$this->current_account = $old_account;
