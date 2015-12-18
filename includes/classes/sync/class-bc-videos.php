@@ -165,35 +165,6 @@ class BC_Videos {
 		$bc_accounts->set_initial_sync_status( $account_id, true );
 	}
 
-	/**
-	 * Accepts a video ID and checks to see if there is a record in WordPress. Returns the post object on success and false on failure.
-	 *
-	 * @param $video_id
-	 *
-	 * @return bool|WP_Post
-	 */
-	public function get_video_by_id( $video_id ) {
-
-		$video_id = BC_Utility::sanitize_and_generate_meta_video_id( $video_id );
-
-		$existing_video = new WP_Query(
-			array(
-				'meta_key'               => '_brightcove_video_id',
-				'meta_value'             => $video_id,
-				'post_type'              => 'brightcove-video',
-				'posts_per_page'         => 1,
-				'update_post_term_cache' => false,
-			)
-		);
-
-		if ( ! $existing_video->have_posts() ) {
-			return false;
-		}
-
-		return end( $existing_video->posts );
-
-	}
-
 	public function sort_api_response( $videos ) {
 
 		foreach ( $videos as $key => $video ) {
