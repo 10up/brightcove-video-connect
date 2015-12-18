@@ -89,20 +89,11 @@ class BC_Callbacks {
 			wp_send_json_error( 'video does not exist' );
 		}
 
-		$videos = new BC_Videos();
-
-		$video_update = $videos->add_or_update_wp_video( $video_details );
-
 		$bc_accounts->restore_default_account();
 
 		$this->trigger_background_fetch();
 
-		if ( $video_update ) {
-			wp_send_json_success( 'video successfully updated' );
-		} else {
-			wp_send_json_error( 'unable to update video' );
-
-		}
+		wp_send_json_success( 'video successfully updated' );
 
 	}
 
