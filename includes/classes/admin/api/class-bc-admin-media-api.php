@@ -168,8 +168,7 @@ class BC_Admin_Media_API {
 
 			if ( ! $delete_status ) {
 
-				// We were not able to delete video from Brightcove, so force a resync to get back our media object.
-				$this->videos->sync_videos();
+				// We were not able to delete video from Brightcove.
 				$delete_message = esc_html__( 'Unable to remove video from Brightcove!', 'brightcove' );
 
 			} else {
@@ -255,9 +254,6 @@ class BC_Admin_Media_API {
 			$uploaded_file['name']    = $name;
 			$uploaded_file['tags']    = $tags;
 			$uploaded_file['account'] = $account;
-
-			$videos = new BC_Videos( $this->cms_api );
-			$videos->sync_videos();
 
 			$bc_accounts->restore_default_account();
 			wp_send_json_success( $uploaded_file );
