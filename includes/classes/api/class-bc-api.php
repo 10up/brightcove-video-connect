@@ -288,7 +288,7 @@ abstract class BC_API {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @param boolean Whether or not we should obtain a fresh OAuth token for the request
+	 * @param boolean $force_new_token Whether or not we should obtain a fresh OAuth token for the request.
 	 *
 	 * @return string String containing oAuth token
 	 */
@@ -305,5 +305,4 @@ abstract class BC_API {
 		return 'Bearer ' . $token;
 
 	}
-
 }
