@@ -152,6 +152,15 @@ class BC_Status_Warning {
 
 	}
 
+	/**
+	 * Process dismissal
+	 *
+	 * Checks that the dismissal is correct.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
 	public function action_wp_ajax_bc_status_dismiss() {
 
 		check_ajax_referer( 'bc_status_dismiss', 'nonce' );
