@@ -3,30 +3,31 @@
 class BC_Setup {
 
 	public static function action_init() {
+
 		global $bc_accounts;
 
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-errors.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-callbacks.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-logging.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-upload.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-playlists.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-videos.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-players.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-api.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-cms-api.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-oauth.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-player-management-api.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-notifications.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-tags.php');
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-errors.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-callbacks.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-logging.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-upload.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-playlists.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-videos.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-players.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-cms-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-oauth.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-player-management-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-notifications.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
 		load_textdomain( 'brightcove', WP_LANG_DIR . '/brightcove/brightcove-' . $locale . '.mo' );
 		load_plugin_textdomain( 'brightcove', false, 'languages' );
 
-		// Preload Errors Class First
+		// Preload Errors Class First.
 		new BC_Errors();
 		new BC_Callbacks();
 		$bc_accounts = new BC_Accounts();
@@ -36,19 +37,18 @@ class BC_Setup {
 			define( 'BRIGHTCOVE_FORCE_SYNC', true );
 		}
 
-		// Load Administrative Resources
+		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/api/class-bc-admin-media-api.php');
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-settings-page.php');
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-playlists-page.php');
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-videos-page.php');
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-sources.php');
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-user-profile.php');
-			require_once(BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-templates.php');
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/api/class-bc-admin-media-api.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-settings-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-playlists-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-videos-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-sources.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-user-profile.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-templates.php' );
 
-			// Load Brightcove API resources
-
+			// Load Brightcove API resources.
 			if ( $bc_accounts->get_account_details_for_user() ) {
 
 				$cms_api = new BC_CMS_API();
@@ -74,7 +74,7 @@ class BC_Setup {
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
-		// Show admin notice only if there are not sources
+		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
 	}
 
@@ -89,10 +89,10 @@ class BC_Setup {
 	 */
 	public static function action_init_all() {
 
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php');
-		require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-permissions.php');
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-permissions.php' );
 
-		// Load WordPress resources
+		// Load WordPress resources.
 		new BC_Permissions();
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
@@ -105,6 +105,7 @@ class BC_Setup {
 	}
 
 	public static function add_brightcove_media_button() {
+
 		if ( BC_Utility::current_user_can_brightcove() ) {
 			echo '<a href="#" id="brightcove-add-media" class="button brightcove-add-media"><img class="bc-button-icon" src="' . esc_url( BRIGHTCOVE_URL . 'images/admin/menu-icon.svg' ) . '"> ' . esc_html__( 'Brightcove Media', 'brightcove' ) . '</a>';
 		}
@@ -125,32 +126,31 @@ class BC_Setup {
 
 		$params = array();
 
-		// Fetch all preload vids/playlists as appropriate
+		// Fetch all preload vids/playlists as appropriate.
 		$uri  = $_SERVER['REQUEST_URI'];
 		$type = 'videos';
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			$cms_api = new BC_CMS_API();
+			$cms_api         = new BC_CMS_API();
 			$admin_media_api = new BC_Admin_Media_API();
 			if ( false !== strpos( $uri, BC_Admin_Menu::get_videos_page_uri_component() ) ) {
-				$params[ 'videos' ] = $admin_media_api->fetch_all('videos');
+				$params['videos'] = $admin_media_api->fetch_all( 'videos' );
 			} else if ( false !== strpos( $uri, BC_Admin_Menu::get_playlists_page_uri_component() ) ) {
-				$type            = 'playlists';
-				$params[ 'playlists' ] = $cms_api->playlist_list();
+				$type                = 'playlists';
+				$params['playlists'] = $cms_api->playlist_list();
 			} else {
 				global $pagenow;
 				if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
 					// Preload both videos and playlists for the post pages because the modal
 					// has tabs to alternate between the two views.
-					$params[ 'videos' ] = $admin_media_api->fetch_all('videos');
-					$params[ 'playlists' ] = $cms_api->playlist_list();
+					$params['videos']    = $admin_media_api->fetch_all( 'videos' );
+					$params['playlists'] = $cms_api->playlist_list();
 				} else {
 					// What weird page are we on?
 					return false;
 				}
 			}
-
 		} else {
 			return false;
 		}
@@ -174,20 +174,20 @@ class BC_Setup {
 			'multi_selection'     => true,
 			'multipart_params'    => array(
 				'action' => 'bc_media_upload',
-			)
+			),
 		);
 
 		$params['messages'] = array(
-			'confirmDelete' => esc_html__( 'Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?', 'brightcove' ),
-			'ongoingSync' => esc_html__( 'We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete.', 'brightcove' ),
-			'successUpload' => esc_html__( 'Successfully uploaded file with name %%s%%.', 'brightcove' ),
+			'confirmDelete'  => esc_html__( 'Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?', 'brightcove' ),
+			'ongoingSync'    => esc_html__( 'We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete.', 'brightcove' ),
+			'successUpload'  => esc_html__( 'Successfully uploaded file with name %%s%%.', 'brightcove' ),
 			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%% Please try reuploading it again.', 'brightcove' ),
 		);
 
-		// Fetch all account hash/name combos
+		// Fetch all account hash/name combos.
 		$params['accounts'] = $bc_accounts->get_sanitized_all_accounts();
 
-		// Fetch all supported mime types
+		// Fetch all supported mime types.
 		$params['mimeTypes'] = BC_Utility::get_all_brightcove_mimetypes();
 
 		$defaultAccount           = $bc_accounts->get_account_details_for_user();
@@ -200,7 +200,7 @@ class BC_Setup {
 
 		global $wp_version;
 		global $bc_accounts;
-		// Use minified libraries if SCRIPT_DEBUG is turned off
+		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$js_variable = array(
@@ -213,14 +213,13 @@ class BC_Setup {
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
 
 		$playlist_enabled_players_for_accounts = array();
-		$accounts = $bc_accounts->get_sanitized_all_accounts();
-		foreach( $accounts as $account ) {
-			$playlist_enabled_players_for_accounts[$account['account_id']] = get_option( '_bc_player_playlist_ids_' . $account['account_id'] );
+		$accounts                              = $bc_accounts->get_sanitized_all_accounts();
+		foreach ( $accounts as $account ) {
+			$playlist_enabled_players_for_accounts[ $account['account_id'] ] = get_option( '_bc_player_playlist_ids_' . $account['account_id'] );
 		}
 
-
 		wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ) );
-		wp_localize_script( 'tinymce_preview', 'bctiny', array( 'wp_version' => $wp_version, 'playlistEnabledPlayers' => $playlist_enabled_players_for_accounts  ) );
+		wp_localize_script( 'tinymce_preview', 'bctiny', array( 'wp_version' => $wp_version, 'playlistEnabledPlayers' => $playlist_enabled_players_for_accounts ) );
 
 		$dependencies = array(
 			'jquery',
@@ -238,22 +237,22 @@ class BC_Setup {
 			'tinymce_preview',
 		);
 
-		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin'.$suffix.'.js' ), $dependencies );
+		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies );
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
 		wp_enqueue_script( 'brightcove-admin' );
 
 		wp_enqueue_media();
 
-		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect'.$suffix.'.css' ), array() );
+		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array() );
 		wp_enqueue_style( 'brightcove-video-connect' );
 	}
 
 	public static function frontend_enqueue_scripts() {
 
-		// Use minified libraries if SCRIPT_DEBUG is turned off
+		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist'.$suffix.'.css', array() );
+		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array() );
 		wp_enqueue_style( 'brightcove-playlist' );
 	}
 
@@ -262,14 +261,14 @@ class BC_Setup {
 		$bc_mime_types = BC_Utility::get_all_brightcove_mimetypes();
 		foreach ( $bc_mime_types as $ext => $mime_type ) {
 
-			// If, for instance, video/mp4 pre-exists exists, we still need to check extensions as many mime types have multiple extensions
+			// If, for instance, video/mp4 pre-exists exists, we still need to check extensions as many mime types have multiple extensions.
 			if ( in_array( $mime_type, $mime_types ) ) {
-				// The mime type does exist, but does it exist with the given extension? If not, add it to the list
+				// The mime type does exist, but does it exist with the given extension? If not, add it to the list.
 				if ( ! array_key_exists( $ext, $mime_types ) ) {
 					$mime_types[ $ext ] = $mime_type;
 				}
 			} else {
-				// The mime type does not exist, so we can safely add it to the list
+				// The mime type does not exist, so we can safely add it to the list.
 				$mime_types[ $ext ] = $mime_type;
 			}
 		}
@@ -292,12 +291,13 @@ class BC_Setup {
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
 		) {
 			$notices[] = array(
-				'message' => sprintf( '%s <a href="%s"><strong>%s</strong></a>',
+				'message' => sprintf(
+					'%s <a href="%s"><strong>%s</strong></a>',
 					esc_html__( 'Please configure Brightcove settings from', 'brightcove' ),
 					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
 					esc_html__( 'here', 'brightcove' )
-					),
-				'type' => 'updated'
+				),
+				'type'    => 'updated',
 			);
 			BC_Utility::admin_notice_messages( $notices );
 		}

@@ -1,14 +1,14 @@
 <?php
 /**
-Plugin Name: Brightcove Video Connect
-Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
-Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
-Version: 1.1.0
-Author: 10up
-Author URI: http://10up.com
-License: GPLv2+
-Text Domain: brightcove
-Domain Path: /languages
+ * Plugin Name: Brightcove Video Connect
+ * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
+ * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
+ * Version: 1.1.0
+ * Author: 10up
+ * Author URI: http://10up.com
+ * License: GPLv2+
+ * Text Domain: brightcove
+ * Domain Path: /languages
  */
 
 /**
@@ -34,13 +34,14 @@ define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
 
-if( defined( 'WP_CLI' ) && WP_CLI ) {
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once( BRIGHTCOVE_PATH . 'cli/class-brightcove-cli.php' );
 }
 /**
  * Activate the plugin
  */
 function brightcove_activate() {
+
 	BC_Utility::activate();
 }
 
@@ -49,37 +50,38 @@ function brightcove_activate() {
  * Uninstall routines should be in uninstall.php
  */
 function brightcove_deactivate() {
+
 	BC_Utility::deactivate();
 }
 
-// Wireup actions
+// Wireup actions.
 global $pagenow;
-if (in_array($pagenow, array('admin-ajax.php', 'admin.php', 'post-new.php', 'edit.php', 'post.php'))) {
-    add_action( 'init', array( 'BC_Setup', 'action_init' ) );
-    add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
+if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', 'edit.php', 'post.php' ) ) ) {
+	add_action( 'init', array( 'BC_Setup', 'action_init' ) );
+	add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
 } else {
-    require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php');
-    require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php');
-    require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php');
-    require_once(BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php');
-    global $bc_accounts;
-    $bc_accounts = new BC_Accounts();
-    add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
+	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php' );
+	global $bc_accounts;
+	$bc_accounts = new BC_Accounts();
+	add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
 }
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ) );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ) );
-add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); //ensures the menu is loaded on all pages
+add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
-    // Activation / Deactivation
-    register_deactivation_hook( __FILE__, 'brightcove_deactivate' );
-    register_activation_hook( __FILE__, 'brightcove_activate' );
+	// Activation / Deactivation.
+	register_deactivation_hook( __FILE__, 'brightcove_deactivate' );
+	register_activation_hook( __FILE__, 'brightcove_activate' );
 
-    // Add settings to plugin action links
-    add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( 'BC_Utility', 'bc_plugin_action_links' ) );
+	// Add settings to plugin action links.
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( 'BC_Utility', 'bc_plugin_action_links' ) );
 }
 
-// Add WP-CLI Support (should be before init)
+// Add WP-CLI Support (should be before init).
 require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-setup.php' );
 
 // Check Brightcove status if is_admin().
