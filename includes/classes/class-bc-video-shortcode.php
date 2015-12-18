@@ -82,25 +82,4 @@ class BC_Video_Shortcode {
 
 		return $html;
 	}
-
-	/**
-	 * Determines if a video has recieved a callback alerting us that it is transcoded and ready for use
-	 *
-	 * @param $video_id
-	 *
-	 * @return bool
-	 */
-	public static function is_video_transcoded( $video_id ) {
-
-		$videos = new BC_Videos( new BC_CMS_API( new BC_Accounts ) );
-		$video  = $videos->get_video_by_id( $video_id );
-
-		if ( ! $video ) {
-			return new WP_Error( 'brightcove-still-being-transcoded', esc_html__( 'No video was found', 'brightcove' ) );
-		}
-
-		$is_transcoded = get_post_meta( $video->ID, '_brightcove_transcoded', true );
-
-		return '1' === $is_transcoded;
-	}
 }
