@@ -338,7 +338,7 @@ class BC_Setup {
 
 	public static function bc_check_minimum_wp_version() {
 
-		if ( version_compare( get_bloginfo( 'version' ), '3.9.2', '<=' ) ) {
+		if ( version_compare( get_bloginfo( 'version' ), '4.2', '<' ) ) {
 
 			if ( current_user_can( 'manage_options' ) ) {
 
@@ -353,7 +353,7 @@ class BC_Setup {
 
 				function bc_plugin_incompatible_admin_notice() {
 
-					echo wp_kses_post( sprintf( __( '<div class="error"><p><strong>Brightcove Video Cloud Enhanced</strong> has been <strong>deactivated</strong> because it\'s incompatibale with WordPress version %s! The minimum compatible WordPress version is <strong>4.0</strong></p></div>', 'brightcove' ), esc_html( get_bloginfo( 'version' ) ) ) );
+					echo wp_kses_post( sprintf( __( '<div class="error"><p><strong>Brightcove Video Cloud Enhanced</strong> has been <strong>deactivated</strong> because it\'s incompatibale with WordPress version %s! The minimum compatible WordPress version is <strong>4.2</strong></p></div>', 'brightcove' ), esc_html( get_bloginfo( 'version' ) ) ) );
 
 					if ( isset( $_GET['activate'] ) ) {
 						unset( $_GET['activate'] );
