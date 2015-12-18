@@ -18,15 +18,6 @@ class BC_Playlists {
 		$this->cms_api      = new BC_CMS_API();
 		$this->playlist_ids = array();
 
-		/**
-		 * With Force Sync option, we allow the syncing to happen as part of the
-		 * page load, otherwise we just let the uploads, and video edit notifications
-		 * to trigger sync actions
-		 */
-
-		if ( defined( 'BRIGHTCOVE_FORCE_SYNC' ) && BRIGHTCOVE_FORCE_SYNC ) {
-			add_action( 'admin_init', array( $this, 'sync_playlists' ) );
-		}
 	}
 
 	/**
@@ -70,94 +61,6 @@ class BC_Playlists {
 		if ( is_array( $request ) && isset( $request['id'] ) ) {
 			return true;
 		}
-
-		return true;
-	}
-
-	/**
-	 * Sync playlists with Brightcove
-	 *
-	 * Retrieve all playlists and create/update when necessary.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool $retry whether this is a 2nd attempt or not.
-	 *
-	 * @return bool True on success or false
-	 */
-	public function sync_playlists( $retry = false ) {
-
-		global $bc_accounts;
-
-		$force_sync = false;
-
-		if ( defined( 'BRIGHTCOVE_FORCE_SYNC' ) && BRIGHTCOVE_FORCE_SYNC ) {
-			$force_sync = true;
-		}
-		if ( ! $force_sync && get_transient( 'brightcove_sync_playlists' ) ) {
-			return false;
-		}
-
-		$accounts           = $bc_accounts->get_sanitized_all_accounts();
-		$completed_accounts = array();
-
-		foreach ( $accounts as $account => $account_data ) {
-
-			// We may have multiple accounts for an account_id, prevent syncing that account more than once.
-			if ( ! in_array( $account_data['account_id'], $completed_accounts ) ) {
-
-				$completed_accounts[] = $account_data['account_id'];
-
-				$bc_accounts->set_current_account( $account );
-
-				$playlists = $this->cms_api->playlist_list();
-
-				if ( ! is_array( $playlists ) ) {
-
-					if ( ! $retry ) {
-
-						return $this->sync_playlists( true );
-
-					} else {
-
-						// Something happened. we retried, we failed.
-						return false;
-
-					}
-				}
-
-				$playlists = $this->sort_api_response( $playlists );
-
-				if ( $force_sync || BC_Utility::hash_changed( 'playlists', $playlists, $this->cms_api->account_id ) ) {
-
-					$playlist_ids_to_keep = array(); // for deleting outdated playlists
-					$playlist_dates       = array();
-					/* process all playlists */
-
-					foreach ( $playlists as $playlist ) {
-
-						$playlist_ids_to_keep[]     = BC_Utility::sanitize_and_generate_meta_video_id( $playlist['id'] );
-						$yyyy_mm                    = substr( preg_replace( '/[^0-9-]/', '', $playlist['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
-						$playlist_dates[ $yyyy_mm ] = $yyyy_mm;
-
-					}
-
-					ksort( $playlist_dates );
-
-					$playlist_dates = array_keys( $playlist_dates ); // Only interested in the dates
-
-					BC_Utility::set_video_playlist_dates( 'playlists', $playlist_dates, $bc_accounts->get_account_id() );
-
-					BC_Utility::store_hash( 'playlists', $playlists, $this->cms_api->account_id );
-
-				}
-
-			}
-
-			$bc_accounts->restore_default_account();
-
-		}
-		set_transient( 'brightcove_sync_playlists', true, 30 );
 
 		return true;
 	}

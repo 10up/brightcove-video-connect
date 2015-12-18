@@ -183,8 +183,7 @@ class BC_Admin_Media_API {
 
 			if ( ! $delete_status ) {
 
-				// We were not able to delete playlist from Brightcove, so force a resync to get back our media object.
-				$this->playlists->sync_playlists();
+				// We were not able to delete playlist from Brightcove.
 				$delete_message = esc_html__( 'Unable to remove playlist from Brightcove!', 'brightcove' );
 
 			} else {
@@ -197,16 +196,6 @@ class BC_Admin_Media_API {
 		BC_Utility::clear_cached_api_requests( 'all' );
 		BC_Utility::clear_cached_api_requests( $bc_accounts->get_account_id() );
 		$bc_accounts->restore_default_account();
-
-		if ( 'videos' === $type ) {
-
-			$this->videos->sync_videos();
-
-		} else {
-
-			$this->playlists->sync_playlists();
-
-		}
 
 		if ( $delete_status ) {
 
