@@ -413,7 +413,5 @@ class BC_Playlists {
 			return get_post_meta( $playlist->ID, '_brightcove_hash', true );
 
 		}
-
 	}
-
 }
