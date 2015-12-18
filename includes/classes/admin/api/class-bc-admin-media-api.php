@@ -2,10 +2,10 @@
 
 class BC_Admin_Media_API {
 
-	private $cms_api;
-	private $playlists;
-	private $video_upload;
-	private $videos;
+	protected $cms_api;
+	protected $playlists;
+	protected $video_upload;
+	protected $videos;
 
 	public function __construct() {
 
@@ -28,7 +28,7 @@ class BC_Admin_Media_API {
 
 	}
 
-	private function bc_helper_check_ajax() {
+	protected function bc_helper_check_ajax() {
 
 		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX || ! isset( $_POST['nonce'] ) ) {
 			wp_send_json_error( esc_html__( 'Invalid Request', 'brightcove' ) );
