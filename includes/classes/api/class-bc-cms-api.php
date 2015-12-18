@@ -44,59 +44,6 @@ class BC_CMS_API extends BC_API {
 	}
 
 	/**
-	 *  Get list of subscriptions.
-	 */
-	public function get_subscriptions() {
-
-		// TODO, check if we exist here in the subscriptions, and if we don't.
-		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'GET' );
-	}
-
-	/**
-	 * Retrieve a single subscription
-	 *
-	 * Retrieves a single subscription specified by $subscription_id
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $subscription_id The id of the subscription
-	 *
-	 * @return bool True on success or false on failure.
-	 */
-	public function get_subscription( $subscription_id ) {
-
-		$subscription_id = sanitize_text_field( $subscription_id );
-
-		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/subscriptions/' . $subscription_id ), 'GET' );
-
-	}
-
-	public function get_notifications_callback_url() {
-
-		$auth = BC_Utility::get_auth_key_for_id( $this->get_account_id() );
-		$url  = get_admin_url() . 'admin-ajax.php?action=bc_notifications&bc_auth=' . $auth;
-
-		return $url;
-
-	}
-
-	public function remove_subscription( $subscription_id ) {
-
-		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/subscriptions/' . $subscription_id ), 'JSON_DELETE' );
-	}
-
-	public function add_subscription( $url = false ) {
-
-		$data = array( "events" => array( "video-change" ) );
-
-		if ( ! $url ) {
-			$data['endpoint'] = esc_url_raw( $this->get_notifications_callback_url() );
-		}
-
-		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'JSON_POST', $data );
-	}
-
-	/**
 	 * Creates a playlist
 	 *
 	 * Creates a new empty playlist in the Brightcove Video Cloud.
