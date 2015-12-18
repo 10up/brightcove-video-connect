@@ -6,8 +6,9 @@ class BC_Videos {
 	protected $tags;
 
 	public function __construct() {
+
 		$this->cms_api = new BC_CMS_API();
-		$this->tags = new BC_Tags();
+		$this->tags    = new BC_Tags();
 
 		/**
 		 * With Force Sync option, we allow the syncing to happen as part of the
@@ -28,22 +29,23 @@ class BC_Videos {
 	 * @return bool|WP_Error
 	 */
 	public function update_bc_video( $sanitized_post_data ) {
+
 		global $bc_accounts;
-		$video_id       = BC_Utility::sanitize_id( $sanitized_post_data['video_id'] );
+		$video_id = BC_Utility::sanitize_id( $sanitized_post_data['video_id'] );
 
 		if ( array_key_exists( 'name', $sanitized_post_data ) && '' !== $sanitized_post_data['name'] ) {
 			$update_data['name'] = utf8_uri_encode( sanitize_text_field( $sanitized_post_data['name'] ) );
 		}
 
-		if ( array_key_exists( 'description', $sanitized_post_data ) && !empty( $sanitized_post_data['description'] ) ) {
+		if ( array_key_exists( 'description', $sanitized_post_data ) && ! empty( $sanitized_post_data['description'] ) ) {
 			$update_data['description'] = BC_Utility::sanitize_payload_item( $sanitized_post_data['description'] );
 		}
 
-		if ( array_key_exists( 'long_description', $sanitized_post_data ) && !empty( $sanitized_post_data['long_description'] ) ) {
+		if ( array_key_exists( 'long_description', $sanitized_post_data ) && ! empty( $sanitized_post_data['long_description'] ) ) {
 			$update_data['long_description'] = BC_Utility::sanitize_payload_item( $sanitized_post_data['long_description'] );
 		}
 
-		if ( array_key_exists( 'tags', $sanitized_post_data ) && !empty( $sanitized_post_data['tags'] ) ) {
+		if ( array_key_exists( 'tags', $sanitized_post_data ) && ! empty( $sanitized_post_data['tags'] ) ) {
 			// Convert tags string to an array.
 			$update_data['tags'] = array_map( 'trim', explode( ',', $sanitized_post_data['tags'] ) );
 		}
@@ -57,10 +59,10 @@ class BC_Videos {
 		/**
 		 * If we had any tags in the update, add them to the tags collection if we don't already track them.
 		 */
-		if ( array_key_exists( 'tags', $update_data ) && is_array( $update_data['tags'] ) && count($update_data['tags'] ) ) {
+		if ( array_key_exists( 'tags', $update_data ) && is_array( $update_data['tags'] ) && count( $update_data['tags'] ) ) {
 			$existing_tags = $this->tags->get_tags();
-			$new_tags = array_diff( $update_data[ 'tags' ], $existing_tags);
-			if (count($new_tags)) {
+			$new_tags      = array_diff( $update_data['tags'], $existing_tags );
+			if ( count( $new_tags ) ) {
 				$this->tags->add_tags( $new_tags );
 			}
 		}
@@ -69,12 +71,12 @@ class BC_Videos {
 			return false;
 		}
 
-
 		return true;
 	}
 
 	protected function have_enough_time( $start_time, $buffer_time = 15, $max_time = false ) {
-		if ( !$max_time ) {
+
+		if ( ! $max_time ) {
 			$max_time = (int) ini_get( 'max_execution_time' );
 			$max_time = $max_time > 0 ? $max_time : 30; // If we can't get max_time, we assume it's 30s
 		}
@@ -83,6 +85,7 @@ class BC_Videos {
 	}
 
 	public function handle_initial_sync( $account_id, $start_time = false ) {
+
 		global $bc_accounts;
 		if ( $bc_accounts->is_initial_sync_complete( $account_id ) ) {
 			return true;
@@ -90,12 +93,12 @@ class BC_Videos {
 
 		$max_time = (int) ini_get( 'max_execution_time' );
 
-		if ( !$start_time ) {
+		if ( ! $start_time ) {
 			$start_time = time();
 		} else {
 			$buffer_time_in_seconds = apply_filters( 'brightcove_buffer_time_in_seconds', 15 );
 			// We give around a 15s buffer for inserting one page of records
-			if ( !$this->have_enough_time( $start_time, $buffer_time_in_seconds, $max_time ) ) {
+			if ( ! $this->have_enough_time( $start_time, $buffer_time_in_seconds, $max_time ) ) {
 				return;
 			}
 		}
@@ -126,23 +129,23 @@ class BC_Videos {
 		}
 
 		$videos_per_page = apply_filters( 'brightcove_videos_per_page', 100 ); // Brightcove as of April 7th 2015 can only fetch 100 videos at a time
-		$tags = $this->tags->get_tags();
-		$dates = BC_Utility::get_video_playlist_dates_for_display( 'videos' );
-		$tags_count = count($tags);
+		$tags            = $this->tags->get_tags();
+		$dates           = BC_Utility::get_video_playlist_dates_for_display( 'videos' );
+		$tags_count      = count( $tags );
 
 		for ( $offset = $current_offset; $offset < $number_of_videos; $offset += $videos_per_page ) {
 			$offset             = min( $offset, $number_of_videos );
 			$current_video_list = $this->cms_api->video_list( $videos_per_page, $offset );
 
 			foreach ( $current_video_list as $video ) {
-				$tags = array_merge( $tags, $video[ 'tags' ] );
-				$yyyy_mm = substr( preg_replace( '/[^0-9-]/', '', $video['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
-				$video_dates[$yyyy_mm] = $yyyy_mm;
+				$tags                    = array_merge( $tags, $video['tags'] );
+				$yyyy_mm                 = substr( preg_replace( '/[^0-9-]/', '', $video['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
+				$video_dates[ $yyyy_mm ] = $yyyy_mm;
 			}
 
 			$tags = array_unique( $tags );
 
-			if ( count($tags) > $tags_count ) {
+			if ( count( $tags ) > $tags_count ) {
 				$this->tags->add_tags( $tags );
 			}
 
@@ -156,7 +159,7 @@ class BC_Videos {
 
 			delete_transient( $transient_key_synching );
 
-			if ( !$this->have_enough_time( $start_time ) ) {
+			if ( ! $this->have_enough_time( $start_time ) ) {
 				global $bc_accounts;
 				$bc_accounts->trigger_sync_via_callback();
 
@@ -170,7 +173,6 @@ class BC_Videos {
 
 		$bc_accounts->set_initial_sync_status( $account_id, true );
 	}
-
 
 	/**
 	 * Sync videos with Brightcove
@@ -186,6 +188,7 @@ class BC_Videos {
 	 * @return bool True on success or false
 	 */
 	public function sync_videos( $retry = false ) {
+
 		global $bc_accounts;
 		$force_sync = false;
 
@@ -193,7 +196,7 @@ class BC_Videos {
 			$force_sync = true;
 		}
 
-		if ( !$force_sync && get_transient( 'brightcove_sync_videos' ) ) {
+		if ( ! $force_sync && get_transient( 'brightcove_sync_videos' ) ) {
 			return false;
 		}
 
@@ -209,12 +212,12 @@ class BC_Videos {
 			$account_id = $account_data['account_id'];
 
 			// We may have multiple accounts for an account_id, prevent syncing that account more than once.
-			if ( !in_array( $account_id, $completed_accounts ) ) {
+			if ( ! in_array( $account_id, $completed_accounts ) ) {
 
 				// Have we sync'd this account yet?
 				$sync_complete = $bc_accounts->is_initial_sync_complete( $account_id );
 
-				if ( !$sync_complete ) {
+				if ( ! $sync_complete ) {
 					$this->handle_initial_sync( $account_id );
 				} else {
 
@@ -272,8 +275,8 @@ class BC_Videos {
 
 						}
 
-						if ( !is_array( $videos ) ) {
-							if ( !$retry ) {
+						if ( ! is_array( $videos ) ) {
+							if ( ! $retry ) {
 								return $this->sync_videos( true );
 							} else {
 								return false; // Something happened we retried, we failed.
@@ -298,8 +301,8 @@ class BC_Videos {
 							if ( 'full' === $sync_type ) {
 								$video_ids_to_keep[] = BC_Utility::sanitize_and_generate_meta_video_id( $video['id'] );
 							}
-							$yyyy_mm               = substr( preg_replace( '/[^0-9-]/', '', $video['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
-							$video_dates[$yyyy_mm] = $yyyy_mm;
+							$yyyy_mm                 = substr( preg_replace( '/[^0-9-]/', '', $video['created_at'] ), 0, 7 ); // Get YYYY-MM from created string
+							$video_dates[ $yyyy_mm ] = $yyyy_mm;
 
 						}
 
@@ -340,7 +343,7 @@ class BC_Videos {
 		$hash     = BC_Utility::get_hash_for_object( $video );
 		$video_id = $video['id'];
 
-		if ( !$add_only ) {
+		if ( ! $add_only ) {
 			$stored_hash = $this->get_video_hash_by_id( $video_id );
 			// No change to existing playlist
 			if ( $hash === $stored_hash ) {
@@ -348,9 +351,9 @@ class BC_Videos {
 			}
 		}
 
-		$post_excerpt = ( !is_null( $video['description'] ) ) ? $video['description'] : '';
-		$post_content = ( !is_null( $video['long_description'] ) ) ? $video['long_description'] : $post_excerpt;
-		$post_title   = ( !is_null( $video['name'] ) ) ? $video['name'] : '';
+		$post_excerpt = ( ! is_null( $video['description'] ) ) ? $video['description'] : '';
+		$post_content = ( ! is_null( $video['long_description'] ) ) ? $video['long_description'] : $post_excerpt;
+		$post_title   = ( ! is_null( $video['name'] ) ) ? $video['name'] : '';
 
 		$post_date = new DateTime( $video['created_at'] );
 		$post_date = $post_date->format( 'Y-m-d g:i:s' );
@@ -369,7 +372,7 @@ class BC_Videos {
 			'post_status'   => 'publish',
 		);
 
-		if ( !$add_only ) {
+		if ( ! $add_only ) {
 			$existing_post = $this->get_video_by_id( $video_id );
 
 			if ( $existing_post ) {
@@ -386,9 +389,9 @@ class BC_Videos {
 			$post_id = wp_insert_post( $video_post_args );
 		}
 
-		if ( !$post_id ) {
+		if ( ! $post_id ) {
 
-			$error_message = esc_html__('The video has not been created in WordPress', 'brightcove' );
+			$error_message = esc_html__( 'The video has not been created in WordPress', 'brightcove' );
 			BC_Logging::log( sprintf( 'BC WORDPRESS ERROR: %s' ), $error_message );
 
 			return new WP_Error( 'post-not-created', $error_message );
@@ -397,7 +400,7 @@ class BC_Videos {
 
 		BC_Logging::log( sprintf( esc_html__( 'BC WORDPRESS: Video with ID #%d has been created', 'brightcove' ), $post_id ) );
 
-		if ( !empty( $video['tags'] ) ) {
+		if ( ! empty( $video['tags'] ) ) {
 			wp_set_post_terms( $post_id, $video['tags'], 'brightcove_tags', false );
 		}
 
@@ -419,8 +422,8 @@ class BC_Videos {
 
 		foreach ( $meta_keys as $key ) {
 
-			if ( !empty( $video[$key] ) ) {
-				$meta[$key] = $video[$key];
+			if ( ! empty( $video[ $key ] ) ) {
+				$meta[ $key ] = $video[ $key ];
 			}
 
 		}
@@ -452,7 +455,7 @@ class BC_Videos {
 			)
 		);
 
-		if ( !$existing_video->have_posts() ) {
+		if ( ! $existing_video->have_posts() ) {
 			return false;
 		}
 
@@ -464,9 +467,9 @@ class BC_Videos {
 
 		foreach ( $videos as $key => $video ) {
 
-			$id          = BC_Utility::sanitize_and_generate_meta_video_id( $video['id'] );
-			$videos[$id] = $video;
-			unset( $videos[$key] );
+			$id            = BC_Utility::sanitize_and_generate_meta_video_id( $video['id'] );
+			$videos[ $id ] = $video;
+			unset( $videos[ $key ] );
 
 		}
 
@@ -480,7 +483,7 @@ class BC_Videos {
 
 		$video = $this->get_video_by_id( $video_id );
 
-		if ( !$video ) {
+		if ( ! $video ) {
 
 			return false;
 

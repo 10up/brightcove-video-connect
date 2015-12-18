@@ -185,6 +185,7 @@ class BC_CMS_API extends BC_API {
 	 *  Get list of subscriptions.
 	 */
 	public function get_subscriptions() {
+
 		// TODO, check if we exist here in the subscriptions, and if we don't.
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'GET' );
 	}
@@ -209,17 +210,21 @@ class BC_CMS_API extends BC_API {
 	}
 
 	public function get_notifications_callback_url() {
+
 		$auth = BC_Utility::get_auth_key_for_id( $this->get_account_id() );
-		$url = get_admin_url() . 'admin-ajax.php?action=bc_notifications&bc_auth=' . $auth;
+		$url  = get_admin_url() . 'admin-ajax.php?action=bc_notifications&bc_auth=' . $auth;
+
 		return $url;
 
 	}
 
 	public function remove_subscription( $subscription_id ) {
+
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/subscriptions/' . $subscription_id ), 'JSON_DELETE' );
 	}
 
 	public function add_subscription( $url = false ) {
+
 		$data = array( "events" => array( "video-change" ) );
 
 		if ( ! $url ) {
@@ -393,7 +398,7 @@ class BC_CMS_API extends BC_API {
 	public function playlist_update( $playlist_id, $args = array() ) {
 
 		$playlist_id = BC_Utility::sanitize_payload_item( $playlist_id );
-		$data = BC_Utility::sanitize_payload_args_recursive( $args );
+		$data        = BC_Utility::sanitize_payload_args_recursive( $args );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists/' . $playlist_id ), 'PATCH', $data );
 	}
@@ -411,7 +416,8 @@ class BC_CMS_API extends BC_API {
 	 * @return array|bool array of data about the new video or false on failure.
 	 */
 	public function video_add( $name, $args = array() ) {
-		$data = BC_Utility::sanitize_payload_args_recursive( $args );
+
+		$data         = BC_Utility::sanitize_payload_args_recursive( $args );
 		$data['name'] = utf8_uri_encode( sanitize_text_field( $name ) );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos' ), 'POST', $data );
@@ -429,11 +435,10 @@ class BC_CMS_API extends BC_API {
 	 */
 	public function video_count( $filter = '' ) {
 
-
 		$data = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/counts/videos' . $filter ) );
 
 		if ( is_wp_error( $data ) ) {
-            return $data; // WP_Error object
+			return $data; // WP_Error object
 		}
 
 		if ( isset( $data['count'] ) ) {
@@ -546,15 +551,15 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int    $limit    Number of videos to return - must be an integer between 1 and 100
+	 * @param int    $limit    Number of videos to return - must be an integer between 1 and 100.
 	 * @param int    $offset   Number of videos to skip (for paging results). Must be a positive integer.
+	 * @param string $query    Query terms to search for.
 	 * @param string $sort     A string that specifies the field to sort by. Start with - to sort descending.
-	 * @param bool   $playable Available at the /videos endpoint
-	 * @param string $query    Query terms to search for
+	 * @param bool   $playable Available at the /videos endpoint.
 	 *
 	 * @return array|bool array of available videos retrieved or false if error
 	 */
-	public function video_list( $limit = 20, $offset = 0, $query = '' , $sort = '-created_at', $playable = true ) {
+	public function video_list( $limit = 20, $offset = 0, $query = '', $sort = '-created_at', $playable = true ) {
 
 		/*
 		 * Available fields for sort:
@@ -569,9 +574,7 @@ class BC_CMS_API extends BC_API {
 		 * state
 		 * plays_total
 		 * plays_trailing_week
-		 */
-
-		/*
+		 *
 		 * Available Search Fields
 		 *
 		 * name	strings or quoted strings
@@ -673,7 +676,7 @@ class BC_CMS_API extends BC_API {
 		$data['master'] = array( 'url' => esc_url_raw( $video_url ) );
 
 		if ( true === $callback ) {
-			$auth = BC_Utility::get_auth_key_for_id( $video_id );
+			$auth              = BC_Utility::get_auth_key_for_id( $video_id );
 			$data['callbacks'] = array( get_admin_url() . 'admin-ajax.php?action=bc_ingest&id=' . $video_id . '&auth=' . $auth );
 		}
 
