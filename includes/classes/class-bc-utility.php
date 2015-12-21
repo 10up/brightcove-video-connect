@@ -618,16 +618,25 @@ class BC_Utility {
 		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_notifications_subscribed_%';" );
 	}
 
+	/**
+	 * Retrieves transient keys
+	 *
+	 * Retrieves a list of all transient keys currently stored.
+	 *
+	 * @since 1.0
+	 *
+	 * @return array Array of transient keys
+	 */
 	public static function get_transient_keys() {
 
-		if ( ! is_array( $transient_keys ) ) {
-			update_option( '_bc_transient_keys', array() );
 		$transient_keys = get_option( 'bc_transient_keys' );
 
-			return array();
+		if ( ! is_array( $transient_keys ) ) {
+			$transient_keys = array();
 		}
 
 		return $transient_keys;
+
 	}
 
 	/**
