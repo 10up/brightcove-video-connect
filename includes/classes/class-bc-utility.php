@@ -684,15 +684,18 @@ class BC_Utility {
 	}
 
 	/**
+	 * Delete cache key
+	 *
 	 * Takes a dynamically generated transient key and removes from the stored list.
 	 *
-	 * @param $key
+	 * @param string $key  The cache key.
+	 * @param string $type The type of cache key (for group cleanup).
 	 *
 	 * @return bool
 	 */
-	public static function delete_transient_key( $key ) {
+	public static function delete_cache_item( $key = '', $type = '' ) {
 
-		$transient_keys = self::get_transient_keys();
+		$transient_keys = self::list_cache_items();
 		if ( ! $transient_keys || ! is_array( $transient_keys ) ) {
 			return false;
 		}
