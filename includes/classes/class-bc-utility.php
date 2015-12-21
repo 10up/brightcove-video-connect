@@ -689,7 +689,7 @@ class BC_Utility {
 	 *
 	 * @since 1.1.1
 	 *
-	 * @param string $key  The cache key.
+	 * @param string $key  The cache key or * for all.
 	 * @param string $type The type of cache key (for group cleanup).
 	 *
 	 * @return bool True on success or false.
@@ -704,39 +704,51 @@ class BC_Utility {
 		$transient_keys = self::list_cache_items();
 		$transients     = array();
 
-		if ( ! $transient_keys || ! is_array( $transient_keys ) ) {
-			return false;
-		}
+		if ( '*' === $key ) { // Clear all saved cache items.
 
-		// If a specific key is set arrange it for clearing.
-		if ( '' !== $key ) {
+			foreach ( $transient_keys as $transient_key => $transient_value ) {
+				delete_transient( $transient_key );
+			}
 
-			$key = sanitize_key( $key );
+			delete_option( 'bc_transient_keys' );
 
-			if ( ! array_search( $key, $transient_keys ) ) {
+		} else { // Only clear specified items.
+
+			if ( ! $transient_keys || ! is_array( $transient_keys ) ) {
 				return false;
 			}
 
-			unset( $transient_keys[ $key ] );
-			$transients[] = $key;
+			// If a specific key is set arrange it for clearing.
+			if ( '' !== $key ) {
 
-		}
+				$key = sanitize_key( $key );
 
-		// If type is set clear by type.
-		if ( '' !== $type ) {
+				if ( ! array_search( $key, $transient_keys ) ) {
+					return false;
+				}
 
-			$type = sanitize_text_field( $type );
+				unset( $transient_keys[ $key ] );
+				$transients[] = $key;
 
-			foreach ( $transient_keys as $transient_key => $transient_type ) {
+			}
 
-				if ( $type === $transient_type ) {
-					$transients[] = $transient_key;
+			// If type is set clear by type.
+			if ( '' !== $type ) {
+
+				$type = sanitize_text_field( $type );
+
+				foreach ( $transient_keys as $transient_key => $transient_type ) {
+
+					if ( $type === $transient_type ) {
+						$transients[] = $transient_key;
+					}
 				}
 			}
-		}
 
-		foreach ( $transients as $key ) {
-			delete_transient( $key );
+			foreach ( $transients as $key ) {
+				delete_transient( $key );
+			}
+
 		}
 
 		return update_option( 'bc_transient_keys', $transient_keys );
