@@ -627,7 +627,7 @@ class BC_Utility {
 	 *
 	 * @return array Array of transient keys
 	 */
-	public static function get_transient_keys() {
+	public static function list_cache_items() {
 
 		$transient_keys = get_option( 'bc_transient_keys' );
 
