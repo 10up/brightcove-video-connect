@@ -623,7 +623,7 @@ class BC_Utility {
 	 *
 	 * Retrieves a list of all transient keys currently stored.
 	 *
-	 * @since 1.0
+	 * @since 1.1.1
 	 *
 	 * @return array Array of transient keys
 	 */
@@ -649,7 +649,7 @@ class BC_Utility {
 	 * @param mixed  $value      The value of the item to cache.
 	 * @param int    $expiration The number of seconds the item should be cached for.
 	 *
-	 * @since 1.0
+	 * @since 1.1.1
 	 *
 	 * @return int 1 on success, 0 on failure or -1 if key is already cached
 	 */
@@ -662,7 +662,7 @@ class BC_Utility {
 		$transient_keys = self::list_cache_items();
 
 		if ( in_array( $key, $transient_keys ) && get_transient( $key ) ) {
-			return -1; // Key already cached.
+			return - 1; // Key already cached.
 		}
 
 		if ( set_transient( sanitize_key( $key ), $value, $expiration ) ) {
@@ -684,29 +684,64 @@ class BC_Utility {
 	}
 
 	/**
-	 * Delete cache key
+	 * Delete cache item
 	 *
-	 * Takes a dynamically generated transient key and removes from the stored list.
+	 * Deletes a cached item from the cache and cache registry.
+	 *
+	 * @since 1.1.1
 	 *
 	 * @param string $key  The cache key.
 	 * @param string $type The type of cache key (for group cleanup).
 	 *
-	 * @return bool
+	 * @return bool True on success or false.
 	 */
 	public static function delete_cache_item( $key = '', $type = '' ) {
 
+		// Check that valid item was given.
+		if ( '' === $key && '' === $type ) {
+			return false;
+		}
+
 		$transient_keys = self::list_cache_items();
+		$transients     = array();
+
 		if ( ! $transient_keys || ! is_array( $transient_keys ) ) {
 			return false;
 		}
 
-		if ( ! array_search( $key, $transient_keys ) ) {
-			return false;
+		// If a specific key is set arrange it for clearing.
+		if ( '' !== $key ) {
+
+			$key = sanitize_key( $key );
+
+			if ( ! array_search( $key, $transient_keys ) ) {
+				return false;
+			}
+
+			unset( $transient_keys[ $key ] );
+			$transients[] = $key;
+
 		}
 
-		unset( $transient_keys[ $key ] );
+		// If type is set clear by type.
+		if ( '' !== $type ) {
 
-		update_option( 'bc_transient_keys', $transient_keys );
+			$type = sanitize_text_field( $type );
+
+			foreach ( $transient_keys as $transient_key => $transient_type ) {
+
+				if ( $type === $transient_type ) {
+					$transients[] = $transient_key;
+				}
+			}
+		}
+
+		foreach( $transients as $key ) {
+			delete_transient( $key );
+		}
+
+		return update_option( 'bc_transient_keys', $transient_keys );
+
 	}
 
 	public static function get_requests_transient_key( $account_id ) {
