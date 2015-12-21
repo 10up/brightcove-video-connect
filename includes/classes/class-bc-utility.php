@@ -601,7 +601,7 @@ class BC_Utility {
 
 		global $wpdb;
 
-		//Delete static options
+		// Delete static options.
 		delete_option( '_brightcove_pending_videos' );
 		delete_option( '_brightcove_salt' );
 		delete_option( '_brightcove_accounts' );
