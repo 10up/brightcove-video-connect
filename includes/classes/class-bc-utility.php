@@ -640,29 +640,43 @@ class BC_Utility {
 	}
 
 	/**
-	 * Store generated transient key.
+	 * Store cache item
 	 *
-	 * Takes a dynamically generated transient key and adds to list. We need to store these to unset them on cache purge
+	 * Stores an item to transient cache for later use.
 	 *
-	 * @param string $key  The generated transient key.
-	 * @param string $type The type of key to store.
+	 * @param string $key        The generated transient key.
+	 * @param string $type       The type of key to store.
+	 * @param mixed  $value      The value of the item to cache.
+	 * @param int    $expiration The number of seconds the item should be cached for.
 	 *
 	 * @since 1.0
 	 *
 	 * @return int 1 on success, 0 on failure or -1 if key is already cached
 	 */
-	public static function add_transient_key( $key, $type ) {
+	public static function add_cache_item( $key, $type, $value, $expiration = 600 ) {
 
-		$transient_keys = self::get_transient_keys();
+		$key        = sanitize_key( $key );
+		$type       = sanitize_text_field( $type );
+		$expiration = absint( $expiration );
 
-		if ( in_array( $key, $transient_keys ) ) {
-			return - 1; // Key already cached.
+		$transient_keys = self::list_cache_items();
+
+		if ( in_array( $key, $transient_keys ) && get_transient( $key ) ) {
+			return -1; // Key already cached.
 		}
 
-		$transient_keys[ sanitize_key( $key ) ] = sanitize_text_field( $type );
+		if ( set_transient( sanitize_key( $key ), $value, $expiration ) ) {
+
+			$transient_keys[ sanitize_key( $key ) ] = sanitize_text_field( $type );
+
+		} else { // For some reason we couldn't save the transient
+
+			return 0;
+
+		}
 
 		if ( update_option( 'bc_transient_keys', $transient_keys ) ) {
-			return 1;
+			return 1; // Key saved to Brightcove registry.
 		}
 
 		return 0;
