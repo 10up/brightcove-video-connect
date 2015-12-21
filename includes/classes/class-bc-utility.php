@@ -736,11 +736,42 @@ class BC_Utility {
 			}
 		}
 
-		foreach( $transients as $key ) {
+		foreach ( $transients as $key ) {
 			delete_transient( $key );
 		}
 
 		return update_option( 'bc_transient_keys', $transient_keys );
+
+	}
+
+	/**
+	 * Fetch cached item
+	 *
+	 * Fetches item from cache and prunes cache registry if expired.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @param string $key The cache key to retrieve.
+	 *
+	 * @return mixed The cached item's value (or FALSE if not found).
+	 */
+	public static function get_cache_item( $key ) {
+
+		$key = sanitize_key( $key );
+
+		$transient = get_transient( $key );
+
+		if ( false === $transient ) { // Delete if from the list if the transient has expired.
+
+			$transient_keys = self::list_cache_items();
+
+			unset( $transient_keys[ $key ] );
+
+			update_option( 'bc_transient_keys', $transient_keys );
+
+		}
+
+		return $transient;
 
 	}
 
