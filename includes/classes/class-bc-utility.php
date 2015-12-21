@@ -620,9 +620,9 @@ class BC_Utility {
 
 	public static function get_transient_keys() {
 
-		$transient_keys = get_option( '_bc_transient_keys' );
 		if ( ! is_array( $transient_keys ) ) {
 			update_option( '_bc_transient_keys', array() );
+		$transient_keys = get_option( 'bc_transient_keys' );
 
 			return array();
 		}
@@ -648,7 +648,7 @@ class BC_Utility {
 
 		$transient_keys[] = sanitize_key( $key );
 
-		if ( update_option( '_bc_transient_keys', $transient_keys ) ) {
+		if ( update_option( 'bc_transient_keys', $transient_keys ) ) {
 			return true;
 		} else {
 			return false;
@@ -675,7 +675,7 @@ class BC_Utility {
 
 		unset( $transient_keys[ $key ] );
 
-		update_option( '_bc_transient_keys', $transient_keys );
+		update_option( 'bc_transient_keys', $transient_keys );
 	}
 
 	public static function get_requests_transient_key( $account_id ) {
