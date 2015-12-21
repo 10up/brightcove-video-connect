@@ -101,20 +101,22 @@ class BC_Utility {
 	 */
 	public static function clear_cached_api_requests( $account_id ) {
 
-		global $wpdb;
 		if ( is_null( $account_id ) ) {
-			$account_id = "";
+
+			$account_id = '';
 		} else {
+
 			if ( 'all' !== $account_id ) {
 				$account_id = BC_Utility::sanitize_id( $account_id );
 			}
 		}
 
 		$keys = self::get_requests_transient_key( $account_id );
+
 		if ( is_array( $keys ) ) {
+
 			foreach ( $keys as $key ) {
-				self::delete_transient_key( $key );
-				delete_transient( $key );
+				self::delete_cache_item( $key );
 			}
 		}
 	}
@@ -579,17 +581,14 @@ class BC_Utility {
 
 			$account_hash = $bc_accounts->get_account_hash();
 
-			delete_transient( 'brightcove_oauth_access_token_' . $account_hash );
-			self::delete_transient_key( 'brightcove_oauth_access_token_' . $account_hash );
+			self::delete_cache_item( 'brightcove_oauth_access_token_' . $account_hash );
 
 			$bc_accounts->restore_default_account();
 
 		}
 
-		delete_transient( 'brightcove_sync_playlists' );
-		delete_transient( 'brightcove_sync_videos' );
-		self::delete_transient_key( 'brighcove_sync_playlists' );
-		self::delete_transient_key( 'brightcove_sync_videos' );
+		self::delete_cache_item( 'brightcove_sync_playlists' );
+		self::delete_cache_item( 'brightcove_sync_videos' );
 		delete_option( '_brightcove_plugin_activated' );
 	}
 
@@ -653,7 +652,7 @@ class BC_Utility {
 	 *
 	 * @return int 1 on success, 0 on failure or -1 if key is already cached
 	 */
-	public static function add_cache_item( $key, $type, $value, $expiration = 600 ) {
+	public static function set_cache_item( $key, $type, $value, $expiration = 600 ) {
 
 		$key        = sanitize_key( $key );
 		$type       = sanitize_text_field( $type );
@@ -779,7 +778,7 @@ class BC_Utility {
 
 		$keys = array();
 
-		foreach ( self::get_transient_keys() as $key ) {
+		foreach ( self::list_cache_items() as $key ) {
 			$regex = '#(_transient__brightcove_req_' . $account_id . '[a-zA-Z0-9-]+)#';
 			preg_match( $regex, $key, $matches );
 			if ( empty( $matches ) ) {

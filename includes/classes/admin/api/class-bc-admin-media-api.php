@@ -284,7 +284,7 @@ class BC_Admin_Media_API {
 
 		$request_identifier = "{$type}-{$posts_per_page}-{$query_string}-{$sort_order}";
 		$transient_key      = substr( '_brightcove_req_all_' . BC_Utility::get_hash_for_object( $request_identifier ), 0, 45 );
-		$results            = get_transient( $transient_key );
+		$results            = BC_Utility::get_cache_item( $transient_key );
 		$results            = is_array( $results ) ? $results : array();
 
 		$initial_page = 1;
@@ -331,7 +331,7 @@ class BC_Admin_Media_API {
 
 		}
 
-		set_transient( $transient_key, $results, 600 ); // High cache time due to high expense of fetching the data.
+		BC_Utility::set_cache_item( $transient_key, 'video_list', $results, 600 ); // High cache time due to high expense of fetching the data.
 		$results = array_slice( $results, $posts_per_page * ( $page - 1 ), $posts_per_page );
 
 		$bc_accounts->restore_default_account();

@@ -52,9 +52,9 @@ class BC_Oauth_API {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @see    get_transient()
+	 * @see    BC_Utility::get_cache_item()
 	 * @see    set_transient()
-	 * @see    delete_transient()
+	 * @see    BC_Utility::delete_cache_item()
 	 * @see    wp_remote_post()
 	 *
 	 * @param bool $force_new_token whether or not to obtain a new OAuth token
@@ -66,7 +66,7 @@ class BC_Oauth_API {
 
 		$transient_name = $this->transient_name;
 
-		$token = $force_new_token ? false : get_transient( $transient_name );
+		$token = $force_new_token ? false : BC_Utility::get_cache_item( $transient_name );
 
 		if ( ! $token ) {
 
@@ -77,7 +77,7 @@ class BC_Oauth_API {
 			if ( '400' == wp_remote_retrieve_response_code( $request ) ) {
 
 				// Just in case
-				delete_transient( $transient_name );
+				BC_Utility::delete_cache_item( $transient_name );
 
 				$oauth_error = new WP_Error( 'oauth_access_token_failure', sprintf( __( 'There is a problem with your Brightcove %1$s or %2$s', 'brightcove' ), '<code>client_id</code>', '<code>client_secret</code>' ) );
 
@@ -93,7 +93,7 @@ class BC_Oauth_API {
 			if ( isset( $data->access_token ) ) {
 
 				$token = $data->access_token;
-				set_transient( $transient_name, $token, $data->expires_in );
+				BC_Utility::set_cache_item( $transient_name, 'oauth', $token, $data->expires_in );
 
 			} else {
 

@@ -32,7 +32,7 @@ abstract class BC_API {
 
 	public function __construct() {
 
-		$this->errors     = array();
+		$this->errors = array();
 
 	}
 
@@ -88,19 +88,20 @@ abstract class BC_API {
 	}
 
 	private function cached_get( $url, $args ) {
+
 		global $bc_accounts;
 		$cache_time_in_seconds = apply_filters( 'brightcove_proxy_cache_time_in_seconds', 180 );
-		$account_id = $bc_accounts->get_account_id();
-		$max_key_length = 45; // transients support a max key of 45
-		$transient_key = substr( '_brightcove_req_' . $account_id . BC_Utility::get_hash_for_object($url), 0, $max_key_length );
-		$request = get_transient( $transient_key );
-		if ( false === $request) {
+		$account_id            = $bc_accounts->get_account_id();
+		$max_key_length        = 45; // transients support a max key of 45
+		$transient_key         = substr( '_brightcove_req_' . $account_id . BC_Utility::get_hash_for_object( $url ), 0, $max_key_length );
+		$request               = BC_Utility::get_cache_item( $transient_key );
+		if ( false === $request ) {
 			$request = wp_remote_get( $url, $args );
 
 			$successful_response_codes = array( 200, 201, 202, 204 );
 
 			if ( in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes ) ) {
-				set_transient( $transient_key, $request, $cache_time_in_seconds);
+				BC_Utility::set_cache_item( $transient_key, '', $request, $cache_time_in_seconds );
 			}
 		}
 
@@ -132,7 +133,7 @@ abstract class BC_API {
 			'POST',
 			'PUT',
 			'JSON_DELETE',
-			'JSON_POST'
+			'JSON_POST',
 		); //only allow methods required by the brightcove APIs
 
 		if ( ! in_array( $method, $allowed_methods ) ) {
@@ -145,10 +146,10 @@ abstract class BC_API {
 		if ( $method === "GET" ) {
 			$hash           = substr( BC_Utility::get_hash_for_object( array(
 				                                                           "url"  => $url,
-				                                                           "data" => $data
+				                                                           "data" => $data,
 			                                                           ) ), 0, 20 );
 			$transient_key  = "_bc_request_$hash";
-			$cached_request = get_site_transient( $transient_key );
+			$cached_request = BC_Utility::get_cache_item( $transient_key );
 
 			if ( false !== $cached_request ) {
 				return $cached_request;
@@ -181,7 +182,7 @@ abstract class BC_API {
 
 			case 'GET':
 
-				$request = $this->cached_get( $url, $args);
+				$request = $this->cached_get( $url, $args );
 
 				break;
 
@@ -240,7 +241,7 @@ abstract class BC_API {
 		$successful_response_codes = array( 200, 201, 202, 204 );
 
 		if ( ! in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes ) ) {
-			$message = esc_html__('An unspecified error has occurred.', 'brightcove' );
+			$message = esc_html__( 'An unspecified error has occurred.', 'brightcove' );
 			if ( isset( $body[0] ) && isset( $body[0]['error_code'] ) ) {
 
 				$message = $body[0]['error_code'];
@@ -267,19 +268,22 @@ abstract class BC_API {
 		}
 
 		if ( $transient_key && $body && ( ! defined( 'WP_DEBUG' ) || false === WP_DEBUG ) ) {
-			// Store body for 60s to prevent hammering the BC APIs
-			set_site_transient( $transient_key, $body, 60 );
+			// Store body for 60s to prevent hammering the BC APIs.
+			BC_Utility::set_cache_item( $transient_key, 'api-request', $body, 60 );
 		}
 
 		return $body;
 
 	}
+
 	/**
 	 * Increase the http timeout for API requests
 	 */
 
 	public function increase_http_timeout( $timeout ) {
+
 		$timeout += 5;
+
 		return $timeout;
 	}
 
