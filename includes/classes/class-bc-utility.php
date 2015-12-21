@@ -640,28 +640,33 @@ class BC_Utility {
 	}
 
 	/**
+	 * Store generated transient key.
+	 *
 	 * Takes a dynamically generated transient key and adds to list. We need to store these to unset them on cache purge
 	 *
-	 * @param $key
+	 * @param string $key  The generated transient key.
+	 * @param string $type The type of key to store.
 	 *
-	 * @return bool
+	 * @since 1.0
+	 *
+	 * @return int 1 on success, 0 on failure or -1 if key is already cached
 	 */
-	public static function add_transient_key( $key ) {
+	public static function add_transient_key( $key, $type ) {
 
 		$transient_keys = self::get_transient_keys();
-		$transient_keys = ( ! $transient_keys ) ? array() : (array) $transient_keys;
 
 		if ( in_array( $key, $transient_keys ) ) {
-			return true;
+			return - 1; // Key already cached.
 		}
 
-		$transient_keys[] = sanitize_key( $key );
+		$transient_keys[ sanitize_key( $key ) ] = sanitize_text_field( $type );
 
 		if ( update_option( 'bc_transient_keys', $transient_keys ) ) {
-			return true;
-		} else {
-			return false;
+			return 1;
 		}
+
+		return 0;
+
 	}
 
 	/**
