@@ -83,51 +83,55 @@ class BC_Accounts {
 
 	public function add_account( $account_id, $client_id, $client_secret, $account_name = 'New Account', $set_default = '', $allow_update = true ) {
 
-		$cli = false;
-		// Check if WP CLI is working and bail in admin if it is
-		if ( 'wpcli' === get_transient( 'brightcove_cli_account_creation' ) && ! defined( 'WP_CLI' ) && ! WP_CLI ) {
+		// Check if WP CLI is working and bail in admin if it is.
+		if ( defined( 'WP_CLI' ) && ! WP_CLI ) {
+
 			return false;
-		} else {
-			$cli = true;
+
 		}
 
 		$is_valid_account = $this->is_valid_account( $account_id, $client_id, $client_secret, $account_name );
 
 		if ( is_array( $is_valid_account ) ) {
+
 			foreach ( $is_valid_account as $wp_error ) {
+
 				if ( is_wp_error( $wp_error ) ) {
-					BC_Utility::admin_notice_messages( array(
-						                                   array(
-							                                   'message' => $wp_error->get_error_message(),
-							                                   'type'    => 'error',
-						                                   ),
-					                                   ) );
+
+					BC_Utility::admin_notice_messages(
+						array(
+							array(
+								'message' => $wp_error->get_error_message(),
+								'type'    => 'error',
+							),
+						)
+					);
+
 				}
 			}
 
 			return false;
+
 		}
 
 		if ( true !== $is_valid_account ) {
-			if ( $cli ) {
-				return new WP_Error( 'brightcove-invalid-account', esc_html__( 'Account credentials are invalid. Please ensure you are using all the correct information from Brightcove Video Cloud Studio to secure a token.', 'brightcove' ) );
-			} else {
-				return false;
-			}
+			return new WP_Error( 'brightcove-invalid-account', esc_html__( 'Account credentials are invalid. Please ensure you are using all the correct information from Brightcove Video Cloud Studio to secure a token.', 'brightcove' ) );
 		}
 
 		$operation = $allow_update ? 'update' : 'add';
 
-		$account_hash = $this->make_account_change( array(
-			                                            'account_id'    => $account_id,
-			                                            'account_name'  => $account_name,
-			                                            'client_id'     => $client_id,
-			                                            'client_secret' => $client_secret,
-			                                            'set_default'   => $set_default,
-			                                            'operation'     => $operation,
-		                                            ) );
+		$account_hash = $this->make_account_change(
+			array(
+				'account_id'    => $account_id,
+				'account_name'  => $account_name,
+				'client_id'     => $client_id,
+				'client_secret' => $client_secret,
+				'set_default'   => $set_default,
+				'operation'     => $operation,
+			)
+		);
 
-		if ( $cli && false === $account_hash ) {
+		if ( false === $account_hash ) {
 			return new WP_Error( 'brightcove-account-exists', esc_html__( 'Unable to update this account via WP-CLI.', 'brightcove' ) );
 		}
 
@@ -135,13 +139,12 @@ class BC_Accounts {
 			$this->set_account_details_for_site( $account_hash );
 		}
 
-		if ( $cli ) {
-			$this->set_sync_type( $account_id, 'full' );
-		}
+		$this->set_sync_type( $account_id, 'full' );
 
 		$this->set_current_account( $account_hash );
 		$all_accounts = $this->get_all_accounts();
-		//If this is the first account, make it the default
+
+		// If this is the first account, make it the default.
 		if ( count( $all_accounts ) <= 1 ) {
 			update_option( '_brightcove_default_account', $account_hash );
 		}
@@ -149,6 +152,7 @@ class BC_Accounts {
 		$this->restore_default_account();
 
 		return true;
+
 	}
 
 	public function delete_account( $hash ) {
