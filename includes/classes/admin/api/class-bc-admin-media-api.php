@@ -45,25 +45,30 @@ class BC_Admin_Media_API {
 
 		global $bc_accounts;
 
-		// call this to check if we are allowed to continue.
+		// Call this to check if we are allowed to continue..
 		$this->bc_helper_check_ajax();
-		$type_msg = '';
 
+		$type_msg     = '';
 		$updated_data = array();
 
-		// check if playlist or video data was sent.
+		// Check if playlist or video data was sent.
 		$fields = array( 'long_description', 'description', 'name', 'playlist_id', 'video_id', 'tags', 'width', 'height' );
+
 		foreach ( $fields as $field ) {
 			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( $_POST[ $field ] ) : '';
 		}
 
 		// Only Playlists have playlist_videos. We only do this if we're updating playlists.
 		if ( isset( $_POST['playlist_videos'] ) ) {
+
 			$playlist_videos = array();
+
 			foreach ( $_POST['playlist_videos'] as $video_id ) {
 				$playlist_videos[] = BC_Utility::sanitize_id( $video_id );
 			}
+
 			$updated_data['playlist_videos'] = $playlist_videos;
+
 		}
 
 		// Only Videos have a video_id so we only do this when updating a video.
@@ -82,15 +87,21 @@ class BC_Admin_Media_API {
 		}
 
 		$hash = $_POST['account'];
+
 		if ( false === $bc_accounts->get_account_by_hash( $hash ) ) {
 			wp_send_json_error( __( 'No such account exists', 'brightcove' ) );
 		}
+
 		$updated_data['account'] = $hash;
-		if ( $_POST['type'] === 'playlists' ) {
+
+		if ( 'playlists' === $_POST['type'] ) {
+
 			$updated_data['playlist-name'] = $updated_data['name'];
 			$status                        = $this->playlists->update_bc_playlist( $updated_data );
 			$type_msg                      = 'playlist';
-		} elseif ( $_POST['type'] === 'videos' ) {
+
+		} elseif ( 'videos' === $_POST['type'] ) {
+
 			$status   = $this->videos->update_bc_video( $updated_data );
 			$type_msg = 'video';
 		}
@@ -99,12 +110,20 @@ class BC_Admin_Media_API {
 		BC_Utility::clear_cached_api_requests( $bc_accounts->get_account_id() );
 		$bc_accounts->restore_default_account();
 
-		if ( $status === true ) {
+		BC_Utility::delete_cache_item( '', 'video_list' ); // Clear the cache of video lists retrieved.
+
+		if ( true === $status ) {
+
 			wp_send_json_success( esc_html__( 'Successfully updated ', 'brightcove' ) . esc_html( $type_msg ) );
+
 		} elseif ( is_wp_error( $status ) ) {
+
 			wp_send_json_error( esc_html__( 'Failed to sync with WordPress!', 'brightcove' ) );
+
 		} else {
+
 			wp_send_json_error( esc_html__( 'Failed to update ', 'brightcove' ) . esc_html( $type_msg ) . '!' );
+
 		}
 	}
 
