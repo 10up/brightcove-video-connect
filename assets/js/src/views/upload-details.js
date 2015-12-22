@@ -1,4 +1,4 @@
-var BrightcoveUploadDetails = BrightcoveView.extend(
+var UploadDetailsView = BrightcoveView.extend(
 	{
 		className : 'brightcove-pending-upload-details attachment-details',
 		tagName :   'div',

@@ -824,7 +824,7 @@ var MediaModel = Backbone.Model.extend({
             a.abort();
         }), wpbc.requests = [];
     }
-}), BrightcoveUploadDetails = BrightcoveView.extend({
+}), UploadDetailsView = BrightcoveView.extend({
     className: "brightcove-pending-upload-details attachment-details",
     tagName: "div",
     template: wp.template("brightcove-pending-upload-details"),
