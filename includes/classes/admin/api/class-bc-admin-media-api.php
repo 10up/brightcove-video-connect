@@ -110,7 +110,7 @@ class BC_Admin_Media_API {
 		BC_Utility::clear_cached_api_requests( $bc_accounts->get_account_id() );
 		$bc_accounts->restore_default_account();
 
-		BC_Utility::delete_cache_item( '', 'video_list' ); // Clear the cache of video lists retrieved.
+		BC_Utility::delete_cache_item( '*' ); // Clear the cache of video lists retrieved.
 
 		if ( true === $status ) {
 
