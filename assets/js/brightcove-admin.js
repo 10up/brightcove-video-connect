@@ -748,17 +748,6 @@ var MediaModel = Backbone.Model.extend({
     removeVideoFromPlaylist: function() {
         wpbc.broadcast.trigger("playlist:remove", this);
     }
-}), PlaylistEditVideoView = BrightcoveView.extend({
-    tagName: "div",
-    className: "",
-    template: wp.template("brightcove-playlist-edit"),
-    events: {
-        "click .brightcove.button.save-sync": "saveSync",
-        "click .brightcove.back": "back"
-    },
-    render: function(a) {
-        a = this.model.toJSON(), this.$el.html(this.template(a));
-    }
 }), PlaylistEditView = BrightcoveView.extend({
     tagName: "div",
     className: "playlist-edit brightcove attachment-details",
