@@ -1,3 +1,6 @@
+/**
+ * Used to provide status warnings from the Brightcove servers.
+ */
 jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '.brightcove-service-error .notice-dismiss' ).click( function () {
