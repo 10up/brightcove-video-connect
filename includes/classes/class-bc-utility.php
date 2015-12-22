@@ -654,6 +654,11 @@ class BC_Utility {
 	 */
 	public static function set_cache_item( $key, $type, $value, $expiration = 600 ) {
 
+		// Allow for the complete bypass of the caching system for development purposes.
+		if ( defined( 'BRIGHTCOVE_BYPASS_CACHE' ) && true === BRIGHTCOVE_BYPASS_CACHE ) {
+			return 1;
+		}
+
 		$key        = sanitize_key( $key );
 		$type       = sanitize_text_field( $type );
 		$expiration = absint( $expiration );
