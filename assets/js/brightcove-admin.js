@@ -1,19 +1,19 @@
 (function($){
 /**
-     * Media model for Media CPT
-     */
+ * Media model for Media CPT
+ */
 var MediaModel = Backbone.Model.extend({
     /**
-         * Copied largely from WP Attachment sync function
-         * Triggered when attachment details change
-         * Overrides Backbone.Model.sync
-         *
-         * @param {string} method
-         * @param {wp.media.model.Media} model
-         * @param {Object} [options={}]
-         *
-         * @returns {Promise}
-         */
+		 * Copied largely from WP Attachment sync function
+		 * Triggered when attachment details change
+		 * Overrides Backbone.Model.sync
+		 *
+		 * @param {string} method
+		 * @param {wp.media.model.Media} model
+		 * @param {Object} [options={}]
+		 *
+		 * @returns {Promise}
+		 */
     sync: function(a, b, c) {
         var d = null;
         // If the attachment does not yet have an `id`, return an instantly
@@ -61,12 +61,12 @@ var MediaModel = Backbone.Model.extend({
         })) : Backbone.Model.prototype.sync.apply(this, arguments);
     },
     /**
-         * Convert date strings into Date objects.
-         *
-         * @param {Object} resp The raw response object, typically returned by fetch()
-         * @returns {Object} The modified response object, which is the attributes hash
-         *    to be set on the model.
-         */
+		 * Convert date strings into Date objects.
+		 *
+		 * @param {Object} resp The raw response object, typically returned by fetch()
+		 * @returns {Object} The modified response object, which is the attributes hash
+		 *    to be set on the model.
+		 */
     parse: function(a) {
         return a ? (a.date = new Date(a.date), a.modified = new Date(a.modified), a) : a;
     },
@@ -111,9 +111,9 @@ var MediaModel = Backbone.Model.extend({
 }), MediaCollection = Backbone.Collection.extend({
     model: MediaModel,
     /**
-         * @param {Array} [models=[]] Array of models used to populate the collection.
-         * @param {Object} [options={}]
-         */
+		 * @param {Array} [models=[]] Array of models used to populate the collection.
+		 * @param {Object} [options={}]
+		 */
     initialize: function(a, b) {
         b = b || {}, b.activeAccount && (this.activeAccount = b.activeAccount), this.additionalRequest = !1, 
         this.pageNumber = this.pageNumber || 1, this.mediaType || "existingPlaylists" !== this.mediaCollectionViewType && "libraryPlaylists" !== this.mediaCollectionViewType || (this.mediaType = "videos"), 
@@ -152,13 +152,13 @@ var MediaModel = Backbone.Model.extend({
         return b;
     },
     /**
-         * Overrides Backbone.Collection.sync
-         *
-         * @param {String} method
-         * @param {Backbone.Model} model
-         * @param {Object} [options={}]
-         * @returns {Promise}
-         */
+		 * Overrides Backbone.Collection.sync
+		 *
+		 * @param {String} method
+		 * @param {Backbone.Model} model
+		 * @param {Object} [options={}]
+		 * @returns {Promise}
+		 */
     sync: function(a, b, c) {
         var d, e;
         // Overload the read method so Media.fetch() functions correctly.
@@ -197,8 +197,8 @@ var MediaModel = Backbone.Model.extend({
             return wpbc.requests.push(h), wpbc.broadcast.trigger("spinner:on"), h;
         }
         /**
-                 * Call wp.media.model.MediaCollection.sync or Backbone.sync
-                 */
+				 * Call wp.media.model.MediaCollection.sync or Backbone.sync
+				 */
         return e = MediaCollection.prototype.sync ? MediaCollection.prototype : Backbone, 
         e.sync.apply(this, arguments);
     },
@@ -207,22 +207,22 @@ var MediaModel = Backbone.Model.extend({
         "abort" === status;
     },
     /**
-         * A custom AJAX-response parser.
-         *
-         * See trac ticket #24753
-         *
-         * @param {Object|Array} resp The raw response Object/Array.
-         * @param {Object} xhr
-         * @returns {Array} The array of model attributes to be added to the collection
-         */
+		 * A custom AJAX-response parser.
+		 *
+		 * See trac ticket #24753
+		 *
+		 * @param {Object|Array} resp The raw response Object/Array.
+		 * @param {Object} xhr
+		 * @returns {Array} The array of model attributes to be added to the collection
+		 */
     parse: function(a, b, c, d) {
         if (wpbc.broadcast.trigger("fetch:finished"), wpbc.broadcast.trigger("spinner:off"), 
         !_.contains([ "success", "cached" ], b)) return !1;
         var e = a.data;
         if ("success" === b && (wpbc.responses[d] = e), !1 === e) return !1;
         _.isArray(e) || (e = [ e ]), /**
-             * In playlist video search, we remove the videos that already exist in the playlist.
-             */
+			 * In playlist video search, we remove the videos that already exist in the playlist.
+			 */
         _.isArray(this.excludeVideoIds) && _.each(this.excludeVideoIds, function(a) {
             e = _.without(e, _.findWhere(e, {
                 id: a
@@ -395,8 +395,8 @@ var MediaModel = Backbone.Model.extend({
     },
     initialize: function(a) {
         /**
-             * If you're looking for the Plupload instance, you're in the wrong place, check the UploadWindowView
-             */
+			 * If you're looking for the Plupload instance, you're in the wrong place, check the UploadWindowView
+			 */
         this.collection = new UploadModelCollection(), a && (this.options = a, this.successMessage = a.successMessage || this.successMessage), 
         this.uploadWindow = new UploadWindowView(), this.listenTo(this.collection, "add", this.fileAdded), 
         this.listenTo(wpbc.broadcast, "pendingUpload:selectedItem", this.selectedItem), 
@@ -681,8 +681,8 @@ var MediaModel = Backbone.Model.extend({
         this.listenTo(wpbc.broadcast, "insert:shortcode", this.insertShortcode), this.listenTo(this.model, "change", this.render);
     },
     /**
-         * @returns {wp.media.view.Media} Returns itself to allow chaining
-         */
+		 * @returns {wp.media.view.Media} Returns itself to allow chaining
+		 */
     render: function(a) {
         return a = _.extend({}, a, this.model.toJSON()), a.duration = this.model.getReadableDuration(), 
         a.updated_at_readable = this.model.getReadableDate("updated_at"), a.created_at_readable = this.model.getReadableDate("created_at"), 
@@ -793,8 +793,8 @@ var MediaModel = Backbone.Model.extend({
         a = this.model.toJSON(), this.$el.html(this.template(a)), this.spinner = this.$el.find(".spinner");
         this.$el.find(".existing-videos");
         /*
-            1. Create a media collection here to fetch each of the videos in options.video_ids.
-             */
+			 1. Create a media collection here to fetch each of the videos in options.video_ids.
+			 */
         a.video_ids && (this.killPendingRequests(), this.playlistVideosView = new MediaCollectionView({
             el: this.$el.find(".existing-videos"),
             videoIds: a.video_ids,
@@ -997,10 +997,10 @@ var UploadView = BrightcoveView.extend({
         this.render());
     },
     /**
-         * Render if we're the active upload.
-         * Re-render if we thought we were but we no longer are.
-         * @param file Fired from UploadProgress on plUpload
-         */
+		 * Render if we're the active upload.
+		 * Re-render if we thought we were but we no longer are.
+		 * @param file Fired from UploadProgress on plUpload
+		 */
     uploadProgress: function(a) {
         // Make sure we're acting on the right file.
         a.id === this.model.get("id") ? (this.model.set("activeUpload", !0), this.model.set("percent", a.percent), 
@@ -1134,9 +1134,9 @@ var UploadView = BrightcoveView.extend({
         a && a === this.columns || this.$el.closest(".media-frame-content").attr("data-columns", this.columns));
     },
     /**
-         * @param {wp.media.model.Video} attachment
-         * @returns {wp.media.View}
-         */
+		 * @param {wp.media.model.Video} attachment
+		 * @returns {wp.media.View}
+		 */
     createMediaView: function(a) {
         a.set("viewType", this.collection.mediaCollectionViewType);
         var b = new MediaView({
@@ -1197,11 +1197,11 @@ var UploadView = BrightcoveView.extend({
     },
     videoAdd: function(a) {
         /**
-             * Video add is heard by two collections, the one containing the videos for the playlists
-             * and the one containing the videos that we can add to them.
-             * We handle the add by adding from the collection where it doesn't exist (the playlist) and removing
-             * where it does (the library).
-             */
+			 * Video add is heard by two collections, the one containing the videos for the playlists
+			 * and the one containing the videos that we can add to them.
+			 * We handle the add by adding from the collection where it doesn't exist (the playlist) and removing
+			 * where it does (the library).
+			 */
         var b = a.model;
         -1 === this.collection.indexOf(b) ? (// this is the playlist collection
         this.collection.add(b), this.playlistChanged()) : (// this is the library model

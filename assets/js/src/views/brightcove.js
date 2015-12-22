@@ -24,7 +24,7 @@ var BrightcoveView = wp.Backbone.View.extend(
 
 			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
 			var accountId   = this.model.get( 'account_id' ).replace( /\D/g, '' );
-			var videoWidth = this.model.get( 'width' );
+			var videoWidth  = this.model.get( 'width' );
 			var videoHeight = this.model.get( 'height' );
 			var shortcode   = '';
 
