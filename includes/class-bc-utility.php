@@ -824,7 +824,7 @@ class BC_Utility {
 	 *
 	 * @return string The HTML code for the player
 	 */
-	public static function player( $type, $id, $account_id, $player_id, $width = 500, $height = 250 ) {
+	public static function player( $type, $id, $account_id, $player_id, $width = 0, $height = 0 ) {
 
 		BC_Utility::delete_cache_item( '*' );
 
@@ -836,34 +836,50 @@ class BC_Utility {
 		$width      = (int) $width;
 		$type       = ( 'playlist' === $type ) ? 'playlist' : 'video';
 
-		$html = '<div style="width: ' . $width . 'px; height: ' . $height . 'px">';
+		if ( 'playlist' === $type && 'default' === $player_id ) {
 
-		$html .= '<style>
-			.video-js {
-			    height: 100%;
-			    width: 100%;
-			}
-			.vjs-big-play-button {
-				display: none;
-			}
-			</style>';
+			$player_api = new BC_Player_Management_API();
+			$players    = $player_api->player_list_playlist_enabled();
 
-		$html .= '<!-- Start of Brightcove Player -->';
+			if ( is_wp_error( $players ) || ! is_array( $players ) || $players['item_count'] < 1 ) {
+				return '<div class="brightcove-player-warning">' . __( 'A specified Source does not have a playlist capable player <a href="https://studio.brightcove.com/products/videocloud/players/">configured</a>. Make sure there is at least one player with "Display Playlist" enabled.', 'brightcove' ) . '</div>';
+			}
+
+			$player_id = esc_attr( $players['items'][0]['id'] );
+
+		}
+
+		$html = '<!-- Start of Brightcove Player -->';
+
+		if ( 0 === $width && 0 === $height ) {
+			$html .= '<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">';
+		}
+
 		$html .= sprintf(
-			'<video data-account="%s" data-player="%s" data-embed="default" data-%s-id="%s" class="video-js" controls=""></video>',
+			'<video data-account="%s" data-player="%s" data-embed="default" data-%s-id="%s" controls style="width: %s; height: %s;%s"></video>',
 			$account_id,
 			$player_id,
 			$type,
-			$id
+			$id,
+			( 0 === $width ) ? '100%' : $width . 'px',
+			( 0 === $height ) ? '100%' : $height . 'px',
+			( 0 === $width && 0 === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
 		);
 		$html .= sprintf(
 			'<script src="//players.brightcove.net/%s/%s_default/index.min.js"></script>',
 			$account_id,
 			$player_id
 		);
-		$html .= '<!-- End of Brightcove Player -->';
 
-		$html .= '</div>';
+		if ( 0 === $width && 0 === $height ) {
+			$html .= '</div></div>';
+		}
+
+		if ( 'playlist' === $type ) {
+			$html .= '<ol class="vjs-playlist" ' . ( ( 0 === $width ) ? '' : 'style="max-width:' . $width . 'px"' ) . '></ol>';
+		}
+
+		$html .= '<!-- End of Brightcove Player -->';
 
 		return $html;
 
