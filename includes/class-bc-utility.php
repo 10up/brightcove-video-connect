@@ -824,13 +824,11 @@ class BC_Utility {
 	 *
 	 * @return string The HTML code for the player
 	 */
-	public static function player( $type, $id, $account_id, $player_id, $width = 0, $height = 0 ) {
-
-		BC_Utility::delete_cache_item( '*' );
+	public static function player( $type, $id, $account_id, $player_id = 'default', $width = 0, $height = 0 ) {
 
 		// Sanitize and Verify.
 		$account_id = BC_Utility::sanitize_id( $account_id );
-		$player_id  = 'default' == $player_id ? 'default' : BC_Utility::sanitize_id( $player_id );
+		$player_id  = ( 'default' == $player_id ) ? 'default' : BC_Utility::sanitize_id( $player_id );
 		$id         = BC_Utility::sanitize_id( $id );
 		$height     = (int) $height;
 		$width      = (int) $width;

@@ -24,7 +24,7 @@ class BC_Video_Shortcode {
 	public static function bc_video( $atts ) {
 
 		$defaults = array(
-			'player_id'  => '',
+			'player_id'  => 'default',
 			'account_id' => '',
 			'video_id'   => '',
 			'height'     => 0,

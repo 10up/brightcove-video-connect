@@ -58,9 +58,7 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
-					type :             this.get( 'mediaType' ),
-					width :            this.get( 'width' ),
-					height :           this.get( 'height' )
+					type :             this.get( 'mediaType' )
 				} );
 
 				var video_ids = this.get( 'video_ids' );

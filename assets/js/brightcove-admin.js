@@ -38,9 +38,7 @@ var MediaModel = Backbone.Model.extend({
                 name: this.get("name"),
                 nonce: wpbc.preload.nonce,
                 tags: this.get("tags"),
-                type: this.get("mediaType"),
-                width: this.get("width"),
-                height: this.get("height")
+                type: this.get("mediaType")
             });
             var e = this.get("video_ids");
             return e ? (c.data.playlist_id = this.id, c.data.playlist_videos = e, c.data.type = "playlists") : c.data.video_id = this.id, 
@@ -326,9 +324,9 @@ var MediaModel = Backbone.Model.extend({
     },
     insertShortcode: function() {
         if (this.model) {
-            var a = this.model.get("id").replace(/\D/g, ""), b = this.model.get("account_id").replace(/\D/g, ""), c = this.model.get("width"), d = this.model.get("height"), e = "", f = "";
-            0 != d && 0 != c && (f = ' width="' + c + '" height="' + d + '"'), e = "videos" === this.mediaType ? '[bc_video video_id="' + a + '" account_id="' + b + '" player_id="default"' + f + "]" : '[bc_playlist playlist_id="' + a + '" account_id="' + b + '"' + f + "]", 
-            window.send_to_editor(e), wpbc.broadcast.trigger("close:modal");
+            var a = this.model.get("id").replace(/\D/g, ""), b = this.model.get("account_id").replace(/\D/g, ""), c = "";
+            c = "videos" === this.mediaType ? '[bc_video video_id="' + a + '" account_id="' + b + '"]' : '[bc_playlist playlist_id="' + a + '" account_id="' + b + '"]', 
+            window.send_to_editor(c), wpbc.broadcast.trigger("close:modal");
         }
     }
 }), ToolbarView = BrightcoveView.extend({

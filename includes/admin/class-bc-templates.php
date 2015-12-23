@@ -115,14 +115,6 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
-				<label class="setting width">
-					<span class="name"><?php esc_html_e( 'Display Width', 'brightcove' )?></span>
-					<input type="text" class="brightcove-width" value="{{data.width}}" />
-				</label>
-				<label class="setting height">
-					<span class="name"><?php esc_html_e( 'Display Height', 'brightcove' )?></span>
-					<input type="text" class="brightcove-height" value="{{data.height}}" />
-				</label>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
