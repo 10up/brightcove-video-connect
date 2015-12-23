@@ -15,8 +15,9 @@ class BC_Admin_Sources {
 		$this->notices = array();
 
 		add_action( 'brightcove/admin/edit_source_page', array( $this, 'render' ) );
-		add_action( 'admin_init', array( $this, 'save_account' ), 1 ); # Avoid a race condition where the account doesn't get saved properly
+		add_action( 'admin_init', array( $this, 'save_account' ), 1 ); // Avoid a race condition where the account doesn't get saved properly.
 		add_action( 'admin_notices', array( $this, 'admin_notice_handler' ) );
+
 	}
 
 	/**
@@ -26,21 +27,31 @@ class BC_Admin_Sources {
 
 		global $bc_accounts;
 
-		$is_source_edit = false;
 		if ( array_key_exists( 'account', $_GET ) ) {
+
 			$hash    = sanitize_text_field( $_GET['account'] );
 			$account = $bc_accounts->get_account_by_hash( $hash );
+
 			if ( ! $account ) {
+
 				$error_message = esc_html__( 'This account could not be found', 'brightcove' );
 				BC_Logging::log( sprintf( 'ACCOUNT: %s', $error_message ) );
 				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
 
 				return new WP_Error( 'brightcove-account-sources-edit-not-found', $error_message );
+
 			}
+
 			$this->render_edit_html( $account );
+
 		} else {
+
 			$this->render_add_html();
+
 		}
+
+		return true;
+
 	}
 
 	/**
