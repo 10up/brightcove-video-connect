@@ -30,11 +30,11 @@ var BrightcoveView = wp.Backbone.View.extend(
 
 			if ( this.mediaType === 'videos' ) {
 
-				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="default"]';
+				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="default" width="' + videoWidth + '" height="' + videoHeight + '"]';
 
 			} else {
 
-				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '" width="' + videoWidth + '" height="' + videoHeight + '"]';
 
 			}
 
