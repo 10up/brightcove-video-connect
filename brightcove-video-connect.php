@@ -60,10 +60,10 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 	add_action( 'init', array( 'BC_Setup', 'action_init' ) );
 	add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
 } else {
-	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
 	global $bc_accounts;
 	$bc_accounts = new BC_Accounts();
 	add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
@@ -82,12 +82,12 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 }
 
 // Add WP-CLI Support (should be before init).
-require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-setup.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
 
 // Check Brightcove status if is_admin().
 if ( is_admin() ) {
 
-	require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-status-warning.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-status-warning.php' );
 	new BC_Status_Warning();
 
 }

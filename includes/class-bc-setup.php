@@ -6,19 +6,19 @@ class BC_Setup {
 
 		global $bc_accounts;
 
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-errors.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-logging.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-playlist-shortcode.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-shortcode.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-video-upload.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-playlists.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/sync/class-bc-videos.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-cms-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-oauth.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/api/class-bc-player-management-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-tags.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-errors.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-logging.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-upload.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
 
@@ -38,13 +38,13 @@ class BC_Setup {
 		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/api/class-bc-admin-media-api.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-settings-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-playlists-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-videos-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-sources.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-user-profile.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-templates.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/api/class-bc-admin-media-api.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-settings-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-playlists-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-videos-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-user-profile.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-templates.php' );
 
 			// Load Brightcove API resources.
 			new BC_Admin_Media_API();
@@ -81,15 +81,15 @@ class BC_Setup {
 	 */
 	public static function action_init_all() {
 
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-utility.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-permissions.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-permissions.php' );
 
 		// Load WordPress resources.
 		new BC_Permissions();
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			require_once( BRIGHTCOVE_PATH . 'includes/classes/admin/class-bc-admin-menu.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-menu.php' );
 
 			new BC_Admin_Menu();
 

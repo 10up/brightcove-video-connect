@@ -569,7 +569,7 @@ class BC_Utility {
 
 	public static function deactivate() {
 
-		require_once( BRIGHTCOVE_PATH . 'includes/classes/class-bc-accounts.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
 
 		$bc_accounts = new BC_Accounts();
 
