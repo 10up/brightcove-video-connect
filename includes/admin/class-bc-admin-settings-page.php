@@ -34,7 +34,7 @@ class BC_Admin_Settings_Page {
 
 		<div class="wrap">
 
-			<h2><img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/admin/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove Settings', 'brightcove' ); ?></h2>
+			<h2><img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove Settings', 'brightcove' ); ?></h2>
 
 			<h3 class="title"><?php esc_html__( 'Sources', 'brightcove' ); ?></h3>
 

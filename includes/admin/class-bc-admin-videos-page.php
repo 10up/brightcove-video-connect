@@ -21,7 +21,7 @@ class BC_Admin_Videos_Page {
 		?>
 		<span class="wrap">
 			<h2>
-				<img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/admin/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove Videos', 'brightcove' ); ?>
+				<img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove Videos', 'brightcove' ); ?>
 				<a class="brightcove-add-new-video add-new-h2" href="#">Add New</a>
 			</h2>
 		</span>

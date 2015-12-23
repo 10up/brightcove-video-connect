@@ -99,7 +99,7 @@ class BC_Setup {
 	public static function add_brightcove_media_button() {
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
-			echo '<a href="#" id="brightcove-add-media" class="button brightcove-add-media"><img class="bc-button-icon" src="' . esc_url( BRIGHTCOVE_URL . 'images/admin/menu-icon.svg' ) . '"> ' . esc_html__( 'Brightcove Media', 'brightcove' ) . '</a>';
+			echo '<a href="#" id="brightcove-add-media" class="button brightcove-add-media"><img class="bc-button-icon" src="' . esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ) . '"> ' . esc_html__( 'Brightcove Media', 'brightcove' ) . '</a>';
 		}
 	}
 

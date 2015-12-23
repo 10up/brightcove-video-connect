@@ -26,7 +26,7 @@ class BC_Admin_User_Profile {
 			$default_account = get_option( '_brightcove_default_account' );
 		}
 		?>
-		<h3><img class="profile-brightcove-logo" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/admin/menu-icon.svg' ) ?>" /><?php esc_html_e( 'Brightcove Preferences', 'brightcove' ) ?></h3>
+		<h3><img class="profile-brightcove-logo" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ) ?>" /><?php esc_html_e( 'Brightcove Preferences', 'brightcove' ) ?></h3>
 		<table class="form-table">
 			<tr>
 				<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ) ?></th>
