@@ -7,7 +7,7 @@ var BrightcoveModalView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.media-menu-item' :     'changeTab',
 			'click .brightcove.media-button-insert' : 'insertIntoPost',
-			'click .brightcove.media-modal-close' :   'closeModal'
+			'click .brightcove.media-modal-icon' :   'closeModal'
 		},
 
 		initialize : function ( options ) {

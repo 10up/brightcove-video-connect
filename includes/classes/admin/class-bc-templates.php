@@ -147,7 +147,7 @@ class BC_Admin_Templates {
 		<?php /* Used by views/modal.js */?>
 		<script type="text/html" id="tmpl-brightcove-media-modal">
             <div class="media-modal wp-core-ui">
-              <a class="media-modal-close brightcove" href="#"><span class="media-modal-icon"><span class="screen-reader-text">Close media panel</span></span></a>
+	            <button type="button" class="button-link media-modal-close"><span class="brightcove media-modal-icon"><span class="screen-reader-text"><?php esc_html_e( 'Close media panel', 'brightcove' ); ?></span></span></button>
               <div class="media-modal-content">
                 <div class="media-frame mode-select wp-core-ui" id="__wp-uploader-id-0">
                   <div class="media-frame-title">
