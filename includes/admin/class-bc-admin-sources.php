@@ -157,7 +157,7 @@ class BC_Admin_Sources {
 		?>
 		<div class="wrap">
 			<h2><?php
-				printf( '<img src="%s" class="bc-page-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( dirname( __DIR__ ) ) ) );
+				printf( '<img src="%s" class="bc-page-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
 				?><?php esc_html_e( 'Add Source', 'brightcove' ) ?></h2>
 
 			<form action="" method="post">
@@ -245,7 +245,7 @@ class BC_Admin_Sources {
 		<div class="wrap">
 
 			<h2><?php
-				printf( '<img src="%s" class="brightcove-admin-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( dirname( __DIR__ ) ) ) );
+				printf( '<img src="%s" class="brightcove-admin-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
 				?><?php esc_html_e( 'Edit Source', 'brightcove' ) ?></h2>
 
 			<form action="" method="post">

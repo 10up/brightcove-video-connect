@@ -15,7 +15,7 @@ class BC_Admin_Menu {
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			add_menu_page( esc_html__( 'Brightcove', 'brightcove' ), esc_html__( 'Brightcove', 'brightcove' ), 'edit_posts', 'brightcove', array( $this, 'render_settings_page' ) , plugins_url( 'images/menu-icon.svg', dirname( dirname( __DIR__ ) ) ), 50 );
+			add_menu_page( esc_html__( 'Brightcove', 'brightcove' ), esc_html__( 'Brightcove', 'brightcove' ), 'edit_posts', 'brightcove', array( $this, 'render_settings_page' ) , plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ), 50 );
 			add_submenu_page( 'brightcove', esc_html__( 'Brightcove Videos', 'brightcove' ), esc_html__( 'Videos', 'brightcove' ), 'edit_posts', BC_Admin_Menu::get_videos_page_uri_component(), array( $this, 'render_videos_page' ) );
 			add_submenu_page( 'brightcove', esc_html__( 'Brightcove Playlists', 'brightcove' ), esc_html__( 'Playlists', 'brightcove' ), 'edit_posts', BC_Admin_Menu::get_playlists_page_uri_component(), array( $this, 'render_playlists_page' ) );
 			add_submenu_page( 'brightcove', esc_html__( 'Brightcove Settings', 'brightcove' ), esc_html__( 'Settings', 'brightcove' ), 'manage_options', 'brightcove-sources', array( $this, 'render_settings_page' ) );
