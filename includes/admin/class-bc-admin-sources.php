@@ -125,7 +125,7 @@ class BC_Admin_Sources {
 				return new WP_Error( 'bc-oauth-error', $error_message );
 			}
 
-			BC_Utility::clear_cached_api_requests( 'all' );
+			BC_Utility::delete_cache_item( '*' );
 			$bc_accounts->set_current_account_by_id( $account_id );
 		}
 

@@ -106,8 +106,7 @@ class BC_Admin_Media_API {
 			$type_msg = 'video';
 		}
 
-		BC_Utility::clear_cached_api_requests( 'all' );
-		BC_Utility::clear_cached_api_requests( $bc_accounts->get_account_id() );
+		BC_Utility::delete_cache_item( '*' );
 		$bc_accounts->restore_default_account();
 
 		BC_Utility::delete_cache_item( '*' ); // Clear the cache of video lists retrieved.
@@ -211,8 +210,7 @@ class BC_Admin_Media_API {
 			}
 		}
 
-		BC_Utility::clear_cached_api_requests( 'all' );
-		BC_Utility::clear_cached_api_requests( $bc_accounts->get_account_id() );
+		BC_Utility::delete_cache_item( '*' );
 		$bc_accounts->restore_default_account();
 
 		if ( $delete_status ) {

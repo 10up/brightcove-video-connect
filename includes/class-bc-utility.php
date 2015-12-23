@@ -97,31 +97,6 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param string $account_id All or account_id or null for ALL accounts.
-	 */
-	public static function clear_cached_api_requests( $account_id ) {
-
-		if ( is_null( $account_id ) ) {
-
-			$account_id = '';
-		} else {
-
-			if ( 'all' !== $account_id ) {
-				$account_id = BC_Utility::sanitize_id( $account_id );
-			}
-		}
-
-		$keys = self::get_requests_transient_key( $account_id );
-
-		if ( is_array( $keys ) ) {
-
-			foreach ( $keys as $key ) {
-				self::delete_cache_item( $key );
-			}
-		}
-	}
-
-	/**
 	 * @param $account array containing an account id, client id and client secret
 	 *
 	 * @return string hash for the account
