@@ -28,13 +28,19 @@ var BrightcoveView = wp.Backbone.View.extend(
 			var videoHeight = this.model.get( 'height' );
 			var shortcode   = '';
 
+			var playerDimensions = '';
+
+			if ( 0 != videoHeight && 0 != videoWidth ) {
+				playerDimensions = ' width="' + videoWidth + '" height="' + videoHeight + '"';
+			}
+
 			if ( this.mediaType === 'videos' ) {
 
-				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="default" width="' + videoWidth + '" height="' + videoHeight + '"]';
+				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="default"' + playerDimensions + ']';
 
 			} else {
 
-				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '" width="' + videoWidth + '" height="' + videoHeight + '"]';
+				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"' + playerDimensions + ']';
 
 			}
 

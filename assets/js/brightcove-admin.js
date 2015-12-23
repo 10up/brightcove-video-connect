@@ -326,8 +326,8 @@ var MediaModel = Backbone.Model.extend({
     },
     insertShortcode: function() {
         if (this.model) {
-            var a = this.model.get("id").replace(/\D/g, ""), b = this.model.get("account_id").replace(/\D/g, ""), c = this.model.get("width"), d = this.model.get("height"), e = "";
-            e = "videos" === this.mediaType ? '[bc_video video_id="' + a + '" account_id="' + b + '" player_id="default" width="' + c + '" height="' + d + '"]' : '[bc_playlist playlist_id="' + a + '" account_id="' + b + '" width="' + c + '" height="' + d + '"]', 
+            var a = this.model.get("id").replace(/\D/g, ""), b = this.model.get("account_id").replace(/\D/g, ""), c = this.model.get("width"), d = this.model.get("height"), e = "", f = "";
+            0 != d && 0 != c && (f = ' width="' + c + '" height="' + d + '"'), e = "videos" === this.mediaType ? '[bc_video video_id="' + a + '" account_id="' + b + '" player_id="default"' + f + "]" : '[bc_playlist playlist_id="' + a + '" account_id="' + b + '"' + f + "]", 
             window.send_to_editor(e), wpbc.broadcast.trigger("close:modal");
         }
     }

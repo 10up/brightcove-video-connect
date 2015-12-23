@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2015-12-23 13:42:37+00:00\n"
+"POT-Creation-Date: 2015-12-23 17:33:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -94,7 +94,7 @@ msgid "Videos"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:20
-#: includes/admin/class-bc-admin-playlists-page.php:21
+#: includes/admin/class-bc-admin-playlists-page.php:24
 msgid "Brightcove Playlists"
 msgstr ""
 
@@ -104,22 +104,23 @@ msgid "Playlists"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:21
-#: includes/admin/class-bc-admin-settings-page.php:37
+#: includes/admin/class-bc-admin-settings-page.php:45
 msgid "Brightcove Settings"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:21
-#: includes/admin/class-bc-admin-sources.php:133
+#: includes/admin/class-bc-admin-sources.php:144
 msgid "Settings"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:24
-#: includes/admin/class-bc-admin-settings-page.php:57
-#: includes/admin/class-bc-admin-sources.php:161
+#: includes/admin/class-bc-admin-settings-page.php:66
+#: includes/admin/class-bc-admin-sources.php:172
 msgid "Add Source"
 msgstr ""
 
-#: includes/admin/class-bc-admin-playlists-page.php:42
+#: includes/admin/class-bc-admin-playlists-page.php:48
+#: includes/class-bc-utility.php:845
 msgid ""
 "A specified Source does not have a playlist capable player <a "
 "href=\"https://studio.brightcove.com/products/videocloud/players/\">"
@@ -127,134 +128,130 @@ msgid ""
 "Playlist\" enabled."
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:26
+#: includes/admin/class-bc-admin-settings-page.php:29
 msgid "Source Deleted"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:39
+#: includes/admin/class-bc-admin-settings-page.php:48
 msgid "Sources"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:44
-#: includes/admin/class-bc-admin-sources.php:167
-#: includes/admin/class-bc-admin-sources.php:255
+#: includes/admin/class-bc-admin-settings-page.php:53
+#: includes/admin/class-bc-admin-sources.php:178
+#: includes/admin/class-bc-admin-sources.php:266
 msgid "Source Name"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:45
-#: includes/admin/class-bc-admin-sources.php:193
-#: includes/admin/class-bc-admin-sources.php:266
+#: includes/admin/class-bc-admin-settings-page.php:54
+#: includes/admin/class-bc-admin-sources.php:204
+#: includes/admin/class-bc-admin-sources.php:277
 msgid "Account ID"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:46
-#: includes/admin/class-bc-admin-sources.php:200
+#: includes/admin/class-bc-admin-settings-page.php:55
+#: includes/admin/class-bc-admin-sources.php:211
 msgid "Client ID"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:75
-#: includes/admin/class-bc-admin-sources.php:249
+#: includes/admin/class-bc-admin-settings-page.php:86
+#: includes/admin/class-bc-admin-sources.php:260
 msgid "Edit Source"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:80
+#: includes/admin/class-bc-admin-settings-page.php:91
 msgid "Delete Source"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:81
+#: includes/admin/class-bc-admin-settings-page.php:92
 msgid ""
 "By deleting this source, WordPress will no longer have access to associated "
 "videos and playlists. Your content remains in Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:129
+#: includes/admin/class-bc-admin-settings-page.php:141
 msgid "Default"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:155
+#: includes/admin/class-bc-admin-settings-page.php:168
 msgid "There are no sources defined. Add one below"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:34
+#: includes/admin/class-bc-admin-sources.php:37
 msgid "This account could not be found"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:60
+#: includes/admin/class-bc-admin-sources.php:71
 msgid "You do not have permission to manage this account."
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:102
+#: includes/admin/class-bc-admin-sources.php:113
 msgid "The Brightcove credentials provided already exist."
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:110
+#: includes/admin/class-bc-admin-sources.php:121
 msgid "We could not authenticate your credentials with Brightcove"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:131
+#: includes/admin/class-bc-admin-sources.php:142
 msgid "Congratulations! Your credentials have been authenticated. Return to"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:170
+#: includes/admin/class-bc-admin-sources.php:181
 msgid "My Brightcove Account Name"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:173
+#: includes/admin/class-bc-admin-sources.php:184
 msgid "This is how the source will be identified in WordPress"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:179
+#: includes/admin/class-bc-admin-sources.php:190
 msgid "Credentials"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:182
+#: includes/admin/class-bc-admin-sources.php:193
 msgid ""
 "Each token has a set of API permissions defined when registering a new "
 "client."
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:185
+#: includes/admin/class-bc-admin-sources.php:196
 msgid "You can check the permissions and find out more about the settings below in"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:186
+#: includes/admin/class-bc-admin-sources.php:197
 msgid "Video Cloud Studio"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:204
+#: includes/admin/class-bc-admin-sources.php:215
 msgid "A unique identifier for a client generated by Brightcove"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:208
+#: includes/admin/class-bc-admin-sources.php:219
 msgid "Client Secret"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:212
+#: includes/admin/class-bc-admin-sources.php:223
 msgid ""
 "A unique identifier generated by Brightcove, used with a client id. Serves "
 "as a password to authenticate a client"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:217
-#: includes/admin/class-bc-admin-sources.php:275
+#: includes/admin/class-bc-admin-sources.php:228
+#: includes/admin/class-bc-admin-sources.php:286
 #: includes/admin/class-bc-admin-user-profile.php:32
 msgid "Default Source"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:221
-#: includes/admin/class-bc-admin-sources.php:279
+#: includes/admin/class-bc-admin-sources.php:232
+#: includes/admin/class-bc-admin-sources.php:290
 msgid "Make this the default source for new users"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:233
+#: includes/admin/class-bc-admin-sources.php:244
 msgid "Check Credentials"
 msgstr ""
 
-#: includes/admin/class-bc-admin-sources.php:284
-msgid "Default Player"
-msgstr ""
-
-#: includes/admin/class-bc-admin-sources.php:309
+#: includes/admin/class-bc-admin-sources.php:302
 msgid "Save Changes"
 msgstr ""
 
