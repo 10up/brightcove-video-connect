@@ -852,11 +852,11 @@ class BC_Utility {
 		$html = '<!-- Start of Brightcove Player -->';
 
 		if ( 0 === $width && 0 === $height ) {
-			$html .= '<div style="display: block; position: relative; max-width: 100%; margin-bottom: 20px;"><div style="padding-top: 56.25%;">';
+			$html .= '<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">';
 		}
 
 		$html .= sprintf(
-			'<video data-account="%s" data-player="%s" data-embed="default" data-%s-id="%s" controls style="width: %s; height: %s;%s"></video>',
+			'<iframe src="//players.brightcove.net/%s/%s_default/index.html?%sId=%s" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" style="width: %s; height: %s;%s"></iframe>',
 			$account_id,
 			$player_id,
 			$type,
@@ -865,21 +865,10 @@ class BC_Utility {
 			( 0 === $height ) ? '100%' : $height . 'px',
 			( 0 === $width && 0 === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
 		);
-		$html .= sprintf(
-			'<script src="//players.brightcove.net/%s/%s_default/index.min.js"></script>',
-			$account_id,
-			$player_id
-		);
-
-		if ( 'playlist' === $type ) {
-			$html .= '<ol class="vjs-playlist" ' . ( ( 0 === $width ) ? '' : 'style="max-width:' . $width . 'px"' ) . '></ol>';
-		}
 
 		if ( 0 === $width && 0 === $height ) {
 			$html .= '</div></div>';
 		}
-
-
 
 		$html .= '<!-- End of Brightcove Player -->';
 
