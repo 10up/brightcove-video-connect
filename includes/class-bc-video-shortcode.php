@@ -11,11 +11,15 @@ class BC_Video_Shortcode {
 	}
 
 	/**
+	 * Render video
+	 *
 	 * Shortcode handler for BC Video embeds
 	 *
-	 * @param $atts
+	 * @since 1.0
 	 *
-	 * @return string
+	 * @param array $atts Array of shortcode parameters.
+	 *
+	 * @return string HTML for displaying shortcode.
 	 */
 	public static function bc_video( $atts ) {
 
@@ -29,57 +33,7 @@ class BC_Video_Shortcode {
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );
 
-		return BC_Video_Shortcode::player( $atts['video_id'], $atts['account_id'], $atts['player_id'], $atts['width'], $atts['height'] );
-	}
+		return BC_Utility::player( 'video', $atts['video_id'], $atts['account_id'], $atts['player_id'], $atts['width'], $atts['height'] );
 
-	/**
-	 * Renders the iFrame player from Brightcove based on passed parameters
-	 *
-	 * @param     $video_id
-	 * @param     $account_id
-	 * @param     $player_id
-	 * @param int $width
-	 * @param int $height
-	 *
-	 * @return string
-	 */
-	public static function player( $video_id, $account_id, $player_id, $width = 500, $height = 250 ) {
-
-		// Sanitize and Verify
-		$account_id = BC_Utility::sanitize_id( $account_id );
-		$player_id  = 'default' == $player_id ? 'default' : BC_Utility::sanitize_id( $player_id );
-		$video_id   = BC_Utility::sanitize_id( $video_id );
-		$height     = (int) $height;
-		$width      = (int) $width;
-
-		$html = '<div style="width: ' . $width . 'px; height: ' . $height . 'px">';
-
-		$html .= '<style>
-			.video-js {
-			    height: 100%;
-			    width: 100%;
-			}
-			.vjs-big-play-button {
-				display: none;
-			}
-			</style>';
-
-		$html .= '<!-- Start of Brightcove Player -->';
-		$html .= sprintf(
-			'<video data-account="%s" data-player="%s" data-embed="default" data-video-id="%s" class="video-js" controls></video>',
-			$account_id,
-			$player_id,
-			$video_id
-		);
-		$html .= sprintf(
-			'<script src="//players.brightcove.net/%s/%s_default/index.min.js"></script>',
-			$account_id,
-			$player_id
-		);
-		$html .= '<!-- End of Brightcove Player -->';
-
-		$html .= '</div>';
-
-		return $html;
 	}
 }

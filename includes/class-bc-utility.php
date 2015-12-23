@@ -807,4 +807,65 @@ class BC_Utility {
 
 		return ( empty( $keys ) ) ? false : $keys;
 	}
+
+	/**
+	 * Render Player
+	 *
+	 * Renders the  player from Brightcove based on passed parameters
+	 *
+	 * @since 1.0
+	 *
+	 * @param string  $type       "playlist" or "video".
+	 * @param  string $id         The brightcove player or video ID.
+	 * @param string  $account_id The Brightcove account ID.
+	 * @param string  $player_id  The brightcove player ID.
+	 * @param int     $width      The Width to display.
+	 * @param int     $height     The height to display.
+	 *
+	 * @return string The HTML code for the player
+	 */
+	public static function player( $type, $id, $account_id, $player_id, $width = 500, $height = 250 ) {
+
+		BC_Utility::delete_cache_item( '*' );
+
+		// Sanitize and Verify.
+		$account_id = BC_Utility::sanitize_id( $account_id );
+		$player_id  = 'default' == $player_id ? 'default' : BC_Utility::sanitize_id( $player_id );
+		$id         = BC_Utility::sanitize_id( $id );
+		$height     = (int) $height;
+		$width      = (int) $width;
+		$type       = ( 'playlist' === $type ) ? 'playlist' : 'video';
+
+		$html = '<div style="width: ' . $width . 'px; height: ' . $height . 'px">';
+
+		$html .= '<style>
+			.video-js {
+			    height: 100%;
+			    width: 100%;
+			}
+			.vjs-big-play-button {
+				display: none;
+			}
+			</style>';
+
+		$html .= '<!-- Start of Brightcove Player -->';
+		$html .= sprintf(
+			'<video data-account="%s" data-player="%s" data-embed="default" data-%s-id="%s" class="video-js" controls=""></video>',
+			$account_id,
+			$player_id,
+			$type,
+			$id
+		);
+		$html .= sprintf(
+			'<script src="//players.brightcove.net/%s/%s_default/index.min.js"></script>',
+			$account_id,
+			$player_id
+		);
+		$html .= '<!-- End of Brightcove Player -->';
+
+		$html .= '</div>';
+
+		return $html;
+
+	}
 }
