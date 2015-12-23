@@ -290,42 +290,6 @@ class BC_Admin_Sources {
 							<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
 						</td>
 					</tr>
-
-					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Default Player (video)', 'brightcove' ) ?></th>
-						<td>
-							<?php
-							$bc_accounts->get_account_details_for_user();
-							$player_api = new BC_Player_Management_API();
-							$players    = $player_api->player_list();
-							?>
-							<select name="sources-players">
-								<?php
-								foreach ( $players['items'] as $player ) {
-									printf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $player['id'] ), esc_html( $player['name'] ), selected( 'default', $player['id'] ) );
-								}
-								?>
-							</select>
-						</td>
-					</tr>
-
-					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Default Player (playlist)', 'brightcove' ) ?></th>
-						<td>
-							<?php
-							$bc_accounts->get_account_details_for_user();
-							$player_api = new BC_Player_Management_API();
-							$players    = $player_api->player_list();
-							?>
-							<select name="sources-players">
-								<?php
-								foreach ( $players['items'] as $player ) {
-									printf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $player['id'] ), esc_html( $player['name'] ), selected( 'default', $player['id'] ) );
-								}
-								?>
-							</select>
-						</td>
-					</tr>
 				</table>
 
 				<?php
