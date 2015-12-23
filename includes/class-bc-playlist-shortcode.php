@@ -24,8 +24,8 @@ class BC_Playlist_Shortcode {
 			'player_id'   => 'default',
 			'account_id'  => '',
 			'playlist_id' => '',
-			'height'      => 250,
-			'width'       => 500,
+			'height'      => 0,
+			'width'       => 0,
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_playlist' );

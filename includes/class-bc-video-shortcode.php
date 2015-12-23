@@ -27,8 +27,8 @@ class BC_Video_Shortcode {
 			'player_id'  => '',
 			'account_id' => '',
 			'video_id'   => '',
-			'height'     => 250,
-			'width'      => 500,
+			'height'     => 0,
+			'width'      => 0,
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );

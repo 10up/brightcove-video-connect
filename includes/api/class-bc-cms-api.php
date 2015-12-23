@@ -432,8 +432,8 @@ class BC_CMS_API extends BC_API {
 
 			foreach ( $results as $index => $result ) {
 
-				$results[ $index ]['width']  = apply_filters( 'bv_video_default_width', 500 );
-				$results[ $index ]['height'] = apply_filters( 'bv_video_default_height', 250 );
+				$results[ $index ]['width']  = apply_filters( 'bv_video_default_width', 0 );
+				$results[ $index ]['height'] = apply_filters( 'bv_video_default_height', 0 );
 
 			}
 		}
