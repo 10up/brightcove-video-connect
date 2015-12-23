@@ -852,7 +852,7 @@ class BC_Utility {
 		$html = '<!-- Start of Brightcove Player -->';
 
 		if ( 0 === $width && 0 === $height ) {
-			$html .= '<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">';
+			$html .= '<div style="display: block; position: relative; max-width: 100%; margin-bottom: 20px;"><div style="padding-top: 56.25%;">';
 		}
 
 		$html .= sprintf(
@@ -871,13 +871,15 @@ class BC_Utility {
 			$player_id
 		);
 
+		if ( 'playlist' === $type ) {
+			$html .= '<ol class="vjs-playlist" ' . ( ( 0 === $width ) ? '' : 'style="max-width:' . $width . 'px"' ) . '></ol>';
+		}
+
 		if ( 0 === $width && 0 === $height ) {
 			$html .= '</div></div>';
 		}
 
-		if ( 'playlist' === $type ) {
-			$html .= '<ol class="vjs-playlist" ' . ( ( 0 === $width ) ? '' : 'style="max-width:' . $width . 'px"' ) . '></ol>';
-		}
+
 
 		$html .= '<!-- End of Brightcove Player -->';
 
