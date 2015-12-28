@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.4
-Stable tag:        1.1.1
+Stable tag:        1.1.2
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,9 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.1.2 =
+* Fix: Remove extra files. This is a holdout from 1.1.1 to remove all the extra files from the repository.
+
 = 1.1.1 =
 * Fixed: playlists and other data saving to Database
 * Fixed: incorrect close icon on media modal
@@ -247,6 +250,9 @@ http://sample-videos.com/
 * First release
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+1.1.2 is a major bugfix release and is reccommended for all users
 
 = 1.1.1 =
 1.1.1 is a major bugfix release and is reccommended for all users
