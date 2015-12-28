@@ -68,11 +68,13 @@ class BC_Admin_Sources {
 		}
 
 		if ( ! current_user_can( 'brightcove_manipulate_accounts' ) ) {
+
 			$error_message = esc_html__( 'You do not have permission to manage this account.', 'brightcove' );
 			BC_Logging::log( sprintf( 'ACCOUNT: %s', $error_message ) );
 			$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
 
 			return new WP_Error( 'brightcove-account-manage-permissions', $error_message );
+
 		}
 
 		if ( ! wp_verify_nonce( $_POST['brightcove-check_oauth'], '_brightcove_check_oauth_for_source' ) ) {
@@ -91,9 +93,11 @@ class BC_Admin_Sources {
 			);
 
 			foreach ( $required_keys as $key ) {
+
 				if ( ! array_key_exists( $key, $_POST ) ) {
 					return false;
 				}
+
 			}
 
 			$account_id    = BC_Utility::sanitize_id( $_POST['source-account-id'] );
@@ -102,46 +106,63 @@ class BC_Admin_Sources {
 			$account_name  = sanitize_text_field( stripslashes_deep( $_POST['source-name'] ) );
 			$set_default   = ( isset( $_POST['source-default-account'] ) && 'on' === $_POST['source-default-account'] ) ? 'default' : '';
 
-			$hash    = BC_Utility::get_hash_for_account( array(
-				                                             'account_id'    => $account_id,
-				                                             'client_id'     => $client_id,
-				                                             'client_secret' => $client_secret,
-			                                             ) );
+			$hash = BC_Utility::get_hash_for_account(
+				array(
+					'account_id'    => $account_id,
+					'client_id'     => $client_id,
+					'client_secret' => $client_secret,
+				)
+			);
+
 			$account = $bc_accounts->get_account_by_hash( $hash );
+
 			if ( $account ) {
-				// Account already exists
+
+				// Account already exists.
 				$error_message = esc_html__( 'The Brightcove credentials provided already exist.', 'brightcove' );
+
 				BC_Logging::log( sprintf( 'BC ACCOUNTS: %s', $error_message ) );
+
 				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
 
 				return new WP_Error( 'bc-account-exists-error', $error_message );
+
 			}
 
 			if ( ! $bc_accounts->add_account( $account_id, $client_id, $client_secret, $account_name, $set_default, false ) ) {
+
 				$error_message = esc_html__( 'We could not authenticate your credentials with Brightcove', 'brightcove' );
+
 				BC_Logging::log( sprintf( 'BC OAUTH ERROR: %s', $error_message ) );
+
 				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
 
 				return new WP_Error( 'bc-oauth-error', $error_message );
+
 			}
 
 			BC_Utility::delete_cache_item( '*' );
 			$bc_accounts->set_current_account_by_id( $account_id );
+
 		}
 
 		if ( 'update' === $_POST['source-action'] ) {
+
 			if ( isset( $_POST['source-default-account'] ) && 'on' === $_POST['source-default-account'] ) {
 				update_option( '_brightcove_default_account', sanitize_text_field( $_POST['hash'] ) );
 			}
+
 		}
 
 		// Deleting transient to allow syncing from the new account, otherwise we won't be able to sync it until this transient expires.
 		BC_Utility::delete_cache_item( 'brightcove_sync_videos' );
+
 		$this->notices[] = array(
-			'message' => sprintf( '%s <a href="%s">%s</a>.',
-			                      esc_html__( 'Congratulations! Your credentials have been authenticated. Return to', 'brightcove' ),
-			                      admin_url( 'admin.php?page=brightcove-sources ' ),
-			                      esc_html__( 'Settings', 'brightcove' )
+			'message' => sprintf(
+				'%s <a href="%s">%s</a>.',
+				esc_html__( 'Congratulations! Your credentials have been authenticated. Return to', 'brightcove' ),
+				admin_url( 'admin.php?page=brightcove-sources ' ),
+				esc_html__( 'Settings', 'brightcove' )
 			),
 			'type'    => 'updated',
 		);
@@ -149,6 +170,7 @@ class BC_Admin_Sources {
 		BC_Utility::delete_cache_item( '*' );
 
 		return true;
+
 	}
 
 	/**
@@ -163,6 +185,9 @@ class BC_Admin_Sources {
 		}
 
 		BC_Utility::admin_notice_messages( $this->notices );
+
+		return true;
+
 	}
 
 	public function render_add_html() {
@@ -252,8 +277,6 @@ class BC_Admin_Sources {
 
 	public function render_edit_html( $account ) {
 
-		global $bc_accounts;
-
 		?>
 		<div class="wrap">
 
@@ -307,5 +330,4 @@ class BC_Admin_Sources {
 		</div>
 		<?php
 	}
-
 }
