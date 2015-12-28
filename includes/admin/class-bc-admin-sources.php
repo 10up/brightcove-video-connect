@@ -146,6 +146,8 @@ class BC_Admin_Sources {
 			'type'    => 'updated',
 		);
 
+		BC_Utility::delete_cache_item( '*' );
+
 		return true;
 	}
 
