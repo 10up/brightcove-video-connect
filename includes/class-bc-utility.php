@@ -748,6 +748,11 @@ class BC_Utility {
 	 */
 	public static function get_cache_item( $key ) {
 
+		// Allow for the complete bypass of the caching system for development purposes.
+		if ( defined( 'BRIGHTCOVE_BYPASS_CACHE' ) && true === BRIGHTCOVE_BYPASS_CACHE ) {
+			return false;
+		}
+
 		$key = sanitize_key( $key );
 
 		$transient = get_transient( $key );
