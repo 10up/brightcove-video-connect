@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.4
-Stable tag:        1.1.0
+Stable tag:        1.1.1
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,25 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.1.1 =
+* Fixed: playlists and other data saving to Database
+* Fixed: incorrect close icon on media modal
+* Fixed: minimum version check
+* Enhancement: Removed callback subscriptions
+* Fixed videos not consistently deleting
+* Fixed caching issues
+* Fixed editing videos from upload screen
+* Fixed inconsistent player implementation
+* Added responsive playlists and videos
+* Removed GUI option for video width and height (more consistent to add manually)
+* Added ability to bypass cache entirely
+* Removed unnecessary code and other files throughout plugin and consolidated file structure
+* Fixed broken shortcode insertion after changing video size via GUI
+* Fixed inconsistent “Add new” button behavior on Video screen
+* Fixed minimum size for playlist display (no longer only shows video selector when width >= 800px)
+* Added notice upon playlist insertion if no compatible player is available - because you can never let people know enough
+* Numerous other small typo corrections, fixes and enhancements
+
 = 1.1.0 =
 * Enhancement: Brightcove Video Connect will now warn users when a part of the Brightcove API system is down that might affect plugin or video behavior.
 * Enhancement: The playlist page will now display an error if no playlist compatible player exists
@@ -228,6 +247,9 @@ http://sample-videos.com/
 * First release
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+1.1.1 is a major bugfix release and is reccommended for all users
 
 = 1.1.0 =
 1.1.0 is a bugfix and new feature update that is recommended for all users

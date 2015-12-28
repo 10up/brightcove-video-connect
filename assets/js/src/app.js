@@ -24,35 +24,7 @@
 			wpbc.responses = {};
 			wpbc.broadcast = _.extend({}, Backbone.Events); // pubSub object
 
-			wpbc.selfSync = function () {
-				$.get(ajaxurl, {action: 'bc_initial_sync'}, function (data) {
-					if (!data.success) {
-						// At most every ten seconds.
-						_.delay(wpbc.selfSync, 10000);
-					} else {
-						wpbc.broadcast.trigger('remove:permanentMessage');
-					}
-				});
-			};
-
-			/* If we have to finish our inital sync, then lets help it along*/
-			if (!!wpbc.initialSync) {
-				wpbc.selfSync();
-			}
-
-			/* Wait until the window is loaded and the anchor element exists in the DOM */
-			$(window).load(this.loaded);
-
-			/* If we're on the videos/playlists pages, sometimes the $(window).load has already fired
-			we test for this and fire up the app anyway.
-			 */
-			if (window.location.href.indexOf('page-brightcove') ) {
-				_.delay(_.bind(function() {
-					if (!wpbc.triggerModal) {
-						this.loaded();
-					}
-				}, this), 100);
-			}
+			this.loaded();
 
 		},
 

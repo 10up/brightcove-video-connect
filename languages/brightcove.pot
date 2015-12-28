@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brightcove Video Connect 1.1.0\n"
+"Project-Id-Version: Brightcove Video Connect 1.1.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2015-12-17 19:34:26+00:00\n"
+"POT-Creation-Date: 2015-12-28 14:42:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,112 +14,113 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.3\n"
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:15
+#: includes/admin/api/class-bc-admin-media-api.php:15
 msgid "You do not have permission to use this Brightcove Account"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:34
-#: includes/classes/admin/api/class-bc-admin-media-api.php:40
+#: includes/admin/api/class-bc-admin-media-api.php:34
+#: includes/admin/api/class-bc-admin-media-api.php:40
 msgid "Invalid Request"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:81
+#: includes/admin/api/class-bc-admin-media-api.php:86
 msgid "Type is not specified"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:86
-#: includes/classes/admin/api/class-bc-admin-media-api.php:147
+#: includes/admin/api/class-bc-admin-media-api.php:92
+#: includes/admin/api/class-bc-admin-media-api.php:174
 msgid "No such account exists"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:103
+#: includes/admin/api/class-bc-admin-media-api.php:116
 msgid "Successfully updated "
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:105
+#: includes/admin/api/class-bc-admin-media-api.php:120
 msgid "Failed to sync with WordPress!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:107
+#: includes/admin/api/class-bc-admin-media-api.php:124
 msgid "Failed to update "
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:122
+#: includes/admin/api/class-bc-admin-media-api.php:151
 msgid "Type is not specified!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:136
+#: includes/admin/api/class-bc-admin-media-api.php:167
 msgid "Wrong type is specified!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:160
+#: includes/admin/api/class-bc-admin-media-api.php:190
 msgid "Unable to remove video from Brightcove!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:162
+#: includes/admin/api/class-bc-admin-media-api.php:194
 msgid "Successfully deleted your video."
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:169
+#: includes/admin/api/class-bc-admin-media-api.php:204
 msgid "Unable to remove playlist from Brightcove!"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:171
+#: includes/admin/api/class-bc-admin-media-api.php:208
 msgid "Successfully deleted your playlist."
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:246
+#: includes/admin/api/class-bc-admin-media-api.php:279
 msgid "Unable to process file, does it have a valid extension?"
 msgstr ""
 
-#: includes/classes/admin/api/class-bc-admin-media-api.php:329
+#: includes/admin/api/class-bc-admin-media-api.php:414
 msgid "Invalid Search Type"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:18
-#: includes/classes/admin/class-bc-templates.php:155
+#: includes/admin/class-bc-admin-menu.php:18
+#: includes/admin/class-bc-templates.php:147
 msgid "Brightcove"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:19
-#: includes/classes/admin/class-bc-admin-videos-page.php:24
+#: includes/admin/class-bc-admin-menu.php:19
+#: includes/admin/class-bc-admin-videos-page.php:24
 msgid "Brightcove Videos"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:19
-#: includes/classes/admin/class-bc-templates.php:160
-#: includes/classes/admin/class-bc-templates.php:340
-#: includes/classes/admin/class-bc-templates.php:421
+#: includes/admin/class-bc-admin-menu.php:19
+#: includes/admin/class-bc-templates.php:152
+#: includes/admin/class-bc-templates.php:332
+#: includes/admin/class-bc-templates.php:413
 msgid "Videos"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:20
-#: includes/classes/admin/class-bc-admin-playlists-page.php:21
+#: includes/admin/class-bc-admin-menu.php:20
+#: includes/admin/class-bc-admin-playlists-page.php:24
 msgid "Brightcove Playlists"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:20
-#: includes/classes/admin/class-bc-templates.php:160
+#: includes/admin/class-bc-admin-menu.php:20
+#: includes/admin/class-bc-templates.php:152
 msgid "Playlists"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:21
-#: includes/classes/admin/class-bc-admin-settings-page.php:37
+#: includes/admin/class-bc-admin-menu.php:21
+#: includes/admin/class-bc-admin-settings-page.php:45
 msgid "Brightcove Settings"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:21
-#: includes/classes/admin/class-bc-admin-sources.php:134
+#: includes/admin/class-bc-admin-menu.php:21
+#: includes/admin/class-bc-admin-sources.php:165
 msgid "Settings"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-menu.php:24
-#: includes/classes/admin/class-bc-admin-settings-page.php:57
-#: includes/classes/admin/class-bc-admin-sources.php:162
+#: includes/admin/class-bc-admin-menu.php:24
+#: includes/admin/class-bc-admin-settings-page.php:66
+#: includes/admin/class-bc-admin-sources.php:199
 msgid "Add Source"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-playlists-page.php:42
+#: includes/admin/class-bc-admin-playlists-page.php:48
+#: includes/class-bc-utility.php:823
 msgid ""
 "A specified Source does not have a playlist capable player <a "
 "href=\"https://studio.brightcove.com/products/videocloud/players/\">"
@@ -127,497 +128,457 @@ msgid ""
 "Playlist\" enabled."
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:26
+#: includes/admin/class-bc-admin-settings-page.php:29
 msgid "Source Deleted"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:39
+#: includes/admin/class-bc-admin-settings-page.php:48
 msgid "Sources"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:44
-#: includes/classes/admin/class-bc-admin-sources.php:168
-#: includes/classes/admin/class-bc-admin-sources.php:255
+#: includes/admin/class-bc-admin-settings-page.php:53
+#: includes/admin/class-bc-admin-sources.php:205
+#: includes/admin/class-bc-admin-sources.php:291
 msgid "Source Name"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:45
-#: includes/classes/admin/class-bc-admin-sources.php:193
-#: includes/classes/admin/class-bc-admin-sources.php:266
+#: includes/admin/class-bc-admin-settings-page.php:54
+#: includes/admin/class-bc-admin-sources.php:231
+#: includes/admin/class-bc-admin-sources.php:302
 msgid "Account ID"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:46
-#: includes/classes/admin/class-bc-admin-sources.php:200
+#: includes/admin/class-bc-admin-settings-page.php:55
+#: includes/admin/class-bc-admin-sources.php:238
 msgid "Client ID"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:75
-#: includes/classes/admin/class-bc-admin-sources.php:249
+#: includes/admin/class-bc-admin-settings-page.php:86
+#: includes/admin/class-bc-admin-sources.php:285
 msgid "Edit Source"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:80
+#: includes/admin/class-bc-admin-settings-page.php:91
 msgid "Delete Source"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:81
+#: includes/admin/class-bc-admin-settings-page.php:92
 msgid ""
 "By deleting this source, WordPress will no longer have access to associated "
 "videos and playlists. Your content remains in Brightcove."
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:129
+#: includes/admin/class-bc-admin-settings-page.php:141
 msgid "Default"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-settings-page.php:155
+#: includes/admin/class-bc-admin-settings-page.php:168
 msgid "There are no sources defined. Add one below"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:33
+#: includes/admin/class-bc-admin-sources.php:37
 msgid "This account could not be found"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:59
+#: includes/admin/class-bc-admin-sources.php:72
 msgid "You do not have permission to manage this account."
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:101
+#: includes/admin/class-bc-admin-sources.php:122
 msgid "The Brightcove credentials provided already exist."
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:109
+#: includes/admin/class-bc-admin-sources.php:134
 msgid "We could not authenticate your credentials with Brightcove"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:132
+#: includes/admin/class-bc-admin-sources.php:163
 msgid "Congratulations! Your credentials have been authenticated. Return to"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:171
+#: includes/admin/class-bc-admin-sources.php:208
 msgid "My Brightcove Account Name"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:174
+#: includes/admin/class-bc-admin-sources.php:211
 msgid "This is how the source will be identified in WordPress"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:180
+#: includes/admin/class-bc-admin-sources.php:217
 msgid "Credentials"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:183
+#: includes/admin/class-bc-admin-sources.php:220
 msgid ""
 "Each token has a set of API permissions defined when registering a new "
 "client."
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:185
+#: includes/admin/class-bc-admin-sources.php:223
 msgid "You can check the permissions and find out more about the settings below in"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:186
+#: includes/admin/class-bc-admin-sources.php:224
 msgid "Video Cloud Studio"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:204
+#: includes/admin/class-bc-admin-sources.php:242
 msgid "A unique identifier for a client generated by Brightcove"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:208
+#: includes/admin/class-bc-admin-sources.php:246
 msgid "Client Secret"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:212
+#: includes/admin/class-bc-admin-sources.php:250
 msgid ""
 "A unique identifier generated by Brightcove, used with a client id. Serves "
 "as a password to authenticate a client"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:217
-#: includes/classes/admin/class-bc-admin-sources.php:275
-#: includes/classes/admin/class-bc-admin-user-profile.php:32
+#: includes/admin/class-bc-admin-sources.php:255
+#: includes/admin/class-bc-admin-sources.php:311
+#: includes/admin/class-bc-admin-user-profile.php:32
 msgid "Default Source"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:221
-#: includes/classes/admin/class-bc-admin-sources.php:279
+#: includes/admin/class-bc-admin-sources.php:259
+#: includes/admin/class-bc-admin-sources.php:315
 msgid "Make this the default source for new users"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:233
+#: includes/admin/class-bc-admin-sources.php:271
 msgid "Check Credentials"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-sources.php:284
-msgid "Default Player"
-msgstr ""
-
-#: includes/classes/admin/class-bc-admin-sources.php:309
+#: includes/admin/class-bc-admin-sources.php:327
 msgid "Save Changes"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-user-profile.php:29
+#: includes/admin/class-bc-admin-user-profile.php:29
 msgid "Brightcove Preferences"
 msgstr ""
 
-#: includes/classes/admin/class-bc-admin-user-profile.php:63
+#: includes/admin/class-bc-admin-user-profile.php:63
 msgid "The specified Source does not exist."
 msgstr ""
 
-#: includes/classes/admin/class-bc-status-warning.php:149
+#: includes/admin/class-bc-status-warning.php:149
 msgid ""
 "One or more Brightcove services are reporting errors. This may effect your "
 "Brightcove experience. For more information please visit"
 msgstr ""
 
-#: includes/classes/admin/class-bc-status-warning.php:150
+#: includes/admin/class-bc-status-warning.php:150
 msgid "the Brightcove Status page"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:44
+#: includes/admin/class-bc-templates.php:44
 msgid "Move up"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:45
+#: includes/admin/class-bc-templates.php:45
 msgid "Move Down"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:46
+#: includes/admin/class-bc-templates.php:46
 msgid "Remove"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:70
+#: includes/admin/class-bc-templates.php:70
 msgid "Add to playlist"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:80
+#: includes/admin/class-bc-templates.php:80
 msgid "Playlist Name"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:82
-#: includes/classes/admin/class-bc-templates.php:134
-#: includes/classes/admin/class-bc-templates.php:397
+#: includes/admin/class-bc-templates.php:82
+#: includes/admin/class-bc-templates.php:126
+#: includes/admin/class-bc-templates.php:389
 msgid "Back"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:102
-#: includes/classes/admin/class-bc-templates.php:251
+#: includes/admin/class-bc-templates.php:102
+#: includes/admin/class-bc-templates.php:243
 msgid "Name"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:106
+#: includes/admin/class-bc-templates.php:106
 msgid "Description"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:110
+#: includes/admin/class-bc-templates.php:110
 msgid "Long Description"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:115
-#: includes/classes/admin/class-bc-templates.php:255
+#: includes/admin/class-bc-templates.php:115
+#: includes/admin/class-bc-templates.php:247
 msgid "Tags"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:119
-msgid "Display Width"
-msgstr ""
-
-#: includes/classes/admin/class-bc-templates.php:123
-msgid "Display Height"
-msgstr ""
-
-#: includes/classes/admin/class-bc-templates.php:129
+#: includes/admin/class-bc-templates.php:121
 msgid "Delete"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:135
+#: includes/admin/class-bc-templates.php:127
 msgid "Save and Sync Changes"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:160
+#: includes/admin/class-bc-templates.php:142
+msgid "Close media panel"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:152
 msgid "Upload Files"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:170
+#: includes/admin/class-bc-templates.php:162
 msgid "Edit Selection"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:170
+#: includes/admin/class-bc-templates.php:162
 msgid "Clear"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:178
+#: includes/admin/class-bc-templates.php:170
 msgid "Insert Into Post"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:186
-#: includes/classes/admin/class-bc-templates.php:276
+#: includes/admin/class-bc-templates.php:178
+#: includes/admin/class-bc-templates.php:268
 msgid "Drop files to upload"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:212
-#: includes/classes/admin/class-bc-templates.php:247
+#: includes/admin/class-bc-templates.php:204
+#: includes/admin/class-bc-templates.php:239
 msgid "File Name"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:213
+#: includes/admin/class-bc-templates.php:205
 msgid "Size"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:214
-#: includes/classes/admin/class-bc-templates.php:259
+#: includes/admin/class-bc-templates.php:206
+#: includes/admin/class-bc-templates.php:251
 msgid "Source"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:215
+#: includes/admin/class-bc-templates.php:207
 msgid "Progress"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:222
+#: includes/admin/class-bc-templates.php:214
 msgid "Start Upload"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:285
+#: includes/admin/class-bc-templates.php:277
 msgid "Upload Limit Exceeded"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:288
+#: includes/admin/class-bc-templates.php:280
 msgid "Drop files anywhere to upload"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:290
+#: includes/admin/class-bc-templates.php:282
 msgid "Select Files"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:305
+#: includes/admin/class-bc-templates.php:297
 msgid "Maximum upload file size: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:307
+#: includes/admin/class-bc-templates.php:299
 msgid ""
 "Please reference the readme.txt file of this plugin for further information "
 "on upload file size limits."
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:338
-#: includes/classes/admin/class-bc-templates.php:419
+#: includes/admin/class-bc-templates.php:330
+#: includes/admin/class-bc-templates.php:411
 msgid "Video"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:343
-#: includes/classes/admin/class-bc-templates.php:424
+#: includes/admin/class-bc-templates.php:335
+#: includes/admin/class-bc-templates.php:416
 msgid "Smart"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:355
-#: includes/classes/admin/class-bc-templates.php:399
-#: includes/classes/admin/class-bc-templates.php:439
+#: includes/admin/class-bc-templates.php:347
+#: includes/admin/class-bc-templates.php:391
+#: includes/admin/class-bc-templates.php:431
 msgid "Edit"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:356
-#: includes/classes/admin/class-bc-templates.php:400
+#: includes/admin/class-bc-templates.php:348
+#: includes/admin/class-bc-templates.php:392
 msgid "Preview"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:392
+#: includes/admin/class-bc-templates.php:384
 msgid "Source: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:393
+#: includes/admin/class-bc-templates.php:385
 msgid "Video ID: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:431
+#: includes/admin/class-bc-templates.php:423
 msgid "Playlist ID: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:432
+#: includes/admin/class-bc-templates.php:424
 msgid "Account Name: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:433
+#: includes/admin/class-bc-templates.php:425
 msgid "Created At: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:434
+#: includes/admin/class-bc-templates.php:426
 msgid "Updated At: "
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:435
+#: includes/admin/class-bc-templates.php:427
 msgid "Playlist Type: "
 msgstr ""
 
-#: includes/classes/api/class-bc-api.php:243
+#: includes/api/class-bc-api.php:244
 msgid "An unspecified error has occurred."
 msgstr ""
 
-#: includes/classes/api/class-bc-oauth.php:82
+#: includes/api/class-bc-oauth.php:82
 msgid "There is a problem with your Brightcove %1$s or %2$s"
 msgstr ""
 
-#: includes/classes/api/class-bc-oauth.php:101
+#: includes/api/class-bc-oauth.php:101
 msgid "oAuth API did not return us an access token"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:158
+#: includes/class-bc-accounts.php:118
 msgid ""
 "Account credentials are invalid. Please ensure you are using all the "
 "correct information from Brightcove Video Cloud Studio to secure a token."
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:176
+#: includes/class-bc-accounts.php:135
 msgid "Unable to update this account via WP-CLI."
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:237
+#: includes/class-bc-accounts.php:161
 msgid "The specified Brightcove Account has not been configured in WordPress"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:532
+#: includes/class-bc-accounts.php:446
 msgid "Supplied account can not create videos"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:540
+#: includes/class-bc-accounts.php:454
 msgid "Supplied account can not update videos"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:546
+#: includes/class-bc-accounts.php:460
 msgid "Supplied account cannot create playlists"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:555
+#: includes/class-bc-accounts.php:469
 msgid "Supplied account cannot modify playlists"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:560
+#: includes/class-bc-accounts.php:474
 msgid "Supplied playlist cannot delete playlists"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:566
+#: includes/class-bc-accounts.php:480
 msgid "Supplied account can not delete videos"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:574
+#: includes/class-bc-accounts.php:488
 msgid "Supplied account can not fetch players"
 msgstr ""
 
-#: includes/classes/class-bc-accounts.php:605
+#: includes/class-bc-accounts.php:519
 msgid "Invalid account credentials"
 msgstr ""
 
-#: includes/classes/class-bc-logging.php:25
+#: includes/class-bc-logging.php:25
 msgid "Binary content is not supported by the Logging mechanism."
 msgstr ""
 
-#: includes/classes/class-bc-logging.php:37
+#: includes/class-bc-logging.php:37
 msgid ""
 "You must provide a file path and name to use <pre>file</pre> mode. Writing "
 "to the syslog instead."
 msgstr ""
 
-#: includes/classes/class-bc-logging.php:44
+#: includes/class-bc-logging.php:44
 msgid ""
 "The file specified, <pre>%s</pre> does not exist. Writing to the syslog "
 "instead."
 msgstr ""
 
-#: includes/classes/class-bc-logging.php:52
+#: includes/class-bc-logging.php:52
 msgid ""
 "The file specified, <pre>%s</pre> is not writable byt the web server. "
 "Writing to the syslog instead."
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:109
+#: includes/class-bc-setup.php:102
 msgid "Brightcove Media"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:171
+#: includes/class-bc-setup.php:177
 msgid "Allowed Files"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:181
+#: includes/class-bc-setup.php:187
 msgid ""
 "Deleting this video will prevent it from showing in any existing posts. Are "
 "you sure you want to delete?"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:182
+#: includes/class-bc-setup.php:188
 msgid ""
 "We are currently performing a sync of your new Brightcove source, you may "
 "not see all videos and playlists until that is complete."
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:183
+#: includes/class-bc-setup.php:189
 msgid "Successfully uploaded file with name %%s%%."
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:184
+#: includes/class-bc-setup.php:190
 msgid ""
 "We were unable to upload the file with name %%s%% Please try reuploading it "
 "again."
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:296
+#: includes/class-bc-setup.php:315
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:298
+#: includes/class-bc-setup.php:317
 msgid "here"
 msgstr ""
 
-#: includes/classes/class-bc-setup.php:320
+#: includes/class-bc-setup.php:344
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "
 "WordPress version %s! The minimum compatible WordPress version is "
-"<strong>4.0</strong></p></div>"
+"<strong>4.2</strong></p></div>"
 msgstr ""
 
-#: includes/classes/class-bc-video-shortcode.php:99
-msgid "No video was found"
-msgstr ""
-
-#: includes/classes/class-bc-video-upload.php:36
+#: includes/class-bc-video-upload.php:46
 msgid "Invalid account"
 msgstr ""
 
-#: includes/classes/class-bc-video-upload.php:44
+#: includes/class-bc-video-upload.php:54
 msgid "Video type is not supported"
 msgstr ""
 
-#: includes/classes/class-bc-video-upload.php:70
+#: includes/class-bc-video-upload.php:87
 msgid "Unable to create a video on brightcove side"
-msgstr ""
-
-#: includes/classes/sync/class-bc-players.php:32
-msgid "Starting Player Sync"
-msgstr ""
-
-#: includes/classes/sync/class-bc-players.php:61
-msgid "Player Sync Complete"
-msgstr ""
-
-#: includes/classes/sync/class-bc-playlists.php:75
-msgid "The Playlist failed to sync with WordPress"
-msgstr ""
-
-#: includes/classes/sync/class-bc-playlists.php:187
-msgid "Starting Playlist Sync"
-msgstr ""
-
-#: includes/classes/sync/class-bc-playlists.php:226
-msgid "Playlist Sync Complete"
-msgstr ""
-
-#: includes/classes/sync/class-bc-videos.php:391
-msgid "The video has not been created in WordPress"
-msgstr ""
-
-#: includes/classes/sync/class-bc-videos.php:398
-msgid "BC WORDPRESS: Video with ID #%d has been created"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -642,7 +603,7 @@ msgstr ""
 msgid "http://10up.com"
 msgstr ""
 
-#: includes/classes/admin/class-bc-templates.php:289
+#: includes/admin/class-bc-templates.php:281
 msgctxt "Uploader: Drop files here - or - Select Files"
 msgid "or"
 msgstr ""
