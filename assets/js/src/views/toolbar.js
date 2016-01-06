@@ -63,7 +63,7 @@ var ToolbarView = BrightcoveView.extend(
 		sourceChanged : function ( event ) {
 
 			// Store the currently selected account on the model.
-			this.set( 'account', event.target.value );
+			this.model.set( 'account', event.target.value );
 			wpbc.broadcast.trigger( 'change:activeAccount', event.target.value );
 		},
 
