@@ -24,7 +24,8 @@ var ToolbarView = BrightcoveView.extend(
 				accounts :  wpbc.preload.accounts,
 				dates :     {},
 				mediaType : mediaType,
-				tags :      wpbc.preload.tags
+				tags :      wpbc.preload.tags,
+				account :   wpbc.preload.defaultAccountId
 			};
 
 			var dates    = wpbc.preload.dates;
