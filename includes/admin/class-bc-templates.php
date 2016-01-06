@@ -439,11 +439,7 @@ class BC_Admin_Templates {
 				<div class="media-toolbar-secondary">
 					<label for="brightcove-media-source" class="screen-reader-text">Filter by source</label>
 					<select id="brightcove-media-source" class="brightcove-media-source attachment-filters">
-						<#
-							console.log( data );
-
-
-						#>						<# _.each(data.accounts, function (account) { #>
+						<# _.each(data.accounts, function (account) { #>
 							<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #>>{{ account.account_name }}</option>
 						<# }); #>
 					</select>
