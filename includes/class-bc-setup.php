@@ -129,32 +129,9 @@ class BC_Setup {
 			$cms_api         = new BC_CMS_API();
 			$admin_media_api = new BC_Admin_Media_API();
 
-			if ( false !== strpos( $uri, BC_Admin_Menu::get_videos_page_uri_component() ) ) {
-
-				$params['videos'] = $admin_media_api->fetch_all( 'videos' );
-
-			} else if ( false !== strpos( $uri, BC_Admin_Menu::get_playlists_page_uri_component() ) ) {
-
+			if ( false !== strpos( $uri, BC_Admin_Menu::get_playlists_page_uri_component() ) ) {
 				$type                = 'playlists';
 				$params['playlists'] = $cms_api->playlist_list();
-
-			} else {
-
-				global $pagenow;
-
-				if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
-
-					// Preload both videos and playlists for the post pages because the modal
-					// has tabs to alternate between the two views.
-					$params['videos']    = $admin_media_api->fetch_all( 'videos' );
-					$params['playlists'] = $cms_api->playlist_list();
-
-				} else {
-
-					// What weird page are we on?
-					return false;
-
-				}
 			}
 		} else {
 			return false;
