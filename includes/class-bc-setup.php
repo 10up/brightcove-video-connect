@@ -196,8 +196,9 @@ class BC_Setup {
 		// Fetch all supported mime types.
 		$params['mimeTypes'] = BC_Utility::get_all_brightcove_mimetypes();
 
-		$defaultAccount           = $bc_accounts->get_account_details_for_user();
-		$params['defaultAccount'] = $defaultAccount['hash'];
+		$defaultAccount             = $bc_accounts->get_account_details_for_user();
+		$params['defaultAccount']   = $defaultAccount['hash'];
+		$params['defaultAccountId'] = $defaultAccount['account_id'];
 
 		return $params;
 
