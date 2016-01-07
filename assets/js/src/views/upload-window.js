@@ -143,7 +143,6 @@ UploadWindowView = BrightcoveView.extend(
 				if ( status.data.videoDetails ) {
 					// Add newly uploaded file to preload list.
 					wpbc.broadcast.trigger( 'uploader:uploadedFileDetails', status.data.videoDetails );
-					wpbc.preload.videos.unshift( status.data.videoDetails );
 				}
 				wpbc.broadcast.trigger( 'uploader:successfulUploadIngest', file );
 			} else {
