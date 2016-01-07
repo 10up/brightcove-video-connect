@@ -136,7 +136,7 @@ var MediaCollection = Backbone.Collection.extend(
 				options      = options || {};
 				options.data = _.extend( options.data || {}, {
 					action :         'bc_media_query',
-					account :        this.activeAccount,
+					account :        this.activeAccount || wpbc.preload.defaultAccountId,
 					dates :          this.date,
 					posts_per_page : 100,
 					page_number :    this.pageNumber,

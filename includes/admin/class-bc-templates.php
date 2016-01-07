@@ -439,10 +439,8 @@ class BC_Admin_Templates {
 				<div class="media-toolbar-secondary">
 					<label for="brightcove-media-source" class="screen-reader-text">Filter by source</label>
 					<select id="brightcove-media-source" class="brightcove-media-source attachment-filters">
-						<# var allValue = 1 === _.size(data.accounts) ? data.accounts[_.keys(data.accounts)[0]]['account_id'] : 'all'; #>
-						<option value="{{ allValue }}">All sources</option>
 						<# _.each(data.accounts, function (account) { #>
-							<option value="{{ account.account_id }}">{{ account.account_name }}</option>
+							<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #>>{{ account.account_name }}</option>
 						<# }); #>
 					</select>
 
@@ -473,7 +471,7 @@ class BC_Admin_Templates {
 				</div>
 				<# if (data.mediaType === 'videos') { #>
 					<div class="media-toolbar-primary search-form">
-						<span class="spinner hidden"></span>
+						<span class="spinner is-active"></span>
 						<label for="media-search-input" class="screen-reader-text">Search Media</label>
 						<input type="search" placeholder="Search" id="media-search-input" class="search">
 					</div>

@@ -24,7 +24,8 @@ var ToolbarView = BrightcoveView.extend(
 				accounts :  wpbc.preload.accounts,
 				dates :     {},
 				mediaType : mediaType,
-				tags :      wpbc.preload.tags
+				tags :      wpbc.preload.tags,
+				account :   this.model.get( 'account' )
 			};
 
 			var dates    = wpbc.preload.dates;
@@ -60,6 +61,9 @@ var ToolbarView = BrightcoveView.extend(
 
 		// Brightcove source changed
 		sourceChanged : function ( event ) {
+
+			// Store the currently selected account on the model.
+			this.model.set( 'account', event.target.value );
 			wpbc.broadcast.trigger( 'change:activeAccount', event.target.value );
 		},
 
