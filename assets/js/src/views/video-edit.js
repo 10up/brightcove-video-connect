@@ -23,7 +23,17 @@ var VideoEditView = BrightcoveView.extend(
 			}
 		},
 
-		saveSync : function () {
+		saveSync : function ( evnt ) {
+			console.log( evnt );
+			var $allButtons = $( evnt.currentTarget ).parents( '.media-frame' ).find( '.button' );
+
+			// Exit if the 'button' is disabled.
+			if ( $allButtons.hasClass( 'disabled' ) ) {
+				return;
+			}
+
+			// Disable the button for the duration of the request.
+			$allButtons.addClass( 'disabled' );
 			wpbc.broadcast.trigger( 'spinner:on' );
 			this.model.set( 'name', this.$el.find( '.brightcove-name' ).val() );
 			this.model.set( 'description', this.$el.find( '.brightcove-description' ).val() );
@@ -32,7 +42,12 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'height', this.$el.find( '.brightcove-height' ).val() );
 			this.model.set( 'width', this.$el.find( '.brightcove-width' ).val() );
 			this.model.set( 'mediaType', 'videos' );
-			this.model.save();
+			this.model.save()
+				.done( function() {
+
+					// Re-enable the button when the request has completed.
+					$allButtons.removeClass( 'disabled' );
+				} );
 		},
 
 		render : function ( options ) {
