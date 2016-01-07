@@ -39,6 +39,9 @@
 					wpbc.modal.render();
 					wpbc.modal.$el.find( '.spinner' ).addClass( 'is-active' );
 				} else {
+
+					// Switch back to the video view.
+					wpbc.broadcast.trigger( 'start:gridview' );
 					wpbc.modal.$el.show();
 				}
 			};
