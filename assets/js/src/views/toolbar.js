@@ -15,7 +15,8 @@ var ToolbarView = BrightcoveView.extend(
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
 			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
-			'keyup .search' :                      'searchHandler'
+			'search .search' :                      'searchHandler',
+			'keyup  .search' :                      'searchHandler'
 		},
 
 		render : function () {
@@ -96,6 +97,10 @@ var ToolbarView = BrightcoveView.extend(
 					this.model.set( 'search', event.target.value );
 					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
 				}
+			} else if ( 0 === event.target.value.length ) {
+				this.model.set( 'search', '' );
+				wpbc.broadcast.trigger( 'change:searchTerm', '' );
+
 			}
 		}
 	}
