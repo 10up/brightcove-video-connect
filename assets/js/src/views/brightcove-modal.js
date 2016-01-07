@@ -67,6 +67,11 @@ var BrightcoveModalView = BrightcoveView.extend(
 
 		closeModal : function ( evnt ) {
 
+			// If we are in the editVideo mode, switch back to the video view.
+			if ( 'editVideo' === wpbc.modal.brightcoveMediaManager.model.get('mode') ) {
+				wpbc.broadcast.trigger( 'start:gridview' );
+			}
+
 			// Exit if the container button is disabled.
 			if ( ! _.isUndefined( evnt ) && $( evnt.currentTarget ).parent().hasClass( 'disabled' ) ) {
 				return;
