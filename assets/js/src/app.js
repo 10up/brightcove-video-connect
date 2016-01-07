@@ -37,6 +37,7 @@
 						tab: 'videos'
 					});
 					wpbc.modal.render();
+					wpbc.modal.$el.find( '.spinner' ).addClass( 'is-active' );
 				} else {
 					wpbc.modal.$el.show();
 				}

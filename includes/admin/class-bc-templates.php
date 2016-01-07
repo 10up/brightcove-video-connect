@@ -471,7 +471,7 @@ class BC_Admin_Templates {
 				</div>
 				<# if (data.mediaType === 'videos') { #>
 					<div class="media-toolbar-primary search-form">
-						<span class="spinner is-active"></span>
+						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text">Search Media</label>
 						<input type="search" placeholder="Search" id="media-search-input" class="search">
 					</div>
