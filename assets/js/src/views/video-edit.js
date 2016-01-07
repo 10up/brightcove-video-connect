@@ -12,6 +12,11 @@ var VideoEditView = BrightcoveView.extend(
 
 		back : function ( event ) {
 			event.preventDefault();
+
+			// Exit if the 'button' is disabled.
+			if ( $( evnt.currentTarget ).hasClass( 'disabled' ) ) {
+				return;
+			}
 			wpbc.broadcast.trigger( 'start:gridview' );
 		},
 
@@ -24,8 +29,9 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		saveSync : function ( evnt ) {
-			console.log( evnt );
-			var $allButtons = $( evnt.currentTarget ).parents( '.media-frame' ).find( '.button' );
+
+			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-frame' ),
+				$allButtons = $mediaFrame.find( '.button' );
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
@@ -34,6 +40,10 @@ var VideoEditView = BrightcoveView.extend(
 
 			// Disable the button for the duration of the request.
 			$allButtons.addClass( 'disabled' );
+
+			// Hide the delete link for the duration of the request.
+			$mediaFrame.find( '.delete-action' ).hide();
+
 			wpbc.broadcast.trigger( 'spinner:on' );
 			this.model.set( 'name', this.$el.find( '.brightcove-name' ).val() );
 			this.model.set( 'description', this.$el.find( '.brightcove-description' ).val() );
@@ -47,6 +57,9 @@ var VideoEditView = BrightcoveView.extend(
 
 					// Re-enable the button when the request has completed.
 					$allButtons.removeClass( 'disabled' );
+
+					// Show the delete link.
+					$mediaFrame.find( '.delete-action' ).show();
 				} );
 		},
 

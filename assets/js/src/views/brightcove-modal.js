@@ -20,7 +20,13 @@ var BrightcoveModalView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'close:modal', this.closeModal );
 		},
 
-		insertIntoPost : function () {
+		insertIntoPost : function ( evnt ) {
+			// Exit if the 'button' is disabled.
+			if ( $( evnt.currentTarget ).hasClass( 'disabled' ) ) {
+				evnt.preventDefault();
+				return;
+			}
+
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
 			wpbc.broadcast.trigger( 'insert:shortcode' );
