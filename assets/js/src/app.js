@@ -92,7 +92,5 @@
 	};
 
 	jQuery( document ).ready( function() {
-		// Ensure $ set up.
-		$ = $ || jQuery;
 		App.load();
 	} );

@@ -61,6 +61,14 @@ module.exports = function ( grunt ) {
 
 			concat: {
 				development: {
+
+					options : {
+
+						// Wrap our scripts to limit their scope.
+						banner: '( function( $ ){\n',
+						footer: '\n} )( jQuery );'
+					},
+
 					files : {
 						'assets/js/brightcove-admin.js' : [
 							// MODELS
