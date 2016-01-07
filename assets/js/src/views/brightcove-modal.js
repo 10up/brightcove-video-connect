@@ -72,6 +72,7 @@ var BrightcoveModalView = BrightcoveView.extend(
 				return;
 			}
 			this.$el.hide();
+			$( 'body' ).removeClass( 'modal-open' );
 		},
 
 		message : function ( message ) {

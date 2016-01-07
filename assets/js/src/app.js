@@ -44,6 +44,9 @@
 					wpbc.broadcast.trigger( 'start:gridview' );
 					wpbc.modal.$el.show();
 				}
+
+				// Prevent body scrolling by adding a class to 'body'.
+				$( 'body' ).addClass( 'modal-open' );
 			};
 
 			var bc_sanitize_ids = function( id ) {
