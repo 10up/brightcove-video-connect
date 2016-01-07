@@ -14,7 +14,7 @@ var VideoEditView = BrightcoveView.extend(
 			event.preventDefault();
 
 			// Exit if the 'button' is disabled.
-			if ( $( evnt.currentTarget ).hasClass( 'disabled' ) ) {
+			if ( $( event.currentTarget ).hasClass( 'disabled' ) ) {
 				return;
 			}
 			wpbc.broadcast.trigger( 'start:gridview' );
