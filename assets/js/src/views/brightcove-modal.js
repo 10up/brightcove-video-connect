@@ -65,7 +65,12 @@ var BrightcoveModalView = BrightcoveView.extend(
 
 		},
 
-		closeModal : function () {
+		closeModal : function ( evnt ) {
+
+			// Exit if the container button is disabled.
+			if ( $( evnt.currentTarget ).parent().hasClass( 'disabled' ) ) {
+				return;
+			}
 			this.$el.hide();
 		},
 

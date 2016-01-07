@@ -30,8 +30,8 @@ var VideoEditView = BrightcoveView.extend(
 
 		saveSync : function ( evnt ) {
 
-			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-frame' ),
-				$allButtons = $mediaFrame.find( '.button' );
+			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
+				$allButtons = $mediaFrame.find( '.button, .button-link' );
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
