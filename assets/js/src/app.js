@@ -84,6 +84,8 @@
 		}
 	};
 
-	$( document ).ready( function() {
-			App.load();
-	});
+	jQuery( document ).ready( function() {
+		// Ensure $ set up.
+		$ = $ || jQuery;
+		App.load();
+	} );
