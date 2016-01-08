@@ -298,15 +298,38 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				wpbc.permanentMessage = newMessage;
 
 			} else {
-
-				newMessage.fadeOut( 6000, function () {
-
-					$( this ).remove();
-					messages.addClass( 'hidden' );
-
-				} );
-
+				// Make the notice dismissable.
+				messages.addClass( 'notice is-dismissible' );
+				this.makeNoticesDismissible();
 			}
+		},
+
+		// Make notices dismissible, mimics core function, fades them empties.
+		makeNoticesDismissible : function() {
+			$( '.notice.is-dismissible' ).each( function() {
+				var $el = $( this ),
+					$button = $( '<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>' ),
+					btnText = commonL10n.dismiss || '';
+
+				// Ensure plain text
+				$button.find( '.screen-reader-text' ).text( btnText );
+				$button.on( 'click.wp-dismiss-notice', function( event ) {
+					event.preventDefault();
+					$el.fadeTo( 100, 0, function() {
+						$el.slideUp( 100, function() {
+							$el.addClass( 'hidden' )
+								.css( {
+									'opacity': 1,
+									'margin-bottom': 0,
+									'display': ''
+								} )
+								.empty();
+						});
+					});
+				});
+
+				$el.append( $button );
+			});
 		},
 
 		showUploader : function () {

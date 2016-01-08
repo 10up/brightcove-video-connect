@@ -20,7 +20,13 @@ var BrightcoveModalView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'close:modal', this.closeModal );
 		},
 
-		insertIntoPost : function () {
+		insertIntoPost : function ( evnt ) {
+			// Exit if the 'button' is disabled.
+			if ( $( evnt.currentTarget ).hasClass( 'disabled' ) ) {
+				evnt.preventDefault();
+				return;
+			}
+
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
 			wpbc.broadcast.trigger( 'insert:shortcode' );
@@ -59,8 +65,19 @@ var BrightcoveModalView = BrightcoveView.extend(
 
 		},
 
-		closeModal : function () {
+		closeModal : function ( evnt ) {
+
+			// If we are in the editVideo mode, switch back to the video view.
+			if ( 'editVideo' === wpbc.modal.brightcoveMediaManager.model.get('mode') ) {
+				wpbc.broadcast.trigger( 'start:gridview' );
+			}
+
+			// Exit if the container button is disabled.
+			if ( ! _.isUndefined( evnt ) && $( evnt.currentTarget ).parent().hasClass( 'disabled' ) ) {
+				return;
+			}
 			this.$el.hide();
+			$( 'body' ).removeClass( 'modal-open' );
 		},
 
 		message : function ( message ) {

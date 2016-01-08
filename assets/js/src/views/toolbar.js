@@ -15,7 +15,8 @@ var ToolbarView = BrightcoveView.extend(
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
 			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
-			'keyup .search' :                      'searchHandler'
+			'search .search' :                      'searchHandler',
+			'keyup  .search' :                      'searchHandler'
 		},
 
 		render : function () {
@@ -81,13 +82,27 @@ var ToolbarView = BrightcoveView.extend(
 		},
 
 		searchHandler : function ( event ) {
-			// Enter / Carriage Return
-			if ( event.keyCode === 13 ) {
-				this.model.set( 'search', event.target.value );
-				wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+
+			// Searches of fewer than three characters return no results.
+			if ( event.target.value.length > 2 ) {
+
+				// Trigger a search when the user pauses typing for one second.
+				_.debounce( _.bind( function(){
+					this.model.set( 'search', event.target.value );
+					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+				}, this ), 1000 )();
+
+				// Enter / Carriage Return triggers immediate search.
+				if ( event.keyCode === 13 ) {
+					this.model.set( 'search', event.target.value );
+					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+				}
+			} else if ( 0 === event.target.value.length ) {
+				this.model.set( 'search', '' );
+				wpbc.broadcast.trigger( 'change:searchTerm', '' );
+
 			}
 		}
-
 	}
 );
 

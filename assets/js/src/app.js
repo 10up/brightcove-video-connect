@@ -37,9 +37,13 @@
 						tab: 'videos'
 					});
 					wpbc.modal.render();
+					wpbc.modal.$el.find( '.spinner' ).addClass( 'is-active' );
 				} else {
 					wpbc.modal.$el.show();
 				}
+
+				// Prevent body scrolling by adding a class to 'body'.
+				$( 'body' ).addClass( 'modal-open' );
 			};
 
 			var bc_sanitize_ids = function( id ) {
@@ -84,6 +88,6 @@
 		}
 	};
 
-	$( document ).ready( function() {
-			App.load();
-	});
+	jQuery( document ).ready( function() {
+		App.load();
+	} );

@@ -59,13 +59,54 @@ module.exports = function ( grunt ) {
 
 			},
 
+			concat: {
+				development: {
+
+					options : {
+
+						// Wrap our scripts to limit their scope.
+						banner: '( function( $ ){\n',
+						footer: '\n} )( jQuery );'
+					},
+
+					files : {
+						'assets/js/brightcove-admin.js' : [
+							// MODELS
+							'assets/js/src/models/media.js',
+							'assets/js/src/models/media-collection.js',
+							'assets/js/src/models/brightcove-media-manager.js',
+							'assets/js/src/models/brightcove-modal.js',
+							'assets/js/src/models/upload-collection.js',
+							'assets/js/src/models/upload.js',
+
+							// VIEWS
+							'assets/js/src/views/brightcove.js',
+							'assets/js/src/views/toolbar.js',
+							'assets/js/src/views/upload-video-manager.js',
+							'assets/js/src/views/brightcove-media-manager.js',
+							'assets/js/src/views/brightcove-modal.js',
+							'assets/js/src/views/media-details.js',
+							'assets/js/src/views/media.js',
+							'assets/js/src/views/playlist-edit.js',
+							'assets/js/src/views/upload-details.js',
+							'assets/js/src/views/upload-window.js',
+							'assets/js/src/views/upload.js',
+							'assets/js/src/views/video-edit.js',
+							'assets/js/src/views/video-preview.js',
+							'assets/js/src/views/media-collection.js',
+							'assets/js/src/app.js'
+						]
+					}
+				}
+			},
+
 			uglify : {
 
 				production : {
 
 					options : {
 						beautify         : false,
-						preserveComments : false,
+						preserveComments : 'all',
 						mangle           : {
 							except : ['jQuery']
 						},
@@ -110,47 +151,6 @@ module.exports = function ( grunt ) {
 
 				},
 
-				development : {
-
-					options : {
-						beautify:          true,
-						separator:       ';\n',
-						banner:            '(function($){\n',
-						footer:            '\n})(jQuery);',
-						preserveComments : true
-					},
-
-					files : {
-						'assets/js/brightcove-admin.js' : [
-							// MODELS
-							'assets/js/src/models/media.js',
-							'assets/js/src/models/media-collection.js',
-							'assets/js/src/models/brightcove-media-manager.js',
-							'assets/js/src/models/brightcove-modal.js',
-							'assets/js/src/models/upload-collection.js',
-							'assets/js/src/models/upload.js',
-
-							// VIEWS
-							'assets/js/src/views/brightcove.js',
-							'assets/js/src/views/toolbar.js',
-							'assets/js/src/views/upload-video-manager.js',
-							'assets/js/src/views/brightcove-media-manager.js',
-							'assets/js/src/views/brightcove-modal.js',
-							'assets/js/src/views/media-details.js',
-							'assets/js/src/views/media.js',
-							'assets/js/src/views/playlist-edit.js',
-							'assets/js/src/views/upload-details.js',
-							'assets/js/src/views/upload-window.js',
-							'assets/js/src/views/upload.js',
-							'assets/js/src/views/video-edit.js',
-							'assets/js/src/views/video-preview.js',
-							'assets/js/src/views/media-collection.js',
-							'assets/js/src/app.js'
-						]
-					}
-
-				}
-
 			},
 
 			makepot : {
@@ -187,7 +187,7 @@ module.exports = function ( grunt ) {
 						'assets/js/src/**/*'
 					],
 
-					tasks : ['uglify:development', 'uglify:production']
+					tasks : ['concat:development', 'uglify:production']
 
 				}
 
@@ -197,6 +197,6 @@ module.exports = function ( grunt ) {
 	);
 
 	// A very basic default task.
-	grunt.registerTask ( 'default', ['clean', 'sass', 'autoprefixer', 'cssmin', 'uglify:development', 'uglify:production', 'makepot'] );
+	grunt.registerTask ( 'default', ['clean', 'sass', 'autoprefixer', 'cssmin', 'concat:development', 'uglify:production', 'makepot'] );
 
 };

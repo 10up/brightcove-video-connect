@@ -80,26 +80,27 @@ var MediaModel = Backbone.Model.extend(
 				// This will permanently delete an attachment.
 			} else if ( 'delete' === method ) {
 				options = options || {};
+				var self = this;
 
 				options.data = _.extend( options.data || {}, {
 					account : accountHash,
 					action :  'bc_media_delete',
 					id :      this.get( 'id' ),
 					nonce :   wpbc.preload.nonce,
-					type :    this.get( 'mediaType' )
+					type :    this.get( 'mediaType' ),
 				} );
 
 				return wp.media.ajax( options ).done( function ( response ) {
-					this.destroyed = true;
+					self.destroyed = true;
 					wpbc.broadcast.trigger( 'delete:successful', response );
-					if ( 'videos' === this.get( 'mediaType' ) || ! _.isUndefined( this.get( 'video_ids' ) ) ) {
+					if ( 'videos' === self.get( 'mediaType' ) || ! _.isUndefined( self.get( 'video_ids' ) ) ) {
 						wpbc.preload.videos = undefined;
 					} else {
 						wpbc.preload.playlists = undefined;
 					}
 					wpbc.responses = {};
 				} ).fail( function ( response ) {
-					this.destroyed = false;
+					self.destroyed = false;
 					wpbc.broadcast.trigger( 'videoEdit:message', response, 'error' );
 					wpbc.broadcast.trigger( 'spinner:off' );
 				} );

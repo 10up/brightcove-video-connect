@@ -30,9 +30,11 @@
     &.edit-view{
         width: calc(100% - 20px);
         border-right: none;
+        height: auto;
     }
     .video-edit{
         max-width: 721px;
+        padding: 5px;
     }
 }
 
