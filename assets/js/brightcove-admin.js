@@ -1,9 +1,12 @@
-(function($){
+( function( $ ){
 /**
  * Media model for Media CPT
  */
-var MediaModel = Backbone.Model.extend({
-    /**
+
+var MediaModel = Backbone.Model.extend(
+	{
+
+		/**
 		 * Copied largely from WP Attachment sync function
 		 * Triggered when attachment details change
 		 * Overrides Backbone.Model.sync
@@ -14,142 +17,317 @@ var MediaModel = Backbone.Model.extend({
 		 *
 		 * @returns {Promise}
 		 */
-    sync: function(a, b, c) {
-        var d = null;
-        // If the attachment does not yet have an `id`, return an instantly
-        // rejected promise. Otherwise, all of our requests will fail.
-        if (// Set the accountHash to the wpbc.preload.accounts[*] where the account_id
-        // matches this media objects account_id.
-        _.find(wpbc.preload.accounts, function(a, b) {
-            return a.account_id === this.get("account_id") ? (d = b, !0) : void 0;
-        }, this), _.isUndefined(this.id)) return $.Deferred().rejectWith(this).promise();
-        // Overload the `read` request so Media.fetch() functions correctly.
-        if ("read" === a) return c = c || {}, c.context = this, c.data = _.extend(c.data || {}, {
-            action: "bc_media_fetch",
-            id: this.id
-        }), wp.media.ajax(c);
-        if ("update" === a) {
-            c = c || {}, c.context = this, // Set the action and ID.
-            c.data = _.extend(c.data || {}, {
-                account: d,
-                action: "bc_media_update",
-                description: this.get("description"),
-                long_description: this.get("long_description"),
-                name: this.get("name"),
-                nonce: wpbc.preload.nonce,
-                tags: this.get("tags"),
-                type: this.get("mediaType")
-            });
-            var e = this.get("video_ids");
-            return e ? (c.data.playlist_id = this.id, c.data.playlist_videos = e, c.data.type = "playlists") : c.data.video_id = this.id, 
-            c.success = this.successFunction, c.error = this.failFunction, wpbc.broadcast.trigger("spinner:on"), 
-            wp.media.ajax(c);
-        }
-        return "delete" === a ? (c = c || {}, c.data = _.extend(c.data || {}, {
-            account: d,
-            action: "bc_media_delete",
-            id: this.get("id"),
-            nonce: wpbc.preload.nonce,
-            type: this.get("mediaType")
-        }), wp.media.ajax(c).done(function(a) {
-            this.destroyed = !0, wpbc.broadcast.trigger("delete:successful", a), "videos" !== this.get("mediaType") && _.isUndefined(this.get("video_ids")) ? wpbc.preload.playlists = void 0 : wpbc.preload.videos = void 0, 
-            wpbc.responses = {};
-        }).fail(function(a) {
-            this.destroyed = !1, wpbc.broadcast.trigger("videoEdit:message", a, "error"), wpbc.broadcast.trigger("spinner:off");
-        })) : Backbone.Model.prototype.sync.apply(this, arguments);
-    },
-    /**
+		sync : function ( method, model, options ) {
+
+			var accountHash = null;
+
+			// Set the accountHash to the wpbc.preload.accounts[*] where the account_id
+			// matches this media objects account_id.
+			_.find( wpbc.preload.accounts, function ( account, hash ) {
+				if ( account.account_id === this.get( 'account_id' ) ) {
+					accountHash = hash;
+					return true;
+				}
+			}, this );
+
+			// If the attachment does not yet have an `id`, return an instantly
+			// rejected promise. Otherwise, all of our requests will fail.
+			if ( _.isUndefined( this.id ) ) {
+				return $.Deferred().rejectWith( this ).promise();
+			}
+
+			// Overload the `read` request so Media.fetch() functions correctly.
+			if ( 'read' === method ) {
+				options         = options || {};
+				options.context = this;
+				options.data    = _.extend( options.data || {}, {
+					action : 'bc_media_fetch',
+					id :     this.id
+				} );
+				return wp.media.ajax( options );
+
+				// Overload the `update` request so properties can be saved.
+			} else if ( 'update' === method ) {
+				options         = options || {};
+				options.context = this;
+				// Set the action and ID.
+				options.data = _.extend( options.data || {}, {
+					account :          accountHash,
+					action :           'bc_media_update',
+					description :      this.get( 'description' ),
+					long_description : this.get( 'long_description' ),
+					name :             this.get( 'name' ),
+					nonce :            wpbc.preload.nonce,
+					tags :             this.get( 'tags' ),
+					type :             this.get( 'mediaType' )
+				} );
+
+				var video_ids = this.get( 'video_ids' );
+				if ( video_ids ) {
+					options.data.playlist_id     = this.id;
+					options.data.playlist_videos = video_ids;
+					options.data.type            = 'playlists';
+				} else {
+					options.data.video_id = this.id;
+				}
+
+				options.success = this.successFunction;
+				options.error   = this.failFunction;
+
+				wpbc.broadcast.trigger( 'spinner:on' );
+				return wp.media.ajax( options );
+
+				// Overload the `delete` request so attachments can be removed.
+				// This will permanently delete an attachment.
+			} else if ( 'delete' === method ) {
+				options = options || {};
+				var self = this;
+
+				options.data = _.extend( options.data || {}, {
+					account : accountHash,
+					action :  'bc_media_delete',
+					id :      this.get( 'id' ),
+					nonce :   wpbc.preload.nonce,
+					type :    this.get( 'mediaType' ),
+				} );
+
+				return wp.media.ajax( options ).done( function ( response ) {
+					self.destroyed = true;
+					wpbc.broadcast.trigger( 'delete:successful', response );
+					if ( 'videos' === self.get( 'mediaType' ) || ! _.isUndefined( self.get( 'video_ids' ) ) ) {
+						wpbc.preload.videos = undefined;
+					} else {
+						wpbc.preload.playlists = undefined;
+					}
+					wpbc.responses = {};
+				} ).fail( function ( response ) {
+					self.destroyed = false;
+					wpbc.broadcast.trigger( 'videoEdit:message', response, 'error' );
+					wpbc.broadcast.trigger( 'spinner:off' );
+				} );
+
+				// Otherwise, fall back to `Backbone.sync()`.
+			} else {
+				/**
+				 * Call `sync` directly on Backbone.Model
+				 */
+				return Backbone.Model.prototype.sync.apply( this, arguments );
+			}
+		},
+
+		/**
 		 * Convert date strings into Date objects.
 		 *
 		 * @param {Object} resp The raw response object, typically returned by fetch()
 		 * @returns {Object} The modified response object, which is the attributes hash
 		 *    to be set on the model.
 		 */
-    parse: function(a) {
-        return a ? (a.date = new Date(a.date), a.modified = new Date(a.modified), a) : a;
-    },
-    getAccountName: function() {
-        var a = (this.get("account_id"), _.findWhere(wpbc.preload.accounts, {
-            account_id: this.get("account_id")
-        }));
-        return void 0 === a ? "unavailable" : a.account_name;
-    },
-    getReadableDuration: function() {
-        var a = this.get("duration");
-        if (a) {
-            a = Number(a / 1e3);
-            var b = Math.floor(a / 3600), c = Math.floor(a % 3600 / 60), d = Math.floor(a % 3600 % 60);
-            return (b > 0 ? b + ":" + (10 > c ? "0" : "") : "") + c + ":" + (10 > d ? "0" : "") + d;
-        }
-        return a;
-    },
-    getReadableDate: function(a) {
-        var b = this.get(a);
-        if (b) {
-            var c = new Date(b), d = c.getHours(), e = c.getMinutes(), f = c.getFullYear(), g = c.getMonth() + 1, h = c.getDate(), i = d >= 12 ? "pm" : "am";
-            d %= 12, d = d ? d : 12, e = 10 > e ? "0" + e : e;
-            var j = f + "/" + g + "/" + h + " - " + d + ":" + e + " " + i;
-            return j;
-        }
-        return b;
-    },
-    successFunction: function(a) {
-        if (wpbc.broadcast.trigger("videoEdit:message", a, "success"), wpbc.broadcast.trigger("spinner:off"), 
-        _.isArray(this.get("video_ids")) && wpbc.preload && wpbc.preload.playlists) {
-            var b = this.get("id");
-            _.each(wpbc.preload.playlists, function(a, c) {
-                a.id === b && (wpbc.preload.playlists[c] = this.toJSON());
-            }, this);
-        }
-        wpbc.responses = {}, "videos" !== this.get("mediaType") && _.isUndefined(this.get("video_ids")) ? wpbc.preload.playlists = void 0 : wpbc.preload.videos = void 0;
-    },
-    failFunction: function(a) {
-        wpbc.broadcast.trigger("videoEdit:message", a, "error"), wpbc.broadcast.trigger("spinner:off");
-    }
-}), MediaCollection = Backbone.Collection.extend({
-    model: MediaModel,
-    /**
+		parse : function ( resp ) {
+			if ( ! resp ) {
+				return resp;
+			}
+
+			resp.date     = new Date( resp.date );
+			resp.modified = new Date( resp.modified );
+			return resp;
+		},
+
+		getAccountName : function () {
+
+			var account_id      = this.get( 'account_id' );
+			var matchingAccount = _.findWhere( wpbc.preload.accounts, {account_id : this.get( 'account_id' )} );
+			return undefined === matchingAccount ? 'unavailable' : matchingAccount.account_name;
+		},
+
+		getReadableDuration : function () {
+
+			var duration = this.get( 'duration' );
+
+			if ( duration ) {
+				duration    = Number( duration / 1000 );
+				var hours   = Math.floor( duration / 3600 );
+				var minutes = Math.floor( duration % 3600 / 60 );
+				var seconds = Math.floor( duration % 3600 % 60 );
+				return ((hours > 0 ? hours + ":" + (minutes < 10 ? "0" : "") : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+			}
+			return duration;
+		},
+
+		getReadableDate : function ( field ) {
+
+			var updated_at = this.get( field );
+
+			if ( updated_at ) {
+
+				var date = new Date( updated_at );
+
+				var hour = date.getHours();
+				var min  = date.getMinutes();
+				var year = date.getFullYear();
+				var mon  = date.getMonth() + 1;
+				var day  = date.getDate();
+				var ampm = hour >= 12 ? 'pm' : 'am';
+
+				hour = hour % 12;
+				hour = hour ? hour : 12;
+
+				min = min < 10 ? '0' + min : min;
+
+				var readableDate = year + '/' + mon + '/' + day + ' - ' + hour + ':' + min + ' ' + ampm;
+				return readableDate;
+			}
+			return updated_at;
+		},
+
+		successFunction : function ( message ) {
+			wpbc.broadcast.trigger( 'videoEdit:message', message, 'success' );
+			wpbc.broadcast.trigger( 'spinner:off' );
+			if ( _.isArray( this.get( 'video_ids' ) ) && wpbc.preload && wpbc.preload.playlists ) {
+				var id = this.get( 'id' );
+				_.each( wpbc.preload.playlists, function ( playlist, index ) {
+					if ( playlist.id === id ) {
+						wpbc.preload.playlists[index] = this.toJSON();
+					}
+				}, this );
+			}
+			wpbc.responses = {};
+			if ( 'videos' === this.get( 'mediaType' ) || ! _.isUndefined( this.get( 'video_ids' ) ) ) {
+				wpbc.preload.videos = undefined;
+			} else {
+				wpbc.preload.playlists = undefined;
+			}
+		},
+
+		failFunction : function ( message ) {
+			wpbc.broadcast.trigger( 'videoEdit:message', message, 'error' );
+			wpbc.broadcast.trigger( 'spinner:off' );
+		}
+	}
+);
+
+var MediaCollection = Backbone.Collection.extend(
+	{
+		model :      MediaModel,
+		/**
 		 * @param {Array} [models=[]] Array of models used to populate the collection.
 		 * @param {Object} [options={}]
 		 */
-    initialize: function(a, b) {
-        b = b || {}, b.activeAccount && (this.activeAccount = b.activeAccount), this.additionalRequest = !1, 
-        this.pageNumber = this.pageNumber || 1, this.mediaType || "existingPlaylists" !== this.mediaCollectionViewType && "libraryPlaylists" !== this.mediaCollectionViewType || (this.mediaType = "videos"), 
-        this.mediaCollectionViewType = b.mediaCollectionViewType || "grid", b.excludeVideoIds && "libraryPlaylists" === b.mediaCollectionViewType && (this.excludeVideoIds = b.excludeVideoIds), 
-        b.videoIds && !a ? (this.mediaType = "videos", this.videoIds = b.videoIds, this.fetch()) : "playlists" !== b.mediaType && (this.mediaType = "videos", 
-        this.fetch()), this.mediaType = b.mediaType, "videos" === this.mediaType && this.listenTo(wpbc.broadcast, "uploader:uploadedFileDetails", function(a) {
-            this.add(a, {
-                at: 0
-            });
-        }), this.activeAccount = b.activeAccount || "all", this.searchTerm = b.searchTerm || "", 
-        this.dates = b.dates || "all", this.tag = b.tag || "", this.listenTo(wpbc.broadcast, "change:activeAccount", function(a) {
-            this.activeAccount = a, this.fetch();
-        }), this.listenTo(wpbc.broadcast, "change:searchTerm", function(a) {
-            this.searchTerm = a, this.fetch();
-        }), this.listenTo(wpbc.broadcast, "change:tag", function(a) {
-            "all" === a && (a = ""), this.tag = a, this.fetch();
-        }), this.listenTo(wpbc.broadcast, "change:date", function(a) {
-            this.date = a, this.fetch();
-        }), this.listenTo(wpbc.broadcast, "tabChange", function(a) {
-            if (this.killPendingRequests(), a.mediaType !== this.mediaType) {
-                this.mediaType = a.mediaType;
-                for (var b, c = wpbc.preload[this.mediaType]; b = this.first(); ) this.remove(b);
-                void 0 !== c ? this.add(c) : this.fetch();
-            }
-        });
-    },
-    killPendingRequests: function() {
-        // Kill all pending requests
-        _.each(wpbc.requests, function(a) {
-            a.abort();
-        }), wpbc.requests = [];
-    },
-    checksum: function(a) {
-        _.isString(a) || (a = _.isFunction(a.toJSON) ? a.toJSON() : JSON.stringify(a));
-        for (var b = 305419896, c = 0; c < a.length; c++) b += a.charCodeAt(c) * (c + 1);
-        return b;
-    },
-    /**
+		initialize : function ( models, options ) {
+			options = options || {};
+			if ( options.activeAccount ) {
+				this.activeAccount = options.activeAccount;
+			}
+
+			this.additionalRequest = false;
+
+			this.pageNumber = this.pageNumber || 1;
+
+			if ( ! this.mediaType && (this.mediaCollectionViewType === 'existingPlaylists' || this.mediaCollectionViewType === 'libraryPlaylists') ) {
+				this.mediaType = 'videos';
+			}
+
+			this.mediaCollectionViewType = options.mediaCollectionViewType || 'grid';
+
+			if ( options.excludeVideoIds && 'libraryPlaylists' === options.mediaCollectionViewType ) {
+				this.excludeVideoIds = options.excludeVideoIds;
+			}
+
+			if ( options.videoIds && ! models ) {
+				this.mediaType = 'videos';
+				this.videoIds  = options.videoIds;
+				this.fetch();
+			} else if ( 'playlists' !== options.mediaType ) {
+				this.mediaType = 'videos';
+				this.fetch();
+			}
+
+			this.mediaType = options.mediaType;
+
+			if ( 'videos' === this.mediaType ) {
+				this.listenTo( wpbc.broadcast, 'uploader:uploadedFileDetails', function ( video ) {
+					// Add the newly uploaded file
+					this.add( video, {at : 0} );
+				} );
+			}
+
+			this.activeAccount = options.activeAccount || 'all';
+			this.searchTerm    = options.searchTerm || '';
+			this.dates         = options.dates || 'all';
+			this.tag           = options.tag || '';
+
+			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
+				this.activeAccount = accountId;
+				this.fetch();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:searchTerm', function ( searchTerm ) {
+				this.searchTerm = searchTerm;
+				this.fetch();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:tag', function ( tag ) {
+
+				if ( 'all' === tag ) {
+					tag = '';
+				}
+
+				this.tag = tag;
+				this.fetch();
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
+				this.date = date;
+				this.fetch();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'tabChange', function ( settings ) {
+				this.killPendingRequests();
+				if ( settings.mediaType !== this.mediaType ) {
+					this.mediaType = settings.mediaType;
+					var preload    = wpbc.preload[this.mediaType];
+					var model;
+					// Remove all models from the collection
+					while ( model = this.first() ) {
+						this.remove( model );
+					}
+					if ( preload !== undefined ) {
+						this.add( preload );
+					} else {
+						this.fetch();
+					}
+				}
+			} );
+		},
+
+		killPendingRequests : function () {
+			// Kill all pending requests
+			_.each( wpbc.requests, function ( request ) {
+				request.abort();
+			} );
+
+			wpbc.requests = [];
+		},
+
+		checksum : function ( object ) {
+			if ( ! _.isString( object ) ) {
+				if ( _.isFunction( object.toJSON ) ) {
+					object = object.toJSON();
+				} else {
+					object = JSON.stringify( object );
+				}
+
+			}
+			var checksum = 0x12345678;
+
+			for ( var i = 0; i < object.length; i ++ ) {
+				checksum += (object.charCodeAt( i ) * (i + 1));
+			}
+
+			return checksum;
+		},
+
+		/**
 		 * Overrides Backbone.Collection.sync
 		 *
 		 * @param {String} method
@@ -157,54 +335,89 @@ var MediaModel = Backbone.Model.extend({
 		 * @param {Object} [options={}]
 		 * @returns {Promise}
 		 */
-    sync: function(a, b, c) {
-        var d, e;
-        // Overload the read method so Media.fetch() functions correctly.
-        if ("read" === a) {
-            c = c || {}, c.data = _.extend(c.data || {}, {
-                action: "bc_media_query",
-                account: this.activeAccount,
-                dates: this.date,
-                posts_per_page: 100,
-                page_number: this.pageNumber,
-                nonce: wpbc.preload.nonce,
-                search: this.searchTerm,
-                tags: this.tag,
-                tagName: wpbc.preload.tags[this.tag],
-                type: this.mediaType || "videos"
-            });
-            var f = _.pick(c.data, "account", "dates", "posts_per_page", "search", "tags", "type");
-            // Determine if we're infinite scrolling or not.
-            this.additionalRequest = _.isEqual(f, wpbc.previousRequest), this.additionalRequest || (c.data.page_number = 1), 
-            /* Prevent reloading on the playlist edit as the playlist videos are one request and library videos another */
-            "existingPlaylists" !== this.mediaCollectionViewType && (wpbc.previousRequest = f), 
-            this.videoIds && (c.data.videoIds = this.videoIds.length ? this.videoIds : "none"), 
-            c.data.query = d, _.contains([ "libraryPlaylists", "existingPlaylists" ], this.mediaCollectionViewType) || this.killPendingRequests();
-            var g = this.checksum(c.data);
-            if (!_.isUndefined(wpbc.responses[g])) return this.parse({
-                data: wpbc.responses[g]
-            }, "cached"), !0;
-            var h = $.ajax({
-                type: "POST",
-                url: wp.ajax.settings.url,
-                context: this,
-                data: c.data
-            }).done(function(a, b, c) {
-                this.parse(a, b, c, g);
-            }).fail(this.fetchFail);
-            return wpbc.requests.push(h), wpbc.broadcast.trigger("spinner:on"), h;
-        }
-        /**
+		sync : function ( method, model, options ) {
+			var args, fallback;
+
+			// Overload the read method so Media.fetch() functions correctly.
+			if ( 'read' === method ) {
+				options      = options || {};
+				options.data = _.extend( options.data || {}, {
+					action :         'bc_media_query',
+					account :        this.activeAccount || wpbc.preload.defaultAccountId,
+					dates :          this.date,
+					posts_per_page : 100,
+					page_number :    this.pageNumber,
+					nonce :          wpbc.preload.nonce,
+					search :         this.searchTerm,
+					tags :           this.tag,
+					tagName :        wpbc.preload.tags[this.tag],
+					type : this.mediaType || 'videos'
+				} );
+
+				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type' );
+
+				// Determine if we're infinite scrolling or not.
+				this.additionalRequest = _.isEqual( previousRequest, wpbc.previousRequest );
+				if ( ! this.additionalRequest ) {
+					options.data.page_number = 1;
+				}
+				/* Prevent reloading on the playlist edit as the playlist videos are one request and library videos another */
+				if ( this.mediaCollectionViewType !== 'existingPlaylists' ) {
+					wpbc.previousRequest = previousRequest;
+				}
+
+				if ( this.videoIds ) {
+					options.data.videoIds = this.videoIds.length ? this.videoIds : 'none';
+				}
+
+				options.data.query = args;
+
+				if ( ! _.contains( ['libraryPlaylists', 'existingPlaylists'], this.mediaCollectionViewType ) ) {
+					this.killPendingRequests();
+				}
+
+				var requestChecksum = this.checksum( options.data );
+
+				if ( ! _.isUndefined( wpbc.responses[requestChecksum] ) ) {
+					this.parse( {data : wpbc.responses[requestChecksum]}, 'cached' );
+					return true;
+				}
+
+				var request = $.ajax( {
+					                      type :    'POST',
+					                      url :     wp.ajax.settings.url,
+					                      context : this,
+					                      data :    options.data
+				                      } ).done( function ( response, status, request ) {
+					this.parse( response, status, request, requestChecksum );
+				} ).fail( this.fetchFail );
+
+				wpbc.requests.push( request );
+				wpbc.broadcast.trigger( 'spinner:on' );
+
+				return request;
+
+				// Otherwise, fall back to Backbone.sync()
+			} else {
+				/**
 				 * Call wp.media.model.MediaCollection.sync or Backbone.sync
 				 */
-        return e = MediaCollection.prototype.sync ? MediaCollection.prototype : Backbone, 
-        e.sync.apply(this, arguments);
-    },
-    fetchFail: function() {
-        this.pageNumber > 1 && this.pageNumber--, wpbc.broadcast.trigger("fetch:finished"), 
-        "abort" === status;
-    },
-    /**
+				fallback = MediaCollection.prototype.sync ? MediaCollection.prototype : Backbone;
+				return fallback.sync.apply( this, arguments );
+			}
+		},
+
+		fetchFail : function () {
+			if ( this.pageNumber > 1 ) {
+				this.pageNumber --;
+			}
+			wpbc.broadcast.trigger( 'fetch:finished' );
+			if ( 'abort' === status ) {
+				return;
+			}
+		},
+
+		/**
 		 * A custom AJAX-response parser.
 		 *
 		 * See trac ticket #24753
@@ -213,1053 +426,2099 @@ var MediaModel = Backbone.Model.extend({
 		 * @param {Object} xhr
 		 * @returns {Array} The array of model attributes to be added to the collection
 		 */
-    parse: function(a, b, c, d) {
-        if (wpbc.broadcast.trigger("fetch:finished"), wpbc.broadcast.trigger("spinner:off"), 
-        !_.contains([ "success", "cached" ], b)) return !1;
-        var e = a.data;
-        if ("success" === b && (wpbc.responses[d] = e), !1 === e) return !1;
-        _.isArray(e) || (e = [ e ]), /**
+		parse : function ( response, status, request, checksum ) {
+			wpbc.broadcast.trigger( 'fetch:finished' );
+			wpbc.broadcast.trigger( 'spinner:off' );
+			if ( ! _.contains( ['success', 'cached'], status ) ) {
+				return false;
+			}
+
+			var data = response.data;
+
+			if ( "success" === status ) {
+				wpbc.responses[checksum] = data;
+			}
+
+			if ( false === data ) {
+				return false;
+			}
+
+			if ( ! _.isArray( data ) ) {
+				data = [data];
+			}
+
+			/**
 			 * In playlist video search, we remove the videos that already exist in the playlist.
 			 */
-        _.isArray(this.excludeVideoIds) && _.each(this.excludeVideoIds, function(a) {
-            e = _.without(e, _.findWhere(e, {
-                id: a
-            }));
-        });
-        var f = _.map(e, function(a) {
-            var b, c, d;
-            return a instanceof Backbone.Model ? (b = a.get("id"), a = a.attributes) : b = a.id, 
-            c = this.findWhere({
-                id: b
-            }), c ? (d = c.parse(a), _.isEqual(c.attributes, d) || c.set(d)) : c = this.add(a), 
-            c.set("viewType", this.mediaCollectionViewType), c;
-        }, this);
-        this.additionalRequest ? this.add(f) : this.set(f);
-    }
-}), BrightcoveMediaManagerModel = Backbone.Model.extend({
-    defaults: {
-        view: "grid",
-        date: "all",
-        tags: "all",
-        type: null,
-        // enum[playlist, video]
-        preload: !0,
-        search: "",
-        account: "all"
-    },
-    initialize: function(a) {
-        _.defaults(a, this.defaults);
-        var b = new MediaCollection([], {
-            mediaType: a.mediaType
-        });
-        b.reset(), /* Prevent empty element from living in our collection */
-        a.preload && a.preload.length && b.add(a.preload), a.preload = !!a.preload, // Whether or not a preload var was present.
-        this.set("media-collection-view", new MediaCollectionView({
-            collection: b
-        })), this.set("options", a);
-    }
-}), BrightcoveModalModel = Backbone.Model.extend({
-    getMediaManagerSettings: function() {
-        var a = this.get("tab"), b = {
-            upload: {
-                accounts: "all",
-                date: "all",
-                embedType: "modal",
-                mediaType: "videos",
-                mode: "uploader",
-                preload: !0,
-                search: "",
-                tags: "all",
-                viewType: "grid"
-            },
-            videos: {
-                accounts: "all",
-                date: "all",
-                embedType: "modal",
-                mediaType: "videos",
-                mode: "manager",
-                preload: !0,
-                search: "",
-                tags: "all",
-                viewType: "grid"
-            },
-            playlists: {
-                accounts: "all",
-                date: "all",
-                embedType: "modal",
-                mediaType: "playlists",
-                mode: "manager",
-                preload: !0,
-                search: "",
-                tags: "all",
-                viewType: "grid"
-            }
-        };
-        return void 0 !== b[a] ? b[a] : !1;
-    }
-}), UploadModelCollection = Backbone.Collection.extend({
-    initialize: function(a) {
-        this.listenTo(wpbc.broadcast, "uploader:queuedFilesAdded", this.queuedFilesAdded);
-    },
-    queuedFilesAdded: function(a) {
-        _.each(a, function(a) {
-            this.add(new UploadModel(a));
-        }, this);
-    }
-}), UploadModel = Backbone.Model.extend({
-    initialize: function(a) {},
-    humanReadableSize: function() {
-        var a = this.get("size");
-        if (0 === a) return "0 Byte";
-        var b = 1e3, c = [ "Bytes", "KB", "MB", "GB" ], d = Math.floor(Math.log(a) / Math.log(b));
-        return (a / Math.pow(b, d)).toPrecision(3) + " " + c[d];
-    }
-}), BrightcoveView = wp.Backbone.View.extend({
-    subviews: null,
-    registerSubview: function(a) {
-        this.subviews = this.subviews || [], this.subviews.push(a);
-    },
-    remove: function() {
-        _.invoke(this.subviews, "remove"), wp.Backbone.View.prototype.remove.call(this);
-    },
-    insertShortcode: function() {
-        if (this.model) {
-            var a = this.model.get("id").replace(/\D/g, ""), b = this.model.get("account_id").replace(/\D/g, ""), c = "";
-            c = "videos" === this.mediaType ? '[bc_video video_id="' + a + '" account_id="' + b + '"]' : '[bc_playlist playlist_id="' + a + '" account_id="' + b + '"]', 
-            window.send_to_editor(c), wpbc.broadcast.trigger("close:modal");
-        }
-    }
-}), ToolbarView = BrightcoveView.extend({
-    tagName: "div",
-    className: "media-toolbar wp-filter",
-    template: wp.template("brightcove-media-toolbar"),
-    events: {
-        "click .view-list": "toggleList",
-        "click .view-grid": "toggleGrid",
-        "change .brightcove-media-source": "sourceChanged",
-        "change .brightcove-media-dates": "datesChanged",
-        "change .brightcove-media-tags": "tagsChanged",
-        "change .brightcove-empty-playlists": "emptyPlaylistsChanged",
-        "keyup .search": "searchHandler"
-    },
-    render: function() {
-        var a = this.model.get("mediaType"), b = {
-            accounts: wpbc.preload.accounts,
-            dates: {},
-            mediaType: a,
-            tags: wpbc.preload.tags
-        }, c = wpbc.preload.dates, d = this.model.get("date");
-        /* @todo: find out if this is working */
-        void 0 !== c && void 0 !== c[a] && void 0 !== c[a][d] && (b.dates = c[a][d]), this.$el.html(this.template(b));
-        var e = this.$el.find(".spinner");
-        this.listenTo(wpbc.broadcast, "spinner:on", function() {
-            e.addClass("is-active").removeClass("hidden");
-        }), this.listenTo(wpbc.broadcast, "spinner:off", function() {
-            e.removeClass("is-active").addClass("hidden");
-        });
-    },
-    // List view Selected
-    toggleList: function() {
-        this.trigger("viewType", "list"), this.$el.find(".view-list").addClass("current"), 
-        this.$el.find(".view-grid").removeClass("current");
-    },
-    // Grid view Selected
-    toggleGrid: function() {
-        this.trigger("viewType", "grid"), this.$el.find(".view-grid").addClass("current"), 
-        this.$el.find(".view-list").removeClass("current");
-    },
-    // Brightcove source changed
-    sourceChanged: function(a) {
-        wpbc.broadcast.trigger("change:activeAccount", a.target.value);
-    },
-    datesChanged: function(a) {
-        wpbc.broadcast.trigger("change:date", a.target.value);
-    },
-    tagsChanged: function(a) {
-        wpbc.broadcast.trigger("change:tag", a.target.value);
-    },
-    emptyPlaylistsChanged: function(a) {
-        var b = $(a.target).prop("checked");
-        wpbc.broadcast.trigger("change:emptyPlaylists", b);
-    },
-    searchHandler: function(a) {
-        // Enter / Carriage Return
-        13 === a.keyCode && (this.model.set("search", a.target.value), wpbc.broadcast.trigger("change:searchTerm", a.target.value));
-    }
-}), UploadVideoManagerView = BrightcoveView.extend({
-    className: "brightcove-file-uploader",
-    events: {
-        "click .brightcove-start-upload": "triggerUpload"
-    },
-    initialize: function(a) {
-        /**
+			if ( _.isArray( this.excludeVideoIds ) ) {
+				_.each( this.excludeVideoIds, function ( videoId ) {
+					data = _.without( data, _.findWhere( data, {id : videoId} ) );
+				} );
+			}
+
+			var allMedia = _.map( data, function ( attrs ) {
+				var id, media, newAttributes;
+
+				if ( attrs instanceof Backbone.Model ) {
+					id    = attrs.get( 'id' );
+					attrs = attrs.attributes;
+				} else {
+					id = attrs.id;
+				}
+
+				media = this.findWhere( {id : id} );
+				if ( ! media ) {
+					media = this.add( attrs );
+				} else {
+					newAttributes = media.parse( attrs );
+
+					if ( ! _.isEqual( media.attributes, newAttributes ) ) {
+						media.set( newAttributes );
+					}
+				}
+
+				media.set( 'viewType', this.mediaCollectionViewType );
+				return media;
+			}, this );
+
+			if ( this.additionalRequest ) {
+				this.add( allMedia );
+			} else {
+				this.set( allMedia );
+			}
+		}
+	}
+);
+
+var BrightcoveMediaManagerModel = Backbone.Model.extend(
+	{
+		defaults :   {
+			view :    'grid',
+			date :    'all',
+			tags :    'all',
+			type :    null, // enum[playlist, video]
+			preload : true,
+			search :  '',
+			account : wpbc.preload.defaultAccountId
+		},
+		initialize : function ( options ) {
+			_.defaults( options, this.defaults );
+
+			var collection = new MediaCollection( [], {mediaType : options.mediaType} );
+			collection.reset();
+			/* Prevent empty element from living in our collection */
+
+			if ( options.preload && options.preload.length ) {
+				collection.add( options.preload );
+			}
+
+			options.preload = ! ! options.preload; // Whether or not a preload var was present.
+
+			this.set( 'media-collection-view', new MediaCollectionView( {collection : collection} ) );
+			this.set( 'options', options );
+
+		}
+	}
+);
+
+
+/**
+ * Media model for Media CPT
+ */
+
+var BrightcoveModalModel = Backbone.Model.extend(
+	{
+
+		getMediaManagerSettings : function () {
+			var tab      = this.get( 'tab' );
+			var settings = {
+				'upload' :    {
+					accounts :  'all',
+					date :      'all',
+					embedType : 'modal',
+					mediaType : 'videos',
+					mode :      'uploader',
+					preload :   true,
+					search :    '',
+					tags :      'all',
+					viewType :  'grid'
+				},
+				'videos' :    {
+					accounts :  'all',
+					date :      'all',
+					embedType : 'modal',
+					mediaType : 'videos',
+					mode :      'manager',
+					preload :   true,
+					search :    '',
+					tags :      'all',
+					viewType :  'grid'
+				},
+				'playlists' : {
+					accounts :  'all',
+					date :      'all',
+					embedType : 'modal',
+					mediaType : 'playlists',
+					mode :      'manager',
+					preload :   true,
+					search :    '',
+					tags :      'all',
+					viewType :  'grid'
+
+				}
+			};
+
+			if ( undefined !== settings[tab] ) {
+				return settings[tab];
+			}
+			return false;
+
+		}
+
+	}
+);
+
+
+/**
+ * Collection model to contain pending uploads
+ */
+
+var UploadModelCollection = Backbone.Collection.extend(
+	{
+
+		initialize : function ( options ) {
+			this.listenTo( wpbc.broadcast, 'uploader:queuedFilesAdded', this.queuedFilesAdded );
+		},
+
+		queuedFilesAdded : function ( queuedFiles ) {
+			_.each( queuedFiles, function ( queuedFile ) {
+				this.add( new UploadModel( queuedFile ) );
+			}, this );
+		}
+
+	}
+);
+
+
+/**
+ * Model to contain pending upload
+ */
+
+var UploadModel = Backbone.Model.extend(
+	{
+
+		initialize : function ( options ) {
+		},
+
+		humanReadableSize : function () {
+			var bytes = this.get( 'size' );
+			if ( bytes === 0 ) {
+				return '0 Byte';
+			}
+			var k     = 1000;
+			var sizes = ['Bytes', 'KB', 'MB', 'GB'];
+			var i     = Math.floor( Math.log( bytes ) / Math.log( k ) );
+			return (bytes / Math.pow( k, i )).toPrecision( 3 ) + ' ' + sizes[i];
+		}
+
+	}
+);
+
+var BrightcoveView = wp.Backbone.View.extend(
+	{
+		subviews : null,
+
+		registerSubview : function ( view ) {
+
+			this.subviews = this.subviews || [];
+			this.subviews.push( view );
+
+		},
+
+		remove : function () {
+
+			_.invoke( this.subviews, 'remove' );
+			wp.Backbone.View.prototype.remove.call( this );
+
+		},
+
+		insertShortcode : function () {
+
+			if ( ! this.model ) {
+				return;
+			}
+
+			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
+			var accountId   = this.model.get( 'account_id' ).replace( /\D/g, '' );
+			var shortcode   = '';
+
+			if ( this.mediaType === 'videos' ) {
+
+				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+
+			} else {
+
+				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+
+			}
+
+			window.send_to_editor( shortcode );
+			wpbc.broadcast.trigger( 'close:modal' );
+
+		}
+	}
+);
+
+
+/**
+ * This is the toolbar to handle sorting, filtering, searching and grid/list view toggles.
+ * State is captured in the brightcove-media-manager model.
+ */
+var ToolbarView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'media-toolbar wp-filter',
+		template :  wp.template( 'brightcove-media-toolbar' ),
+
+		events : {
+			'click .view-list' :                   'toggleList',
+			'click .view-grid' :                   'toggleGrid',
+			'change .brightcove-media-source' :    'sourceChanged',
+			'change .brightcove-media-dates' :     'datesChanged',
+			'change .brightcove-media-tags' :      'tagsChanged',
+			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
+			'search .search' :                      'searchHandler',
+			'keyup  .search' :                      'searchHandler'
+		},
+
+		render : function () {
+			var mediaType = this.model.get( 'mediaType' );
+			var options   = {
+				accounts :  wpbc.preload.accounts,
+				dates :     {},
+				mediaType : mediaType,
+				tags :      wpbc.preload.tags,
+				account :   this.model.get( 'account' )
+			};
+
+			var dates    = wpbc.preload.dates;
+			var date_var = this.model.get( 'date' );
+			/* @todo: find out if this is working */
+			if ( dates !== undefined && dates[mediaType] !== undefined && dates[mediaType][date_var] !== undefined ) {
+				options.dates = dates[mediaType][date_var];
+			}
+
+			this.$el.html( this.template( options ) );
+			var spinner = this.$el.find( '.spinner' );
+			this.listenTo( wpbc.broadcast, 'spinner:on', function () {
+				spinner.addClass( 'is-active' ).removeClass( 'hidden' );
+			} );
+			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
+				spinner.removeClass( 'is-active' ).addClass( 'hidden' );
+			} );
+		},
+
+		// List view Selected
+		toggleList : function () {
+			this.trigger( 'viewType', 'list' );
+			this.$el.find( '.view-list' ).addClass( 'current' );
+			this.$el.find( '.view-grid' ).removeClass( 'current' );
+		},
+
+		// Grid view Selected
+		toggleGrid : function () {
+			this.trigger( 'viewType', 'grid' );
+			this.$el.find( '.view-grid' ).addClass( 'current' );
+			this.$el.find( '.view-list' ).removeClass( 'current' );
+		},
+
+		// Brightcove source changed
+		sourceChanged : function ( event ) {
+
+			// Store the currently selected account on the model.
+			this.model.set( 'account', event.target.value );
+			wpbc.broadcast.trigger( 'change:activeAccount', event.target.value );
+		},
+
+		datesChanged : function ( event ) {
+			wpbc.broadcast.trigger( 'change:date', event.target.value );
+		},
+
+		tagsChanged : function ( event ) {
+			wpbc.broadcast.trigger( 'change:tag', event.target.value );
+		},
+
+		emptyPlaylistsChanged : function ( event ) {
+			var emptyPlaylists = $( event.target ).prop( 'checked' );
+			wpbc.broadcast.trigger( 'change:emptyPlaylists', emptyPlaylists );
+		},
+
+		searchHandler : function ( event ) {
+
+			// Searches of fewer than three characters return no results.
+			if ( event.target.value.length > 2 ) {
+
+				// Trigger a search when the user pauses typing for one second.
+				_.debounce( _.bind( function(){
+					this.model.set( 'search', event.target.value );
+					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+				}, this ), 1000 )();
+
+				// Enter / Carriage Return triggers immediate search.
+				if ( event.keyCode === 13 ) {
+					this.model.set( 'search', event.target.value );
+					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+				}
+			} else if ( 0 === event.target.value.length ) {
+				this.model.set( 'search', '' );
+				wpbc.broadcast.trigger( 'change:searchTerm', '' );
+
+			}
+		}
+	}
+);
+
+
+var UploadVideoManagerView = BrightcoveView.extend(
+	{
+		className : "brightcove-file-uploader",
+
+		events : {
+			'click .brightcove-start-upload' : 'triggerUpload'
+		},
+
+		initialize : function ( options ) {
+			/**
 			 * If you're looking for the Plupload instance, you're in the wrong place, check the UploadWindowView
 			 */
-        this.collection = new UploadModelCollection(), a && (this.options = a, this.successMessage = a.successMessage || this.successMessage), 
-        this.uploadWindow = new UploadWindowView(), this.listenTo(this.collection, "add", this.fileAdded), 
-        this.listenTo(wpbc.broadcast, "pendingUpload:selectedItem", this.selectedItem), 
-        this.listenTo(wpbc.broadcast, "uploader:prepareUpload", this.prepareUpload), this.listenTo(wpbc.broadcast, "uploader:successMessage", this.successMessage), 
-        this.listenTo(wpbc.broadcast, "uploader:errorMessage", this.errorMessage), this.listenTo(wpbc.broadcast, "uploader:clear", this.resetUploads);
-    },
-    resetUploads: function() {
-        for (;model = this.collection.first(); ) this.collection.remove(model);
-    },
-    errorMessage: function(a) {
-        this.message(a, "error");
-    },
-    successMessage: function(a) {
-        this.message(a, "success");
-    },
-    message: function(a, b) {
-        var c = this.$el.find(".brightcove-messages"), d = "brightcove-message ";
-        "success" === b ? d += "notice updated" : "error" === b && (d += "error");
-        var e = $('<div class="wrap"><div class="' + d + '"><p>' + a + "</p></div></div>");
-        c.append(e), e.fadeOut(6e3, function() {
-            $(this).remove();
-        });
-    },
-    prepareUpload: function() {
-        wpbc.uploads = wpbc.uploads || {}, this.collection.each(function(a) {
-            wpbc.uploads[a.get("id")] = {
-                account: a.get("account"),
-                name: a.get("fileName"),
-                tags: a.get("tags")
-            };
-        }), wpbc.broadcast.trigger("uploader:startUpload");
-    },
-    fileAdded: function(a, b) {
-        // Start upload triggers progress bars under every video.
-        // Need to re-render when one model is added
-        1 === this.collection.length && this.render();
-        var c = new UploadView({
-            model: a
-        });
-        c.render(), c.$el.appendTo(this.$el.find(".brightcove-pending-uploads"));
-    },
-    triggerUpload: function() {
-        wpbc.broadcast.trigger("uploader:prepareUpload");
-    },
-    selectedItem: function(a) {
-        this.uploadDetails = new UploadDetailsView({
-            model: a
-        }), this.uploadDetails.render(), this.$el.find(".brightcove-pending-upload-details").remove(), 
-        this.uploadDetails.$el.appendTo(this.$el.find(".brightcove-upload-queued-files"));
-    },
-    render: function(a) {
-        this.collection.length ? this.template = wp.template("brightcove-uploader-queued-files") : (this.template = wp.template("brightcove-uploader-inline"), 
-        this.uploadWindow.render(), this.uploadWindow.$el.appendTo($("body"))), this.$el.html(this.template(a)), 
-        this.collection.length ? this.$el.find(".brightcove-start-upload").show() : this.$el.find(".brightcove-start-upload").hide();
-    }
-}), BrightcoveMediaManagerView = BrightcoveView.extend({
-    tagName: "div",
-    className: "brightcove-media",
-    events: {},
-    scrollHandler: function() {
-        wpbc.broadcast.trigger("scroll:mediaGrid");
-    },
-    initialize: function(a) {
-        var b = wp.media.isTouchDevice ? 300 : 200;
-        this.scrollHandler = _.chain(this.scrollHandler).bind(this).throttle(b).value(), 
-        this.options = a, this.mode = a.mode || "manager", a.preload = this.options.preload ? wpbc.preload[this.options.mediaType] : !1, 
-        this.model = new BrightcoveMediaManagerModel(a), /* Search and dropdowns */
-        this.toolbar = new ToolbarView({
-            model: this.model
-        }), /* Uploader View */
-        this.uploader = new UploadVideoManagerView(), this.model.set("accounts", wpbc.preload.accounts), 
-        // All accounts.
-        this.model.set("activeAccount", a.account), // Active account ID / All
-        this.listenTo(this.toolbar, "viewType", function(a) {
-            this.model.set("view", a);
-        }), this.listenTo(wpbc.broadcast, "videoEdit:message", this.message), this.listenTo(wpbc.broadcast, "permanent:message", this.permanentMessage), 
-        this.listenTo(wpbc.broadcast, "remove:permanentMessage", function() {
-            wpbc.permanentMessage && wpbc.permanentMessage.remove(), this.$el.find(".brightcove-message").addClass("hidden");
-        }), // We only care when a change occurs
-        this.listenTo(this.model, "change:view", function(a, b) {
-            this.model.get("media-collection-view").setViewType(b);
-        }), this.listenTo(this.model, "change:mode", function(a, b) {
-            "uploader" !== b && wpbc.broadcast.trigger("uploader:clear");
-        }), this.listenTo(wpbc.broadcast, "backButton", function(a) {
-            this.model.set("mode", "manager"), this.render();
-        }), this.listenTo(wpbc.broadcast, "change:emptyPlaylists", function(a) {
-            var b = this.model.get("media-collection-view");
-            this.model.set("mode", "manager"), _.each(b.collection.models, function(b) {
-                "undefined" != typeof b.get("video_ids") && 1 <= b.get("video_ids").length && b && b.view && b.view.$el || (a ? b.view.$el.hide() : b.view.$el.show());
-            });
-        }), this.listenTo(wpbc.broadcast, "delete:successful", function(a) {
-            this.startGridView(), this.message(a, "success");
-        }), this.listenTo(wpbc.broadcast, "change:activeAccount", function(a) {
-            this.clearPreview(), this.model.set("activeAccount", a), this.model.set("mode", "manager"), 
-            this.render();
-        }), this.listenTo(wpbc.broadcast, "change:tag", function(a) {
-            this.clearPreview(), this.model.set("tag", a);
-        }), this.listenTo(wpbc.broadcast, "change:date", function(a) {
-            this.clearPreview(), this.model.set("date", a);
-        }), this.listenTo(wpbc.broadcast, "upload:video", function() {
-            this.showUploader();
-        }), this.listenTo(this.model, "change:search", function(a, b) {
-            this.model.get("search");
-        }), this.listenTo(wpbc.broadcast, "start:gridview", function() {
-            _.invoke(this.subviews, "remove"), this.detailsView = null, // Prevent selected view from not being toggleable when we hit the back button on edit
-            this.startGridView();
-        }), this.listenTo(wpbc.broadcast, "tabChange", function(a) {
-            this.model.set(a), this.detailsView instanceof MediaDetailsView && (this.detailsView.remove(), 
-            this.detailsView = void 0), this.render();
-        }), this.listenTo(wpbc.broadcast, "edit:media", function(a) {
-            var b = this.model.get("mediaType");
-            if ("videos" === b) {
-                // We just hit the edit button with the edit window already open.
-                if ("editVideo" === this.model.get("mode")) return !0;
-                this.editView = new VideoEditView({
-                    model: a
-                }), this.registerSubview(this.editView), this.model.set("mode", "editVideo"), this.render();
-            } else {
-                // We just hit the edit button with the edit window already open.
-                if ("editPlaylist" === this.model.get("mode")) return !0;
-                this.editView = new PlaylistEditView({
-                    model: a
-                }), this.registerSubview(this.editView), this.model.set("mode", "editPlaylist"), 
-                this.render();
-            }
-        }), this.listenTo(wpbc.broadcast, "preview:media", function(a) {
-            var b = this.model.get("mediaType");
-            if ("videos" === b) {
-                // We just hit the preview button with the preview window already open.
-                if ("previewVideo" === this.model.get("mode")) return !0;
-                this.previewView = new VideoPreviewView({
-                    model: a
-                }), this.registerSubview(this.previewView), this.model.set("mode", "previewVideo"), 
-                this.render();
-            } else /**
+			this.collection = new UploadModelCollection();
+			if ( options ) {
+				this.options = options;
+
+				this.successMessage = options.successMessage || this.successMessage;
+			}
+
+			this.uploadWindow = new UploadWindowView();
+
+			this.listenTo( this.collection, 'add', this.fileAdded );
+			this.listenTo( wpbc.broadcast, 'pendingUpload:selectedItem', this.selectedItem );
+			this.listenTo( wpbc.broadcast, 'uploader:prepareUpload', this.prepareUpload );
+			this.listenTo( wpbc.broadcast, 'uploader:successMessage', this.successMessage );
+			this.listenTo( wpbc.broadcast, 'uploader:errorMessage', this.errorMessage );
+			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
+		},
+
+		resetUploads : function () {
+			while ( model = this.collection.first() ) {
+				this.collection.remove( model );
+			}
+		},
+
+		errorMessage : function ( message ) {
+			this.message( message, 'error' );
+		},
+
+		successMessage : function ( message ) {
+			this.message( message, 'success' );
+		},
+
+		message : function ( message, type ) {
+			var messages       = this.$el.find( '.brightcove-messages' );
+			var messageClasses = 'brightcove-message ';
+			if ( 'success' === type ) {
+				messageClasses += 'notice updated';
+			} else if ( 'error' === type ) {
+				messageClasses += 'error';
+			}
+			var newMessage = $( '<div class="wrap"><div class="' + messageClasses + '"><p>' + message + '</p></div></div>' );
+			messages.append( newMessage );
+			newMessage.fadeOut( 6000, function () {
+				$( this ).remove();
+			} );
+		},
+
+		prepareUpload : function () {
+			wpbc.uploads = wpbc.uploads || {};
+			this.collection.each( function ( upload ) {
+				wpbc.uploads[upload.get( 'id' )] = {
+					account : upload.get( 'account' ),
+					name :    upload.get( 'fileName' ),
+					tags :    upload.get( 'tags' )
+				};
+			} );
+			wpbc.broadcast.trigger( 'uploader:startUpload' );
+		},
+
+		fileAdded : function ( model, collection ) {
+			// Start upload triggers progress bars under every video.
+			// Need to re-render when one model is added
+			if ( this.collection.length === 1 ) {
+				this.render();
+			}
+			var pendingUpload = new UploadView( {model : model} );
+			pendingUpload.render();
+			pendingUpload.$el.appendTo( this.$el.find( '.brightcove-pending-uploads' ) );
+		},
+
+		triggerUpload : function () {
+			wpbc.broadcast.trigger( 'uploader:prepareUpload' );
+		},
+
+		selectedItem : function ( model ) {
+			this.uploadDetails = new UploadDetailsView( {model : model} );
+			this.uploadDetails.render();
+			this.$el.find( '.brightcove-pending-upload-details' ).remove();
+			this.uploadDetails.$el.appendTo( this.$el.find( '.brightcove-upload-queued-files' ) );
+		},
+
+		render : function ( options ) {
+			if ( this.collection.length ) {
+				this.template = wp.template( 'brightcove-uploader-queued-files' );
+			} else {
+				this.template = wp.template( 'brightcove-uploader-inline' );
+				this.uploadWindow.render();
+				this.uploadWindow.$el.appendTo( $( 'body' ) );
+			}
+			this.$el.html( this.template( options ) );
+			if ( this.collection.length ) {
+				this.$el.find( '.brightcove-start-upload' ).show();
+			} else {
+				this.$el.find( '.brightcove-start-upload' ).hide();
+			}
+		}
+	}
+);
+
+var BrightcoveMediaManagerView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'brightcove-media',
+
+		events : {
+			/*
+			 'click .brightcove.media-button': 'insertIntoPost'
+			 */
+		},
+
+		scrollHandler : function () {
+			wpbc.broadcast.trigger( 'scroll:mediaGrid' );
+		},
+
+		initialize : function ( options ) {
+
+			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
+			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
+			this.options                 = options;
+			this.mode                    = options.mode || 'manager';
+
+			options.preload = this.options.preload ? wpbc.preload[this.options.mediaType] : false;
+
+			this.model = new BrightcoveMediaManagerModel( options );
+
+			/* Search and dropdowns */
+			this.toolbar = new ToolbarView( {model : this.model} );
+
+			/* Uploader View */
+			this.uploader = new UploadVideoManagerView();
+
+			this.model.set( 'accounts', wpbc.preload.accounts ); // All accounts.
+			this.model.set( 'activeAccount', options.account ); // Active account ID / All
+
+			this.listenTo( this.toolbar, 'viewType', function ( viewType ) {
+				this.model.set( 'view', viewType ); // Set the model view type
+			} );
+
+			this.listenTo( wpbc.broadcast, 'videoEdit:message', this.message );
+			this.listenTo( wpbc.broadcast, 'permanent:message', this.permanentMessage );
+
+			this.listenTo( wpbc.broadcast, 'remove:permanentMessage', function () {
+
+				if ( wpbc.permanentMessage ) {
+					wpbc.permanentMessage.remove();
+				}
+
+				this.$el.find( '.brightcove-message' ).addClass( 'hidden' );
+
+			} );
+
+			// We only care when a change occurs
+			this.listenTo( this.model, 'change:view', function ( model, type ) {
+				this.model.get( 'media-collection-view' ).setViewType( type );
+			} );
+
+			this.listenTo( this.model, 'change:mode', function ( model, mode ) {
+
+				if ( 'uploader' !== mode ) {
+					wpbc.broadcast.trigger( 'uploader:clear' );
+				}
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
+
+				this.model.set( 'mode', 'manager' );
+				this.render();
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
+
+				var mediaCollectionView = this.model.get( 'media-collection-view' );
+				this.model.set( 'mode', 'manager' );
+
+				_.each( mediaCollectionView.collection.models, function ( mediaObject ) {
+
+					if ( ! ( 'undefined' !== typeof mediaObject.get( 'video_ids' ) && 1 <= mediaObject.get( 'video_ids' ).length && mediaObject && mediaObject.view && mediaObject.view.$el ) ) {
+
+						if ( emptyPlaylists ) {
+
+							mediaObject.view.$el.hide();
+
+						} else {
+
+							mediaObject.view.$el.show();
+
+						}
+					}
+				} );
+			} );
+
+			this.listenTo( wpbc.broadcast, 'delete:successful', function ( message ) {
+
+				this.startGridView();
+				this.message( message, 'success' );
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
+
+				this.clearPreview();
+				this.model.set( 'activeAccount', accountId );
+				this.model.set( 'mode', 'manager' );
+				this.render();
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:tag', function ( tag ) {
+
+				this.clearPreview();
+				this.model.set( 'tag', tag );
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
+
+				this.clearPreview();
+				this.model.set( 'date', date );
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'upload:video', function () {
+				this.showUploader();
+			} );
+
+			this.listenTo( this.model, 'change:search', function ( model, searchTerm ) {
+				this.model.get( 'search' );
+			} );
+
+			this.listenTo( wpbc.broadcast, 'start:gridview', function () {
+
+				_.invoke( this.subviews, 'remove' );
+
+				this.detailsView = null; // Prevent selected view from not being toggleable when we hit the back button on edit
+
+				this.startGridView();
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'tabChange', function ( settings ) {
+
+				this.model.set( settings );
+
+				if ( this.detailsView instanceof MediaDetailsView ) {
+
+					this.detailsView.remove();
+
+					this.detailsView = undefined;
+
+				}
+
+				this.render();
+
+			} );
+
+			this.listenTo( wpbc.broadcast, 'edit:media', function ( model ) {
+
+				var mediaType = this.model.get( 'mediaType' );
+
+				if ( mediaType === 'videos' ) {
+
+					// We just hit the edit button with the edit window already open.
+					if ( 'editVideo' === this.model.get( 'mode' ) ) {
+						return true;
+					}
+
+					this.editView = new VideoEditView( {model : model} );
+
+					this.registerSubview( this.editView );
+					this.model.set( 'mode', 'editVideo' );
+					this.render();
+
+				} else {
+
+					// We just hit the edit button with the edit window already open.
+					if ( 'editPlaylist' === this.model.get( 'mode' ) ) {
+						return true;
+					}
+
+					this.editView = new PlaylistEditView( {model : model} );
+
+					this.registerSubview( this.editView );
+					this.model.set( 'mode', 'editPlaylist' );
+					this.render();
+
+				}
+			} );
+
+			this.listenTo( wpbc.broadcast, 'preview:media', function ( model ) {
+
+				var mediaType = this.model.get( 'mediaType' );
+
+				if ( mediaType === 'videos' ) {
+
+					// We just hit the preview button with the preview window already open.
+					if ( 'previewVideo' === this.model.get( 'mode' ) ) {
+						return true;
+					}
+
+					this.previewView = new VideoPreviewView( {model : model} );
+
+					this.registerSubview( this.previewView );
+					this.model.set( 'mode', 'previewVideo' );
+					this.render();
+
+				} else {
+
+					/**
 					 * @todo: playlist preview view
 					 */
-            this.model.set("mode", "editPlaylist");
-        }), this.listenTo(wpbc.broadcast, "change:searchTerm", function(a) {
-            this.clearPreview();
-        }), this.listenTo(wpbc.broadcast, "view:toggled", function(a) {
-            /* If user selects same thumbnail they want to hide the details view */
-            this.detailsView && this.detailsView.model === a.model ? (this.detailsView.$el.toggle(), 
-            a.$el.toggleClass("highlighted"), this.model.get("media-collection-view").$el.toggleClass("menu-visible"), 
-            wpbc.broadcast.trigger("toggle:insertButton")) : (this.clearPreview(), this.detailsView = new MediaDetailsView({
-                model: a.model,
-                el: $(".brightcove.media-frame-menu"),
-                mediaType: this.model.get("mediaType")
-            }), this.registerSubview(this.detailsView), this.detailsView.render(), this.detailsView.$el.toggle(!0), 
-            // Always show new view
-            this.model.get("media-collection-view").$el.addClass("menu-visible"), a.$el.addClass("highlighted"), 
-            wpbc.broadcast.trigger("toggle:insertButton", "enabled"));
-        });
-    },
-    /**
+					this.model.set( 'mode', 'editPlaylist' );
+
+				}
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:searchTerm', function ( mediaView ) {
+				this.clearPreview();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'view:toggled', function ( mediaView ) {
+
+				/* If user selects same thumbnail they want to hide the details view */
+				if ( this.detailsView && this.detailsView.model === mediaView.model ) {
+
+					this.detailsView.$el.toggle();
+					mediaView.$el.toggleClass( 'highlighted' );
+					this.model.get( 'media-collection-view' ).$el.toggleClass( 'menu-visible' );
+					wpbc.broadcast.trigger( 'toggle:insertButton' );
+
+				} else {
+
+					this.clearPreview();
+					this.detailsView = new MediaDetailsView( {model : mediaView.model, el : $( '.brightcove.media-frame-menu' ), mediaType : this.model.get( 'mediaType' )} );
+					this.registerSubview( this.detailsView );
+
+					this.detailsView.render();
+					this.detailsView.$el.toggle( true ); // Always show new view
+					this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
+					mediaView.$el.addClass( 'highlighted' );
+					wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
+
+				}
+			} );
+
+		},
+
+		/**
 		 * Clear the preview view and remove highlighted class from previous selected video.
 		 */
-    clearPreview: function() {
-        this.detailsView instanceof MediaDetailsView && this.detailsView.remove(), this.model.get("media-collection-view").$el.find(".highlighted").removeClass("highlighted");
-    },
-    startGridView: function() {
-        this.model.set("mode", "manager"), this.render();
-    },
-    message: function(a, b, c) {
-        var d = this.$el.find(".brightcove-message");
-        "success" === b ? (d.addClass("updated"), d.removeClass("error")) : "error" === b && (d.addClass("error"), 
-        d.removeClass("updated"));
-        var e = $("<p></p>");
-        e.text(a), d.append(e), d.removeClass("hidden"), c ? (wpbc.permanentMessage && wpbc.permanentMessage.remove(), 
-        wpbc.permanentMessage = e) : e.fadeOut(6e3, function() {
-            $(this).remove(), d.addClass("hidden");
-        });
-    },
-    showUploader: function() {
-        "manager" === this.model.get("mode") ? this.model.set("mode", "uploader") : this.model.set("mode", "manager"), 
-        this.render();
-    },
-    permanentMessage: function(a) {
-        this.message(a, "error", !0);
-    },
-    render: function() {
-        var a, b = this.model.get("options"), c = this.model.get("mode");
-        if (// Nuke all registered subviews
-        _.invoke(this.subviews, "remove"), "uploader" === c) this.template = wp.template("brightcove-uploader-container"), 
-        this.$el.empty(), this.$el.html(this.template(b)), this.uploader.render(), this.uploader.delegateEvents(), 
-        this.uploader.$el.appendTo($(".brightcove-uploader")); else if ("manager" === c) {
-            this.template = wp.template("brightcove-media"), this.$el.html(this.template(b)), 
-            this.toolbar.render(), this.toolbar.delegateEvents(), this.toolbar.$el.show(), this.toolbar.$el.appendTo(this.$el.find(".media-frame-router"));
-            // Add the Media views to the media manager
-            var d = this.model.get("media-collection-view");
-            d.render(), d.delegateEvents();
-            var e = this.$el.find(".media-frame-content");
-            e.on("scroll", this.scrollHandler), d.$el.appendTo(e), wpbc.initialSync && (wpbc.broadcast.trigger("remove:permanentMessage"), 
-            wpbc.broadcast.trigger("permanent:message", wpbc.preload.messages.ongoingSync));
-        } else "editVideo" === c ? (this.toolbar.$el.hide(), a = this.$el.find(".media-frame-content"), 
-        a.empty(), this.editView.render(), this.editView.delegateEvents(), this.editView.$el.appendTo(a), 
-        this.$el.find(".brightcove.media-frame-content").addClass("edit-view")) : "editPlaylist" === c ? (this.toolbar.$el.hide(), 
-        a = this.$el, a.empty(), a.html('<div class="playlist-edit-container"></div>'), 
-        a = a.find(".playlist-edit-container"), this.editView.render(), this.editView.delegateEvents(), 
-        this.editView.$el.appendTo(a), a.addClass("playlist")) : "previewVideo" === c && (this.toolbar.$el.hide(), 
-        a = this.$el.find(".media-frame-content"), a.empty(), this.previewView.render(), 
-        this.detailsView.render({
-            detailsMode: "preview"
-        }), this.previewView.delegateEvents(), this.previewView.$el.appendTo(a), this.$el.find(".brightcove.media-frame-toolbar").hide(), 
-        brightcove.createExperiences());
-        return "editPlaylist" !== c && this.$el.find(".media-frame-content").removeClass("playlist"), 
-        this;
-    }
-}), BrightcoveModalView = BrightcoveView.extend({
-    tagName: "div",
-    className: "media-modal brightcove",
-    template: wp.template("brightcove-media-modal"),
-    events: {
-        "click .brightcove.media-menu-item": "changeTab",
-        "click .brightcove.media-button-insert": "insertIntoPost",
-        "click .brightcove.media-modal-icon": "closeModal"
-    },
-    initialize: function(a) {
-        this.model = new BrightcoveModalModel({
-            tab: a.tab
-        }), this.brightcoveMediaManager = new BrightcoveMediaManagerView(this.model.getMediaManagerSettings()), 
-        this.registerSubview(this.brightcoveMediaManager), this.listenTo(wpbc.broadcast, "toggle:insertButton", function(a) {
-            this.toggleInsertButton(a);
-        }), this.listenTo(wpbc.broadcast, "close:modal", this.closeModal);
-    },
-    insertIntoPost: function() {
-        // Media Details will trigger the insertion since it's always active and contains
-        // the model we're inserting
-        wpbc.broadcast.trigger("insert:shortcode");
-    },
-    toggleInsertButton: function(a) {
-        var b = this.$el.find(".brightcove.media-button");
-        "enabled" === a ? b.removeAttr("disabled") : "disabled" === a ? b.attr("disabled", "disabled") : void 0 !== b.attr("disabled") ? b.removeAttr("disabled") : b.attr("disabled", "disabled");
-    },
-    changeTab: function(a) {
-        if (!$(a.target).hasClass("active")) {
-            $(a.target).addClass("active");
-            var b = _.without(a.target.classList, "media-menu-item", "brightcove")[0], c = [ "videos", "upload", "playlists" ];
-            _.each(_.without(c, b), function(a) {
-                $(".brightcove.media-menu-item." + a).removeClass("active");
-            }), _.contains(c, b) && (this.model.set("tab", b), wpbc.broadcast.trigger("spinner:off"), 
-            wpbc.broadcast.trigger("tabChange", this.model.getMediaManagerSettings()));
-        }
-    },
-    closeModal: function() {
-        this.$el.hide();
-    },
-    message: function(a) {
-        this.$el.find(".brightcove-message");
-    },
-    render: function(a) {
-        this.$el.html(this.template(a)), this.brightcoveMediaManager.render(), this.brightcoveMediaManager.$el.appendTo(this.$el.find(".media-frame-content"));
-    }
-}), MediaDetailsView = BrightcoveView.extend({
-    tagName: "div",
-    className: "media-details",
-    attributes: function() {
-        return {
-            tabIndex: 0,
-            role: "checkbox",
-            "aria-label": this.model.get("title"),
-            "aria-checked": !1,
-            "data-id": this.model.get("id")
-        };
-    },
-    events: {
-        "click .brightcove.edit.button": "triggerEditMedia",
-        "click .brightcove.preview.button": "triggerPreviewMedia",
-        "click .brightcove.back.button": "backButton"
-    },
-    triggerEditMedia: function(a) {
-        a.preventDefault(), wpbc.broadcast.trigger("edit:media", this.model);
-    },
-    triggerPreviewMedia: function(a) {
-        a.preventDefault(), wpbc.broadcast.trigger("preview:media", this.model);
-    },
-    backButton: function(a) {
-        wpbc.broadcast.trigger("backButton", this.mediaType);
-    },
-    initialize: function(a) {
-        a = a || {}, this.type = a.type ? a.type : "grid", this.mediaType = a.mediaType, 
-        this.listenTo(wpbc.broadcast, "insert:shortcode", this.insertShortcode), this.listenTo(this.model, "change", this.render);
-    },
-    /**
+		clearPreview : function () {
+
+			if ( this.detailsView instanceof MediaDetailsView ) {
+				this.detailsView.remove();
+			}
+
+			this.model.get( 'media-collection-view' ).$el.find( '.highlighted' ).removeClass( 'highlighted' );
+
+		},
+
+		startGridView : function () {
+
+			this.model.set( 'mode', 'manager' );
+			this.render();
+
+		},
+
+		message : function ( message, type, permanent ) {
+
+			var messages = this.$el.find( '.brightcove-message' );
+
+			if ( 'success' === type ) {
+
+				messages.addClass( 'updated' );
+				messages.removeClass( 'error' );
+
+			} else if ( 'error' === type ) {
+
+				messages.addClass( 'error' );
+				messages.removeClass( 'updated' );
+
+			}
+
+			var newMessage = $( '<p></p>' );
+			newMessage.text( message );
+
+			messages.append( newMessage );
+			messages.removeClass( 'hidden' );
+
+			if ( permanent ) {
+
+				if ( wpbc.permanentMessage ) {
+					wpbc.permanentMessage.remove();
+				}
+
+				wpbc.permanentMessage = newMessage;
+
+			} else {
+				// Make the notice dismissable.
+				messages.addClass( 'notice is-dismissible' );
+				this.makeNoticesDismissible();
+			}
+		},
+
+		// Make notices dismissible, mimics core function, fades them empties.
+		makeNoticesDismissible : function() {
+			$( '.notice.is-dismissible' ).each( function() {
+				var $el = $( this ),
+					$button = $( '<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>' ),
+					btnText = commonL10n.dismiss || '';
+
+				// Ensure plain text
+				$button.find( '.screen-reader-text' ).text( btnText );
+				$button.on( 'click.wp-dismiss-notice', function( event ) {
+					event.preventDefault();
+					$el.fadeTo( 100, 0, function() {
+						$el.slideUp( 100, function() {
+							$el.addClass( 'hidden' )
+								.css( {
+									'opacity': 1,
+									'margin-bottom': 0,
+									'display': ''
+								} )
+								.empty();
+						});
+					});
+				});
+
+				$el.append( $button );
+			});
+		},
+
+		showUploader : function () {
+
+			if ( 'manager' === this.model.get( 'mode' ) ) {
+
+				this.model.set( 'mode', 'uploader' );
+
+			} else {
+
+				this.model.set( 'mode', 'manager' );
+
+			}
+
+			this.render();
+
+		},
+
+		permanentMessage : function ( message ) {
+			this.message( message, 'error', true );
+		},
+
+		render : function () {
+
+			var options = this.model.get( 'options' );
+			var contentContainer;
+
+			var mode = this.model.get( 'mode' );
+
+			// Nuke all registered subviews
+			_.invoke( this.subviews, 'remove' );
+
+			if ( 'uploader' === mode ) {
+
+				this.template = wp.template( 'brightcove-uploader-container' );
+
+				this.$el.empty();
+				this.$el.html( this.template( options ) );
+				this.uploader.render();
+				this.uploader.delegateEvents();
+				this.uploader.$el.appendTo( $( '.brightcove-uploader' ) );
+
+			} else if ( 'manager' === mode ) {
+
+				this.template = wp.template( 'brightcove-media' );
+
+				this.$el.html( this.template( options ) );
+				this.toolbar.render();
+				this.toolbar.delegateEvents();
+				this.toolbar.$el.show();
+				this.toolbar.$el.appendTo( this.$el.find( '.media-frame-router' ) );
+
+				// Add the Media views to the media manager
+				var mediaCollectionView = this.model.get( 'media-collection-view' );
+
+				mediaCollectionView.render();
+				mediaCollectionView.delegateEvents();
+
+				var mediaCollectionContainer = this.$el.find( '.media-frame-content' );
+
+				mediaCollectionContainer.on( 'scroll', this.scrollHandler );
+				mediaCollectionView.$el.appendTo( mediaCollectionContainer );
+
+				if ( ! ! wpbc.initialSync ) {
+
+					wpbc.broadcast.trigger( 'remove:permanentMessage' );
+					wpbc.broadcast.trigger( 'permanent:message', wpbc.preload.messages.ongoingSync );
+
+				}
+			} else if ( 'editVideo' === mode ) {
+
+				this.toolbar.$el.hide();
+
+				contentContainer = this.$el.find( '.media-frame-content' );
+
+				contentContainer.empty();
+				this.editView.render();
+				this.editView.delegateEvents();
+				this.editView.$el.appendTo( contentContainer );
+				this.$el.find( '.brightcove.media-frame-content' ).addClass( 'edit-view' );
+
+			} else if ( 'editPlaylist' === mode ) {
+
+				this.toolbar.$el.hide();
+
+				contentContainer = this.$el;
+
+				contentContainer.empty();
+				contentContainer.html( '<div class="playlist-edit-container"></div>' );
+
+				contentContainer = contentContainer.find( '.playlist-edit-container' );
+
+				this.editView.render();
+				this.editView.delegateEvents();
+				this.editView.$el.appendTo( contentContainer );
+				contentContainer.addClass( 'playlist' );
+
+			} else if ( 'previewVideo' === mode ) {
+
+				this.toolbar.$el.hide();
+
+				contentContainer = this.$el.find( '.media-frame-content' );
+
+				contentContainer.empty();
+				this.previewView.render();
+				this.detailsView.render( {detailsMode : 'preview'} );
+				this.previewView.delegateEvents();
+				this.previewView.$el.appendTo( contentContainer );
+				this.$el.find( '.brightcove.media-frame-toolbar' ).hide();
+				brightcove.createExperiences();
+
+			}
+
+			if ( 'editPlaylist' !== mode ) {
+				this.$el.find( '.media-frame-content' ).removeClass( 'playlist' );
+			}
+
+			return this;
+
+		}
+
+	}
+);
+
+var BrightcoveModalView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'media-modal brightcove',
+		template :  wp.template( 'brightcove-media-modal' ),
+
+		events : {
+			'click .brightcove.media-menu-item' :     'changeTab',
+			'click .brightcove.media-button-insert' : 'insertIntoPost',
+			'click .brightcove.media-modal-icon' :   'closeModal'
+		},
+
+		initialize : function ( options ) {
+			this.model                  = new BrightcoveModalModel( {tab : options.tab} );
+			this.brightcoveMediaManager = new BrightcoveMediaManagerView( this.model.getMediaManagerSettings() );
+			this.registerSubview( this.brightcoveMediaManager );
+			this.listenTo( wpbc.broadcast, 'toggle:insertButton', function ( state ) {
+				this.toggleInsertButton( state );
+			} );
+			this.listenTo( wpbc.broadcast, 'close:modal', this.closeModal );
+		},
+
+		insertIntoPost : function ( evnt ) {
+			// Exit if the 'button' is disabled.
+			if ( $( evnt.currentTarget ).hasClass( 'disabled' ) ) {
+				evnt.preventDefault();
+				return;
+			}
+
+			// Media Details will trigger the insertion since it's always active and contains
+			// the model we're inserting
+			wpbc.broadcast.trigger( 'insert:shortcode' );
+
+		},
+
+		toggleInsertButton : function ( state ) {
+			var button = this.$el.find( '.brightcove.media-button' );
+			if ( 'enabled' === state ) {
+				button.removeAttr( 'disabled' );
+			} else if ( 'disabled' === state ) {
+				button.attr( 'disabled', 'disabled' );
+			} else if ( undefined !== button.attr( 'disabled' ) ) {
+				button.removeAttr( 'disabled' );
+			} else {
+				button.attr( 'disabled', 'disabled' );
+			}
+		},
+
+		changeTab : function ( event ) {
+			if ( $( event.target ).hasClass( 'active' ) ) {
+				return; // Clicking the already active tab
+			}
+			$( event.target ).addClass( 'active' );
+			var tab  = _.without( event.target.classList, 'media-menu-item', 'brightcove' )[0];
+			var tabs = ['videos', 'upload', 'playlists'];
+			_.each( _.without( tabs, tab ), function ( otherTab ) {
+				$( '.brightcove.media-menu-item.' + otherTab ).removeClass( 'active' );
+			} );
+
+			if ( _.contains( tabs, tab ) ) {
+				this.model.set( 'tab', tab );
+				wpbc.broadcast.trigger( 'spinner:off' );
+				wpbc.broadcast.trigger( 'tabChange', this.model.getMediaManagerSettings() );
+			}
+
+		},
+
+		closeModal : function ( evnt ) {
+
+			// If we are in the editVideo mode, switch back to the video view.
+			if ( 'editVideo' === wpbc.modal.brightcoveMediaManager.model.get('mode') ) {
+				wpbc.broadcast.trigger( 'start:gridview' );
+			}
+
+			// Exit if the container button is disabled.
+			if ( ! _.isUndefined( evnt ) && $( evnt.currentTarget ).parent().hasClass( 'disabled' ) ) {
+				return;
+			}
+			this.$el.hide();
+			$( 'body' ).removeClass( 'modal-open' );
+		},
+
+		message : function ( message ) {
+			var messageContainer = this.$el.find( '.brightcove-message' );
+
+		},
+
+		render : function ( options ) {
+			this.$el.html( this.template( options ) );
+
+			this.brightcoveMediaManager.render();
+			this.brightcoveMediaManager.$el.appendTo( this.$el.find( '.media-frame-content' ) );
+		}
+
+	}
+);
+
+
+var MediaDetailsView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'media-details',
+
+		attributes : function () {
+			return {
+				'tabIndex' :     0,
+				'role' :         'checkbox',
+				'aria-label' :   this.model.get( 'title' ),
+				'aria-checked' : false,
+				'data-id' :      this.model.get( 'id' )
+			};
+		},
+
+		events : {
+			'click .brightcove.edit.button' :    'triggerEditMedia',
+			'click .brightcove.preview.button' : 'triggerPreviewMedia',
+			'click .brightcove.back.button' :    'backButton'
+		},
+
+		triggerEditMedia : function ( event ) {
+			event.preventDefault();
+			wpbc.broadcast.trigger( 'edit:media', this.model );
+		},
+
+		triggerPreviewMedia : function ( event ) {
+			event.preventDefault();
+			wpbc.broadcast.trigger( 'preview:media', this.model );
+		},
+
+		backButton : function ( event ) {
+			wpbc.broadcast.trigger( 'backButton', this.mediaType );
+		},
+
+		initialize : function ( options ) {
+			options        = options || {};
+			this.type      = options.type ? options.type : 'grid';
+			this.mediaType = options.mediaType;
+			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
+			this.listenTo( this.model, 'change', this.render );
+		},
+
+		/**
 		 * @returns {wp.media.view.Media} Returns itself to allow chaining
 		 */
-    render: function(a) {
-        return a = _.extend({}, a, this.model.toJSON()), a.duration = this.model.getReadableDuration(), 
-        a.updated_at_readable = this.model.getReadableDate("updated_at"), a.created_at_readable = this.model.getReadableDate("created_at"), 
-        a.account_name = this.model.getAccountName(), this.template = wp.template("brightcove-media-item-details-" + this.mediaType), 
-        this.$el.html(this.template(a)), this.delegateEvents(), this;
-    },
-    /* Prevent this.remove() from removing the container element for the details view */
-    remove: function() {
-        return this.undelegateEvents(), this.$el.empty(), this.stopListening(), this;
-    }
-}), MediaView = BrightcoveView.extend({
-    tagName: "li",
-    className: "attachment brightcove",
-    attributes: function() {
-        return {
-            tabIndex: 0,
-            role: "checkbox",
-            "aria-label": this.model.get("title"),
-            "aria-checked": !1,
-            "data-id": this.model.get("id")
-        };
-    },
-    events: {
-        "click .attachment-preview": "toggleDetailView",
-        "click .video-move-up": "videoMoveUp",
-        "click .video-move-down": "videoMoveDown",
-        "click .trash": "removeVideoFromPlaylist",
-        "click .add-to-playlist": "videoAdd",
-        "click .edit": "triggerEditMedia",
-        "click .preview": "triggerPreviewMedia"
-    },
-    triggerEditMedia: function(a) {
-        a.preventDefault(), wpbc.broadcast.trigger("edit:media", this.model);
-    },
-    triggerPreviewMedia: function(a) {
-        a.preventDefault(), wpbc.broadcast.trigger("preview:media", this.model);
-    },
-    buttons: {},
-    initialize: function(a) {
-        a = a || {}, this.type = a.type ? a.type : "grid", this.listenTo(this.model, "change:view", function(a, b) {
-            this.type !== b && (this.type = b, this.render());
-        }), this.render();
-    },
-    render: function() {
-        var a = this.model.toJSON();
-        return a.duration = this.model.getReadableDuration(), a.updated_at_readable = this.model.getReadableDate("updated_at"), 
-        a.account_name = this.model.getAccountName(), "existingPlaylists" === a.viewType ? this.template = wp.template("brightcove-playlist-edit-video-in-playlist") : "libraryPlaylists" === a.viewType ? this.template = wp.template("brightcove-playlist-edit-video-in-library") : this.template = wp.template("brightcove-media-item-" + this.type), 
-        a.buttons = this.buttons, this.$el.html(this.template(a)), this.$el.toggleClass("uploading", a.uploading), 
-        this;
-    },
-    toggleDetailView: function() {
-        wpbc.broadcast.trigger("view:toggled", this);
-    },
-    videoMoveUp: function() {
-        wpbc.broadcast.trigger("playlist:moveUp", this);
-    },
-    videoMoveDown: function() {
-        wpbc.broadcast.trigger("playlist:moveDown", this);
-    },
-    videoAdd: function() {
-        wpbc.broadcast.trigger("playlist:add", this);
-    },
-    removeVideoFromPlaylist: function() {
-        wpbc.broadcast.trigger("playlist:remove", this);
-    }
-}), PlaylistEditView = BrightcoveView.extend({
-    tagName: "div",
-    className: "playlist-edit brightcove attachment-details",
-    template: wp.template("brightcove-playlist-edit"),
-    events: {
-        "click .brightcove.button.save-sync": "saveSync",
-        "click .brightcove.back": "back",
-        "change .brightcove-name": "updatedName"
-    },
-    deleteVideo: function(a) {
-        a.preventDefault(), this.model.set("mediaType", "videos"), this.model.destroy();
-    },
-    updatedName: function(a) {
-        var b = this.model.get("name");
-        b !== a.target.value && (this.model.set("name", a.target.value), this.model.save());
-    },
-    back: function(a) {
-        a.preventDefault(), wpbc.broadcast.trigger("start:gridview");
-    },
-    saveSync: function(a) {
-        a.preventDefault(), this.model.set("name", this.$el.find(".brightcove-name").val()), 
-        this.model.set("description", this.$el.find(".brightcove-description").val()), this.model.set("long_description", this.$el.find(".brightcove-long-description").val()), 
-        this.model.set("tags", this.$el.find(".brightcove-tags").val()), this.model.set("mediaType", "videos"), 
-        this.model.save();
-    },
-    initialize: function() {
-        this.listenTo(wpbc.broadcast, "tabChange", function() {
-            _.invoke(this.subviews, "remove");
-        }), wpbc.broadcast.trigger("spinner:off");
-    },
-    render: function(a) {
-        a = this.model.toJSON(), this.$el.html(this.template(a)), this.spinner = this.$el.find(".spinner");
-        this.$el.find(".existing-videos");
-        /*
+		render : function ( options ) {
+			options                     = _.extend( {}, options, this.model.toJSON() );
+			options.duration            = this.model.getReadableDuration();
+			options.updated_at_readable = this.model.getReadableDate( 'updated_at' );
+			options.created_at_readable = this.model.getReadableDate( 'created_at' );
+			options.account_name        = this.model.getAccountName();
+
+			this.template = wp.template( 'brightcove-media-item-details-' + this.mediaType );
+
+			this.$el.html( this.template( options ) );
+
+			this.delegateEvents();
+			return this;
+		},
+
+		/* Prevent this.remove() from removing the container element for the details view */
+		remove : function () {
+			this.undelegateEvents();
+			this.$el.empty();
+			this.stopListening();
+			return this;
+		}
+
+	}
+);
+
+
+var MediaView = BrightcoveView.extend(
+	{
+		tagName :   'li',
+		className : 'attachment brightcove',
+
+		attributes : function () {
+			return {
+				'tabIndex' :     0,
+				'role' :         'checkbox',
+				'aria-label' :   this.model.get( 'title' ),
+				'aria-checked' : false,
+				'data-id' :      this.model.get( 'id' )
+			};
+		},
+
+		events : {
+			'click .attachment-preview' : 'toggleDetailView',
+			'click .video-move-up' :      'videoMoveUp',
+			'click .video-move-down' :    'videoMoveDown',
+			'click .trash' :              'removeVideoFromPlaylist',
+			'click .add-to-playlist' :    'videoAdd',
+			'click .edit' :               'triggerEditMedia',
+			'click .preview' :            'triggerPreviewMedia'
+		},
+
+		triggerEditMedia : function ( event ) {
+			event.preventDefault();
+			wpbc.broadcast.trigger( 'edit:media', this.model );
+		},
+
+		triggerPreviewMedia : function ( event ) {
+			event.preventDefault();
+			wpbc.broadcast.trigger( 'preview:media', this.model );
+		},
+
+		buttons : {},
+
+		initialize : function ( options ) {
+			options   = options || {};
+			this.type = options.type ? options.type : 'grid';
+
+			// We only care when a change occurs
+			this.listenTo( this.model, 'change:view', function ( model, type ) {
+				if ( this.type !== type ) {
+					this.type = type;
+					this.render();
+				}
+			} );
+
+			this.render();
+		},
+
+		render : function () {
+			var options                 = this.model.toJSON();
+			options.duration            = this.model.getReadableDuration();
+			options.updated_at_readable = this.model.getReadableDate( 'updated_at' );
+			options.account_name        = this.model.getAccountName();
+
+			if ( 'existingPlaylists' === options.viewType ) {
+				this.template = wp.template( 'brightcove-playlist-edit-video-in-playlist' );
+			} else if ( 'libraryPlaylists' === options.viewType ) {
+				this.template = wp.template( 'brightcove-playlist-edit-video-in-library' );
+			} else {
+				this.template = wp.template( 'brightcove-media-item-' + this.type );
+			}
+
+			options.buttons = this.buttons;
+
+			this.$el.html( this.template( options ) );
+
+			this.$el.toggleClass( 'uploading', options.uploading );
+
+			return this;
+		},
+
+		toggleDetailView : function () {
+			wpbc.broadcast.trigger( 'view:toggled', this );
+		},
+
+		videoMoveUp : function () {
+			wpbc.broadcast.trigger( 'playlist:moveUp', this );
+		},
+
+		videoMoveDown : function () {
+			wpbc.broadcast.trigger( 'playlist:moveDown', this );
+		},
+
+		videoAdd : function () {
+			wpbc.broadcast.trigger( 'playlist:add', this );
+		},
+
+		removeVideoFromPlaylist : function () {
+			wpbc.broadcast.trigger( 'playlist:remove', this );
+		}
+	}
+);
+
+var PlaylistEditView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'playlist-edit brightcove attachment-details',
+		template :  wp.template( 'brightcove-playlist-edit' ),
+
+		events : {
+			'click .brightcove.button.save-sync' : 'saveSync',
+			'click .brightcove.back' :             'back',
+			'change .brightcove-name' :            'updatedName'
+		},
+
+		deleteVideo : function ( event ) {
+			event.preventDefault();
+			this.model.set( 'mediaType', 'videos' );
+			this.model.destroy();
+		},
+
+		updatedName : function ( event ) {
+			var name = this.model.get( 'name' );
+			if ( name !== event.target.value ) {
+				this.model.set( 'name', event.target.value );
+				this.model.save();
+			}
+		},
+
+		back : function ( event ) {
+			event.preventDefault();
+			wpbc.broadcast.trigger( 'start:gridview' );
+
+		},
+
+		saveSync : function ( event ) {
+			event.preventDefault();
+			this.model.set( 'name', this.$el.find( '.brightcove-name' ).val() );
+			this.model.set( 'description', this.$el.find( '.brightcove-description' ).val() );
+			this.model.set( 'long_description', this.$el.find( '.brightcove-long-description' ).val() );
+			this.model.set( 'tags', this.$el.find( '.brightcove-tags' ).val() );
+			this.model.set( 'mediaType', 'videos' );
+			this.model.save();
+		},
+
+		initialize : function () {
+			this.listenTo( wpbc.broadcast, 'tabChange', function () {
+				_.invoke( this.subviews, 'remove' );
+			} );
+			wpbc.broadcast.trigger( 'spinner:off' );
+		},
+
+		render : function ( options ) {
+			options = this.model.toJSON();
+			this.$el.html( this.template( options ) );
+			this.spinner                = this.$el.find( '.spinner' );
+			var playlistVideosContainer = this.$el.find( '.existing-videos' );
+			/*
 			 1. Create a media collection here to fetch each of the videos in options.video_ids.
 			 */
-        a.video_ids && (this.killPendingRequests(), this.playlistVideosView = new MediaCollectionView({
-            el: this.$el.find(".existing-videos"),
-            videoIds: a.video_ids,
-            activeAccount: this.model.get("account_id"),
-            mediaCollectionViewType: "existingPlaylists",
-            mediaType: "playlists"
-        }), this.libraryVideosView = new MediaCollectionView({
-            el: this.$el.find(".library-videos"),
-            excludeVideoIds: a.video_ids,
-            activeAccount: this.model.get("account_id"),
-            mediaCollectionViewType: "libraryPlaylists",
-            mediaType: "playlists"
-        }), this.registerSubview(this.playlistVideosView), this.registerSubview(this.libraryVideosView), 
-        this.listenTo(wpbc.broadcast, "playlist:changed", _.throttle(this.playlistChanged, 300)), 
-        this.listenTo(wpbc.broadcast, "insert:shortcode", this.insertShortcode)), this.listenTo(wpbc.broadcast, "spinner:on", function() {
-            this.spinner.addClass("is-active").removeClass("hidden");
-        }), this.listenTo(wpbc.broadcast, "spinner:off", function() {
-            this.spinner.removeClass("is-active").addClass("hidden");
-        });
-    },
-    playlistChanged: function(a) {
-        this.killPendingRequests(), this.model.set("video_ids", a), this.model.save();
-    },
-    killPendingRequests: function() {
-        // Kill all pending requests
-        _.each(wpbc.requests, function(a) {
-            a.abort();
-        }), wpbc.requests = [];
-    }
-}), UploadDetailsView = BrightcoveView.extend({
-    className: "brightcove-pending-upload-details attachment-details",
-    tagName: "div",
-    template: wp.template("brightcove-pending-upload-details"),
-    events: {
-        "keyup .brightcove-name": "nameChanged",
-        "keyup .brightcove-tags": "tagsChanged",
-        "change .brightcove-media-source": "accountChanged"
-    },
-    initialize: function(a) {
-        this.listenTo(wpbc.broadcast, "pendingUpload:hideDetails", this.hide), this.listenTo(wpbc.broadcast, "uploader:fileUploaded", function(a) {
-            a.id === this.model.get("id") && (this.model.set("uploaded", !0), this.render());
-        }), this.model.set("ingestSuccess", !0), this.model.set("uploadSuccess", !0);
-    },
-    nameChanged: function(a) {
-        this.model.set("fileName", a.target.value);
-    },
-    tagsChanged: function(a) {
-        this.model.set("tags", a.target.value);
-    },
-    accountChanged: function(a) {
-        this.model.set("account", a.target.value);
-    },
-    hide: function() {
-        this.$el.hide();
-    },
-    render: function(a) {
-        a = a || {}, a.fileName = this.model.get("fileName"), a.tags = this.model.get("tags"), 
-        a.size = this.model.humanReadableSize(), a.accounts = this.model.get("accounts"), 
-        a.account = this.model.get("account"), a.uploaded = this.model.get("uploaded"), 
-        this.$el.html(this.template(a));
-    }
-});
 
-UploadWindowView = BrightcoveView.extend({
-    className: "uploader-window",
-    template: wp.template("brightcove-uploader-window"),
-    initialize: function(a) {
-        _.bindAll(this, "uploaderFilesAdded"), this.listenTo(wpbc.broadcast, "uploader:queuedFilesAdded", this.hide), 
-        this.listenTo(wpbc.broadcast, "uploader:startUpload", this.uploaderStartUpload), 
-        this.listenTo(wpbc.broadcast, "uploader:clear", this.resetUploads);
-    },
-    render: function(a) {
-        this.$el.html(this.template(a)), _.defer(_.bind(this.afterRender, this));
-    },
-    resetUploads: function() {
-        this.uploader && this.uploader.files && (this.uploader.files = []);
-    },
-    afterRender: function() {
-        this.uploader = new plupload.Uploader(_.defaults(this.options, wpbc.preload.plupload)), 
-        // Uploader has neither .on nor .listenTo
-        this.uploader.added = this.uploaderFilesAdded, this.uploader.progress = this.uploaderUploadProgress, 
-        this.uploader.bind("FilesAdded", this.uploaderFilesAdded), this.uploader.bind("UploadProgress", this.uploaderUploadProgress), 
-        this.uploader.bind("BeforeUpload", this.uploaderBeforeUpload), this.uploader.bind("FileUploaded", this.uploaderFileUploaded), 
-        this.uploader.bind("init", this.uploaderAfterInit), this.uploader.init(), $("html").on("dragenter", _.bind(this.show, this));
-        /* the following dropzone function code is taken from the wp.Uploader code */
-        var a = wpbc.preload.plupload.drop_element.replace(/[^a-zA-Z0-9-]+/g, ""), b = $("#" + a);
-        b.on("dropzone:leave", _.bind(this.hide, this));
-    },
-    uploaderAfterInit: function(a) {
-        var b, c, d, e = wpbc.preload.plupload.drop_element.replace(/[^a-zA-Z0-9-]+/g, ""), f = $("#" + e);
-        // Generate drag/drop helper classes.
-        if (d = a.features.dragdrop, f) {
-            if (f.toggleClass("supports-drag-drop", !!d), !d) return f.unbind(".wp-uploader");
-            // 'dragenter' doesn't fire correctly, simulate it with a limited 'dragover'.
-            f.bind("dragover.wp-uploader", function() {
-                b && clearTimeout(b), c || (f.trigger("dropzone:enter").addClass("drag-over"), c = !0);
-            }), f.bind("dragleave.wp-uploader, drop.wp-uploader", function() {
-                // Using an instant timer prevents the drag-over class from
-                // being quickly removed and re-added when elements inside the
-                // dropzone are repositioned.
-                //
-                // @see https://core.trac.wordpress.org/ticket/21705
-                b = setTimeout(function() {
-                    c = !1, f.trigger("dropzone:leave").removeClass("drag-over");
-                }, 0);
-            });
-        }
-    },
-    show: function() {
-        var a = this.$el.show();
-        // Ensure that the animation is triggered by waiting until
-        // the transparent element is painted into the DOM.
-        _.defer(function() {
-            a.css({
-                opacity: 1
-            });
-        });
-    },
-    hide: function() {
-        var a = this.$el.css({
-            opacity: 0
-        });
-        wp.media.transition(a).done(function() {
-            // Transition end events are subject to race conditions.
-            // Make sure that the value is set as intended.
-            "0" === a.css("opacity") && a.hide();
-        }), // https://core.trac.wordpress.org/ticket/27341
-        _.delay(function() {
-            "0" === a.css("opacity") && a.is(":visible") && a.hide();
-        }, 500);
-    },
-    uploaderFilesAdded: function(a, b) {
-        wpbc.broadcast.trigger("uploader:queuedFilesAdded", b);
-    },
-    uploaderStartUpload: function() {
-        this.uploader.start();
-    },
-    uploaderUploadProgress: function(a, b) {
-        wpbc.broadcast.trigger("uploader:uploadProgress", b);
-    },
-    uploaderBeforeUpload: function(a, b) {
-        a.settings.multipart_params = _.defaults(wpbc.uploads[b.id], wpbc.preload.plupload.multipart_params, {
-            nonce: wpbc.preload.nonce
-        });
-    },
-    uploaderFileUploaded: function(a, b, c) {
-        var d = JSON.parse(c.response);
-        wpbc.broadcast.trigger("uploader:fileUploaded", b), "success" === d.data.upload && "success" === d.data.ingest ? (d.data.videoDetails && (// Add newly uploaded file to preload list.
-        wpbc.broadcast.trigger("uploader:uploadedFileDetails", d.data.videoDetails), wpbc.preload.videos.unshift(d.data.videoDetails)), 
-        wpbc.broadcast.trigger("uploader:successfulUploadIngest", b)) : (b.percent = 0, 
-        b.status = plupload.UPLOADING, a.state = plupload.STARTED, a.trigger("StateChanged"), 
-        wpbc.broadcast.trigger("uploader:failedUploadIngest", b));
-    }
-});
+			if ( options.video_ids ) {
+				this.killPendingRequests();
+				this.playlistVideosView = new MediaCollectionView( {el : this.$el.find( '.existing-videos' ), videoIds : options.video_ids, activeAccount : this.model.get( 'account_id' ), mediaCollectionViewType : 'existingPlaylists', mediaType : 'playlists'} );
+				this.libraryVideosView  = new MediaCollectionView( {el : this.$el.find( '.library-videos' ), excludeVideoIds : options.video_ids, activeAccount : this.model.get( 'account_id' ), mediaCollectionViewType : 'libraryPlaylists', mediaType : 'playlists'} );
+				this.registerSubview( this.playlistVideosView );
+				this.registerSubview( this.libraryVideosView );
+				this.listenTo( wpbc.broadcast, 'playlist:changed', _.throttle( this.playlistChanged, 300 ) );
+				this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
+			}
+			this.listenTo( wpbc.broadcast, 'spinner:on', function () {
+				this.spinner.addClass( 'is-active' ).removeClass( 'hidden' );
+			} );
+			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
+				this.spinner.removeClass( 'is-active' ).addClass( 'hidden' );
+			} );
+		},
 
-var UploadView = BrightcoveView.extend({
-    className: "brightcove-pending-upload",
-    tagName: "tr",
-    template: wp.template("brightcove-pending-upload"),
-    events: {
-        click: "toggleRow"
-    },
-    initialize: function() {
-        this.listenTo(wpbc.broadcast, "pendingUpload:selectedRow", this.otherToggledRow), 
-        this.listenTo(wpbc.broadcast, "uploader:uploadProgress", this.uploadProgress), this.listenTo(wpbc.broadcast, "uploader:getParams", this.getParams), 
-        this.listenTo(wpbc.broadcast, "uploader:successfulUploadIngest", this.successfulUploadIngest), 
-        this.listenTo(wpbc.broadcast, "uploader:failedUploadIngest", this.failedUploadIngest);
-        var a = {
-            fileName: this.model.get("name"),
-            tags: "",
-            accounts: wpbc.preload.accounts,
-            // All accounts.
-            account: wpbc.preload.defaultAccount,
-            ingestSuccess: !1,
-            uploadSuccess: !1,
-            uploaded: !1
-        };
-        this.model.set(a), this.listenTo(this.model, "change:fileName", this.render), this.listenTo(this.model, "change:account", this.render);
-    },
-    render: function(a) {
-        a = a || {}, a.fileName = this.model.get("fileName"), a.size = this.model.humanReadableSize();
-        var b = this.model.get("account");
-        a.accountName = wpbc.preload.accounts[b].account_name, a.percent = this.model.get("percent"), 
-        a.activeUpload = this.model.get("activeUpload"), a.ingestSuccess = this.model.get("ingestSuccess"), 
-        a.uploadSuccess = this.model.get("uploadSuccess"), this.$el.html(this.template(a)), 
-        this.model.get("selected") && this.$el.addClass("selected"), this.model.get("ingestSuccess") && this.$el.addClass("ingest-success"), 
-        this.model.get("uploadSuccess") && this.$el.addClass("upload-success");
-    },
-    getParams: function(a) {
-        wpbc.broadcast.trigger("uploader:params", "abcde");
-    },
-    failedUploadIngest: function(a) {
-        // Make sure we're acting on the right file.
-        a.id === this.model.get("id") && (wpbc.broadcast.trigger("uploader:errorMessage", wpbc.preload.messages.unableToUpload.replace("%%s%%", this.model.get("fileName"))), 
-        this.render());
-    },
-    successfulUploadIngest: function(a) {
-        // Make sure we're acting on the right file.
-        a.id === this.model.get("id") && (wpbc.broadcast.trigger("uploader:successMessage", wpbc.preload.messages.successUpload.replace("%%s%%", this.model.get("fileName"))), 
-        this.render());
-    },
-    /**
+		playlistChanged : function ( videoIds ) {
+			this.killPendingRequests();
+			this.model.set( 'video_ids', videoIds );
+			this.model.save();
+		},
+
+		killPendingRequests : function () {
+			// Kill all pending requests
+			_.each( wpbc.requests, function ( request ) {
+				request.abort();
+			} );
+
+			wpbc.requests = [];
+		},
+
+	}
+);
+
+var UploadDetailsView = BrightcoveView.extend(
+	{
+		className : 'brightcove-pending-upload-details attachment-details',
+		tagName :   'div',
+		template :  wp.template( 'brightcove-pending-upload-details' ),
+
+		events : {
+			'keyup .brightcove-name' :          'nameChanged',
+			'keyup .brightcove-tags' :          'tagsChanged',
+			'change .brightcove-media-source' : 'accountChanged'
+		},
+
+		initialize : function ( options ) {
+			this.listenTo( wpbc.broadcast, 'pendingUpload:hideDetails', this.hide );
+			this.listenTo( wpbc.broadcast, 'uploader:fileUploaded', function ( file ) {
+				if ( file.id === this.model.get( 'id' ) ) {
+					this.model.set( 'uploaded', true );
+					this.render();
+				}
+			} );
+			this.model.set( 'ingestSuccess', true );
+			this.model.set( 'uploadSuccess', true );
+		},
+
+		nameChanged : function ( event ) {
+			this.model.set( 'fileName', event.target.value );
+		},
+
+		tagsChanged : function ( event ) {
+			this.model.set( 'tags', event.target.value );
+		},
+
+		accountChanged : function ( event ) {
+			this.model.set( 'account', event.target.value );
+		},
+
+		hide : function () {
+			this.$el.hide();
+		},
+
+		render : function ( options ) {
+			options          = options || {};
+			options.fileName = this.model.get( 'fileName' );
+			options.tags     = this.model.get( 'tags' );
+			options.size     = this.model.humanReadableSize();
+			options.accounts = this.model.get( 'accounts' );
+			options.account  = this.model.get( 'account' );
+			options.uploaded = this.model.get( 'uploaded' );
+			this.$el.html( this.template( options ) );
+		}
+
+	}
+);
+
+UploadWindowView = BrightcoveView.extend(
+	{
+		className : 'uploader-window',
+		template :  wp.template( 'brightcove-uploader-window' ),
+
+		initialize : function ( options ) {
+			_.bindAll( this, 'uploaderFilesAdded' );
+			this.listenTo( wpbc.broadcast, 'uploader:queuedFilesAdded', this.hide );
+			this.listenTo( wpbc.broadcast, 'uploader:startUpload', this.uploaderStartUpload );
+			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
+		},
+
+		render : function ( options ) {
+			this.$el.html( this.template( options ) );
+			_.defer( _.bind( this.afterRender, this ) );
+		},
+
+		resetUploads : function () {
+			if ( this.uploader && this.uploader.files ) {
+				this.uploader.files = []; // Reset pending uploads
+			}
+		},
+
+		afterRender : function () {
+			this.uploader = new plupload.Uploader( _.defaults( this.options, wpbc.preload.plupload ) );
+
+			// Uploader has neither .on nor .listenTo
+			this.uploader.added    = this.uploaderFilesAdded;
+			this.uploader.progress = this.uploaderUploadProgress;
+			this.uploader.bind( 'FilesAdded', this.uploaderFilesAdded );
+			this.uploader.bind( 'UploadProgress', this.uploaderUploadProgress );
+			this.uploader.bind( 'BeforeUpload', this.uploaderBeforeUpload );
+			this.uploader.bind( 'FileUploaded', this.uploaderFileUploaded );
+
+			this.uploader.bind( 'init', this.uploaderAfterInit );
+
+			this.uploader.init();
+			$( 'html' ).on( 'dragenter', _.bind( this.show, this ) );
+			/* the following dropzone function code is taken from the wp.Uploader code */
+			var drop_element = wpbc.preload.plupload.drop_element.replace( /[^a-zA-Z0-9-]+/g, '' );
+			var dropzone     = $( '#' + drop_element );
+			dropzone.on( 'dropzone:leave', _.bind( this.hide, this ) );
+		},
+
+		uploaderAfterInit : function ( uploader ) {
+			var drop_element = wpbc.preload.plupload.drop_element.replace( /[^a-zA-Z0-9-]+/g, '' );
+			var timer, active, dragdrop,
+			    dropzone     = $( '#' + drop_element );
+
+			dragdrop = uploader.features.dragdrop;
+
+			// Generate drag/drop helper classes.
+			if ( ! dropzone ) {
+				return;
+			}
+
+			dropzone.toggleClass( 'supports-drag-drop', ! ! dragdrop );
+
+			if ( ! dragdrop ) {
+				return dropzone.unbind( '.wp-uploader' );
+			}
+
+			// 'dragenter' doesn't fire correctly, simulate it with a limited 'dragover'.
+			dropzone.bind( 'dragover.wp-uploader', function () {
+				if ( timer ) {
+					clearTimeout( timer );
+				}
+
+				if ( active ) {
+					return;
+				}
+
+				dropzone.trigger( 'dropzone:enter' ).addClass( 'drag-over' );
+				active = true;
+			} );
+
+			dropzone.bind( 'dragleave.wp-uploader, drop.wp-uploader', function () {
+				// Using an instant timer prevents the drag-over class from
+				// being quickly removed and re-added when elements inside the
+				// dropzone are repositioned.
+				//
+				// @see https://core.trac.wordpress.org/ticket/21705
+				timer = setTimeout( function () {
+					active = false;
+					dropzone.trigger( 'dropzone:leave' ).removeClass( 'drag-over' );
+				}, 0 );
+			} );
+		},
+
+		show : function () {
+			var $el = this.$el.show();
+
+			// Ensure that the animation is triggered by waiting until
+			// the transparent element is painted into the DOM.
+			_.defer( function () {
+				$el.css( {opacity : 1} );
+			} );
+		},
+
+		hide : function () {
+			var $el = this.$el.css( {opacity : 0} );
+
+			wp.media.transition( $el ).done( function () {
+				// Transition end events are subject to race conditions.
+				// Make sure that the value is set as intended.
+				if ( '0' === $el.css( 'opacity' ) ) {
+					$el.hide();
+				}
+			} );
+
+			// https://core.trac.wordpress.org/ticket/27341
+			_.delay( function () {
+				if ( '0' === $el.css( 'opacity' ) && $el.is( ':visible' ) ) {
+					$el.hide();
+				}
+			}, 500 );
+		},
+
+		uploaderFilesAdded : function ( uploader, queuedFiles ) {
+			wpbc.broadcast.trigger( 'uploader:queuedFilesAdded', queuedFiles );
+		},
+
+		uploaderStartUpload : function () {
+			this.uploader.start();
+		},
+
+		uploaderUploadProgress : function ( up, file ) {
+			wpbc.broadcast.trigger( 'uploader:uploadProgress', file );
+		},
+
+		uploaderBeforeUpload : function ( up, file ) {
+			up.settings.multipart_params = _.defaults(
+				wpbc.uploads[file.id],
+				wpbc.preload.plupload.multipart_params,
+				{nonce : wpbc.preload.nonce}
+			);
+		},
+
+		uploaderFileUploaded : function ( up, file, response ) {
+			var status = JSON.parse( response.response );
+			wpbc.broadcast.trigger( 'uploader:fileUploaded', file );
+			if ( status.data.upload === 'success' && status.data.ingest === 'success' ) {
+				if ( status.data.videoDetails ) {
+					// Add newly uploaded file to preload list.
+					wpbc.broadcast.trigger( 'uploader:uploadedFileDetails', status.data.videoDetails );
+				}
+				wpbc.broadcast.trigger( 'uploader:successfulUploadIngest', file );
+			} else {
+				file.percent = 0;
+				file.status  = plupload.UPLOADING;
+				up.state     = plupload.STARTED;
+				up.trigger( 'StateChanged' );
+				wpbc.broadcast.trigger( 'uploader:failedUploadIngest', file );
+			}
+		}
+	}
+);
+
+var UploadView = BrightcoveView.extend(
+	{
+		className : 'brightcove-pending-upload',
+		tagName :   'tr',
+		template :  wp.template( 'brightcove-pending-upload' ),
+
+		events : {
+			'click' : 'toggleRow'
+		},
+
+		initialize : function () {
+			this.listenTo( wpbc.broadcast, 'pendingUpload:selectedRow', this.otherToggledRow );
+			this.listenTo( wpbc.broadcast, 'uploader:uploadProgress', this.uploadProgress );
+			this.listenTo( wpbc.broadcast, 'uploader:getParams', this.getParams );
+			this.listenTo( wpbc.broadcast, 'uploader:successfulUploadIngest', this.successfulUploadIngest );
+			this.listenTo( wpbc.broadcast, 'uploader:failedUploadIngest', this.failedUploadIngest );
+
+			var options = {
+				'fileName' :      this.model.get( 'name' ),
+				'tags' :          '',
+				'accounts' :      wpbc.preload.accounts, // All accounts.
+				'account' :       wpbc.preload.defaultAccount,
+				'ingestSuccess' : false,
+				'uploadSuccess' : false,
+				'uploaded' :      false
+			};
+
+			this.model.set( options );
+
+			this.listenTo( this.model, 'change:fileName', this.render );
+			this.listenTo( this.model, 'change:account', this.render );
+		},
+
+		render : function ( options ) {
+			options               = options || {};
+			options.fileName      = this.model.get( 'fileName' );
+			options.size          = this.model.humanReadableSize();
+			var sourceHash        = this.model.get( 'account' );
+			options.accountName   = wpbc.preload.accounts[sourceHash].account_name;
+			options.percent       = this.model.get( 'percent' );
+			options.activeUpload  = this.model.get( 'activeUpload' );
+			options.ingestSuccess = this.model.get( 'ingestSuccess' );
+			options.uploadSuccess = this.model.get( 'uploadSuccess' );
+
+			this.$el.html( this.template( options ) );
+			if ( this.model.get( 'selected' ) ) {
+				this.$el.addClass( 'selected' );
+			}
+			if ( this.model.get( 'ingestSuccess' ) ) {
+				this.$el.addClass( 'ingest-success' );
+			}
+			if ( this.model.get( 'uploadSuccess' ) ) {
+				this.$el.addClass( 'upload-success' );
+			}
+		},
+
+		getParams : function ( fileId ) {
+			wpbc.broadcast.trigger( 'uploader:params', "abcde" );
+		},
+
+		failedUploadIngest : function ( file ) {
+			// Make sure we're acting on the right file.
+			if ( file.id === this.model.get( 'id' ) ) {
+				wpbc.broadcast.trigger( 'uploader:errorMessage', wpbc.preload.messages.unableToUpload.replace( '%%s%%', this.model.get( 'fileName' ) ) );
+				this.render();
+			}
+		},
+
+		successfulUploadIngest : function ( file ) {
+			// Make sure we're acting on the right file.
+			if ( file.id === this.model.get( 'id' ) ) {
+				wpbc.broadcast.trigger( 'uploader:successMessage', wpbc.preload.messages.successUpload.replace( '%%s%%', this.model.get( 'fileName' ) ) );
+				this.render();
+			}
+		},
+		/**
 		 * Render if we're the active upload.
 		 * Re-render if we thought we were but we no longer are.
 		 * @param file Fired from UploadProgress on plUpload
 		 */
-    uploadProgress: function(a) {
-        // Make sure we're acting on the right file.
-        a.id === this.model.get("id") ? (this.model.set("activeUpload", !0), this.model.set("percent", a.percent), 
-        this.render()) : this.model.get("activeUpload") && (this.model.unset("activeUpload"), 
-        this.render());
-    },
-    toggleRow: function(a) {
-        this.$el.toggleClass("selected"), this.$el.hasClass("selected") ? (this.model.set("selected", !0), 
-        wpbc.broadcast.trigger("pendingUpload:selectedRow", this.cid)) : wpbc.broadcast.trigger("pendingUpload:hideDetails", this.cid);
-    },
-    otherToggledRow: function(a) {
-        // Ignore broadcast from self
-        a !== this.cid ? (this.$el.removeClass("selected"), this.model.unset("selected")) : wpbc.broadcast.trigger("pendingUpload:selectedItem", this.model);
-    }
-}), VideoEditView = BrightcoveView.extend({
-    tagName: "div",
-    className: "video-edit brightcove attachment-details",
-    template: wp.template("brightcove-video-edit"),
-    events: {
-        "click .brightcove.button.save-sync": "saveSync",
-        "click .brightcove.delete": "deleteVideo",
-        "click .brightcove.button.back": "back"
-    },
-    back: function(a) {
-        a.preventDefault(), wpbc.broadcast.trigger("start:gridview");
-    },
-    deleteVideo: function() {
-        confirm(wpbc.preload.messages.confirmDelete) && (wpbc.broadcast.trigger("spinner:on"), 
-        this.model.set("mediaType", "videos"), this.model.destroy());
-    },
-    saveSync: function() {
-        wpbc.broadcast.trigger("spinner:on"), this.model.set("name", this.$el.find(".brightcove-name").val()), 
-        this.model.set("description", this.$el.find(".brightcove-description").val()), this.model.set("long_description", this.$el.find(".brightcove-long-description").val()), 
-        this.model.set("tags", this.$el.find(".brightcove-tags").val()), this.model.set("height", this.$el.find(".brightcove-height").val()), 
-        this.model.set("width", this.$el.find(".brightcove-width").val()), this.model.set("mediaType", "videos"), 
-        this.model.save();
-    },
-    render: function(a) {
-        this.listenTo(wpbc.broadcast, "insert:shortcode", this.insertShortcode), a = this.model.toJSON(), 
-        this.$el.html(this.template(a));
-        var b = this.$el.find(".spinner");
-        this.listenTo(wpbc.broadcast, "spinner:on", function() {
-            b.addClass("is-active").removeClass("hidden");
-        }), this.listenTo(wpbc.broadcast, "spinner:off", function() {
-            b.removeClass("is-active").addClass("hidden");
-        });
-    }
-}), VideoPreviewView = BrightcoveView.extend({
-    tagName: "div",
-    className: "video-preview brightcove",
-    template: wp.template("brightcove-video-preview"),
-    render: function(a) {
-        a = a || {}, a.id = this.model.get("id"), a.account_id = this.model.get("account_id"), 
-        this.$el.html(this.template(a)), this.listenTo(wpbc.broadcast, "insert:shortcode", this.insertShortcode);
-    }
-}), MediaCollectionView = BrightcoveView.extend({
-    tagName: "ul",
-    className: "brightcove-media attachments",
-    attributes: {
-        tabIndex: -1
-    },
-    events: {
-        /* scroll fired on playlist edits, but for media grids it's handled by firing 'scroll:mediaGrid' in brightcove-media-manager */
-        scroll: "scrollHandler"
-    },
-    loadMoreMediaItems: function() {
-        this.fetchingResults = !0, this.collection.fetch();
-    },
-    scrollHandler: function() {
-        // We don't fetch for videos in an existing playlist
-        if ("existingPlaylists" !== this.collection.mediaCollectionViewType) {
-            var a = 200;
-            // How many px from bottom until we fetch the next page.
-            !this.fetchingResults && this.el.scrollTop + this.el.clientHeight + a > this.el.scrollHeight && (this.collection.pageNumber += 1, 
-            this.loadMoreMediaItems());
-        }
-    },
-    initialize: function(a) {
-        this.fetchingResults = !1, this.listenTo(wpbc.broadcast, "fetch:finished", function() {
-            this.fetchingResults = !1;
-        });
-        var b = wp.media.isTouchDevice ? 300 : 200;
-        this.scrollHandler = _.chain(this.scrollHandler).bind(this).throttle(b).value(), 
-        this.listenTo(wpbc.broadcast, "scroll:mediaGrid", this.scrollHandler), a = a || {}, 
-        this.el.id = _.uniqueId("__attachments-view-"), !this.collection && a.videoIds ? (this.collection = new MediaCollection(null, {
-            videoIds: a.videoIds,
-            activeAccount: a.activeAccount,
-            mediaCollectionViewType: a.mediaCollectionViewType
-        }), this.listenTo(wpbc.broadcast, "playlist:moveUp", this.videoMoveUp), this.listenTo(wpbc.broadcast, "playlist:moveDown", this.videoMoveDown), 
-        this.listenTo(wpbc.broadcast, "playlist:remove", this.videoRemove), this.listenTo(wpbc.broadcast, "playlist:add", this.videoAdd)) : this.collection || "libraryPlaylists" !== a.mediaCollectionViewType || (this.collection = new MediaCollection(null, {
-            excludeVideoIds: a.excludeVideoIds,
-            activeAccount: a.activeAccount,
-            mediaCollectionViewType: a.mediaCollectionViewType
-        }), this.listenTo(wpbc.broadcast, "playlist:remove", this.videoRemove), this.listenTo(wpbc.broadcast, "playlist:add", this.videoAdd)), 
-        _.defaults(this.options, {
-            refreshSensitivity: wp.media.isTouchDevice ? 300 : 200,
-            refreshThreshold: 3,
-            VideoView: wp.media.view.Video,
-            sortable: !1,
-            resize: !0,
-            idealColumnWidth: 202
-        }), this._viewsByCid = {}, this.resizeEvent = "resize.media-modal-columns", this.listenTo(this.collection, "add", function(a) {
-            this.views.add(this.createMediaView(a), {
-                at: this.collection.indexOf(a)
-            });
-        }, this), this.listenTo(this.collection, "remove", function(a) {
-            a && (a.view ? a.view.remove() : a.cid && this._viewsByCid[a.cid] && this._viewsByCid[a.cid].remove());
-        }, this), this.listenTo(this.collection, "reset", this.render), this.scroll = _.chain(this.scroll).bind(this).throttle(this.options.refreshSensitivity).value(), 
-        this.options.scrollElement = this.options.scrollElement || this.el, $(this.options.scrollElement).on("scroll", this.scroll), 
-        _.bindAll(this, "setColumns"), this.options.resize && (this.on("ready", this.bindEvents), 
-        _.defer(this.setColumns, this));
-    },
-    render: function() {
-        this.$el.empty(), this.collection.each(function(a) {
-            a.view = new MediaView({
-                model: a
-            }), this.registerSubview(a.view), a.view.render(), a.view.delegateEvents(), a.view.$el.appendTo(this.$el);
-        }, this);
-    },
-    setViewType: function(a) {
-        this.collection.each(function(b) {
-            b.set("view", a);
-        }, this);
-    },
-    bindEvents: function() {
-        this.$window.off(this.resizeEvent).on(this.resizeEvent, _.debounce(this.setColumns, 50));
-    },
-    setColumns: function() {
-        var a = this.columns, b = this.$el.width();
-        b && (this.columns = Math.min(Math.round(b / this.options.idealColumnWidth), 12) || 1, 
-        a && a === this.columns || this.$el.closest(".media-frame-content").attr("data-columns", this.columns));
-    },
-    /**
+		uploadProgress :         function ( file ) {
+			// Make sure we're acting on the right file.
+			if ( file.id === this.model.get( 'id' ) ) {
+				this.model.set( 'activeUpload', true );
+				this.model.set( 'percent', file.percent );
+				this.render();
+			} else {
+				if ( this.model.get( 'activeUpload' ) ) {
+					this.model.unset( 'activeUpload' );
+					this.render();
+				}
+			}
+		},
+
+		toggleRow : function ( event ) {
+			this.$el.toggleClass( 'selected' );
+			if ( this.$el.hasClass( 'selected' ) ) {
+				this.model.set( 'selected', true );
+				wpbc.broadcast.trigger( 'pendingUpload:selectedRow', this.cid );
+			} else {
+				wpbc.broadcast.trigger( 'pendingUpload:hideDetails', this.cid );
+			}
+		},
+
+		otherToggledRow : function ( cid ) {
+			// Ignore broadcast from self
+			if ( cid !== this.cid ) {
+				this.$el.removeClass( 'selected' );
+				this.model.unset( 'selected' );
+			} else {
+				wpbc.broadcast.trigger( 'pendingUpload:selectedItem', this.model );
+			}
+		}
+	}
+);
+
+var VideoEditView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'video-edit brightcove attachment-details',
+		template :  wp.template( 'brightcove-video-edit' ),
+
+		events : {
+			'click .brightcove.button.save-sync' : 'saveSync',
+			'click .brightcove.delete' :           'deleteVideo',
+			'click .brightcove.button.back' :      'back'
+		},
+
+		back : function ( event ) {
+			event.preventDefault();
+
+			// Exit if the 'button' is disabled.
+			if ( $( event.currentTarget ).hasClass( 'disabled' ) ) {
+				return;
+			}
+			wpbc.broadcast.trigger( 'start:gridview' );
+		},
+
+		deleteVideo : function () {
+			if ( confirm( wpbc.preload.messages.confirmDelete ) ) {
+				wpbc.broadcast.trigger( 'spinner:on' );
+				this.model.set( 'mediaType', 'videos' );
+				this.model.destroy();
+			}
+		},
+
+		saveSync : function ( evnt ) {
+
+			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
+				$allButtons = $mediaFrame.find( '.button, .button-link' );
+
+			// Exit if the 'button' is disabled.
+			if ( $allButtons.hasClass( 'disabled' ) ) {
+				return;
+			}
+
+			// Disable the button for the duration of the request.
+			$allButtons.addClass( 'disabled' );
+
+			// Hide the delete link for the duration of the request.
+			$mediaFrame.find( '.delete-action' ).hide();
+
+			wpbc.broadcast.trigger( 'spinner:on' );
+			this.model.set( 'name', this.$el.find( '.brightcove-name' ).val() );
+			this.model.set( 'description', this.$el.find( '.brightcove-description' ).val() );
+			this.model.set( 'long_description', this.$el.find( '.brightcove-long-description' ).val() );
+
+			// Trim whitespace and commas from tags beginning/end.
+			this.model.set( 'tags', this.$el.find( '.brightcove-tags' ).val().trim().replace(/(^,)|(,$)/g, '' ) );
+			this.model.set( 'height', this.$el.find( '.brightcove-height' ).val() );
+			this.model.set( 'width', this.$el.find( '.brightcove-width' ).val() );
+			this.model.set( 'mediaType', 'videos' );
+			this.model.save()
+				.done( function() {
+
+					// Update the tag dropdown and wpbc.preload.tags with any new tag values.
+					var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+						newTags      = _.difference( editTags, wpbc.preload.tags );
+
+						// Add any new tags to the tags object and the dropdown.
+						_.each( newTags, function( newTag ){
+							newTag = newTag.trim();
+							if ( '' !== newTag ) {
+								wpbc.preload.tags.push( newTag );
+							}
+						} );
+						wpbc.preload.tags.sort();
+				} )
+				.always( function() {
+					// Re-enable the button when the request has completed.
+					$allButtons.removeClass( 'disabled' );
+
+					// Show the delete link.
+					$mediaFrame.find( '.delete-action' ).show();
+				} );
+		},
+
+		render : function ( options ) {
+			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
+			options = this.model.toJSON();
+			this.$el.html( this.template( options ) );
+			var spinner = this.$el.find( '.spinner' );
+			this.listenTo( wpbc.broadcast, 'spinner:on', function () {
+				spinner.addClass( 'is-active' ).removeClass( 'hidden' );
+			} );
+			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
+				spinner.removeClass( 'is-active' ).addClass( 'hidden' );
+			} );
+		}
+
+	}
+);
+
+
+var VideoPreviewView = BrightcoveView.extend(
+	{
+		tagName :   'div',
+		className : 'video-preview brightcove',
+		template :  wp.template( 'brightcove-video-preview' ),
+
+		render : function ( options ) {
+			options            = options || {};
+			options.id         = this.model.get( 'id' );
+			options.account_id = this.model.get( 'account_id' );
+			this.$el.html( this.template( options ) );
+			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
+		}
+
+	}
+);
+
+var MediaCollectionView = BrightcoveView.extend(
+	{
+		tagName :   'ul',
+		className : 'brightcove-media attachments',
+
+		attributes : {
+			tabIndex : - 1
+		},
+
+		events : {
+			/* scroll fired on playlist edits, but for media grids it's handled by firing 'scroll:mediaGrid' in brightcove-media-manager */
+			'scroll' : 'scrollHandler'
+		},
+
+		loadMoreMediaItems : function () {
+			this.fetchingResults = true;
+			this.collection.fetch();
+		},
+
+		scrollHandler : function () {
+			// We don't fetch for videos in an existing playlist
+			if ( 'existingPlaylists' === this.collection.mediaCollectionViewType ) {
+				return;
+			}
+
+			var scrollThreshold = 200; // How many px from bottom until we fetch the next page.
+			if ( ! this.fetchingResults && this.el.scrollTop + this.el.clientHeight + scrollThreshold > this.el.scrollHeight ) {
+				this.collection.pageNumber += 1;
+				this.loadMoreMediaItems();
+			}
+		},
+
+		initialize : function ( options ) {
+			this.fetchingResults = false;
+			this.listenTo( wpbc.broadcast, 'fetch:finished', function () {
+				this.fetchingResults = false;
+			} );
+			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
+			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
+			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
+			options    = options || {};
+			this.el.id = _.uniqueId( '__attachments-view-' );
+
+			// Occurs on playlist edit, existing videos.
+			if ( ! this.collection && options.videoIds ) {
+				this.collection = new MediaCollection( null, {videoIds : options.videoIds, activeAccount : options.activeAccount, mediaCollectionViewType : options.mediaCollectionViewType} );
+				this.listenTo( wpbc.broadcast, 'playlist:moveUp', this.videoMoveUp );
+				this.listenTo( wpbc.broadcast, 'playlist:moveDown', this.videoMoveDown );
+				this.listenTo( wpbc.broadcast, 'playlist:remove', this.videoRemove );
+				this.listenTo( wpbc.broadcast, 'playlist:add', this.videoAdd );
+			} else if ( ! this.collection && 'libraryPlaylists' === options.mediaCollectionViewType ) {
+				this.collection = new MediaCollection( null, {excludeVideoIds : options.excludeVideoIds, activeAccount : options.activeAccount, mediaCollectionViewType : options.mediaCollectionViewType} );
+				this.listenTo( wpbc.broadcast, 'playlist:remove', this.videoRemove );
+				this.listenTo( wpbc.broadcast, 'playlist:add', this.videoAdd );
+			}
+
+			_.defaults( this.options, {
+				refreshSensitivity : wp.media.isTouchDevice ? 300 : 200,
+				refreshThreshold :   3,
+				VideoView :          wp.media.view.Video,
+				sortable :           false,
+				resize :             true,
+				idealColumnWidth :   202
+			} );
+
+			this._viewsByCid = {};
+			this.resizeEvent = 'resize.media-modal-columns';
+
+			this.listenTo( this.collection, 'add', function ( media ) {
+				this.views.add( this.createMediaView( media ), {
+					at : this.collection.indexOf( media )
+				} );
+			}, this );
+
+			this.listenTo( this.collection, 'remove', function ( media ) {
+				if ( media ) {
+					if ( media.view ) {
+						media.view.remove();
+					} else if ( media.cid && this._viewsByCid[media.cid] ) {
+						this._viewsByCid[media.cid].remove();
+					}
+				}
+			}, this );
+
+			this.listenTo( this.collection, 'reset', this.render );
+
+			// Throttle the scroll handler and bind this.
+			this.scroll = _.chain( this.scroll ).bind( this ).throttle( this.options.refreshSensitivity ).value();
+
+			this.options.scrollElement = this.options.scrollElement || this.el;
+			$( this.options.scrollElement ).on( 'scroll', this.scroll );
+
+			_.bindAll( this, 'setColumns' );
+
+			if ( this.options.resize ) {
+				this.on( 'ready', this.bindEvents );
+				// this.controller.on('open', this.setColumns);
+
+				// Call this.setColumns() after this view has been rendered in the DOM so
+				// attachments get proper width applied.
+				_.defer( this.setColumns, this );
+			}
+		},
+
+		render : function () {
+			this.$el.empty();
+			this.collection.each( function ( mediaModel ) {
+				mediaModel.view = new MediaView( {model : mediaModel} );
+				this.registerSubview( mediaModel.view );
+				mediaModel.view.render();
+				mediaModel.view.delegateEvents();
+				mediaModel.view.$el.appendTo( this.$el );
+			}, this );
+		},
+
+		setViewType : function ( type ) {
+			this.collection.each( function ( mediaModel ) {
+				mediaModel.set( 'view', type );
+			}, this );
+		},
+
+		bindEvents : function () {
+			this.$window.off( this.resizeEvent ).on( this.resizeEvent, _.debounce( this.setColumns, 50 ) );
+		},
+
+		setColumns : function () {
+			var prev  = this.columns,
+			    width = this.$el.width();
+
+			if ( width ) {
+				this.columns = Math.min( Math.round( width / this.options.idealColumnWidth ), 12 ) || 1;
+
+				if ( ! prev || prev !== this.columns ) {
+					this.$el.closest( '.media-frame-content' ).attr( 'data-columns', this.columns );
+				}
+			}
+		},
+
+		/**
 		 * @param {wp.media.model.Video} attachment
 		 * @returns {wp.media.View}
 		 */
-    createMediaView: function(a) {
-        a.set("viewType", this.collection.mediaCollectionViewType);
-        var b = new MediaView({
-            controller: this.controller,
-            model: a,
-            collection: this.collection,
-            selection: this.options.selection
-        });
-        return this.registerSubview(b), this._viewsByCid[a.cid] = b, b;
-    },
-    prepare: function() {
-        // Create all of the Video views, and replace
-        // the list in a single DOM operation.
-        this.collection.length ? this.views.set(this.collection.map(this.createMediaView, this)) : (this.views.unset(), 
-        this.collection.more().done(this.scroll));
-    },
-    ready: function() {
-        // Trigger the scroll event to check if we're within the
-        // threshold to query for additional attachments.
-        this.scroll();
-    },
-    scroll: function() {
-        var a, b = this, c = this.options.scrollElement, d = c.scrollTop;
-        // The scroll event occurs on the document, but the element
-        // that should be checked is the document body.
-        c === document && (c = document.body, d = $(document).scrollTop()), "function" === this.collection.hasMore && $(c).is(":visible") && this.collection.hasMore() && (a = this.views.parent.toolbar, 
-        c.scrollHeight - (d + c.clientHeight) < c.clientHeight / 3 && a.get("spinner").show(), 
-        c.scrollHeight < d + c.clientHeight * this.options.refreshThreshold && this.collection.more().done(function() {
-            b.scroll(), a.get("spinner").hide();
-        }));
-    },
-    videoMoveUp: function(a) {
-        var b = a.model, c = this.collection.indexOf(b);
-        c > 0 && (this.collection.remove(b, {
-            silent: !0
-        }), // silence this to stop excess event triggers
-        this.collection.add(b, {
-            at: c - 1
-        })), this.render(), this.playlistChanged();
-    },
-    videoMoveDown: function(a) {
-        var b = a.model, c = this.collection.indexOf(b);
-        c < this.collection.models.length && (this.collection.remove(b, {
-            silent: !0
-        }), // silence this to stop excess event triggers
-        this.collection.add(b, {
-            at: c + 1
-        })), this.render(), this.playlistChanged();
-    },
-    videoRemove: function(a) {
-        var b = a.model;
-        -1 === this.collection.indexOf(b) ? // this is the library model
-        this.collection.add(b) : (// this is the playlist collection
-        this.collection.remove(b, {
-            silent: !0
-        }), // silence this to stop excess event triggers
-        this.playlistChanged()), this.render();
-    },
-    videoAdd: function(a) {
-        /**
+		createMediaView : function ( attachment ) {
+			attachment.set( 'viewType', this.collection.mediaCollectionViewType );
+			var view = new MediaView( {
+				controller : this.controller,
+				model :      attachment,
+				collection : this.collection,
+				selection :  this.options.selection
+			} );
+			this.registerSubview( view );
+			this._viewsByCid[attachment.cid] = view;
+			return view;
+		},
+
+		prepare : function () {
+			// Create all of the Video views, and replace
+			// the list in a single DOM operation.
+			if ( this.collection.length ) {
+				this.views.set( this.collection.map( this.createMediaView, this ) );
+
+				// If there are no elements, clear the views and load some.
+			} else {
+				this.views.unset();
+				this.collection.more().done( this.scroll );
+			}
+		},
+
+		ready : function () {
+			// Trigger the scroll event to check if we're within the
+			// threshold to query for additional attachments.
+			this.scroll();
+		},
+
+		scroll : function () {
+			var view      = this,
+			    el        = this.options.scrollElement,
+			    scrollTop = el.scrollTop,
+			    toolbar;
+
+			// The scroll event occurs on the document, but the element
+			// that should be checked is the document body.
+			if ( el === document ) {
+				el        = document.body;
+				scrollTop = $( document ).scrollTop();
+			}
+
+			if ( 'function' !== this.collection.hasMore || ! $( el ).is( ':visible' ) || ! this.collection.hasMore() ) {
+				return;
+			}
+
+			toolbar = this.views.parent.toolbar;
+
+			// Show the spinner only if we are close to the bottom.
+			if ( el.scrollHeight - ( scrollTop + el.clientHeight ) < el.clientHeight / 3 ) {
+				toolbar.get( 'spinner' ).show();
+			}
+
+			if ( el.scrollHeight < scrollTop + ( el.clientHeight * this.options.refreshThreshold ) ) {
+				this.collection.more().done( function () {
+					view.scroll();
+					toolbar.get( 'spinner' ).hide();
+				} );
+			}
+		},
+
+		videoMoveUp : function ( videoView ) {
+			var model = videoView.model;
+			var index = this.collection.indexOf( model );
+			if ( index > 0 ) {
+				this.collection.remove( model, {silent : true} ); // silence this to stop excess event triggers
+				this.collection.add( model, {at : index - 1} );
+			}
+			this.render();
+			this.playlistChanged();
+		},
+
+		videoMoveDown : function ( videoView ) {
+			var model = videoView.model;
+			var index = this.collection.indexOf( model );
+			if ( index < this.collection.models.length ) {
+				this.collection.remove( model, {silent : true} ); // silence this to stop excess event triggers
+				this.collection.add( model, {at : index + 1} );
+			}
+			this.render();
+			this.playlistChanged();
+		},
+
+		videoRemove : function ( videoView ) {
+			var model = videoView.model;
+			if ( - 1 === this.collection.indexOf( model ) ) {
+				// this is the library model
+				this.collection.add( model );
+			} else {
+				// this is the playlist collection
+				this.collection.remove( model, {silent : true} ); // silence this to stop excess event triggers
+				this.playlistChanged();
+			}
+			this.render();
+		},
+
+		videoAdd : function ( videoView ) {
+			/**
 			 * Video add is heard by two collections, the one containing the videos for the playlists
 			 * and the one containing the videos that we can add to them.
 			 * We handle the add by adding from the collection where it doesn't exist (the playlist) and removing
 			 * where it does (the library).
 			 */
-        var b = a.model;
-        -1 === this.collection.indexOf(b) ? (// this is the playlist collection
-        this.collection.add(b), this.playlistChanged()) : (// this is the library model
-        this.collection.remove(b, {
-            silent: !0
-        }), this.render());
-    },
-    playlistChanged: function() {
-        var a = [];
-        this.collection.each(function(b) {
-            a.push(b.id);
-        }), this.videoIds = a, // var syncPlaylist = _.throttle(_.bind(this.syncPlaylist, this), 2000);
-        this.syncPlaylist();
-    },
-    syncPlaylist: function() {
-        wpbc.broadcast.trigger("playlist:changed", this.videoIds);
-    }
-}), App = {
-    renderMediaManager: function(a) {
-        var b = $(".brightcove-media-" + a);
-        document.getElementById("content_ifr");
-        if (b.length) {
-            var c = new BrightcoveMediaManagerView({
-                el: b,
-                date: "all",
-                embedType: "page",
-                preload: !0,
-                mode: "manager",
-                search: "",
-                accounts: "all",
-                tags: "all",
-                mediaType: a,
-                viewType: "grid"
-            });
-            c.render();
-        }
-    },
-    load: function() {
-        wpbc.requests = [], wpbc.responses = {}, wpbc.broadcast = _.extend({}, Backbone.Events), 
-        // pubSub object
-        this.loaded();
-    },
-    loaded: function() {
-        var a = $(".brightcove-modal");
-        wpbc.triggerModal = function() {
-            wpbc.modal ? wpbc.modal.$el.show() : (wpbc.modal = new BrightcoveModalView({
-                el: a,
-                tab: "videos"
-            }), wpbc.modal.render());
-        };
-        // Load the appropriate media type manager into the container element,
-        // We only support loading one per page.
-        _.each([ "videos", "playlists" ], function(a) {
-            App.renderMediaManager(a);
-        }), $(".account-toggle-button").on("click", function(a) {
-            a.preventDefault(), $(this).hide(), $(".brightcove-account-row.hidden").show();
-        }), $(".brightcove-add-new-video").on("click", function(a) {
-            a.preventDefault(), wpbc.broadcast.trigger("upload:video");
-        }), $(".brightcove-add-media").on("click", function() {
-            wpbc.triggerModal();
-        }), $(document).keyup(function(a) {
-            27 === a.keyCode && // Close modal on ESCAPE if it's open.
-            wpbc.broadcast.trigger("close:modal");
-        }), $("a.brightcove-action-delete-source").on("click", function(a) {
-            var b = $(this).data("alert-message");
-            return confirm(b) ? void 0 : !1;
-        });
-    }
-};
+			var model = videoView.model;
+			if ( - 1 === this.collection.indexOf( model ) ) {
+				// this is the playlist collection
+				this.collection.add( model );
+				this.playlistChanged();
+			} else {
+				// this is the library model
+				this.collection.remove( model, {silent : true} );
+				this.render();
+			}
+		},
 
-$(document).ready(function() {
-    App.load();
-});
-})(jQuery);
+		playlistChanged : function () {
+			var videoIds = [];
+			this.collection.each( function ( video ) {
+				videoIds.push( video.id );
+			} );
+			this.videoIds = videoIds;
+			// var syncPlaylist = _.throttle(_.bind(this.syncPlaylist, this), 2000);
+			this.syncPlaylist();
+		},
+
+		syncPlaylist : function () {
+			wpbc.broadcast.trigger( 'playlist:changed', this.videoIds );
+		}
+
+	}
+);
+
+
+	var App = {
+		renderMediaManager: function(mediaType) {
+			var brightcoveMediaContainer = $('.brightcove-media-' + mediaType);
+			var content_ifr = document.getElementById('content_ifr');
+			if ( brightcoveMediaContainer.length ) {
+				var brightcoveMediaManager = new BrightcoveMediaManagerView({
+					el: brightcoveMediaContainer,
+					date: 'all',
+					embedType: 'page',
+					preload: true,
+					mode: 'manager',
+					search: '',
+					accounts: 'all',
+					tags: 'all',
+					mediaType: mediaType,
+					viewType: 'grid'
+				});
+				brightcoveMediaManager.render();
+			}
+		},
+
+		load: function() {
+			wpbc.requests = [];
+			wpbc.responses = {};
+			wpbc.broadcast = _.extend({}, Backbone.Events); // pubSub object
+
+			this.loaded();
+
+		},
+
+		loaded: function() {
+			var brightcoveModalContainer = $('.brightcove-modal');
+			wpbc.triggerModal = function() {
+				if (!wpbc.modal) {
+					wpbc.modal = new BrightcoveModalView({
+						el: brightcoveModalContainer,
+						tab: 'videos'
+					});
+					wpbc.modal.render();
+					wpbc.modal.$el.find( '.spinner' ).addClass( 'is-active' );
+				} else {
+					wpbc.modal.$el.show();
+				}
+
+				// Prevent body scrolling by adding a class to 'body'.
+				$( 'body' ).addClass( 'modal-open' );
+			};
+
+			var bc_sanitize_ids = function( id ) {
+				return id.replace(/\D/g,'');
+			};
+
+			// Load the appropriate media type manager into the container element,
+			// We only support loading one per page.
+			_.each(['videos', 'playlists'], function(mediaType){
+				App.renderMediaManager(mediaType);
+			});
+
+			$('.account-toggle-button').on('click',function(event){
+				event.preventDefault();
+				$(this).hide();
+				$('.brightcove-account-row.hidden').show();
+			});
+
+			$('.brightcove-add-new-video').on('click', function(e) {
+				e.preventDefault();
+				wpbc.broadcast.trigger('upload:video');
+			});
+
+			$('.brightcove-add-media').on('click', function() {
+				wpbc.triggerModal();
+			});
+
+			$(document).keyup(function(e) {
+				if (27 === e.keyCode) {
+					// Close modal on ESCAPE if it's open.
+					wpbc.broadcast.trigger('close:modal');
+				}
+			});
+
+			$('a.brightcove-action-delete-source').on('click',function(e){
+				var message = $(this).data('alert-message');
+				if( !confirm( message ) ) {
+					return false;
+				}
+			});
+
+		}
+	};
+
+	jQuery( document ).ready( function() {
+		App.load();
+	} );
+
+} )( jQuery );

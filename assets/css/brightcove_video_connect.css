@@ -148,9 +148,11 @@ div.brightcove-message {
   .brightcove.media-frame-content.edit-view, .brightcove-media.playlist.edit-view {
     width: -webkit-calc(100% - 20px);
     width: calc(100% - 20px);
-    border-right: none; }
+    border-right: none;
+    height: auto; }
   .brightcove.media-frame-content .video-edit, .brightcove-media.playlist .video-edit {
-    max-width: 721px; }
+    max-width: 721px;
+    padding: 5px; }
 
 .brightcove-buttons .delete {
   color: #a00;
