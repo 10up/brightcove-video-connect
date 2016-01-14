@@ -31,7 +31,7 @@ class BC_Admin_Templates {
 						<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
 							<img src="{{data.images.thumbnail.src}}" width="162" height="94">
 						<# } else { #>
-							<img src="<?php echo BRIGHTCOVE_URL . 'images/video-processing-large.png'; ?>" width="162" height="94">
+							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" width="162" height="94">
 						<# } #>
 						<div class="duration">
 							<span>{{data.duration}}</span>
@@ -58,7 +58,7 @@ class BC_Admin_Templates {
 					<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
 						<img src="{{data.images.thumbnail.src}}" width="162" height="94">
 					<# } else { #>
-						<img src="<?php echo BRIGHTCOVE_URL . 'images/video-processing-large.png'; ?>" width="162" height="94">
+						<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" width="162" height="94">
 					<# } #>
 					<div class="duration">
 						<span>{{data.duration}}</span>
@@ -313,9 +313,9 @@ class BC_Admin_Templates {
 						<img src="{{ data.images.thumbnail.src }}" class="icon" draggable="false" width="162" height="94" />
 					<# } else { #>
 						<# if ( data.video_ids ) { #>
-							<img src="<?php echo BRIGHTCOVE_URL . 'images/video-playlist-large.png'; ?>" class="icon" draggable="false" width="162" height="94"  />
+							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
 						<# } else { #>
-							<img src="<?php echo BRIGHTCOVE_URL . 'images/video-processing-large.png'; ?>" class="icon" draggable="false" width="162" height="94"  />
+							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
 						<# } #>
 					<# } #>
 					<# if ( data.duration ) { #>
@@ -371,7 +371,7 @@ class BC_Admin_Templates {
 					<# if ( data.images && data.images.poster && data.images.poster.src ) { #>
 						<img src="{{ data.images.poster.src }}" class="detail-icon" draggable="false" width="300" height="172"  />
 					<# } else { #>
-						<img src="<?php echo BRIGHTCOVE_URL . 'images/video-processing-large.png'; ?>" class="detail-icon" draggable="false" width="300" height="172"  />
+						<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="detail-icon" draggable="false" width="300" height="172"  />
 					<# } #>
 					<# if ( data.duration ) { #>
 						<div class="detail-duration">
@@ -402,7 +402,7 @@ class BC_Admin_Templates {
 					<# if ( data.images && data.images.poster && data.images.poster.src ) { #>
 						<img src="{{ data.images.poster.src }}" class="detail-icon" draggable="false" width="300" height="172" />
                     <# } else { #>
-                        <img src="<?php echo BRIGHTCOVE_URL . 'images/video-playlist-large.png'; ?>" class="detail-icon" draggable="false" width="300" height="172"  />
+                        <img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="detail-icon" draggable="false" width="300" height="172"  />
                     <# } #>
                     <# if ( data.video_ids ) { #>
                         <div class="detail-video-count">

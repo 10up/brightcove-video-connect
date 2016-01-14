@@ -56,9 +56,19 @@ class BC_Status_Warning {
 	 */
 	protected function _check_for_failed() {
 
-		$status_response = wp_remote_get( $this->status_endpoint );
+		if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
+			$status_response = vip_safe_wp_remote_get( $this->status_endpoint );
+		} else {
+			$status_response = wp_remote_get( $this->status_endpoint );
+		}
 		$statuses        = array();
-		$failed_services = get_site_transient( 'brightcove_failed_services' );
+
+		if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
+			$failed_services = get_site_transient( 'brightcove_failed_services' );
+		} else {
+			// while this makes sense to be a site transient, due to the nature of WordPress.com VIP ensure to keep it as regular transient on this environment.
+			$failed_services = get_transient( 'brightcove_failed_services' );
+		}
 
 		if ( false === $failed_services ) {
 
@@ -102,8 +112,11 @@ class BC_Status_Warning {
 
 			}
 
-			set_site_transient( 'brightcove_failed_services', $failed_services, $timeout );
-
+			if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
+				set_site_transient( 'brightcove_failed_services', $failed_services, $timeout );
+			} else {
+				set_transient( 'brightcove_failed_services', $failed_services, $timeout );
+			}
 		}
 
 		if ( empty( $failed_services ) ) {

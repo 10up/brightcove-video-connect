@@ -96,8 +96,11 @@ abstract class BC_API {
 		$transient_key         = substr( '_brightcove_req_' . $account_id . BC_Utility::get_hash_for_object( $url ), 0, $max_key_length );
 		$request               = BC_Utility::get_cache_item( $transient_key );
 		if ( false === $request ) {
-			$request = wp_remote_get( $url, $args );
-
+			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
+				$request = vip_safe_wp_remote_get( $url, $args );
+			} else {
+				$request = wp_remote_get( $url, $args );
+			}
 			$successful_response_codes = array( 200, 201, 202, 204 );
 
 			if ( in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes ) ) {
