@@ -186,7 +186,29 @@ http://sample-videos.com/
 == Changelog ==
 
 = 1.1.3 =
-*
+* Fix: Tags should automatically populate drop down on videos page
+* Fix: Clear search results if user empties field or clicks search field `x`
+* Fix: Improve search handling
+* Fix: Improve logic for exit edit mode when closing modal
+* Fix: Ensure this bound properly in returned delete callback
+* Fix: Prevent body/background from scrolling when modal open
+* Fix: Fix a scroll overflow issue in the edit video modal
+* Fix: When re-opening modal, always switch back to video grid view
+* Fix: Activate the spinner only when opening modal, not in template
+* Fix: Ensure close button handler doesn't interfere with other close requests
+* Fix: Fix back button disabled detection
+* Fix: Make the notices dismissable instead of fading
+* Fix: Disable closing modal during sync
+* Fix: Disable all buttons and hide delete link while syncing
+* Fix: Disable all buttons on the edit video screen while syncing
+* Fix: Correct scrollbar on Sync button click, adds some css padding
+* Fix: Start with the spinner active, until the initial ajax request completes
+* Fix: Set default account id for media manager
+* Fix: Correct setting of account on selection
+* Fix: Select default account for initial sync (as default)
+* Fix: Only localize playlist data, get the rest via ajax
+* Fix: Add selected to current account dropdown, remove All option
+* Fix: Various miscellaneous corrections for updated WordPress VIP submission
 
 = 1.1.2 =
 * Fix: Remove extra files. This is a holdout from 1.1.1 to remove all the extra files from the repository.
