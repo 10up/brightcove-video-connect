@@ -3,3 +3,4 @@
 node_modules
 release
 .sass-cache
+deploy.sh
