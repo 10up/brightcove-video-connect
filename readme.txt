@@ -4,8 +4,8 @@ Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghaky
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to:      4.4
-Stable tag:        1.1.2
+Tested up to:      4.5
+Stable tag:        1.1.3
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,9 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.1.3 =
+*
+
 = 1.1.2 =
 * Fix: Remove extra files. This is a holdout from 1.1.1 to remove all the extra files from the repository.
 
@@ -251,23 +254,5 @@ http://sample-videos.com/
 
 == Upgrade Notice ==
 
-= 1.1.2 =
-1.1.2 is a major bugfix release and is reccommended for all users
-
-= 1.1.1 =
-1.1.1 is a major bugfix release and is reccommended for all users
-
-= 1.1.0 =
-1.1.0 is a bugfix and new feature update that is recommended for all users
-
-= 1.0.9 =
-1.0.9 is an important bugfix and is recommended for all users
-
-= 1.0.8 =
-1.0.8 is an important bugfix and is recommended for all users
-
-= 1.0.6 =
-1.0.6 is a major bugfix and is recommended for all users
-
-= 1.0.0 =
-First Release
+= 1.1.3 =
+1.1.3 solves many JavaScript errors that users have been experiencing and is recommended for all users
