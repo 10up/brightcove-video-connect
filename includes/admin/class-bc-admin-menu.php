@@ -41,14 +41,23 @@ class BC_Admin_Menu {
 	 * Provides hook for Settings panel to hook into
 	 */
 	public function render_settings_page() {
+		/**
+		 * Fires when the setting page loads.
+		 */
 		do_action( 'brightcove/admin/settings_page' );
 	}
 
 	public function render_videos_page() {
+		/**
+		 * Fires when the videos page loads.
+		 */
 		do_action( 'brightcove/admin/videos_page' );
 	}
 
 	public function render_playlists_page() {
+		/**
+		 * Fires when the playlists page loads.
+		 */
 		do_action( 'brightcove/admin/playlists_page' );
 	}
 
@@ -56,6 +65,9 @@ class BC_Admin_Menu {
 	 * Provides hook for Add/Edit source panel to hook into
 	 */
 	public function render_edit_source_page() {
+		/**
+		 * Fires when the edit source page loads.
+		 */
 		do_action( 'brightcove/admin/edit_source_page' );
 	}
 
