@@ -1,6 +1,6 @@
 ## Developer Guide
 
-##PHP Hooks
+## PHP Hooks
 
 ### Filters:
 
@@ -19,13 +19,17 @@ The brightcove plugin uses these hooks internally when rendering out plugin page
  * `brightcove/admin/playlists_page`: Fires when the playlist page loads.
  * `brightcove/admin/edit_source_page`: Fires when the edit source page loads.
 
-##JavaScript architecture
+## JavaScript architecture
 
 ### Event bus driven
-The Backbone application uses a single global bus structure to communicate chages. The plugin exposes a global `wpbc` object and uses `wpbc.broadcast` extended from Backbine.Events as an event pipeline. Events are triggered by user interaction and async responses. Changes are listened for by views. The events can contain data used by the view to change its underlying model data, and typically initiate a re-render of the view.
+The Brightcove plugin interface is a Backbone application that uses a single bus architecture to communicate changes. The plugin exposes a global `wpbc` object and uses `wpbc.broadcast` extended from Backbine.Events as an event pipeline.
 
-Events fired include:
+Events are triggered by user interaction and async responses. Triggered events are listened for by views. The events sometimes contain data used by the view to change its underlying model data, and typically initiate a re-render of the view.
+
+*Events fired include:*
+
 `spinner:on`, `spinner:off`, `delete:successful`, `videoEdit:message`, `fetch:finished`, `close:modal`, `change:activeAccount`, `change:date`, `change:tag`, `change:emptyPlaylists`, `change:searchTerm`, `uploader:startUpload`, `uploader:prepareUpload`, `scroll:mediaGrid`, `uploader:clear`, `toggle:insertButton`, `remove:permanentMessage`, `permanent:message`, `insert:`shortcode`,` tabChange, `start:gridview`, `edit:media`, `preview:`media`,` backButton, `view:toggled`, `playlist:moveUp`, `playlist:moveDown`, `playlist:add`, `playlist:remove`, `uploader:queuedFilesAdded`, `uploader:fileUploaded`, `uploader:uploadedFileDetails`, `uploader:successfulUploadIngest`, `uploader:failedUploadIngest`, `uploader:params`, `uploader:errorMessage`, `uploader:successMessage`, `pendingUpload:selectedRow`, `pendingUpload:hideDetails`, `pendingUpload:selectedItem`, `upload:video`, `close:modal`, `delete:successful`, `videoEdit:message`
 
 ### Tracking the modal state
+
 When the Brightcove modal is open, the modal state is tracked via `wpbc.modal.brightcoveMediaManager.model`
