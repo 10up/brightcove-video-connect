@@ -22,7 +22,7 @@ The brightcove plugin uses these hooks internally when rendering out plugin page
 ## JavaScript architecture
 
 ### Event bus driven
-The Brightcove plugin interface is a Backbone application that uses a single bus architecture to communicate changes. The plugin exposes a global `wpbc` object and uses `wpbc.broadcast` extended from Backbine.Events as an event pipeline.
+The Brightcove plugin interface is a Backbone application that uses a single bus architecture to communicate changes. The plugin exposes a global `wpbc` object and uses `wpbc.broadcast` extended from `Backbone.Events` as an event pipeline.
 
 Events are triggered by user interaction and async responses. Triggered events are listened for by views. The events sometimes contain data used by the view to change its underlying model data, and typically initiate a re-render of the view.
 
