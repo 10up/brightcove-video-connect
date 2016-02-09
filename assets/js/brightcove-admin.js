@@ -824,14 +824,15 @@ var UploadVideoManagerView = BrightcoveView.extend(
 
 		message : function ( message, type ) {
 			var messages       = this.$el.find( '.brightcove-messages' );
-			var messageClasses = 'brightcove-message ';
+			var messageClasses = '';
 			if ( 'success' === type ) {
-				messageClasses += 'notice updated';
+				messageClasses = 'notice updated';
 			} else if ( 'error' === type ) {
-				messageClasses += 'error';
+				messageClasses = 'error';
 			}
-			var newMessage = $( '<div class="wrap"><div class="' + messageClasses + '"><p>' + message + '</p></div></div>' );
+			var newMessage = $( '<div class="wrap"><div class="brightcove-message"><p class="message-text"></p></div></div>' );
 			messages.append( newMessage );
+			newMessage.addClass( messageClasses ).find( '.message-text' ).text( message );
 			newMessage.fadeOut( 6000, function () {
 				$( this ).remove();
 			} );

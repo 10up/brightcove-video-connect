@@ -97,7 +97,7 @@ abstract class BC_API {
 		$request               = BC_Utility::get_cache_item( $transient_key );
 		if ( false === $request ) {
 			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
-				$request = vip_safe_wp_remote_get( $url, $args );
+				$request = vip_safe_wp_remote_get( $url, '', 3, 1, 20, $args );
 			} else {
 				$request = wp_remote_get( $url, $args );
 			}
