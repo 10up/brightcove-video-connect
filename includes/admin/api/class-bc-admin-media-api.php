@@ -404,6 +404,15 @@ class BC_Admin_Media_API {
 		$query          = ( isset( $_POST['search'] ) && '' !== $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : false;
 		$tag_name       = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
 		$dates          = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
+
+		/**
+		 * Filter the maximum number of items the brightcove media call will query for.
+		 *
+		 * Enables adjusting the `posts_per_page` parameter used when querying for media. Absint is applied,
+		 * so a positive number should be supplied.
+		 *
+		 * @param int $posts_per_page Posts per page for media query. Default 100.
+		 */
 		$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( $_POST['posts_per_page'] ) : apply_filters( 'brightcove_max_posts_per_page', 100 );
 		$page           = isset( $_POST['page_number'] ) ? absint( $_POST['page_number'] ) : 1;
 
