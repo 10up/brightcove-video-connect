@@ -79,10 +79,35 @@ var VideoEditView = BrightcoveView.extend(
 				} );
 		},
 
+		/**
+		 * Render the actual view for the Video Edit screen.
+		 *
+		 * @param {Object} options
+		 */
 		render : function ( options ) {
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
+
+			// Render the model into the template
 			this.$el.html( this.template( options ) );
+
+			// Render custom fields into the template
+			var customContainer = this.$el.find( '#brightcove-custom-fields' ),
+				stringTmp = wp.template( 'brightcove-video-edit-custom-string' ),
+				enumTmp = wp.template( 'brightcove-video-edit-custom-enum' );
+
+			_.each( this.model.get('custom'), function( custom ) {
+				switch( custom.type ) {
+					case 'string':
+						customContainer.append( stringTmp( custom ) );
+						break;
+					case 'enum':
+						customContainer.append( enumTmp( custom ) );
+						break;
+				}
+			} );
+
+			// Configure a spinner to provide feedback during updates
 			var spinner = this.$el.find( '.spinner' );
 			this.listenTo( wpbc.broadcast, 'spinner:on', function () {
 				spinner.addClass( 'is-active' ).removeClass( 'hidden' );
