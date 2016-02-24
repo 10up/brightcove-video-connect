@@ -115,6 +115,7 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
+				<div id="brightcove-custom-fields"></div>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
@@ -127,6 +128,20 @@ class BC_Admin_Templates {
 					<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
 				</span>
 			</div>
+		</script>
+		<script type="text/html" id="tmpl-brightcove-video-edit-custom-string">
+			<label class="setting custom">
+				<span class="name">{{data.label}}</span>
+				<input type="text" class="brightcove-custom" value="{{data.value}}" />
+			</label>
+		</script>
+		<script type="text/html" id="tmpl-brightcove-video-edit-custom-enum">
+			<label class="setting custom">
+				<span class="name">{{data.label}}</span>
+				<select class="brightcove-custom">
+
+				</select>
+			</label>
 		</script>
 
 		<?php /* Used by views/video-preview.js */?>
