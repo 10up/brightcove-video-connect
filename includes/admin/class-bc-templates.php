@@ -132,13 +132,13 @@ class BC_Admin_Templates {
 		<script type="text/html" id="tmpl-brightcove-video-edit-custom-string">
 			<label class="setting custom">
 				<span class="name">{{data.display_name}}</span>
-				<input type="text" class="brightcove-custom" value="{{data.value}}" />
+				<input type="text" class="brightcove-custom-string" data-id="{{data.id}}" value="{{data.value}}" />
 			</label>
 		</script>
 		<script type="text/html" id="tmpl-brightcove-video-edit-custom-enum">
 			<label class="setting custom">
 				<span class="name">{{data.display_name}}</span>
-				<select class="brightcove-custom">
+				<select class="brightcove-custom-enum" data-id="{{data.id}}">
 					<# _.each(data.enum_values, function (value, index) {
 						if (value === data.value) {
 						var selected = ' selected';

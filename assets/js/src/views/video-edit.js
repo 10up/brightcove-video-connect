@@ -54,6 +54,20 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'height', this.$el.find( '.brightcove-height' ).val() );
 			this.model.set( 'width', this.$el.find( '.brightcove-width' ).val() );
 			this.model.set( 'mediaType', 'videos' );
+
+			// Custom fields
+			var custom = {};
+			_.each( this.$el.find( '.brightcove-custom-string, .brightcove-custom-enum' ), function( item ) {
+				var key = item.getAttribute( 'data-id' ),
+					val = item.value.trim();
+
+				if ( '' !== val ) {
+					custom[ key ] = val;
+				}
+			} );
+
+			this.model.set( 'custom_fields', custom );
+
 			this.model.save()
 				.done( function() {
 
