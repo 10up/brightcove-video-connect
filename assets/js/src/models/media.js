@@ -58,6 +58,7 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
+					custom_fields:     this.get( 'custom_fields' ),
 					type :             this.get( 'mediaType' )
 				} );
 

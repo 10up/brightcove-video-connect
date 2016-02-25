@@ -76,7 +76,20 @@ class BC_Admin_Media_API {
 			$updated_data['video_id'] = BC_Utility::sanitize_id( $_POST['video_id'] );
 		}
 
-		$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( $_POST[ $field ] ) : '';
+		// If custom fields are sent, be sure to sanitize them separately
+		if ( isset( $_POST['custom_fields'] ) ) {
+			$custom = array();
+			foreach( $_POST['custom_fields'] as $id => $value ) {
+				$id = sanitize_text_field( $id );
+				$value = sanitize_text_field( $value );
+
+				if ( ! empty( $id ) && ! empty( $value ) ) {
+					$custom[ $id ] = $value;
+				}
+			}
+
+			$updated_data['custom_fields'] = $custom;
+		}
 
 		$updated_data['update-playlist-metadata'] = sanitize_text_field( $_POST['nonce'] );
 
