@@ -57,17 +57,23 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'mediaType', 'videos' );
 
 			// Custom fields
-			var custom = {};
+			var custom = {},
+				custom_fields = this.model.get( 'custom' );
+
 			_.each( this.$el.find( '.brightcove-custom-string, .brightcove-custom-enum' ), function( item ) {
 				var key = item.getAttribute( 'data-id' ),
 					val = item.value.trim();
 
 				if ( '' !== val ) {
 					custom[ key ] = val;
+
+					var obj = _.find( custom_fields, function( item ) { return item.id == key } );
+					obj.value = val;
 				}
 			} );
 
 			this.model.set( 'custom_fields', custom );
+			this.model.set( 'custom', custom_fields );
 
 			this.model.save()
 				.done( function() {
