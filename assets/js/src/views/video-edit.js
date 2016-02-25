@@ -29,6 +29,7 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		saveSync : function ( evnt ) {
+			evnt.preventDefault();
 
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
@@ -70,10 +71,10 @@ var VideoEditView = BrightcoveView.extend(
 
 			this.model.save()
 				.done( function() {
-
-					// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-					var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
-						newTags      = _.difference( editTags, wpbc.preload.tags );
+					if ( $mediaFrame.length > 0 ) {
+						// Update the tag dropdown and wpbc.preload.tags with any new tag values.
+						var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+							newTags      = _.difference( editTags, wpbc.preload.tags );
 
 						// Add any new tags to the tags object and the dropdown.
 						_.each( newTags, function( newTag ){
@@ -83,6 +84,7 @@ var VideoEditView = BrightcoveView.extend(
 							}
 						} );
 						wpbc.preload.tags.sort();
+					}
 				} )
 				.always( function() {
 					// Re-enable the button when the request has completed.
