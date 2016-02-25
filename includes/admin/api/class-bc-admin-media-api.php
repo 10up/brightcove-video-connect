@@ -507,23 +507,18 @@ class BC_Admin_Media_API {
 
 		// Loop through results to remap the custom_fields array to a collection of objects with description, display name, id, etc
 		foreach( $results as &$result ) {
-			$result['custom'] = array();
+			$result['custom'] = $fields['custom_fields'];
 
 			foreach( $result['custom_fields'] as $id => $value ) {
-				foreach( $fields['custom_fields'] as $field ) {
+				foreach( $result['custom'] as &$field ) {
 					if ( $field['id'] === $id ) {
-						$result['custom'][] = array(
-							'id'    => $id,
-							'label' => $field['display_name'],
-							'type'  => $field['type'],
-							'value' => $value
-						);
+						$field['value'] = $value;
 						break;
 					}
 				}
 			}
 
-			unset( $result['custom_fields'] );
+
 		}
 
 		$bc_accounts->restore_default_account();
