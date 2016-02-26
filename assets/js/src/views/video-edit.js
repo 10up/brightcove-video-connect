@@ -5,9 +5,10 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' : 'saveSync',
-			'click .brightcove.delete' :           'deleteVideo',
-			'click .brightcove.button.back' :      'back'
+			'click .brightcove.button.save-sync' :     'saveSync',
+			'click .brightcove.delete' :               'deleteVideo',
+			'click .brightcove.button.back' :          'back',
+			'click .setting .button' :                 'openMediaManager'
 		},
 
 		back : function ( event ) {
@@ -28,8 +29,44 @@ var VideoEditView = BrightcoveView.extend(
 			}
 		},
 
-		saveSync : function ( evnt ) {
+		/**
+		 * Allow the user to attach a video still or thumbnail.
+		 *
+		 * @returns {boolean}
+		 */
+		openMediaManager: function ( evnt ) {
+			evnt.preventDefault();
 
+			var elem    = $( evnt.currentTarget ).parents( '.setting' ),
+				editor  = elem.data('editor'),
+				options = {
+					state:    'insert',
+					title:    wp.media.view.l10n.addMedia,
+					multiple: false
+				};
+
+			wp.media.editor.open( editor, options );
+		},
+
+		/**
+		 * Set the hidden input in mediaManager.targetPost to the ID of the selected attachment.
+		 *
+		 * @returns {boolean}
+		 */
+		setAttachment: function( element ) {
+			console.log( 'Function called' );
+			var newAttachment = wp.media.state().get( 'selection' ).first().toJSON(),
+				metafield     = $( element ).parents( '.setting' );
+
+
+			console.log( newAttachment );
+			// Set the attachment ID to be stored
+			//metafield.val( newAttachment );
+
+			return false;
+		},
+
+		saveSync : function ( evnt ) {
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
 
@@ -90,6 +127,7 @@ var VideoEditView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
 				spinner.removeClass( 'is-active' ).addClass( 'hidden' );
 			} );
+			wp.media.editor.on( 'select', setAttachment );
 		}
 
 	}

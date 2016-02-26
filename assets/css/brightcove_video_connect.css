@@ -410,6 +410,9 @@ div.brightcove-message {
   .brightcove.media-frame-content .attachment {
     padding: 20px 10px; } }
 
+.brightcove.video-edit .button-secondary {
+  margin-left: 5px; }
+
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
   height: auto;

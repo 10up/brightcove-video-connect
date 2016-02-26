@@ -115,6 +115,20 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
+				<label class="setting video-still">
+					<span class="name"><?php esc_html_e( 'Video Still', 'brightcove' )?></span>
+					<input type="hidden" class="brightcove-tags" value="{{data.poster}}" />
+					<button class="button button-secondary select-files">
+						<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+					</button>
+				</label>
+				<label class="setting thumbnail">
+					<span class="name"><?php esc_html_e( 'Thumbnail', 'brightcove' )?></span>
+					<input type="hidden" class="brightcove-tags" value="{{data.thumbnail}}" />
+					<button class="button button-secondary select-files">
+						<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+					</button>
+				</label>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
