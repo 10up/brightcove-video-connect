@@ -2,9 +2,29 @@
 
 class BC_Admin_Media_API {
 
+	/**
+	 * @var BC_CMS_API
+	 */
 	protected $cms_api;
+
+	/**
+	 * @var BC_Player_Management_API
+	 */
+	protected $player_api;
+
+	/**
+	 * @var BC_Playlists
+	 */
 	protected $playlists;
+
+	/**
+	 * @var BC_Video_Upload
+	 */
 	protected $video_upload;
+
+	/**
+	 * @var BC_Videos
+	 */
 	protected $videos;
 
 	public function __construct() {
@@ -16,6 +36,7 @@ class BC_Admin_Media_API {
 		}
 
 		$this->cms_api      = new BC_CMS_API();
+		$this->player_api   = new BC_Player_Management_API();
 		$this->playlists    = new BC_Playlists( $this->cms_api );
 		$this->videos       = new BC_Videos( $this->cms_api );
 		$this->video_upload = new BC_Video_Upload( $this->cms_api );
