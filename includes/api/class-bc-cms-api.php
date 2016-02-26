@@ -487,4 +487,15 @@ class BC_CMS_API extends BC_API {
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
 	}
+
+	/**
+	 * Get a list of custom video fields for the account.
+	 *
+	 * @return array|bool Array of all custom video fields of false if failure
+	 */
+	public function video_fields() {
+		$results = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/video_fields' ) );
+
+		return $results;
+	}
 }
