@@ -489,6 +489,122 @@ class BC_CMS_API extends BC_API {
 	}
 
 	/**
+	 * Upload a poster (preroll image) for processing
+	 *
+	 * Sends a URL of the video's poster image to the Dynamic Ingest API for processing.
+	 *
+	 * @param string $video_id   Video cloud ID
+	 * @param string $poster_url URL for the video poster image
+	 * @param int    [$height]   Pixel height of the image
+	 * @param int    [$width]    Pixel width of the image
+	 *
+	 * @return string|bool The ingest request ID or false on failure
+	 */
+	public function poster_upload( $video_id, $poster_url, $height = 0, $width = 0 ) {
+		// Sanitize values
+		$height   = absint( $height );
+		$width    = absint( $width );
+		$video_id = urlencode( $video_id );
+
+		// Build out the data
+		$data = array();
+
+		$data['poster'] = array(
+			'url' => esc_url_raw( $poster_url ),
+		);
+
+		if ( 0 !== $height ) {
+			$data['poster']['height'] = $height;
+		}
+		if ( 0 !== $width ) {
+			$data['poster']['width'] = $width;
+		}
+
+		// Send the data
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
+	}
+
+	/**
+	 * Upload a thumbnail image for processing
+	 *
+	 * Sends a URL of the video's thumbnail image to the Dynamic Ingest API for processing.
+	 *
+	 * @param string $video_id      Video cloud ID
+	 * @param string $thumbnail_url URL for the thumbnail image
+	 * @param int    [$height]      Pixel height of the image
+	 * @param int    [$width]       Pixel width of the image
+	 *
+	 * @return string|bool The ingest request ID or false on failure
+	 */
+	public function thumbnail_upload( $video_id, $thumbnail_url, $height = 0, $width = 0 ) {
+		// Sanitize values
+		$height   = absint( $height );
+		$width    = absint( $width );
+		$video_id = urlencode( $video_id );
+
+		// Build out the data
+		$data = array();
+
+		$data['thumbnail'] = array(
+			'url' => esc_url_raw( $thumbnail_url ),
+		);
+
+		if ( 0 !== $height ) {
+			$data['poster']['height'] = $height;
+		}
+		if ( 0 !== $width ) {
+			$data['poster']['width'] = $width;
+		}
+
+		// Send the data
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
+	}
+
+	/**
+	 * Upload a single caption file for processing
+	 *
+	 * Sends a URL of the video's caption file to the Dynamic Ingest API for processing.
+	 *
+	 * @param string $video_id         Video cloud ID
+	 * @param string $caption_file_url URL for a WebVTT file
+	 * @param string $language         ISO 629 2-letter language code for text tracks
+	 * @param string [$kind]           How the VTT file will be used (captions, subtitles, descriptions, chapters, metadata)
+	 * @param string [$label]          User-readable title
+	 * @param bool   [$default]        Set the default language for captions/subtitles
+	 *
+	 * @return string|bool The ingest request ID or false on failure
+	 */
+	public function single_caption_upload( $video_id, $caption_file_url, $language, $kind = 'default', $label = null, $default = false ) {
+		// Text track
+		$track = new BC_Text_Track( $caption_file_url, $language, $kind, $label, $default );
+
+		// Send the data
+		return $this->caption_upload( $video_id, array( $track ) );
+	}
+
+	/**
+	 * Upload a collection of text tracks for a specific video.
+	 *
+	 * Sends the URLs of various video text track files to the Dynamic Ingest API for processing.
+	 *
+	 * @param string          $video_id
+	 * @param BC_Text_Track[] $text_tracks
+	 *
+	 * @return string|bool The ingest request ID or false on failure
+	 */
+	public function caption_upload( $video_id, $text_tracks ) {
+		// Prepare data
+		$data = array();
+		$data['text_tracks'] = array();
+		foreach( $text_tracks as $track ) {
+			$data['text_tracks'][] = $track->toArray();
+		}
+
+		// Send the data
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
+	}
+
+	/**
 	 * Get a list of custom video fields for the account.
 	 *
 	 * @return array|bool Array of all custom video fields of false if failure
