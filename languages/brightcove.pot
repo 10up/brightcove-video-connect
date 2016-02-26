@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.1.3\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2016-01-15 18:58:51+00:00\n"
+"POT-Creation-Date: 2016-02-26 17:37:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.5.3\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
 
 #: includes/admin/api/class-bc-admin-media-api.php:15
 msgid "You do not have permission to use this Brightcove Account"
@@ -23,61 +23,61 @@ msgstr ""
 msgid "Invalid Request"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:86
+#: includes/admin/api/class-bc-admin-media-api.php:99
 msgid "Type is not specified"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:92
-#: includes/admin/api/class-bc-admin-media-api.php:174
+#: includes/admin/api/class-bc-admin-media-api.php:105
+#: includes/admin/api/class-bc-admin-media-api.php:187
 msgid "No such account exists"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:116
+#: includes/admin/api/class-bc-admin-media-api.php:129
 msgid "Successfully updated "
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:120
+#: includes/admin/api/class-bc-admin-media-api.php:133
 msgid "Failed to sync with WordPress!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:124
+#: includes/admin/api/class-bc-admin-media-api.php:137
 msgid "Failed to update "
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:151
+#: includes/admin/api/class-bc-admin-media-api.php:164
 msgid "Type is not specified!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:167
+#: includes/admin/api/class-bc-admin-media-api.php:180
 msgid "Wrong type is specified!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:190
+#: includes/admin/api/class-bc-admin-media-api.php:203
 msgid "Unable to remove video from Brightcove!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:194
+#: includes/admin/api/class-bc-admin-media-api.php:207
 msgid "Successfully deleted your video."
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:204
+#: includes/admin/api/class-bc-admin-media-api.php:217
 msgid "Unable to remove playlist from Brightcove!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:208
+#: includes/admin/api/class-bc-admin-media-api.php:221
 msgid "Successfully deleted your playlist."
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:279
+#: includes/admin/api/class-bc-admin-media-api.php:292
 msgid "Unable to process file, does it have a valid extension?"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:414
+#: includes/admin/api/class-bc-admin-media-api.php:436
 msgid "Invalid Search Type"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:18
-#: includes/admin/class-bc-templates.php:147
+#: includes/admin/class-bc-templates.php:168
 msgid "Brightcove"
 msgstr ""
 
@@ -87,9 +87,9 @@ msgid "Brightcove Videos"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:19
-#: includes/admin/class-bc-templates.php:152
-#: includes/admin/class-bc-templates.php:332
-#: includes/admin/class-bc-templates.php:413
+#: includes/admin/class-bc-templates.php:173
+#: includes/admin/class-bc-templates.php:353
+#: includes/admin/class-bc-templates.php:434
 msgid "Videos"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Brightcove Playlists"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:20
-#: includes/admin/class-bc-templates.php:152
+#: includes/admin/class-bc-templates.php:173
 msgid "Playlists"
 msgstr ""
 
@@ -168,11 +168,11 @@ msgid ""
 "videos and playlists. Your content remains in Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:141
+#: includes/admin/class-bc-admin-settings-page.php:153
 msgid "Default"
 msgstr ""
 
-#: includes/admin/class-bc-admin-settings-page.php:168
+#: includes/admin/class-bc-admin-settings-page.php:180
 msgid "There are no sources defined. Add one below"
 msgstr ""
 
@@ -294,13 +294,13 @@ msgid "Playlist Name"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:82
-#: includes/admin/class-bc-templates.php:126
-#: includes/admin/class-bc-templates.php:389
+#: includes/admin/class-bc-templates.php:127
+#: includes/admin/class-bc-templates.php:410
 msgid "Back"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:102
-#: includes/admin/class-bc-templates.php:243
+#: includes/admin/class-bc-templates.php:264
 msgid "Name"
 msgstr ""
 
@@ -313,137 +313,137 @@ msgid "Long Description"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:115
-#: includes/admin/class-bc-templates.php:247
+#: includes/admin/class-bc-templates.php:268
 msgid "Tags"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:121
+#: includes/admin/class-bc-templates.php:122
 msgid "Delete"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:127
+#: includes/admin/class-bc-templates.php:128
 msgid "Save and Sync Changes"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:142
+#: includes/admin/class-bc-templates.php:163
 msgid "Close media panel"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:152
+#: includes/admin/class-bc-templates.php:173
 msgid "Upload Files"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:162
+#: includes/admin/class-bc-templates.php:183
 msgid "Edit Selection"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:162
+#: includes/admin/class-bc-templates.php:183
 msgid "Clear"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:170
+#: includes/admin/class-bc-templates.php:191
 msgid "Insert Into Post"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:178
-#: includes/admin/class-bc-templates.php:268
+#: includes/admin/class-bc-templates.php:199
+#: includes/admin/class-bc-templates.php:289
 msgid "Drop files to upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:204
-#: includes/admin/class-bc-templates.php:239
+#: includes/admin/class-bc-templates.php:225
+#: includes/admin/class-bc-templates.php:260
 msgid "File Name"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:205
+#: includes/admin/class-bc-templates.php:226
 msgid "Size"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:206
-#: includes/admin/class-bc-templates.php:251
+#: includes/admin/class-bc-templates.php:227
+#: includes/admin/class-bc-templates.php:272
 msgid "Source"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:207
+#: includes/admin/class-bc-templates.php:228
 msgid "Progress"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:214
+#: includes/admin/class-bc-templates.php:235
 msgid "Start Upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:277
+#: includes/admin/class-bc-templates.php:298
 msgid "Upload Limit Exceeded"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:280
+#: includes/admin/class-bc-templates.php:301
 msgid "Drop files anywhere to upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:282
+#: includes/admin/class-bc-templates.php:303
 msgid "Select Files"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:297
+#: includes/admin/class-bc-templates.php:318
 msgid "Maximum upload file size: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:299
+#: includes/admin/class-bc-templates.php:320
 msgid ""
 "Please reference the readme.txt file of this plugin for further information "
 "on upload file size limits."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:330
-#: includes/admin/class-bc-templates.php:411
+#: includes/admin/class-bc-templates.php:351
+#: includes/admin/class-bc-templates.php:432
 msgid "Video"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:335
-#: includes/admin/class-bc-templates.php:416
+#: includes/admin/class-bc-templates.php:356
+#: includes/admin/class-bc-templates.php:437
 msgid "Smart"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:347
-#: includes/admin/class-bc-templates.php:391
-#: includes/admin/class-bc-templates.php:431
+#: includes/admin/class-bc-templates.php:368
+#: includes/admin/class-bc-templates.php:412
+#: includes/admin/class-bc-templates.php:452
 msgid "Edit"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:348
-#: includes/admin/class-bc-templates.php:392
+#: includes/admin/class-bc-templates.php:369
+#: includes/admin/class-bc-templates.php:413
 msgid "Preview"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:384
+#: includes/admin/class-bc-templates.php:405
 msgid "Source: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:385
+#: includes/admin/class-bc-templates.php:406
 msgid "Video ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:423
+#: includes/admin/class-bc-templates.php:444
 msgid "Playlist ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:424
+#: includes/admin/class-bc-templates.php:445
 msgid "Account Name: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:425
+#: includes/admin/class-bc-templates.php:446
 msgid "Created At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:426
+#: includes/admin/class-bc-templates.php:447
 msgid "Updated At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:427
+#: includes/admin/class-bc-templates.php:448
 msgid "Playlist Type: "
 msgstr ""
 
-#: includes/api/class-bc-api.php:247
+#: includes/api/class-bc-api.php:253
 msgid "An unspecified error has occurred."
 msgstr ""
 
@@ -603,7 +603,7 @@ msgstr ""
 msgid "http://10up.com"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:281
+#: includes/admin/class-bc-templates.php:302
 msgctxt "Uploader: Drop files here - or - Select Files"
 msgid "or"
 msgstr ""

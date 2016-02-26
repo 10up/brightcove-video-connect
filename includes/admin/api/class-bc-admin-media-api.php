@@ -97,7 +97,20 @@ class BC_Admin_Media_API {
 			$updated_data['video_id'] = BC_Utility::sanitize_id( $_POST['video_id'] );
 		}
 
-		$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( $_POST[ $field ] ) : '';
+		// If custom fields are sent, be sure to sanitize them separately
+		if ( isset( $_POST['custom_fields'] ) ) {
+			$custom = array();
+			foreach( $_POST['custom_fields'] as $id => $value ) {
+				$id = sanitize_text_field( $id );
+				$value = sanitize_text_field( $value );
+
+				if ( ! empty( $id ) && ! empty( $value ) ) {
+					$custom[ $id ] = $value;
+				}
+			}
+
+			$updated_data['custom_fields'] = $custom;
+		}
 
 		$updated_data['update-playlist-metadata'] = sanitize_text_field( $_POST['nonce'] );
 
@@ -486,6 +499,8 @@ class BC_Admin_Media_API {
 			 */
 
 			$bc_accounts->set_current_account_by_id( $account_id );
+
+			// Get a list of videos
 			$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, 'updated_at' );
 
 			/**
@@ -519,6 +534,24 @@ class BC_Admin_Media_API {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 			$results = $this->cms_api->playlist_list();
+		}
+
+		// Get a list of available custom fields
+		$fields = $this->cms_api->video_fields();
+
+		// Loop through results to remap the custom_fields array to a collection of objects with description, display name, id, etc
+		foreach( $results as &$result ) {
+			$result['custom'] = $fields['custom_fields'];
+
+			foreach( $result['custom_fields'] as $id => $value ) {
+				foreach( $result['custom'] as &$field ) {
+					if ( $field['id'] === $id ) {
+						$field['value'] = $value;
+						break;
+					}
+				}
+			}
+
 
 		}
 
