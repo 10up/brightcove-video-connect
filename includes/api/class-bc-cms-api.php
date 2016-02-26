@@ -567,19 +567,17 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @param string $video_id         Video cloud ID
 	 * @param string $caption_file_url URL for a WebVTT file
-	 * @param string $language         ISO 629 2-letter language code for text tracks
-	 * @param string [$kind]           How the VTT file will be used (captions, subtitles, descriptions, chapters, metadata)
+	 * @param string [$language]       ISO 639 2-letter language code for text tracks
 	 * @param string [$label]          User-readable title
-	 * @param bool   [$default]        Set the default language for captions/subtitles
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
-	public function single_caption_upload( $video_id, $caption_file_url, $language, $kind = 'default', $label = null, $default = false ) {
+	public function caption_upload( $video_id, $caption_file_url, $language = 'en', $label = '' ) {
 		// Text track
-		$track = new BC_Text_Track( $caption_file_url, $language, $kind, $label, $default );
+		$track = new BC_Text_Track( $caption_file_url, $language, 'captions', $label, false );
 
 		// Send the data
-		return $this->caption_upload( $video_id, array( $track ) );
+		return $this->text_track_upload( $video_id, array( $track ) );
 	}
 
 	/**
@@ -592,7 +590,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
-	public function caption_upload( $video_id, $text_tracks ) {
+	public function text_track_upload( $video_id, $text_tracks ) {
 		// Prepare data
 		$data = array();
 		$data['text_tracks'] = array();

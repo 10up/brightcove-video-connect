@@ -39,7 +39,7 @@ class BC_Text_Track {
 	 * @param string [$label]
 	 * @param bool   [$default]
 	 */
-	public function __construct( $url, $language, $kind = 'captions', $label = '', $default = false ) {
+	public function __construct( $url, $language = 'en', $kind = 'captions', $label = '', $default = false ) {
 		$this->url = esc_url_raw( $url );
 		$this->srcLang = substr( sanitize_text_field( $language ), 0, 2 );
 		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ) ) ) {
