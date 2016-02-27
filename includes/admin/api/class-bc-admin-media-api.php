@@ -21,11 +21,13 @@ class BC_Admin_Media_API {
 		$this->video_upload = new BC_Video_Upload( $this->cms_api );
 
 		/* All of these actions are for authenticated users only for a reason */
-		add_action( 'wp_ajax_bc_media_query', array( $this, 'brightcove_media_query' ) );
-		add_action( 'wp_ajax_bc_media_update', array( $this, 'bc_ajax_update_video_or_playlist' ) );
-		add_action( 'wp_ajax_bc_media_delete', array( $this, 'bc_ajax_delete_video_or_playlist' ) );
-		add_action( 'wp_ajax_bc_media_upload', array( $this, 'brightcove_media_upload' ) ); // For uploading a file.
-
+		add_action( 'wp_ajax_bc_media_query',    array( $this, 'brightcove_media_query' ) );
+		add_action( 'wp_ajax_bc_media_update',   array( $this, 'bc_ajax_update_video_or_playlist' ) );
+		add_action( 'wp_ajax_bc_media_delete',   array( $this, 'bc_ajax_delete_video_or_playlist' ) );
+		add_action( 'wp_ajax_bc_media_upload',   array( $this, 'brightcove_media_upload' ) ); // For uploading a file.
+		add_action( 'wp_ajax_bc_poster_upload',  array( $this, 'ajax_poster_upload' ) );
+		add_action( 'wp_ajax_bc_thumb_upload',   array( $this, 'ajax_thumb_upload' ) );
+		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ) );
 	}
 
 	protected function bc_helper_check_ajax() {
@@ -536,6 +538,137 @@ class BC_Admin_Media_API {
 
 		$bc_accounts->restore_default_account();
 		wp_send_json_success( $results );
+
+	}
+
+	/**
+	 * Handle an uploaded preroll image and associate it with a specific video
+	 *
+	 * Expects the following AJAX fields:
+	 * - nonce     Nonce for action `_bc_ajax_upload`
+	 * - account   Hash for the account to which we're uploading
+	 * - video_id  ID of the video on Brightcove
+	 * - poster_id ID of the poster image within WordPress' media gallery
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 */
+	public function ajax_poster_upload() {
+		global $bc_accounts;
+
+		// Ensure all required fields were sent
+		foreach ( array( 'nonce', 'account', 'video_id', 'poster_id' ) as $parameter ) {
+			if ( ! isset( $_POST[ $parameter ] ) ) {
+				wp_send_json_error();
+			}
+		}
+
+		// Validate our nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], '_bc_ajax_upload' ) ) {
+			wp_send_json_error(); // Nonce was invalid, fail
+		}
+
+		// Set up the account to which we're pushing data
+		$account_hash = sanitize_text_field( $_POST['account'] );
+		$account      = $bc_accounts->set_current_account( $account_hash );
+		if ( false === $account ) {
+			wp_send_json_error(); // Account was invalid, fail
+		}
+
+		// Sanitize our passed data
+		$video_id = sanitize_text_field( $_POST['video_id'] );
+		$poster_id = absint( $_POST['poster_id'] );
+
+		// Get the Upload URL from the media library
+		$url = wp_get_attachment_url( $poster_id );
+		if ( false === $url ) {
+			wp_send_json_error(); // Attachment has no URL, fail
+		}
+
+		// Retrieve the attachment meta information so we have height and width
+		$info = wp_get_attachment_metadata( $poster_id );
+
+		// Push the poster to Brightcove
+		$ingestion_status = $this->cms_api->poster_upload( $video_id, $url, $info['height'], $info['weight'] );
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+
+		if ( false === $ingestion_status ) {
+			wp_send_json_error(); // Ingestion failed, fail
+		}
+
+		// If we made it this far, the stars have aligned and all is good with the world!
+		wp_send_json_success( $ingestion_status );
+	}
+
+	/**
+	 * Handle an uploaded thumbnail image and associate it with a specific video
+	 *
+	 * Expects the following AJAX fields:
+	 * - nonce        Nonce for action `_bc_ajax_upload`
+	 * - account      Hash for the account to which we're uploading
+	 * - video_id     ID of the video on Brightcove
+	 * - thumbnail_id ID of the thumbnail within WordPress' media gallery
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 */
+	public function ajax_thumb_upload() {
+		global $bc_accounts;
+
+		// Ensure all required fields were sent
+		foreach ( array( 'nonce', 'account', 'video_id', 'thumbnail_id' ) as $parameter ) {
+			if ( ! isset( $_POST[ $parameter ] ) ) {
+				wp_send_json_error();
+			}
+		}
+
+		// Validate our nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], '_bc_ajax_upload' ) ) {
+			wp_send_json_error(); // Nonce was invalid, fail
+		}
+
+		// Set up the account to which we're pushing data
+		$account_hash = sanitize_text_field( $_POST['account'] );
+		$account      = $bc_accounts->set_current_account( $account_hash );
+		if ( false === $account ) {
+			wp_send_json_error(); // Account was invalid, fail
+		}
+
+		// Sanitize our passed data
+		$video_id = sanitize_text_field( $_POST['video_id'] );
+		$thumbnail_id = absint( $_POST['thumbnail_id'] );
+
+		// Get the Upload URL from the media library
+		$url = wp_get_attachment_url( $thumbnail_id );
+		if ( false === $url ) {
+			wp_send_json_error(); // Attachment has no URL, fail
+		}
+
+		// Retrieve the attachment meta information so we have height and width
+		$info = wp_get_attachment_metadata( $thumbnail_id );
+
+		// Push the thumbnail to Brightcove
+		$ingestion_status = $this->cms_api->thumbnail_upload( $video_id, $thumbnail_id, $info['height'], $info['width'] );
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+
+		if ( false === $ingestion_status ) {
+			wp_send_json_error(); // Ingestion failed, fail
+		}
+
+		// If we made it this far, the stars have aligned and all is good with the world!
+		wp_send_json_success( $ingestion_status );
+	}
+
+	/**
+	 * Handle an uploaded caption file and associate it with the specified video
+	 *
+	 * Expects the following AJAX fields:
+	 * - video_id  ID of the video on Brightcove
+	 * - poster_id ID of the poster image within WordPress' media gallery
+	 */
+	public function ajax_caption_upload() {
 
 	}
 }
