@@ -565,8 +565,8 @@ class BC_Admin_Media_API {
 	 * Retrieve a list of players available for usage on the front-end
 	 *
 	 * Requires the following fields:
-	 *  - nonce
-	 *  - account
+	 *  - nonce   WordPress nonce to prevent replay attacks
+	 *  - account ID of the account we're referencing
 	 *
 	 * Will return an array of objects (in JSON) representing available players. Each player will roughly contain:
 	 * - accountId   (string)
