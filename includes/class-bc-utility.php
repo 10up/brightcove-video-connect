@@ -290,7 +290,7 @@ class BC_Utility {
 			return 'default';
 		}
 
-		return is_string( $player_id ) ? preg_replace( '/[^0-9a-f-]/', '', $player_id ) : '';
+		return is_string( $player_id ) ? preg_replace( '/[^0-9a-zA-Z-]/', '', $player_id ) : '';
 	}
 
 	public static function sanitize_payload_args_recursive( $args ) {
@@ -808,7 +808,7 @@ class BC_Utility {
 
 		// Sanitize and Verify.
 		$account_id = BC_Utility::sanitize_id( $account_id );
-		$player_id  = ( 'default' == $player_id ) ? 'default' : sanitize_text_field( $player_id );
+		$player_id  = BC_Utility::sanitize_player_id( $player_id );
 		$id         = BC_Utility::sanitize_id( $id );
 		$height     = (int) $height;
 		$width      = (int) $width;
