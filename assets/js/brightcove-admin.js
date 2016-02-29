@@ -2072,35 +2072,50 @@ var VideoEditView = BrightcoveView.extend(
 		/**
 		 * Allow the user to attach a video still or thumbnail.
 		 *
-		 * @returns {boolean}
+		 * @param {Event} evnt
 		 */
 		openMediaManager: function ( evnt ) {
 			evnt.preventDefault();
 
-			var elem    = $( evnt.currentTarget ).parents( '.setting' ),
-				editor  = elem.data('editor'),
-				options = {
+			var elem         = $( evnt.currentTarget ).parents( '.setting' ),
+				editor       = elem.data('editor'),
+				mediaManager = wp.media.frames.brightcove = wp.media(),
+				options      = {
 					state:    'insert',
 					title:    wp.media.view.l10n.addMedia,
 					multiple: false
 				};
 
-			wp.media.editor.open( editor, options );
+			// Open the media manager
+			mediaManager.open( editor, options );
+
+			// Listen for selection of media
+			this.listenTo( mediaManager, 'select', function() {
+				var media = mediaManager.state().get( 'selection' ).first().toJSON(),
+					field = $( evnt ).parents( '.setting' );
+
+				// Set the selected attachment to the correct field
+				this.setAttachment( media, field );
+
+				wpbc.broadcast.trigger( 'media:selected' );
+			});
 		},
 
 		/**
 		 * Set the hidden input in mediaManager.targetPost to the ID of the selected attachment.
 		 *
+		 * @param {Object} media
+		 * @param {String} field
 		 * @returns {boolean}
 		 */
-		setAttachment: function( element ) {
-			console.log( 'Function called' );
-			var newAttachment = wp.media.state().get( 'selection' ).first().toJSON(),
-				metafield     = $( element ).parents( '.setting' );
+		setAttachment: function( media, field ) {
+			var field = field.prevObject[0].currentTarget.className,
+				field = field.split( ' ' ), // convert string into array of classNames
+				field = '.' + field.join( '.' ); // convert field into a valid CSS class
+				field = $( field ).prev( 'input' );
 
-			console.log( newAttachment );
 			// Set the attachment ID to be stored
-			//metafield.val( newAttachment );
+			field.val( media.id );
 
 			return false;
 		},
