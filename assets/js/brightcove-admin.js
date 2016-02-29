@@ -2212,7 +2212,6 @@ var VideoEditView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
 				spinner.removeClass( 'is-active' ).addClass( 'hidden' );
 			} );
-			wp.media.editor.on( 'select', setAttachment );
 		}
 
 	}

@@ -1,5 +1,10 @@
 .brightcove.video-edit {
-	.button-secondary {
+	label {
+		margin-bottom: 4px;
+	}
+
+	.button-secondary,
+	select {
 		margin-left: 5px;
 	}
 }
