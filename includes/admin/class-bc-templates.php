@@ -129,6 +129,8 @@ class BC_Admin_Templates {
 						<?php esc_html_e( 'Select File', 'ms-research' ); ?>
 					</button>
 				</label>
+
+				<div id="brightcove-custom-fields"></div>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
@@ -141,6 +143,26 @@ class BC_Admin_Templates {
 					<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
 				</span>
 			</div>
+		</script>
+		<script type="text/html" id="tmpl-brightcove-video-edit-custom-string">
+			<label class="setting custom">
+				<span class="name">{{data.display_name}}</span>
+				<input type="text" class="brightcove-custom-string" data-id="{{data.id}}" value="{{data.value}}" />
+			</label>
+		</script>
+		<script type="text/html" id="tmpl-brightcove-video-edit-custom-enum">
+			<label class="setting custom">
+				<span class="name">{{data.display_name}}</span>
+				<select class="brightcove-custom-enum" data-id="{{data.id}}">
+					<# _.each(data.enum_values, function (value, index) {
+						if (value === data.value) {
+						var selected = ' selected';
+						} #>
+
+						<option value="{{value}}"{{selected}}>{{value}}</option>
+						<# }); #>
+				</select>
+			</label>
 		</script>
 
 		<?php /* Used by views/video-preview.js */?>

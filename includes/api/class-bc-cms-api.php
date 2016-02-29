@@ -182,6 +182,7 @@ class BC_CMS_API extends BC_API {
 
 			foreach ( $results as $index => $result ) {
 
+				// Note: the width and height parameters added here are currently unused.
 				$results[ $index ]['width']  = apply_filters( 'bv_playlist_default_width', 0 );
 				$results[ $index ]['height'] = apply_filters( 'bv_playlist_default_height', 0 );
 
@@ -432,6 +433,7 @@ class BC_CMS_API extends BC_API {
 
 			foreach ( $results as $index => $result ) {
 
+				// Note: the width and height parameters added here are currently unused.
 				$results[ $index ]['width']  = apply_filters( 'bv_video_default_width', 0 );
 				$results[ $index ]['height'] = apply_filters( 'bv_video_default_height', 0 );
 
@@ -484,5 +486,16 @@ class BC_CMS_API extends BC_API {
 		$data['master'] = array( 'url' => esc_url_raw( $video_url ) );
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
+	}
+
+	/**
+	 * Get a list of custom video fields for the account.
+	 *
+	 * @return array|bool Array of all custom video fields of false if failure
+	 */
+	public function video_fields() {
+		$results = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/video_fields' ) );
+
+		return $results;
 	}
 }

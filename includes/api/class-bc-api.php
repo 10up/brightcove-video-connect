@@ -90,6 +90,12 @@ abstract class BC_API {
 	private function cached_get( $url, $args ) {
 
 		global $bc_accounts;
+
+		/**
+		 * Filter the length of time to cache proxied remote calls to the Brightcove API.
+		 *
+		 * @param int $cache_time_in_seconds The cache time to use, in seconds. Default 180.
+		 */
 		$cache_time_in_seconds = apply_filters( 'brightcove_proxy_cache_time_in_seconds', 180 );
 		$account_id            = $bc_accounts->get_account_id();
 		$max_key_length        = 45; // transients support a max key of 45
@@ -97,7 +103,7 @@ abstract class BC_API {
 		$request               = BC_Utility::get_cache_item( $transient_key );
 		if ( false === $request ) {
 			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
-				$request = vip_safe_wp_remote_get( $url, $args );
+				$request = vip_safe_wp_remote_get( $url, '', 3, 1, 20, $args );
 			} else {
 				$request = wp_remote_get( $url, $args );
 			}
