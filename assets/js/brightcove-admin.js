@@ -2097,27 +2097,33 @@ var VideoEditView = BrightcoveView.extend(
 				// Set the selected attachment to the correct field
 				this.setAttachment( media, field );
 
+				// Make this action available to other areas of the application
 				wpbc.broadcast.trigger( 'media:selected' );
 			});
 		},
 
 		/**
-		 * Set the hidden input in mediaManager.targetPost to the ID of the selected attachment.
+		 * Set the hidden input to the ID of the selected attachment.
 		 *
 		 * @param {Object} media
 		 * @param {String} field
 		 * @returns {boolean}
 		 */
 		setAttachment: function( media, field ) {
-			var field = field.prevObject[0].currentTarget.className,
-				field = field.split( ' ' ), // convert string into array of classNames
-				field = '.' + field.join( '.' ); // convert field into a valid CSS class
-				field = $( field ).prev( 'input' );
+			var field     = field.prevObject[0].currentTarget.className,
+				field     = field.split( ' ' ), // convert string into array of classNames
+				field     = '.' + field.join( '.' ), // convert array into a valid CSS class
+				field     = $( field ).prev( 'input' ),
+				preview   = field.prev( '.image-preview' ),
+				img       = document.createElement( 'img' );
 
 			// Set the attachment ID to be stored
 			field.val( media.id );
 
-			return false;
+			// Display a preview image
+			img.src = media.sizes.thumbnail.url;
+
+			preview.html( img );
 		},
 
 		saveSync : function ( evnt ) {

@@ -117,17 +117,23 @@ class BC_Admin_Templates {
 				</label>
 				<label class="setting poster">
 					<span class="name"><?php esc_html_e( 'Poster', 'brightcove' )?></span>
-					<input type="hidden" class="brightcove-tags" value="{{data.poster}}" />
-					<button class="button button-secondary -poster">
-						<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-					</button>
+					<div class="setting-content">
+						<div class="image-preview"></div>
+						<input type="hidden" class="brightcove-tags" value="{{data.poster}}" />
+						<button class="button button-secondary -poster">
+							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+						</button>
+					</div>
 				</label>
 				<label class="setting thumbnail">
 					<span class="name"><?php esc_html_e( 'Thumbnail', 'brightcove' )?></span>
-					<input type="hidden" class="brightcove-tags" value="{{data.thumbnail}}" />
-					<button class="button button-secondary -thumbnail">
-						<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-					</button>
+					<div class="setting-content">
+						<div class="image-preview"></div>
+						<input type="hidden" class="brightcove-tags" value="{{data.thumbnail}}" />
+						<button class="button button-secondary -thumbnail">
+							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+						</button>
+					</div>
 				</label>
 
 				<div id="brightcove-custom-fields"></div>
