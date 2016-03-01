@@ -12,4 +12,25 @@
 	.setting-content {
 		float: left;
 	}
+
+	.attachment {
+		cursor: pointer;
+		display: none;
+		padding: 8px 0 0;
+		width: auto;
+
+		&.active {
+			display: block;
+
+			.check {
+				display: block;
+				top: 9px;
+			}
+		}
+	}
+
+	.button-secondary {
+		clear: left;
+		display: block;
+	}
 }

@@ -421,6 +421,21 @@ div.brightcove-message {
 .brightcove.video-edit .setting-content {
   float: left; }
 
+.brightcove.video-edit .attachment {
+  cursor: pointer;
+  display: none;
+  padding: 8px 0 0;
+  width: auto; }
+  .brightcove.video-edit .attachment.active {
+    display: block; }
+    .brightcove.video-edit .attachment.active .check {
+      display: block;
+      top: 9px; }
+
+.brightcove.video-edit .button-secondary {
+  clear: left;
+  display: block; }
+
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
   height: auto;

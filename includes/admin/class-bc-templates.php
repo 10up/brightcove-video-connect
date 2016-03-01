@@ -118,7 +118,13 @@ class BC_Admin_Templates {
 				<label class="setting poster">
 					<span class="name"><?php esc_html_e( 'Poster', 'brightcove' )?></span>
 					<div class="setting-content">
-						<div class="image-preview"></div>
+						<div class="attachment">
+							<div class="-image"></div>
+							<button type="button" class="button-link check" tabindex="-1">
+								<span class="media-modal-icon"></span>
+								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
+							</button>
+						</div>
 						<input type="hidden" class="brightcove-tags" value="{{data.poster}}" />
 						<button class="button button-secondary -poster">
 							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
@@ -128,7 +134,13 @@ class BC_Admin_Templates {
 				<label class="setting thumbnail">
 					<span class="name"><?php esc_html_e( 'Thumbnail', 'brightcove' )?></span>
 					<div class="setting-content">
-						<div class="image-preview"></div>
+						<div class="attachment">
+							<div class="-image"></div>
+							<button type="button" class="button-link check" tabindex="-1">
+								<span class="media-modal-icon"></span>
+								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
+							</button>
+						</div>
 						<input type="hidden" class="brightcove-tags" value="{{data.thumbnail}}" />
 						<button class="button button-secondary -thumbnail">
 							<?php esc_html_e( 'Select File', 'ms-research' ); ?>

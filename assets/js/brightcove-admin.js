@@ -2048,7 +2048,8 @@ var VideoEditView = BrightcoveView.extend(
 			'click .brightcove.button.save-sync' :     'saveSync',
 			'click .brightcove.delete' :               'deleteVideo',
 			'click .brightcove.button.back' :          'back',
-			'click .setting .button' :                 'openMediaManager'
+			'click .setting .button' :                 'openMediaManager',
+			'click .attachment .check' :               'removeAttachment'
 		},
 
 		back : function ( event ) {
@@ -2110,20 +2111,41 @@ var VideoEditView = BrightcoveView.extend(
 		 * @returns {boolean}
 		 */
 		setAttachment: function( media, field ) {
-			var field     = field.prevObject[0].currentTarget.className,
-				field     = field.split( ' ' ), // convert string into array of classNames
-				field     = '.' + field.join( '.' ), // convert array into a valid CSS class
-				field     = $( field ).prev( 'input' ),
-				preview   = field.prev( '.image-preview' ),
-				img       = document.createElement( 'img' );
+			var field           = field.prevObject[0].currentTarget.className,
+				field           = field.split( ' ' ), // convert string into array of classNames
+				field           = '.' + field.join( '.' ), // convert array into a valid CSS class
+				field           = $( field ).prev( 'input' ),
+				attachment      = field.prev( '.attachment' ),
+				preview         = attachment.find( '.-image' ),
+				image           = document.createElement( 'img' );
+				image.src       = media.sizes.thumbnail.url;
+				image.className = 'thumbnail';
 
 			// Set the attachment ID to be stored
 			field.val( media.id );
 
 			// Display a preview image
-			img.src = media.sizes.thumbnail.url;
+			preview.html( image );
+			attachment.addClass( 'active' );
+		},
 
-			preview.html( img );
+		/**
+		 * Allow the user to remove media from a given field.
+		 *
+		 * @param {Event} evnt
+		 * @returns {boolean}
+		 */
+		removeAttachment: function( evnt ) {
+			var container = $( evnt.currentTarget ).parents( '.attachment' ),
+				image     = container.find( '.-image' ),
+				field     = container.next( 'input' );
+
+			// Empty the field
+			field.val( '' );
+
+			// Remove the preview image
+			image.empty();
+			container.removeClass( 'active' );
 		},
 
 		saveSync : function ( evnt ) {
