@@ -420,6 +420,9 @@ div.brightcove-message {
 
 .brightcove.video-edit .setting-content {
   float: left; }
+  .brightcove.video-edit .setting-content .button-secondary {
+    clear: left;
+    display: block; }
 
 .brightcove.video-edit .attachment {
   cursor: pointer;
@@ -431,10 +434,6 @@ div.brightcove-message {
     .brightcove.video-edit .attachment.active .check {
       display: block;
       top: 9px; }
-
-.brightcove.video-edit .button-secondary {
-  clear: left;
-  display: block; }
 
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
