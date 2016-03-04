@@ -115,7 +115,7 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
-				<label class="setting poster">
+				<div class="setting poster">
 					<span class="name"><?php esc_html_e( 'Poster', 'brightcove' )?></span>
 					<div class="setting-content">
 						<div class="attachment">
@@ -125,13 +125,13 @@ class BC_Admin_Templates {
 								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
 							</button>
 						</div>
-						<input type="hidden" class="brightcove-tags -poster" value="{{data.poster}}" />
+						<input type="hidden" class="brightcove-poster" value="{{data.poster}}" />
 						<button class="button button-secondary -poster">
 							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
 						</button>
 					</div>
-				</label>
-				<label class="setting thumbnail">
+				</div>
+				<div class="setting thumbnail">
 					<span class="name"><?php esc_html_e( 'Thumbnail', 'brightcove' )?></span>
 					<div class="setting-content">
 						<div class="attachment">
@@ -141,25 +141,45 @@ class BC_Admin_Templates {
 								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
 							</button>
 						</div>
-						<input type="hidden" class="brightcove-tags -thumbnail" value="{{data.thumbnail}}" />
+						<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}" />
 						<button class="button button-secondary -thumbnail">
 							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
 						</button>
 					</div>
-				</label>
-				<label class="setting captions">
+				</div>
+				<div class="setting captions">
 					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
 					<div class="setting-content">
-						<input type="hidden" class="brightcove-tags -captions" value="{{data.captions}}" />
+						<input type="hidden" class="brightcove-captions" value="{{data.captions}}" />
 						<button class="button button-secondary -captions">
 							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
 						</button>
+						<div id="caption-url"></div>
 
-						<div id="caption-extras">
-							Test fields
+						<div id="caption-extra-fields">
+							<label class="-language">
+								<span class="name"><?php esc_html_e( 'Language', 'brightcove' )?></span>
+								<input type="text" class="brightcove-captions-language" value="{{data.srclang}}" />
+							</label>
+
+							<label class="-label">
+								<span class="name"><?php esc_html_e( 'Label', 'brightcove' )?></span>
+								<input type="text" class="brightcove-captions-label" value="{{data.label}}" />
+							</label>
+
+							<label class="-kind">
+								<span class="name"><?php esc_html_e( 'Kind', 'brightcove' )?></span>
+								<select class="brightcove-captions-kind">
+									<option value="captions"><?php esc_html_e( 'Captions', 'brightcove' ); ?></option>
+									<option value="subtitles"><?php esc_html_e( 'Subtitles', 'brightcove' ); ?></option>
+									<option value="descriptions"><?php esc_html_e( 'Descriptions', 'brightcove' ); ?></option>
+									<option value="chapters"><?php esc_html_e( 'Chapters', 'brightcove' ); ?></option>
+									<option value="metadata"><?php esc_html_e( 'Metadata', 'brightcove' ); ?></option>
+								</select>
+							</label>
 						</div>
 					</div>
-				</label>
+				</div>
 
 				<div id="brightcove-custom-fields"></div>
 			</div>

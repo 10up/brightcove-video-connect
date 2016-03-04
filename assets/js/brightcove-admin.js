@@ -2124,13 +2124,17 @@ var VideoEditView = BrightcoveView.extend(
 			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
 				// Executed if the user is uploading a closed caption
 				if ( 'vtt' === media.subtype ) {
-					var captionExtras = document.getElementById( 'caption-extras' ),
+					var captionExtras = document.getElementById( 'caption-extra-fields' ),
+						captionUrl    = document.getElementById( 'caption-url' ),
 						selectedMedia = {
 							src: media.url
 						};
 
 					// Expose the additional caption fields
 					$( captionExtras ).addClass( 'active' );
+
+					// Display the selected captions file url
+					$( captionUrl ).empty().html( media.url );
 				} else {
 					// Alert the user that the file is not the correct format
 					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
@@ -2207,7 +2211,6 @@ var VideoEditView = BrightcoveView.extend(
 		saveSync : function ( evnt ) {
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
-				$thumbnail  = this.$el.find( '.brightcove-tags.-thumbnail' ).val();
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
@@ -2230,8 +2233,8 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'height', this.$el.find( '.brightcove-height' ).val() );
 			this.model.set( 'width', this.$el.find( '.brightcove-width' ).val() );
 			this.model.set( 'mediaType', 'videos' );
-			this.model.set( 'poster', this.$el.find( '.brightcove-tags.-poster' ).val() );
-			this.model.set( 'thumbnail', this.$el.find( '.brightcove-tags.-thumbnail' ).val() );
+			this.model.set( 'poster', this.$el.find( '.brightcove-poster' ).val() );
+			this.model.set( 'thumbnail', this.$el.find( '.brightcove-thumbnail' ).val() );
 
 			// Custom fields
 			var custom = {},

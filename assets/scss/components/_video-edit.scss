@@ -1,7 +1,7 @@
 .brightcove.video-edit {
 	.image-preview,
-	label {
-		margin-bottom: 4px;
+	.setting {
+		margin-bottom: 8px;
 	}
 
 	.setting-content,
@@ -11,6 +11,7 @@
 
 	.setting-content {
 		float: left;
+		max-width: 65%;
 
 		.button-secondary {
 			clear: left;
@@ -34,11 +35,45 @@
 		}
 	}
 
-	#caption-extras {
+	button.-captions,
+	#caption-url {
+		float: left;
+	}
+
+	button.-captions {
+		margin-right: 1em;
+	}
+
+	#caption-url {
+		color: #666;
+		line-height: 28px;
+	}
+
+	#caption-extra-fields {
+		@include clearfix();
+		clear: both;
 		display: none;
 
 		&.active {
 			display: block;
+		}
+
+		label {
+			@include clearfix();
+			box-sizing: border-box;
+			display: block;
+			float: left;
+			padding-right: 0.75em;
+			width: 33.3333%;
+
+			span,
+			input,
+			select {
+				margin: 0;
+				min-width: 100%;
+				text-align: left;
+				width: 100%;
+			}
 		}
 	}
 }
