@@ -435,6 +435,11 @@ div.brightcove-message {
       display: block;
       top: 9px; }
 
+.brightcove.video-edit #caption-extras {
+  display: none; }
+  .brightcove.video-edit #caption-extras.active {
+    display: block; }
+
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
   height: auto;

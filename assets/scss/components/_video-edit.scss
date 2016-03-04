@@ -33,4 +33,12 @@
 			}
 		}
 	}
+
+	#caption-extras {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
 }

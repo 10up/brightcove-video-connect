@@ -147,6 +147,19 @@ class BC_Admin_Templates {
 						</button>
 					</div>
 				</label>
+				<label class="setting captions">
+					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
+					<div class="setting-content">
+						<input type="hidden" class="brightcove-tags -captions" value="{{data.captions}}" />
+						<button class="button button-secondary -captions">
+							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+						</button>
+
+						<div id="caption-extras">
+							Test fields
+						</div>
+					</div>
+				</label>
 
 				<div id="brightcove-custom-fields"></div>
 			</div>

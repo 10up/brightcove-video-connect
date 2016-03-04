@@ -65,8 +65,6 @@ var MediaModel = Backbone.Model.extend(
 					thumbnail:         this.get( 'thumbnail' )
 				} );
 
-				console.log( options.data );
-
 				var video_ids = this.get( 'video_ids' );
 				if ( video_ids ) {
 					options.data.playlist_id     = this.id;
@@ -2120,24 +2118,45 @@ var VideoEditView = BrightcoveView.extend(
 			var field           = field.prevObject[0].currentTarget,
 				field           = $( field ).prev( 'input' ),
 				attachment      = field.prev( '.attachment' ),
-				preview         = attachment.find( '.-image' ),
-				image           = document.createElement( 'img' );
+				preview         = attachment.find( '.-image' );
+
+			// Perform different setup actions based on the type of upload
+			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
+				// Executed if the user is uploading a closed caption
+				if ( 'vtt' === media.subtype ) {
+					var captionExtras = document.getElementById( 'caption-extras' ),
+						selectedMedia = {
+							src: media.url
+						};
+
+					// Expose the additional caption fields
+					$( captionExtras ).addClass( 'active' );
+				} else {
+					// Alert the user that the file is not the correct format
+					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
+				}
+			} else {
+				// Executed if the user is uploading a poster image or thumbnail
+				var selectedMedia = {
+					url:    media.sizes.full.url,
+					width:  media.sizes.full.width,
+					height: media.sizes.full.height
+				};
+
+				// Set up our preview image
+				var image = document.createElement( 'img' );
+
+				// Set image properties
 				image.src       = media.sizes.thumbnail.url;
 				image.className = 'thumbnail';
 
-			// Setup an object of necessary info to be stored as JSON
-			var selectedMedia = {
-				url:    media.sizes.full.url,
-				width:  media.sizes.full.width,
-				height: media.sizes.full.height
+				// Display a preview image
+				attachment.addClass( 'active' );
+				preview.html( image );
 			}
 
 			// Add our meta to the hidden field
 			field.val( JSON.stringify( selectedMedia ) );
-
-			// Display a preview image
-			attachment.addClass( 'active' );
-			preview.html( image );
 		},
 
 		/**
