@@ -59,9 +59,13 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
+					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
-					type :             this.get( 'mediaType' )
+					poster:            this.get( 'poster' ),
+					thumbnail:         this.get( 'thumbnail' )
 				} );
+
+				console.log( options.data );
 
 				var video_ids = this.get( 'video_ids' );
 				if ( video_ids ) {
@@ -500,7 +504,9 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 			type :    null, // enum[playlist, video]
 			preload : true,
 			search :  '',
-			account : wpbc.preload.defaultAccountId
+			account : wpbc.preload.defaultAccountId,
+			poster: {},
+			thumbnail: {}
 		},
 		initialize : function ( options ) {
 			_.defaults( options, this.defaults );
@@ -542,7 +548,9 @@ var BrightcoveModalModel = Backbone.Model.extend(
 					preload :   true,
 					search :    '',
 					tags :      'all',
-					viewType :  'grid'
+					viewType :  'grid',
+					poster:     {},
+					thumbnail:  {}
 				},
 				'videos' :    {
 					accounts :  'all',
@@ -2043,9 +2051,11 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' : 'saveSync',
-			'click .brightcove.delete' :           'deleteVideo',
-			'click .brightcove.button.back' :      'back'
+			'click .brightcove.button.save-sync' :     'saveSync',
+			'click .brightcove.delete' :               'deleteVideo',
+			'click .brightcove.button.back' :          'back',
+			'click .setting .button' :                 'openMediaManager',
+			'click .attachment .check' :               'removeAttachment'
 		},
 
 		back : function ( event ) {
@@ -2066,11 +2076,119 @@ var VideoEditView = BrightcoveView.extend(
 			}
 		},
 
-		saveSync : function ( evnt ) {
+		/**
+		 * Allow the user to attach a video still or thumbnail.
+		 *
+		 * @param {Event} evnt
+		 */
+		openMediaManager: function ( evnt ) {
 			evnt.preventDefault();
 
+			var elem         = $( evnt.currentTarget ).parents( '.setting' ),
+				editor       = elem.data('editor'),
+				mediaManager = wp.media.frames.brightcove = wp.media(),
+				options      = {
+					state:    'insert',
+					title:    wp.media.view.l10n.addMedia,
+					multiple: false
+				};
+
+			// Open the media manager
+			mediaManager.open( editor, options );
+
+			// Listen for selection of media
+			this.listenTo( mediaManager, 'select', function() {
+				var media = mediaManager.state().get( 'selection' ).first().toJSON(),
+					field = $( evnt ).parents( '.setting' );
+
+				// Set the selected attachment to the correct field
+				this.setAttachment( media, field );
+
+				// Make this action available to other areas of the application
+				wpbc.broadcast.trigger( 'media:selected' );
+			});
+		},
+
+		/**
+		 * Set the hidden input to the ID of the selected attachment.
+		 *
+		 * @param {Object} media
+		 * @param {String} field
+		 * @returns {boolean}
+		 */
+		setAttachment: function( media, field ) {
+			var field           = field.prevObject[0].currentTarget,
+				field           = $( field ).prev( 'input' ),
+				attachment      = field.prev( '.attachment' ),
+				preview         = attachment.find( '.-image' ),
+				image           = document.createElement( 'img' );
+				image.src       = media.sizes.thumbnail.url;
+				image.className = 'thumbnail';
+
+			// Setup an object of necessary info to be stored as JSON
+			var selectedMedia = {
+				url:    media.sizes.full.url,
+				width:  media.sizes.full.width,
+				height: media.sizes.full.height
+			}
+
+			// Add our meta to the hidden field
+			field.val( JSON.stringify( selectedMedia ) );
+
+			// Display a preview image
+			attachment.addClass( 'active' );
+			preview.html( image );
+		},
+
+		/**
+		 * Allow the user to remove media from a given field.
+		 *
+		 * @param {Event} evnt
+		 * @returns {boolean}
+		 */
+		removeAttachment: function( evnt ) {
+			var container = $( evnt.currentTarget ).parents( '.attachment' ),
+				image     = container.find( '.-image' ),
+				field     = container.next( 'input' );
+
+			// Empty the field
+			field.val( '' );
+
+			// Remove the preview image
+			container.removeClass( 'active' );
+			image.empty();
+		},
+
+		/**
+		 * Display the attachment if one is already set.
+		 *
+		 * @param {Event} evnt
+		 * @returns {boolean}
+		 */
+		displayAttachment: function( field ) {
+			if ( 'poster' === field ) {
+				var field = '.button-secondary.-poster';
+			}
+
+			if ( 'thumbnail' === field ) {
+				var field = '.button-secondary.-thumbnail';
+			}
+
+			var attachment      = $( field ).prev( '.attachment' ),
+				preview         = attachment.find( '.-image' ),
+				image           = document.createElement( 'img' );
+				image.src       = media.sizes.thumbnail.url;
+				image.className = 'thumbnail';
+
+			// Display a preview image
+			attachment.addClass( 'active' );
+			preview.html( image );
+		},
+
+		saveSync : function ( evnt ) {
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
+				$thumbnail  = this.$el.find( '.brightcove-tags.-thumbnail' ).val();
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
@@ -2093,6 +2211,8 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'height', this.$el.find( '.brightcove-height' ).val() );
 			this.model.set( 'width', this.$el.find( '.brightcove-width' ).val() );
 			this.model.set( 'mediaType', 'videos' );
+			this.model.set( 'poster', this.$el.find( '.brightcove-tags.-poster' ).val() );
+			this.model.set( 'thumbnail', this.$el.find( '.brightcove-tags.-thumbnail' ).val() );
 
 			// Custom fields
 			var custom = {},
@@ -2175,6 +2295,15 @@ var VideoEditView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
 				spinner.removeClass( 'is-active' ).addClass( 'hidden' );
 			} );
+
+			// If there's already a poster or thumbnail set, display it
+			if ( this.model.get( 'poster' ) ) {
+				this.displayAttachment( 'poster' );
+			}
+
+			if ( this.model.get( 'thumbnail' ) ) {
+				this.displayAttachment( 'thumbnail' );
+			}
 		}
 
 	}

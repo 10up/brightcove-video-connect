@@ -410,6 +410,31 @@ div.brightcove-message {
   .brightcove.media-frame-content .attachment {
     padding: 20px 10px; } }
 
+.brightcove.video-edit .image-preview,
+.brightcove.video-edit label {
+  margin-bottom: 4px; }
+
+.brightcove.video-edit .setting-content,
+.brightcove.video-edit select {
+  margin-left: 7px; }
+
+.brightcove.video-edit .setting-content {
+  float: left; }
+  .brightcove.video-edit .setting-content .button-secondary {
+    clear: left;
+    display: block; }
+
+.brightcove.video-edit .attachment {
+  cursor: pointer;
+  display: none;
+  padding: 8px 0 0;
+  width: auto; }
+  .brightcove.video-edit .attachment.active {
+    display: block; }
+    .brightcove.video-edit .attachment.active .check {
+      display: block;
+      top: 9px; }
+
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
   height: auto;
