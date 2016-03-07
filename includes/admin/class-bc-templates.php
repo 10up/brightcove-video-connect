@@ -116,6 +116,21 @@ class BC_Admin_Templates {
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
 				<div id="brightcove-custom-fields"></div>
+				<div class="setting select-player">
+					<span class="name"><?php esc_html_e( 'Select a Player', 'brightcove' )?></span>
+
+					<div class="player-container">
+						<# _.each(data.players, function (player) { #>
+							<div class="color-option <# if ( data.player_id === account.selected_player ) { #>selected<# } #>">
+								<label>
+									<input type="radio" name="brightcove-player" value="1"  <# if ( data.player.id === account.selected_player ) { #>checked="checked"<# } #>
+									<span class="screen-reader-text">{{data.player.name}}</span>
+									<iframe src="<# data.branches.master.preview_url #>">
+								</label>
+							</div>
+						<# }); #>
+					</div>
+				</div>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
