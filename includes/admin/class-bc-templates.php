@@ -179,7 +179,7 @@ class BC_Admin_Templates {
 							</label>
 
 							<div class="action-row">
-								<a href="#" class="delete"><?php esc_html_e( 'Remove', 'brightcove' ); ?></button>
+								<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></button>
 							</div>
 						</div>
 					</div>
