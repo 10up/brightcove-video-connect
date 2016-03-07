@@ -177,6 +177,10 @@ class BC_Admin_Templates {
 									<option value="metadata"><?php esc_html_e( 'Metadata', 'brightcove' ); ?></option>
 								</select>
 							</label>
+
+							<div class="action-row">
+								<a href="#" class="delete"><?php esc_html_e( 'Remove', 'brightcove' ); ?></button>
+							</div>
 						</div>
 					</div>
 				</div>

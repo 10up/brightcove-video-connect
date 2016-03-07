@@ -35,6 +35,14 @@
 		}
 	}
 
+	.action-row {
+		.delete {
+			color: #a00;
+			display: inline-block;
+			padding-top: 6px;
+		}
+	}
+
 	button.-captions,
 	#caption-url {
 		float: left;

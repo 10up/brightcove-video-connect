@@ -436,6 +436,11 @@ div.brightcove-message {
       display: block;
       top: 9px; }
 
+.brightcove.video-edit .action-row .delete {
+  color: #a00;
+  display: inline-block;
+  padding-top: 6px; }
+
 .brightcove.video-edit button.-captions,
 .brightcove.video-edit #caption-url {
   float: left; }

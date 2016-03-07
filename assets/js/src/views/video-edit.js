@@ -9,7 +9,8 @@ var VideoEditView = BrightcoveView.extend(
 			'click .brightcove.delete' :               'deleteVideo',
 			'click .brightcove.button.back' :          'back',
 			'click .setting .button' :                 'openMediaManager',
-			'click .attachment .check' :               'removeAttachment'
+			'click .attachment .check' :               'removeAttachment',
+			'click #caption-extra-fields .delete' :    'removeCaption'
 		},
 
 		back : function ( event ) {
@@ -164,6 +165,33 @@ var VideoEditView = BrightcoveView.extend(
 			preview.html( image );
 		},
 
+		/**
+		 * Remove a caption
+		 *
+		 * @param {Event} evnt
+		 */
+		removeCaption: function( evnt ) {
+			var caption   = evnt.currentTarget,
+				container = document.getElementById( 'caption-extra-fields' ),
+				input     = document.getElementsByClassName( 'brightcove-captions' ),
+				preview   = document.getElementById( 'caption-url' ),
+				language  = document.getElementsByClassName( 'brightcove-captions-language' ),
+				label     = document.getElementsByClassName( 'brightcove-captions-label' ),
+				kind      = document.getElementsByClassName( 'brightcove-captions-kind' );
+
+			// Empty the input fields
+			$( input ).val( '' );
+			$( language ).val( '' );
+			$( label ).val( '' );
+			$( kind ).val( '' );
+
+			// Empty the preview field
+			$( preview ).empty();
+
+			// Hide the extra fields
+			$( container ).removeClass( 'active' );
+		},
+
 		saveSync : function ( evnt ) {
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
@@ -286,4 +314,3 @@ var VideoEditView = BrightcoveView.extend(
 
 	}
 );
-
