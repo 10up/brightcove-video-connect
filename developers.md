@@ -1,5 +1,14 @@
 ## Developer Guide
 
+### Local Development
+
+Portions of the plugin require a publicly-accessible web server to work. These features include
+
+ * Media ingestion (video and image upload)
+ * Status updates
+ 
+While the plugin itself will function on a local or firewalled machine, some operations like the publishing of media to Brightcove require Brightcove to have access _back in_ to your site. If you're developing on a local server, you will need to use a proxy tunnel to make your machine accessible to Brightcove. An example of one such service is [ngrok](https://ngrok.com/), which creates a temporary, publicly-accessible URL that tunnels to a local service.
+
 ## PHP Hooks
 
 ### Filters:
