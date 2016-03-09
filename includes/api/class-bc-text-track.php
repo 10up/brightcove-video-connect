@@ -43,7 +43,7 @@ class BC_Text_Track {
 		$this->url = esc_url_raw( $url );
 		$this->srcLang = substr( sanitize_text_field( $language ), 0, 2 );
 		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ) ) ) {
-			$this->kind = 'default';
+			$this->kind = 'captions';
 		} else {
 			$this->kind = $kind;
 		}

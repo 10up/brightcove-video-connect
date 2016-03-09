@@ -741,10 +741,69 @@ class BC_Admin_Media_API {
 	 * Handle an uploaded caption file and associate it with the specified video
 	 *
 	 * Expects the following AJAX fields:
+	 * - nonce    Nonce for action `_bc_ajax_upload`
+	 * - account  Hash for the account to which we're uploading
 	 * - video_id  ID of the video on Brightcove
-	 * - poster_id ID of the poster image within WordPress' media gallery
+	 * - captions  Array containing caption objects (associative arrays of 'url,' 'lang,' and 'label')
+	 *
+	 * @global BC_Accounts $bc_accounts
 	 */
 	public function ajax_caption_upload() {
+		global $bc_accounts;
 
+		// Ensure all required fields were sent
+		foreach ( array( 'nonce', 'account', 'video_id', 'captions' ) as $parameter ) {
+			if ( ! isset( $_POST[ $parameter ] ) ) {
+				wp_send_json_error();
+			}
+		}
+
+		// Validate our nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], '_bc_ajax_upload' ) ) {
+			wp_send_json_error(); // Nonce was invalid, fail
+		}
+
+		// Set up the account to which we're pushing data
+		$account_hash = sanitize_text_field( $_POST['account'] );
+		$account      = $bc_accounts->set_current_account( $account_hash );
+		if ( false === $account ) {
+			wp_send_json_error(); // Account was invalid, fail
+		}
+
+		// Sanitize our passed data
+		$video_id = sanitize_text_field( $_POST['video_id'] );
+		$captions = array();
+		foreach( $_POST['captions'] as $caption ) {
+			// Validate required fields
+			if ( ! isset( $caption['url'] ) || ! isset( $caption['lang'] ) ) {
+				continue;
+			}
+
+			$url = esc_url( $caption['url'] );
+			$lang = sanitize_text_field( $caption['lang'] );
+			if ( empty( $url ) || empty( $lang ) ) {
+				continue; // Attachment has no URL, fail
+			}
+			$label = isset( $_POST['label'] ) ? sanitize_text_field( $_POST['label'] ) : '';
+
+			$captions[] = new BC_Text_Track( $url, $lang, 'captions', $label );
+		}
+
+		if ( empty( $captions ) ) {
+			wp_send_json_error(); // After sanitization, we have no valid captions
+		}
+
+		// Push the captions to Brightcove
+		$ingestion_status = $this->cms_api->text_track_upload( $video_id, $captions );
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+
+		if ( false === $ingestion_status ) {
+			wp_send_json_error(); // Ingestion failed, fail
+		}
+
+		// If we made it this far, the stars have aligned and all is good with the world!
+		wp_send_json_success( $ingestion_status );
 	}
 }
