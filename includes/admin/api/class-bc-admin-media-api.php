@@ -2,9 +2,29 @@
 
 class BC_Admin_Media_API {
 
+	/**
+	 * @var BC_CMS_API
+	 */
 	protected $cms_api;
+
+	/**
+	 * @var BC_Player_Management_API
+	 */
+	protected $player_api;
+
+	/**
+	 * @var BC_Playlists
+	 */
 	protected $playlists;
+
+	/**
+	 * @var BC_Video_Upload
+	 */
 	protected $video_upload;
+
+	/**
+	 * @var BC_Videos
+	 */
 	protected $videos;
 
 	public function __construct() {
@@ -16,6 +36,7 @@ class BC_Admin_Media_API {
 		}
 
 		$this->cms_api      = new BC_CMS_API();
+		$this->player_api   = new BC_Player_Management_API();
 		$this->playlists    = new BC_Playlists( $this->cms_api );
 		$this->videos       = new BC_Videos( $this->cms_api );
 		$this->video_upload = new BC_Video_Upload( $this->cms_api );
@@ -26,6 +47,7 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_media_delete', array( $this, 'bc_ajax_delete_video_or_playlist' ) );
 		add_action( 'wp_ajax_bc_media_upload', array( $this, 'brightcove_media_upload' ) ); // For uploading a file.
 
+		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 	}
 
 	protected function bc_helper_check_ajax() {
@@ -537,5 +559,62 @@ class BC_Admin_Media_API {
 		$bc_accounts->restore_default_account();
 		wp_send_json_success( $results );
 
+	}
+
+	/**
+	 * Retrieve a list of players available for usage on the front-end
+	 *
+	 * Requires the following fields:
+	 *  - nonce   WordPress nonce to prevent replay attacks
+	 *  - account ID of the account we're referencing
+	 *
+	 * Will return an array of objects (in JSON) representing available players. Each player will roughly contain:
+	 * - accountId   (string)
+	 * - id          (string)
+	 * - name        (string)
+	 * - description (string)
+	 * - branches    (object)
+	 * - created_at  (datetime)
+	 * - url         (string)
+	 * - embed_count (integer)
+	 *
+	 * @see http://docs.brightcove.com/en/video-cloud/player-management/reference/versions/v1/index.html#api-Players-Get_All_Players
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 */
+	public function ajax_players() {
+		global $bc_accounts;
+
+		// Ensure all required fields were sent
+		foreach ( array( 'nonce', 'account' ) as $parameter ) {
+			if ( ! isset( $_POST[ $parameter ] ) ) {
+				wp_send_json_error();
+			}
+		}
+
+		// Validate our nonce
+		if ( ! isset( $_POST[ 'nonce' ] ) || ! wp_verify_nonce( $_POST[ 'nonce' ], '_bc_ajax_players' ) ) {
+			wp_send_json_error(); // Nonce was invalid, fail
+		}
+
+		// Set up the account from which we're fetching data
+		$account_id = sanitize_text_field( $_POST[ 'account' ] );
+		$account = $bc_accounts->set_current_account_by_id( $account_id );
+
+		if ( false === $account ) {
+			wp_send_json_error(); // Account was invalid, fail
+		}
+
+		// Get players from Brightcove
+		$players = $this->player_api->player_list();
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+
+		if ( false === $players ) {
+			wp_send_json_error(); // Retrieval failed, fail
+		}
+
+		wp_send_json_success( $players );
 	}
 }
