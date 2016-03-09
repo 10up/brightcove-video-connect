@@ -14,6 +14,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-text-track.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
