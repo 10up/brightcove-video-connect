@@ -625,10 +625,12 @@ class BC_Admin_Media_API {
 	 * Handle an uploaded preroll image and associate it with a specific video
 	 *
 	 * Expects the following AJAX fields:
-	 * - nonce     Nonce for action `_bc_ajax_upload`
-	 * - account   Hash for the account to which we're uploading
-	 * - video_id  ID of the video on Brightcove
-	 * - poster_id ID of the poster image within WordPress' media gallery
+	 * - nonce    Nonce for action `_bc_ajax_upload`
+	 * - account  Hash for the account to which we're uploading
+	 * - video_id ID of the video on Brightcove
+	 * - url      URL of the poster image to ingest
+	 * - width    Pixel width of the image to ingest
+	 * - height   Pixel height of the image to ingest
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 */
@@ -636,7 +638,7 @@ class BC_Admin_Media_API {
 		global $bc_accounts;
 
 		// Ensure all required fields were sent
-		foreach ( array( 'nonce', 'account', 'video_id', 'poster_id' ) as $parameter ) {
+		foreach ( array( 'nonce', 'account', 'video_id', 'url', 'width', 'height' ) as $parameter ) {
 			if ( ! isset( $_POST[ $parameter ] ) ) {
 				wp_send_json_error();
 			}
@@ -656,19 +658,15 @@ class BC_Admin_Media_API {
 
 		// Sanitize our passed data
 		$video_id = sanitize_text_field( $_POST['video_id'] );
-		$poster_id = absint( $_POST['poster_id'] );
-
-		// Get the Upload URL from the media library
-		$url = wp_get_attachment_url( $poster_id );
-		if ( false === $url ) {
+		$url = esc_url( $_POST['url'] );
+		if ( empty( $url ) ) {
 			wp_send_json_error(); // Attachment has no URL, fail
 		}
-
-		// Retrieve the attachment meta information so we have height and width
-		$info = wp_get_attachment_metadata( $poster_id );
+		$height = absint( $_POST['height'] );
+		$width = absint( $_POST['width'] );
 
 		// Push the poster to Brightcove
-		$ingestion_status = $this->cms_api->poster_upload( $video_id, $url, $info['height'], $info['weight'] );
+		$ingestion_status = $this->cms_api->poster_upload( $video_id, $url, $height, $width );
 
 		// Restore our global, default account
 		$bc_accounts->restore_default_account();
@@ -685,10 +683,12 @@ class BC_Admin_Media_API {
 	 * Handle an uploaded thumbnail image and associate it with a specific video
 	 *
 	 * Expects the following AJAX fields:
-	 * - nonce        Nonce for action `_bc_ajax_upload`
-	 * - account      Hash for the account to which we're uploading
-	 * - video_id     ID of the video on Brightcove
-	 * - thumbnail_id ID of the thumbnail within WordPress' media gallery
+	 * - nonce    Nonce for action `_bc_ajax_upload`
+	 * - account  Hash for the account to which we're uploading
+	 * - video_id ID of the video on Brightcove
+	 * - url      URL of the thumbnail image to ingest
+	 * - width    Pixel width of the image to ingest
+	 * - height   Pixel height of the image to ingest
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 */
@@ -696,7 +696,7 @@ class BC_Admin_Media_API {
 		global $bc_accounts;
 
 		// Ensure all required fields were sent
-		foreach ( array( 'nonce', 'account', 'video_id', 'thumbnail_id' ) as $parameter ) {
+		foreach ( array( 'nonce', 'account', 'video_id', 'url', 'width', 'height' ) as $parameter ) {
 			if ( ! isset( $_POST[ $parameter ] ) ) {
 				wp_send_json_error();
 			}
@@ -716,19 +716,15 @@ class BC_Admin_Media_API {
 
 		// Sanitize our passed data
 		$video_id = sanitize_text_field( $_POST['video_id'] );
-		$thumbnail_id = absint( $_POST['thumbnail_id'] );
-
-		// Get the Upload URL from the media library
-		$url = wp_get_attachment_url( $thumbnail_id );
-		if ( false === $url ) {
+		$url = esc_url( $_POST['url'] );
+		if ( empty( $url ) ) {
 			wp_send_json_error(); // Attachment has no URL, fail
 		}
-
-		// Retrieve the attachment meta information so we have height and width
-		$info = wp_get_attachment_metadata( $thumbnail_id );
+		$height = absint( $_POST['height'] );
+		$width = absint( $_POST['width'] );
 
 		// Push the thumbnail to Brightcove
-		$ingestion_status = $this->cms_api->thumbnail_upload( $video_id, $thumbnail_id, $info['height'], $info['width'] );
+		$ingestion_status = $this->cms_api->thumbnail_upload( $video_id, $url, $height, $width );
 
 		// Restore our global, default account
 		$bc_accounts->restore_default_account();

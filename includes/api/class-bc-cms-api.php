@@ -550,10 +550,10 @@ class BC_CMS_API extends BC_API {
 		);
 
 		if ( 0 !== $height ) {
-			$data['poster']['height'] = $height;
+			$data['thumbnail']['height'] = $height;
 		}
 		if ( 0 !== $width ) {
-			$data['poster']['width'] = $width;
+			$data['thumbnail']['width'] = $width;
 		}
 
 		// Send the data
