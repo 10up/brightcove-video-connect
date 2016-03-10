@@ -410,6 +410,79 @@ div.brightcove-message {
   .brightcove.media-frame-content .attachment {
     padding: 20px 10px; } }
 
+.brightcove.video-edit .image-preview,
+.brightcove.video-edit .setting {
+  margin-bottom: 8px; }
+
+.brightcove.video-edit .setting-content,
+.brightcove.video-edit select {
+  margin-left: 7px; }
+
+.brightcove.video-edit .setting-content {
+  float: left;
+  max-width: 65%; }
+  .brightcove.video-edit .setting-content .button-secondary {
+    clear: left;
+    display: block; }
+
+.brightcove.video-edit .attachment {
+  cursor: pointer;
+  display: none;
+  padding: 8px 0 0;
+  width: auto; }
+  .brightcove.video-edit .attachment.active {
+    display: block; }
+    .brightcove.video-edit .attachment.active .check {
+      display: block;
+      top: 9px; }
+
+.brightcove.video-edit .action-row .delete {
+  color: #a00;
+  display: inline-block;
+  padding-top: 6px; }
+
+.brightcove.video-edit button.-captions,
+.brightcove.video-edit #caption-url {
+  float: left; }
+
+.brightcove.video-edit button.-captions {
+  margin-right: 1em; }
+
+.brightcove.video-edit #caption-url {
+  color: #666;
+  line-height: 28px; }
+
+.brightcove.video-edit #caption-extra-fields {
+  *zoom: 1;
+  clear: both;
+  display: none; }
+  .brightcove.video-edit #caption-extra-fields:before, .brightcove.video-edit #caption-extra-fields:after {
+    content: " ";
+    display: table; }
+  .brightcove.video-edit #caption-extra-fields:after {
+    clear: both; }
+  .brightcove.video-edit #caption-extra-fields.active {
+    display: block; }
+  .brightcove.video-edit #caption-extra-fields label {
+    *zoom: 1;
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    padding-right: 0.75em;
+    width: 33.3333%; }
+    .brightcove.video-edit #caption-extra-fields label:before, .brightcove.video-edit #caption-extra-fields label:after {
+      content: " ";
+      display: table; }
+    .brightcove.video-edit #caption-extra-fields label:after {
+      clear: both; }
+    .brightcove.video-edit #caption-extra-fields label span,
+    .brightcove.video-edit #caption-extra-fields label input,
+    .brightcove.video-edit #caption-extra-fields label select {
+      margin: 0;
+      min-width: 100%;
+      text-align: left;
+      width: 100%; }
+
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
   height: auto;

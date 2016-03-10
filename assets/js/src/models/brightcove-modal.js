@@ -17,7 +17,9 @@ var BrightcoveModalModel = Backbone.Model.extend(
 					preload :   true,
 					search :    '',
 					tags :      'all',
-					viewType :  'grid'
+					viewType :  'grid',
+					poster:     {},
+					thumbnail:  {}
 				},
 				'videos' :    {
 					accounts :  'all',
