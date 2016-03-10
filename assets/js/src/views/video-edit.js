@@ -91,7 +91,7 @@ var VideoEditView = BrightcoveView.extend(
 					$( captionExtras ).addClass( 'active' );
 
 					// Display the selected captions file url
-					$( captionUrl ).empty().html( media.url );
+					$( captionUrl ).empty().html( media.url ); // .html() considered okay because auth is required to view this screen
 				} else {
 					// Alert the user that the file is not the correct format
 					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
@@ -113,7 +113,7 @@ var VideoEditView = BrightcoveView.extend(
 
 				// Display a preview image
 				attachment.addClass( 'active' );
-				preview.html( image );
+				preview.html( image ); // .html() considered okay because auth is required to view this screen
 			}
 
 			// Add our meta to the hidden field
