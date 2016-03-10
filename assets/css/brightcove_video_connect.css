@@ -360,6 +360,7 @@ div.brightcove-message {
     .brightcove.media-frame-menu .attachment-detail .video-info .video-id,
     .brightcove.media-frame-menu .attachment-detail .video-info .video-source,
     .brightcove.media-frame-menu .attachment-detail .video-info .video-updated,
+    .brightcove.media-frame-menu .attachment-detail .video-info .video-player,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .account-name,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .created-date,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-id,
@@ -370,7 +371,8 @@ div.brightcove-message {
     .brightcove.media-frame-menu .attachment-detail .playlist-info .video-description,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .video-id,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .video-source,
-    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated {
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-player {
       clear: both;
       display: block;
       color: #999;
@@ -386,6 +388,7 @@ div.brightcove-message {
       .brightcove.media-frame-menu .attachment-detail .video-info .video-id .title,
       .brightcove.media-frame-menu .attachment-detail .video-info .video-source .title,
       .brightcove.media-frame-menu .attachment-detail .video-info .video-updated .title,
+      .brightcove.media-frame-menu .attachment-detail .video-info .video-player .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .account-name .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .created-date .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-id .title,
@@ -396,7 +399,8 @@ div.brightcove-message {
       .brightcove.media-frame-menu .attachment-detail .playlist-info .video-description .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .video-id .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .video-source .title,
-      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated .title {
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated .title,
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-player .title {
         margin-right: 5px; }
 
 @media screen and (max-width: 700px) {
