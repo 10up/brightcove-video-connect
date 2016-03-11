@@ -427,7 +427,6 @@ div.brightcove-message {
 
 .brightcove.video-edit .attachment {
   cursor: pointer;
-  display: none;
   padding: 8px 0 0;
   width: auto; }
   .brightcove.video-edit .attachment.active {
@@ -435,6 +434,8 @@ div.brightcove-message {
     .brightcove.video-edit .attachment.active .check {
       display: block;
       top: 9px; }
+    .brightcove.video-edit .attachment.active .button {
+      display: none; }
   .brightcove.video-edit .attachment img {
     height: auto;
     max-width: 100%; }
@@ -455,37 +456,47 @@ div.brightcove-message {
   color: #666;
   line-height: 28px; }
 
+.brightcove.video-edit .add-remote-caption {
+  line-height: 28px; }
+
 .brightcove.video-edit .caption-repeater {
   clear: both;
+  padding: 0.75em 0;
+  width: 100%; }
+  .brightcove.video-edit .caption-repeater.empty-row {
+    display: none; }
+  .brightcove.video-edit .caption-repeater.active {
+    display: block; }
+
+.brightcove.video-edit input.brightcove-captions {
+  clear: both;
+  margin-bottom: 0.75em;
   width: 100%; }
 
-.brightcove.video-edit .caption-fields {
+.brightcove.video-edit .caption-secondary-fields {
   *zoom: 1;
   clear: both; }
-  .brightcove.video-edit .caption-fields:before, .brightcove.video-edit .caption-fields:after {
+  .brightcove.video-edit .caption-secondary-fields:before, .brightcove.video-edit .caption-secondary-fields:after {
     content: " ";
     display: table; }
-  .brightcove.video-edit .caption-fields:after {
+  .brightcove.video-edit .caption-secondary-fields:after {
     clear: both; }
-  .brightcove.video-edit .caption-fields.-empty {
-    display: none; }
-  .brightcove.video-edit .caption-fields.-active {
-    display: block; }
-  .brightcove.video-edit .caption-fields label {
+  .brightcove.video-edit .caption-secondary-fields label {
     *zoom: 1;
     box-sizing: border-box;
     display: block;
     float: left;
-    padding-right: 0.75em;
     width: 50%; }
-    .brightcove.video-edit .caption-fields label:before, .brightcove.video-edit .caption-fields label:after {
+    .brightcove.video-edit .caption-secondary-fields label:before, .brightcove.video-edit .caption-secondary-fields label:after {
       content: " ";
       display: table; }
-    .brightcove.video-edit .caption-fields label:after {
+    .brightcove.video-edit .caption-secondary-fields label:after {
       clear: both; }
-    .brightcove.video-edit .caption-fields label span,
-    .brightcove.video-edit .caption-fields label input,
-    .brightcove.video-edit .caption-fields label select {
+    .brightcove.video-edit .caption-secondary-fields label:nth-child(1) {
+      padding-right: 1em; }
+    .brightcove.video-edit .caption-secondary-fields label span,
+    .brightcove.video-edit .caption-secondary-fields label input,
+    .brightcove.video-edit .caption-secondary-fields label select {
       margin: 0;
       min-width: 100%;
       text-align: left;

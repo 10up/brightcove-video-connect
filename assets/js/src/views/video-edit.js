@@ -74,24 +74,14 @@ var VideoEditView = BrightcoveView.extend(
 		setAttachment: function( media, field ) {
 			var field           = field.prevObject[0].currentTarget,
 				field           = $( field ).prev( 'input' ),
-				attachment      = field.prev( '.attachment' ),
+				attachment      = field.parents( '.attachment' ),
 				preview         = attachment.find( '.-image' );
 
 			// Perform different setup actions based on the type of upload
 			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
 				// Executed if the user is uploading a closed caption
 				if ( 'vtt' === media.subtype ) {
-					var captionExtras = document.getElementById( 'js-caption-fields' ),
-						captionUrl    = document.getElementById( 'js-caption-url' ),
-						selectedMedia = {
-							src: media.url
-						};
-
-					// Expose the additional caption fields
-					$( captionExtras ).addClass( 'active' );
-
-					// Display the selected captions file url
-					$( captionUrl ).empty().html( media.url ); // .html() considered okay because auth is required to view this screen
+					this.addCaptionRow( media );
 				} else {
 					// Alert the user that the file is not the correct format
 					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
@@ -169,10 +159,28 @@ var VideoEditView = BrightcoveView.extend(
 		/**
 		 * Add a caption row
 		 *
-		 * @param {Event} evnt
+		 * @param {Object} media
 		 */
-		addCaptionRow: function( evnt ) {
+		addCaptionRow: function( media ) {
+			var newRow      = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
+			container = document.getElementById( 'js-captions' ),
+				captionExtras = document.getElementById( 'js-caption-fields' ),
+				captionUrl    = document.getElementById( 'js-caption-url' ),
+				selectedMedia = {
+					src: media.url
+				};
 
+			newRow.find( 'input' ).prop( 'disabled', false );
+			newRow.removeAttr( 'id' );
+			newRow.removeClass( 'empty-row' );
+
+			$( container ).append( newRow );
+
+			// Expose the additional caption fields
+			$( captionExtras ).addClass( 'active' );
+
+			// Display the selected captions file url
+			$( captionUrl ).empty().html( media.url ); // .html() considered okay because auth is required to view this screen
 		},
 
 		saveSync : function ( evnt ) {

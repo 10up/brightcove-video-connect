@@ -124,15 +124,18 @@ class BC_Admin_Templates {
 									<img src="{{data.images.poster.src}}" class="thumbnail">
 								<# } #>
 							</div>
+
 							<button type="button" class="button-link check" tabindex="-1">
 								<span class="media-modal-icon"></span>
 								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
 							</button>
+
+							<input type="hidden" class="brightcove-poster" value="{{data.poster}}">
+
+							<button class="button button-secondary -poster">
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							</button>
 						</div>
-						<input type="hidden" class="brightcove-poster" value="{{data.poster}}" />
-						<button class="button button-secondary -poster">
-							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-						</button>
 					</div>
 				</div>
 				<div class="setting thumbnail">
@@ -144,15 +147,18 @@ class BC_Admin_Templates {
 									<img src="{{data.images.thumbnail.src}}" class="thumbnail">
 								<# } #>
 							</div>
+
 							<button type="button" class="button-link check" tabindex="-1">
 								<span class="media-modal-icon"></span>
 								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
 							</button>
+
+							<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}">
+
+							<button class="button button-secondary -thumbnail">
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							</button>
 						</div>
-						<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}" />
-						<button class="button button-secondary -thumbnail">
-							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-						</button>
 					</div>
 				</div>
 				<div class="setting captions">
@@ -165,26 +171,51 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Use a remote file instead', 'brightcove' ); ?>
 						</a>
 
-							<div id="js-caption-fields" class="caption-repeater repeater-row">
-								<input class="brightcove-captions" value="{{data.caption}}" />
+						<div id="js-captions">
+							<# _.each( data.captions, function( caption ) { #>
+								<div id="js-caption-fields" class="caption-repeater repeater-row">
+									<input class="brightcove-captions" value="{{data.caption}}">
+
+									<div class="caption-secondary-fields">
+										<label class="-language">
+											<?php esc_html_e( 'Language', 'brightcove' )?>
+											<input type="text" class="brightcove-captions-language" value="{{data.srclang}}">
+										</label>
+
+										<label class="-label">
+											<?php esc_html_e( 'Label', 'brightcove' )?>
+											<input type="text" class="brightcove-captions-label" value="{{data.label}}">
+										</label>
+
+										<div class="action-row">
+											<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
+										</div>
+									</div>
+								</div>
+							<# }); #>
+							<div id="js-caption-empty-row" class="caption-repeater repeater-row empty-row">
+								<label class="-src">
+									<?php esc_html_e( 'File Source', 'brightcove' ); ?>
+									<input class="brightcove-captions" type="text">
+								</label>
 
 								<div class="caption-secondary-fields">
 									<label class="-language">
 										<?php esc_html_e( 'Language', 'brightcove' )?>
-										<input type="text" class="brightcove-captions-language" value="{{data.srclang}}" />
+										<input class="brightcove-captions-language" type="text">
 									</label>
 
 									<label class="-label">
 										<?php esc_html_e( 'Label', 'brightcove' )?>
-										<input type="text" class="brightcove-captions-label" value="{{data.label}}" />
+										<input class="brightcove-captions-label" type="text">
 									</label>
 
 									<div class="action-row">
-										<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></button>
+										<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
 									</div>
 								</div>
 							</div>
-						
+						</div>
 					</div>
 				</div>
 

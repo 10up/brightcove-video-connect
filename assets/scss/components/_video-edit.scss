@@ -21,7 +21,6 @@
 
 	.attachment {
 		cursor: pointer;
-		display: none;
 		padding: 8px 0 0;
 		width: auto;
 
@@ -31,6 +30,10 @@
 			.check {
 				display: block;
 				top: 9px;
+			}
+
+			.button {
+				display: none;
 			}
 		}
 
@@ -62,30 +65,44 @@
 		line-height: 28px;
 	}
 
-	.caption-repeater {
-		clear: both;
-		width: 100%;
+	.add-remote-caption {
+		line-height: 28px;
 	}
 
-	.caption-fields {
-		@include clearfix();
+	.caption-repeater {
 		clear: both;
+		padding: 0.75em 0;
+		width: 100%;
 
-		&.-empty {
+		&.empty-row {
 			display: none;
 		}
 
-		&.-active {
+		&.active {
 			display: block;
 		}
+	}
+
+	input.brightcove-captions {
+		clear: both;
+		margin-bottom: 0.75em;
+		width: 100%;
+	}
+
+	.caption-secondary-fields {
+		@include clearfix();
+		clear: both;
 
 		label {
 			@include clearfix();
 			box-sizing: border-box;
 			display: block;
 			float: left;
-			padding-right: 0.75em;
 			width: 50%;
+
+			&:nth-child(1) {
+				padding-right: 1em;
+			}
 
 			span,
 			input,
