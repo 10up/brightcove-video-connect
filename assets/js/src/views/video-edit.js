@@ -81,8 +81,8 @@ var VideoEditView = BrightcoveView.extend(
 			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
 				// Executed if the user is uploading a closed caption
 				if ( 'vtt' === media.subtype ) {
-					var captionExtras = document.getElementById( 'caption-extra-fields' ),
-						captionUrl    = document.getElementById( 'caption-url' ),
+					var captionExtras = document.getElementById( 'js-caption-fields' ),
+						captionUrl    = document.getElementById( 'js-caption-url' ),
 						selectedMedia = {
 							src: media.url
 						};
@@ -108,7 +108,7 @@ var VideoEditView = BrightcoveView.extend(
 				var image = document.createElement( 'img' );
 
 				// Set image properties
-				image.src       = media.sizes.thumbnail.url;
+				image.src       = media.sizes.full.url;
 				image.className = 'thumbnail';
 
 				// Display a preview image
@@ -140,41 +140,15 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		/**
-		 * Display the attachment if one is already set.
-		 *
-		 * @param {Event} evnt
-		 * @returns {boolean}
-		 */
-		displayAttachment: function( field ) {
-			if ( 'poster' === field ) {
-				var field = '.button-secondary.-poster';
-			}
-
-			if ( 'thumbnail' === field ) {
-				var field = '.button-secondary.-thumbnail';
-			}
-
-			var attachment      = $( field ).prev( '.attachment' ),
-				preview         = attachment.find( '.-image' ),
-				image           = document.createElement( 'img' );
-				image.src       = media.sizes.thumbnail.url;
-				image.className = 'thumbnail';
-
-			// Display a preview image
-			attachment.addClass( 'active' );
-			preview.html( image );
-		},
-
-		/**
 		 * Remove a caption
 		 *
 		 * @param {Event} evnt
 		 */
 		removeCaption: function( evnt ) {
 			var caption   = evnt.currentTarget,
-				container = document.getElementById( 'caption-extra-fields' ),
+				container = document.getElementById( 'js-caption-fields' ),
 				input     = document.getElementsByClassName( 'brightcove-captions' ),
-				preview   = document.getElementById( 'caption-url' ),
+				preview   = document.getElementById( 'js-caption-url' ),
 				language  = document.getElementsByClassName( 'brightcove-captions-language' ),
 				label     = document.getElementsByClassName( 'brightcove-captions-label' ),
 				kind      = document.getElementsByClassName( 'brightcove-captions-kind' );
@@ -190,6 +164,15 @@ var VideoEditView = BrightcoveView.extend(
 
 			// Hide the extra fields
 			$( container ).removeClass( 'active' );
+		},
+
+		/**
+		 * Add a caption row
+		 *
+		 * @param {Event} evnt
+		 */
+		addCaptionRow: function( evnt ) {
+
 		},
 
 		saveSync : function ( evnt ) {

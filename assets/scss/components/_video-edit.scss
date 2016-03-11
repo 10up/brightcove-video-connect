@@ -11,7 +11,7 @@
 
 	.setting-content {
 		float: left;
-		max-width: 65%;
+		width: 64%;
 
 		.button-secondary {
 			clear: left;
@@ -33,6 +33,11 @@
 				top: 9px;
 			}
 		}
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
 	}
 
 	.action-row {
@@ -44,7 +49,7 @@
 	}
 
 	button.-captions,
-	#caption-url {
+	.caption-url {
 		float: left;
 	}
 
@@ -52,17 +57,25 @@
 		margin-right: 1em;
 	}
 
-	#caption-url {
+	.caption-url {
 		color: #666;
 		line-height: 28px;
 	}
 
-	#caption-extra-fields {
+	.caption-repeater {
+		clear: both;
+		width: 100%;
+	}
+
+	.caption-fields {
 		@include clearfix();
 		clear: both;
-		display: none;
 
-		&.active {
+		&.-empty {
+			display: none;
+		}
+
+		&.-active {
 			display: block;
 		}
 
@@ -72,7 +85,7 @@
 			display: block;
 			float: left;
 			padding-right: 0.75em;
-			width: 33.3333%;
+			width: 50%;
 
 			span,
 			input,
