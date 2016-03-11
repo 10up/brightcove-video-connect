@@ -119,7 +119,11 @@ class BC_Admin_Media_API {
 			}
 
 			// Build out history
-			$history = array();
+			$raw = wp_unslash( $_POST['history'] );
+			$history = json_decode( $raw, true );
+			if ( null === $history ) {
+				$history = array();
+			}
 
 			$custom['_change_history'] = json_encode( $history );
 
