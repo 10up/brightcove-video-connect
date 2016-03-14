@@ -197,7 +197,6 @@ var VideoEditView = BrightcoveView.extend(
 		 * Updates the caption text based on number of captions
 		 */
 		updateCaptionText: function() {
-			console.log( document.getElementsByClassName( 'caption-repeater' ).length );
 			var button = $( '.captions .button-secondary' ),
 				link   = $( '.add-remote-caption' );
 
