@@ -300,6 +300,10 @@ var VideoEditView = BrightcoveView.extend(
 				enumTmp = wp.template( 'brightcove-video-edit-custom-enum' );
 
 			_.each( this.model.get('custom'), function( custom ) {
+				if ( '_change_history' === custom.id ) {
+					return;
+				}
+
 				switch( custom.type ) {
 					case 'string':
 						customContainer.append( stringTmp( custom ) );
@@ -309,6 +313,24 @@ var VideoEditView = BrightcoveView.extend(
 						break;
 				}
 			} );
+
+			// Render the change history
+			var history = this.model.get( 'history' );
+
+			if ( history !== undefined ) {
+				var historyStr = '';
+
+				// Parse our fetched JSON object
+				history = JSON.parse( history );
+
+				_.each( history, function( item ) {
+					historyStr += item.user + ' - ' + item.time + '\n';
+				} );
+				
+				if ( '' !== historyStr ) {
+					this.$el.find( 'textarea.brightcove-change-history' ).val( historyStr );
+				}
+			}
 
 			// Configure a spinner to provide feedback during updates
 			var spinner = this.$el.find( '.spinner' );

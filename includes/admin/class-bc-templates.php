@@ -229,6 +229,13 @@ class BC_Admin_Templates {
 						</div>
 					</div>
 				</div>
+
+				<div id="brightcove-change-history">
+					<label class="setting history">
+						<span class="name"><?php esc_html_e( 'Change History', 'brightcove' ); ?></span>
+						<textarea class="brightcove-change-history" data-id="history" disabled="disabled"><?php esc_html_e( 'Nothing yet ...', 'brightcove' ); ?></textarea>
+					</label>
+				</div>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
