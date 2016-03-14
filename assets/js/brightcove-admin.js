@@ -2049,12 +2049,13 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :     'saveSync',
-			'click .brightcove.delete' :               'deleteVideo',
-			'click .brightcove.button.back' :          'back',
-			'click .setting .button' :                 'openMediaManager',
-			'click .attachment .check' :               'removeAttachment',
-			'click #caption-extra-fields .delete' :    'removeCaption'
+			'click .brightcove.button.save-sync' :      'saveSync',
+			'click .brightcove.delete' :                'deleteVideo',
+			'click .brightcove.button.back' :           'back',
+			'click .setting .button' :                  'openMediaManager',
+			'click .attachment .check' :                'removeAttachment',
+			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
+			'click .add-remote-caption' :               'addCaptionRow'
 		},
 
 		back : function ( event ) {
@@ -2125,7 +2126,7 @@ var VideoEditView = BrightcoveView.extend(
 			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
 				// Executed if the user is uploading a closed caption
 				if ( 'vtt' === media.subtype ) {
-					this.addCaptionRow( media );
+					this.addCaptionRow( false, media );
 				} else {
 					// Alert the user that the file is not the correct format
 					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
@@ -2174,57 +2175,83 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		/**
-		 * Remove a caption
-		 *
-		 * @param {Event} evnt
-		 */
-		removeCaption: function( evnt ) {
-			var caption   = evnt.currentTarget,
-				container = document.getElementById( 'js-caption-fields' ),
-				input     = document.getElementsByClassName( 'brightcove-captions' ),
-				preview   = document.getElementById( 'js-caption-url' ),
-				language  = document.getElementsByClassName( 'brightcove-captions-language' ),
-				label     = document.getElementsByClassName( 'brightcove-captions-label' ),
-				kind      = document.getElementsByClassName( 'brightcove-captions-kind' );
-
-			// Empty the input fields
-			$( input ).val( '' );
-			$( language ).val( '' );
-			$( label ).val( '' );
-			$( kind ).val( '' );
-
-			// Empty the preview field
-			$( preview ).empty();
-
-			// Hide the extra fields
-			$( container ).removeClass( 'active' );
-		},
-
-		/**
 		 * Add a caption row
 		 *
+		 * @param {Event} evnt
 		 * @param {Object} media
 		 */
-		addCaptionRow: function( media ) {
-			var newRow      = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
-			container = document.getElementById( 'js-captions' ),
-				captionExtras = document.getElementById( 'js-caption-fields' ),
-				captionUrl    = document.getElementById( 'js-caption-url' ),
-				selectedMedia = {
-					src: media.url
-				};
+		addCaptionRow: function( evnt, media ) {
+			// If using the add remote file link, prevent the page from jumping to the top
+			if ( evnt ) {
+				evnt.preventDefault();
+			}
 
+			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
+				container  = document.getElementById( 'js-captions' ),
+				captionUrl = document.getElementById( 'js-caption-url' );
+
+			// Clean up our cloned row
 			newRow.find( 'input' ).prop( 'disabled', false );
 			newRow.removeAttr( 'id' );
 			newRow.removeClass( 'empty-row' );
 
+			// If added via Select File button, add the file source in the input field
+			if ( media ) {
+				var selectedMedia = {
+					src: media.url
+				};
+
+				newRow.find( '.brightcove-captions' ).val( selectedMedia.src );
+			}
+
+			// Append our new row to the container
 			$( container ).append( newRow );
 
-			// Expose the additional caption fields
-			$( captionExtras ).addClass( 'active' );
+			// Update the context button text
+			this.updateCaptionText();
+		},
 
-			// Display the selected captions file url
-			$( captionUrl ).empty().html( media.url ); // .html() considered okay because auth is required to view this screen
+		/**
+		 * Remove a caption
+		 *
+		 * @param {Event} evnt
+		 */
+		removeCaptionRow: function( evnt ) {
+			evnt.preventDefault();
+
+			var caption   = evnt.currentTarget,
+				container = $( caption ).parents( '.caption-repeater' ),
+				source    = container.find( '.brightcove-captions' ),
+				language  = container.find( '.brightcove-captions-launguage' ),
+				label     = container.find( '.brightcove-captions-label' );
+
+			// Empty the input fields
+			$( source ).val( '' );
+			$( language ).val( '' );
+			$( label ).val( '' );
+
+			// Remove the container entirely
+			container.remove();
+
+			// Update the context button text
+			this.updateCaptionText();
+		},
+
+		/**
+		 * Updates the caption text based on number of captions
+		 */
+		updateCaptionText: function() {
+			console.log( document.getElementsByClassName( 'caption-repeater' ).length );
+			var button = $( '.captions .button-secondary' ),
+				link   = $( '.add-remote-caption' );
+
+			if ( 1 < document.getElementsByClassName( 'caption-repeater' ).length ) {
+				button.text( 'Add Another Caption' );
+				link.text( 'Add another remote file' );
+			} else {
+				button.text( 'Select File' );
+				link.text( 'Use a remote file instead' );
+			}
 		},
 
 		saveSync : function ( evnt ) {

@@ -462,11 +462,12 @@ div.brightcove-message {
 .brightcove.video-edit .caption-repeater {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  border-bottom: 1px solid #d5d5d5;
   clear: both;
-  padding: 1em;
+  padding: 1em 0;
   width: 100%; }
-  .brightcove.video-edit .caption-repeater:nth-child(even) {
-    background-color: #e2e2e2; }
+  .brightcove.video-edit .caption-repeater:nth-last-child(1) {
+    border-bottom: 0; }
   .brightcove.video-edit .caption-repeater.empty-row {
     display: none; }
   .brightcove.video-edit .caption-repeater.active {

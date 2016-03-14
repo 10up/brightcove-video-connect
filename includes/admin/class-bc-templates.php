@@ -168,10 +168,18 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
 					<div class="setting-content">
 						<button class="button button-secondary -captions">
-							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							<# if ( data.captions ) { #>
+								<?php esc_html_e( 'Add Another Caption', 'ms-research' ); ?>
+							<# } else { #>
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							<# } #>
 						</button>
 						<a href="#" class="add-remote-caption">
-							<?php esc_html_e( 'Use a remote file instead', 'brightcove' ); ?>
+							<# if ( data.captions ) { #>
+								<?php esc_html_e( 'Add another remote file', 'brightcove' ); ?>
+							<# } else { #>
+								<?php esc_html_e( 'Use a remote file instead', 'brightcove' ); ?>
+							<# } #>
 						</a>
 
 						<div id="js-captions">
@@ -214,7 +222,7 @@ class BC_Admin_Templates {
 									</label>
 
 									<div class="action-row">
-										<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
+										<a href="#" class="delete"><?php esc_html_e( 'Delete Caption', 'brightcove' ); ?></a>
 									</div>
 								</div>
 							</div>
