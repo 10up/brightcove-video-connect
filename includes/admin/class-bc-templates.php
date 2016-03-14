@@ -484,21 +484,28 @@ class BC_Admin_Templates {
 							<span>{{ data.duration }}</span>
 						</div>
 					<# } #>
-
 				</div>
 				<div class="video-info">
 					<span class="video-name">{{ data.name }}</span>
 					<div class="video-source"><span class="title"><?php esc_html_e( 'Source: ', 'brightcove' ); ?></span><span class="data">{{ data.account_name }}</span></div>
 					<div class="video-id"><span class="title"><?php esc_html_e( 'Video ID: ', 'brightcove' ); ?></span><span class="data">{{ data.id }}</span></div>
-					<div class="video-player">
-						<span class="title"><?php esc_html_e( 'Video Player: ', 'brightcove' ); ?></span>
-						<# _.each( data.players, function ( player ) { #>
-							<label for="player-{{ player.id }}">
-								{{ player.name }}
-								<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}">
-							</label>
-						<# }); #>
-					</div>
+					<?php
+						$screen      = get_current_screen();
+						$parent_base = $screen->parent_base;
+
+						if ( 'edit' === $parent_base ) { ?>
+							<div class="video-player">
+								<span class="title"><?php esc_html_e( 'Video Player: ', 'brightcove' ); ?></span>
+								<# _.each( wpbc.players.items, function ( player ) { #>
+									<label class="brightcove-player" for="player-{{ player.id }}">
+										<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}">
+										{{ player.name }}
+									</label>
+								<# }); #>
+							</div>
+							<?php
+						}
+					?>
 				</div>
 				<div class="media-actions">
 					<# if ('preview' === data.detailsMode) { #>

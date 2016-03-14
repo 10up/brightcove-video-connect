@@ -349,6 +349,10 @@ div.brightcove-message {
       height: auto;
       margin-bottom: 20px;
       width: 100%; }
+    .brightcove.media-frame-menu .attachment-detail .video-info .brightcove-player,
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .brightcove-player {
+      display: block;
+      padding: 3px 0; }
     .brightcove.media-frame-menu .attachment-detail .video-info .account-name,
     .brightcove.media-frame-menu .attachment-detail .video-info .created-date,
     .brightcove.media-frame-menu .attachment-detail .video-info .playlist-id,
