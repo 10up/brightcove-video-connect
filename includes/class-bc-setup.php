@@ -189,10 +189,14 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+		$player_api = new BC_Player_Management_API();
+		$players    = $player_api->player_list();
+
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => BC_Setup::preload_params(),
 			'wp_version'     => $wp_version,
+			'players'    => $players,
 			'str_badformat'  => sprintf( esc_html__( 'This file is not the proper format. Please use .vtt files, see: %s', 'brightcove' ), 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
 			'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),

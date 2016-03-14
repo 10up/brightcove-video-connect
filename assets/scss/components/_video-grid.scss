@@ -218,6 +218,11 @@
 				width         : 100%;
 			}
 
+			.brightcove-player {
+				display: block;
+				padding: 3px 0;
+			}
+
             .account-name,
             .created-date,
             .playlist-id,
@@ -228,7 +233,8 @@
             .video-description,
             .video-id,
             .video-source,
-            .video-updated {
+            .video-updated,
+            .video-player {
 
 				clear   : both;
 				display : block;
