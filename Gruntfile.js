@@ -177,7 +177,7 @@ module.exports = function ( grunt ) {
 						'assets/scss/**/*'
 					],
 
-					tasks : ['sass']
+					tasks : ['sass', 'cssmin']
 
 				},
 
