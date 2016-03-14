@@ -61,6 +61,7 @@ var MediaModel = Backbone.Model.extend(
 					tags :             this.get( 'tags' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
+					history:           this.get( 'history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' )
 				} );
@@ -656,12 +657,18 @@ var BrightcoveView = wp.Backbone.View.extend(
 			}
 
 			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
-			var accountId   = this.model.get( 'account_id' ).replace( /\D/g, '' );
-			var shortcode   = '';
+			var accountId    = this.model.get( 'account_id' ).replace( /\D/g, '' );
+			var playerId     = wpbc.selectedPlayer;
+			var shortcode    = '';
+
+			if ( ! playerId ) {
+				var playerId = 'default';
+			}
+
 
 			if ( this.mediaType === 'videos' ) {
 
-				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
 
 			} else {
 
@@ -1381,6 +1388,9 @@ var BrightcoveModalView = BrightcoveView.extend(
 				evnt.preventDefault();
 				return;
 			}
+
+			// Make the selected player available to the shortcode
+			wpbc.selectedPlayer = $( 'input[name="video-player-field"]:checked' ).val();
 
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
@@ -2241,7 +2251,6 @@ var VideoEditView = BrightcoveView.extend(
 		 * Updates the caption text based on number of captions
 		 */
 		updateCaptionText: function() {
-			console.log( document.getElementsByClassName( 'caption-repeater' ).length );
 			var button = $( '.captions .button-secondary' ),
 				link   = $( '.add-remote-caption' );
 
@@ -2345,6 +2354,10 @@ var VideoEditView = BrightcoveView.extend(
 				enumTmp = wp.template( 'brightcove-video-edit-custom-enum' );
 
 			_.each( this.model.get('custom'), function( custom ) {
+				if ( '_change_history' === custom.id ) {
+					return;
+				}
+
 				switch( custom.type ) {
 					case 'string':
 						customContainer.append( stringTmp( custom ) );
@@ -2354,6 +2367,24 @@ var VideoEditView = BrightcoveView.extend(
 						break;
 				}
 			} );
+
+			// Render the change history
+			var history = this.model.get( 'history' );
+
+			if ( history !== undefined ) {
+				var historyStr = '';
+
+				// Parse our fetched JSON object
+				history = JSON.parse( history );
+
+				_.each( history, function( item ) {
+					historyStr += item.user + ' - ' + item.time + '\n';
+				} );
+				
+				if ( '' !== historyStr ) {
+					this.$el.find( 'textarea.brightcove-change-history' ).val( historyStr );
+				}
+			}
 
 			// Configure a spinner to provide feedback during updates
 			var spinner = this.$el.find( '.spinner' );

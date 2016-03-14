@@ -189,10 +189,14 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+		$player_api = new BC_Player_Management_API();
+		$players    = $player_api->player_list();
+
 		$js_variable = array(
 			'path'       => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'    => BC_Setup::preload_params(),
 			'wp_version' => $wp_version,
+			'players'    => $players,
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
