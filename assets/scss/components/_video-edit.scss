@@ -11,7 +11,7 @@
 
 	.setting-content {
 		float: left;
-		max-width: 65%;
+		width: 64%;
 
 		.button-secondary {
 			clear: left;
@@ -21,7 +21,6 @@
 
 	.attachment {
 		cursor: pointer;
-		display: none;
 		padding: 8px 0 0;
 		width: auto;
 
@@ -32,6 +31,15 @@
 				display: block;
 				top: 9px;
 			}
+
+			.button {
+				display: none;
+			}
+		}
+
+		img {
+			height: auto;
+			max-width: 100%;
 		}
 	}
 
@@ -44,7 +52,7 @@
 	}
 
 	button.-captions,
-	#caption-url {
+	.caption-url {
 		float: left;
 	}
 
@@ -52,27 +60,56 @@
 		margin-right: 1em;
 	}
 
-	#caption-url {
+	.caption-url {
 		color: #666;
 		line-height: 28px;
 	}
 
-	#caption-extra-fields {
-		@include clearfix();
+	.add-remote-caption {
+		line-height: 28px;
+	}
+
+	.caption-repeater {
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		border-bottom: 1px solid #d5d5d5;
 		clear: both;
-		display: none;
+		padding: 1em 0;
+		width: 100%;
+
+		&:nth-last-child(1) {
+			border-bottom: 0;
+		}
+
+		&.empty-row {
+			display: none;
+		}
 
 		&.active {
 			display: block;
 		}
+	}
+
+	input.brightcove-captions {
+		clear: both;
+		margin-bottom: 0.75em;
+		width: 100%;
+	}
+
+	.caption-secondary-fields {
+		@include clearfix();
+		clear: both;
 
 		label {
 			@include clearfix();
 			box-sizing: border-box;
 			display: block;
 			float: left;
-			padding-right: 0.75em;
-			width: 33.3333%;
+			width: 50%;
+
+			&:nth-child(1) {
+				padding-right: 1em;
+			}
 
 			span,
 			input,

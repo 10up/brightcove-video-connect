@@ -61,6 +61,7 @@ var MediaModel = Backbone.Model.extend(
 					tags :             this.get( 'tags' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
+					history:           this.get( 'history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' )
 				} );
@@ -659,6 +660,10 @@ var BrightcoveView = wp.Backbone.View.extend(
 			var accountId    = this.model.get( 'account_id' ).replace( /\D/g, '' );
 			var playerId     = wpbc.selectedPlayer;
 			var shortcode    = '';
+
+			if ( ! playerId ) {
+				var playerId = 'default';
+			}
 
 
 			if ( this.mediaType === 'videos' ) {
@@ -2054,12 +2059,13 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :     'saveSync',
-			'click .brightcove.delete' :               'deleteVideo',
-			'click .brightcove.button.back' :          'back',
-			'click .setting .button' :                 'openMediaManager',
-			'click .attachment .check' :               'removeAttachment',
-			'click #caption-extra-fields .delete' :    'removeCaption'
+			'click .brightcove.button.save-sync' :      'saveSync',
+			'click .brightcove.delete' :                'deleteVideo',
+			'click .brightcove.button.back' :           'back',
+			'click .setting .button' :                  'openMediaManager',
+			'click .attachment .check' :                'removeAttachment',
+			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
+			'click .add-remote-caption' :               'addCaptionRow'
 		},
 
 		back : function ( event ) {
@@ -2123,24 +2129,14 @@ var VideoEditView = BrightcoveView.extend(
 		setAttachment: function( media, field ) {
 			var field           = field.prevObject[0].currentTarget,
 				field           = $( field ).prev( 'input' ),
-				attachment      = field.prev( '.attachment' ),
+				attachment      = field.parents( '.attachment' ),
 				preview         = attachment.find( '.-image' );
 
 			// Perform different setup actions based on the type of upload
 			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
 				// Executed if the user is uploading a closed caption
 				if ( 'vtt' === media.subtype ) {
-					var captionExtras = document.getElementById( 'caption-extra-fields' ),
-						captionUrl    = document.getElementById( 'caption-url' ),
-						selectedMedia = {
-							src: media.url
-						};
-
-					// Expose the additional caption fields
-					$( captionExtras ).addClass( 'active' );
-
-					// Display the selected captions file url
-					$( captionUrl ).empty().html( media.url ); // .html() considered okay because auth is required to view this screen
+					this.addCaptionRow( false, media );
 				} else {
 					// Alert the user that the file is not the correct format
 					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
@@ -2157,7 +2153,7 @@ var VideoEditView = BrightcoveView.extend(
 				var image = document.createElement( 'img' );
 
 				// Set image properties
-				image.src       = media.sizes.thumbnail.url;
+				image.src       = media.sizes.full.url;
 				image.className = 'thumbnail';
 
 				// Display a preview image
@@ -2189,29 +2185,40 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		/**
-		 * Display the attachment if one is already set.
+		 * Add a caption row
 		 *
 		 * @param {Event} evnt
-		 * @returns {boolean}
+		 * @param {Object} media
 		 */
-		displayAttachment: function( field ) {
-			if ( 'poster' === field ) {
-				var field = '.button-secondary.-poster';
+		addCaptionRow: function( evnt, media ) {
+			// If using the add remote file link, prevent the page from jumping to the top
+			if ( evnt ) {
+				evnt.preventDefault();
 			}
 
-			if ( 'thumbnail' === field ) {
-				var field = '.button-secondary.-thumbnail';
+			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
+				container  = document.getElementById( 'js-captions' ),
+				captionUrl = document.getElementById( 'js-caption-url' );
+
+			// Clean up our cloned row
+			newRow.find( 'input' ).prop( 'disabled', false );
+			newRow.removeAttr( 'id' );
+			newRow.removeClass( 'empty-row' );
+
+			// If added via Select File button, add the file source in the input field
+			if ( media ) {
+				var selectedMedia = {
+					src: media.url
+				};
+
+				newRow.find( '.brightcove-captions' ).val( selectedMedia.src );
 			}
 
-			var attachment      = $( field ).prev( '.attachment' ),
-				preview         = attachment.find( '.-image' ),
-				image           = document.createElement( 'img' );
-				image.src       = media.sizes.thumbnail.url;
-				image.className = 'thumbnail';
+			// Append our new row to the container
+			$( container ).append( newRow );
 
-			// Display a preview image
-			attachment.addClass( 'active' );
-			preview.html( image );
+			// Update the context button text
+			this.updateCaptionText();
 		},
 
 		/**
@@ -2219,26 +2226,41 @@ var VideoEditView = BrightcoveView.extend(
 		 *
 		 * @param {Event} evnt
 		 */
-		removeCaption: function( evnt ) {
+		removeCaptionRow: function( evnt ) {
+			evnt.preventDefault();
+
 			var caption   = evnt.currentTarget,
-				container = document.getElementById( 'caption-extra-fields' ),
-				input     = document.getElementsByClassName( 'brightcove-captions' ),
-				preview   = document.getElementById( 'caption-url' ),
-				language  = document.getElementsByClassName( 'brightcove-captions-language' ),
-				label     = document.getElementsByClassName( 'brightcove-captions-label' ),
-				kind      = document.getElementsByClassName( 'brightcove-captions-kind' );
+				container = $( caption ).parents( '.caption-repeater' ),
+				source    = container.find( '.brightcove-captions' ),
+				language  = container.find( '.brightcove-captions-launguage' ),
+				label     = container.find( '.brightcove-captions-label' );
 
 			// Empty the input fields
-			$( input ).val( '' );
+			$( source ).val( '' );
 			$( language ).val( '' );
 			$( label ).val( '' );
-			$( kind ).val( '' );
 
-			// Empty the preview field
-			$( preview ).empty();
+			// Remove the container entirely
+			container.remove();
 
-			// Hide the extra fields
-			$( container ).removeClass( 'active' );
+			// Update the context button text
+			this.updateCaptionText();
+		},
+
+		/**
+		 * Updates the caption text based on number of captions
+		 */
+		updateCaptionText: function() {
+			var button = $( '.captions .button-secondary' ),
+				link   = $( '.add-remote-caption' );
+
+			if ( 1 < document.getElementsByClassName( 'caption-repeater' ).length ) {
+				button.text( 'Add Another Caption' );
+				link.text( 'Add another remote file' );
+			} else {
+				button.text( 'Select File' );
+				link.text( 'Use a remote file instead' );
+			}
 		},
 
 		saveSync : function ( evnt ) {
@@ -2332,6 +2354,10 @@ var VideoEditView = BrightcoveView.extend(
 				enumTmp = wp.template( 'brightcove-video-edit-custom-enum' );
 
 			_.each( this.model.get('custom'), function( custom ) {
+				if ( '_change_history' === custom.id ) {
+					return;
+				}
+
 				switch( custom.type ) {
 					case 'string':
 						customContainer.append( stringTmp( custom ) );
@@ -2341,6 +2367,24 @@ var VideoEditView = BrightcoveView.extend(
 						break;
 				}
 			} );
+
+			// Render the change history
+			var history = this.model.get( 'history' );
+
+			if ( history !== undefined ) {
+				var historyStr = '';
+
+				// Parse our fetched JSON object
+				history = JSON.parse( history );
+
+				_.each( history, function( item ) {
+					historyStr += item.user + ' - ' + item.time + '\n';
+				} );
+				
+				if ( '' !== historyStr ) {
+					this.$el.find( 'textarea.brightcove-change-history' ).val( historyStr );
+				}
+			}
 
 			// Configure a spinner to provide feedback during updates
 			var spinner = this.$el.find( '.spinner' );

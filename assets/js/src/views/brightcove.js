@@ -27,6 +27,10 @@ var BrightcoveView = wp.Backbone.View.extend(
 			var playerId     = wpbc.selectedPlayer;
 			var shortcode    = '';
 
+			if ( ! playerId ) {
+				var playerId = 'default';
+			}
+
 
 			if ( this.mediaType === 'videos' ) {
 

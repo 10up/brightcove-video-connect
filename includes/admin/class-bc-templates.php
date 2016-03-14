@@ -118,88 +118,123 @@ class BC_Admin_Templates {
 				<div class="setting poster">
 					<span class="name"><?php esc_html_e( 'Poster', 'brightcove' )?></span>
 					<div class="setting-content">
-						<div class="attachment">
-							<div class="-image"></div>
+						<div class="attachment <# if ( data.images.poster.src ) { #>active<# } #>">
+							<div class="-image">
+								<# if ( data.images.poster.src ) { #>
+									<img src="{{data.images.poster.src}}" class="thumbnail">
+								<# } #>
+							</div>
+
 							<button type="button" class="button-link check" tabindex="-1">
 								<span class="media-modal-icon"></span>
 								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
 							</button>
+
+							<input type="hidden" class="brightcove-poster" value="{{data.poster}}">
+
+							<button class="button button-secondary -poster">
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							</button>
 						</div>
-						<input type="hidden" class="brightcove-poster" value="{{data.poster}}" />
-						<button class="button button-secondary -poster">
-							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-						</button>
 					</div>
 				</div>
 				<div class="setting thumbnail">
 					<span class="name"><?php esc_html_e( 'Thumbnail', 'brightcove' )?></span>
 					<div class="setting-content">
-						<div class="attachment">
-							<div class="-image"></div>
+						<div class="attachment <# if ( data.images.thumbnail.src ) { #>active<# } #>">
+							<div class="-image">
+								<# if ( data.images.thumbnail.src ) { #>
+									<img src="{{data.images.thumbnail.src}}" class="thumbnail">
+								<# } #>
+							</div>
+
 							<button type="button" class="button-link check" tabindex="-1">
 								<span class="media-modal-icon"></span>
 								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
 							</button>
-						</div>
-						<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}" />
-						<button class="button button-secondary -thumbnail">
-							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-						</button>
-					</div>
-				</div>
-				<div class="setting captions">
-					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
-					<div class="setting-content">
-						<input type="hidden" class="brightcove-captions" value="{{data.captions}}" />
-						<button class="button button-secondary -captions">
-							<?php esc_html_e( 'Select File', 'ms-research' ); ?>
-						</button>
-						<div id="caption-url"></div>
 
-						<div id="caption-extra-fields">
-							<label class="-language">
-								<span class="name"><?php esc_html_e( 'Language', 'brightcove' )?></span>
-								<input type="text" class="brightcove-captions-language" value="{{data.srclang}}" />
-							</label>
+							<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}">
 
-							<label class="-label">
-								<span class="name"><?php esc_html_e( 'Label', 'brightcove' )?></span>
-								<input type="text" class="brightcove-captions-label" value="{{data.label}}" />
-							</label>
-
-							<label class="-kind">
-								<span class="name"><?php esc_html_e( 'Kind', 'brightcove' )?></span>
-								<select class="brightcove-captions-kind">
-									<option value="captions"><?php esc_html_e( 'Captions', 'brightcove' ); ?></option>
-									<option value="subtitles"><?php esc_html_e( 'Subtitles', 'brightcove' ); ?></option>
-									<option value="descriptions"><?php esc_html_e( 'Descriptions', 'brightcove' ); ?></option>
-									<option value="chapters"><?php esc_html_e( 'Chapters', 'brightcove' ); ?></option>
-									<option value="metadata"><?php esc_html_e( 'Metadata', 'brightcove' ); ?></option>
-								</select>
-							</label>
-
-							<div class="action-row">
-								<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></button>
-							</div>
+							<button class="button button-secondary -thumbnail">
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							</button>
 						</div>
 					</div>
 				</div>
 
 				<div id="brightcove-custom-fields"></div>
-				<div class="setting select-player">
-					<span class="name"><?php esc_html_e( 'Select a Player', 'brightcove' )?></span>
 
-					<div class="player-container">
-						<# _.each(data.players, function (player) { #>
-							<div class="color-option <# if ( data.player_id === account.selected_player ) { #>selected<# } #>">
-								<label>
-									<input type="radio" name="brightcove-player" value="1"  <# if ( data.player.id === account.selected_player ) { #>checked="checked"<# } #>
-									<span class="screen-reader-text">{{data.player.name}}</span>
-									<iframe src="<# data.branches.master.preview_url #>">
+				<div class="setting captions">
+					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
+					<div class="setting-content">
+						<button class="button button-secondary -captions">
+							<# if ( data.captions ) { #>
+								<?php esc_html_e( 'Add Another Caption', 'ms-research' ); ?>
+							<# } else { #>
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							<# } #>
+						</button>
+						<a href="#" class="add-remote-caption">
+							<# if ( data.captions ) { #>
+								<?php esc_html_e( 'Add another remote file', 'brightcove' ); ?>
+							<# } else { #>
+								<?php esc_html_e( 'Use a remote file instead', 'brightcove' ); ?>
+							<# } #>
+						</a>
+
+						<div id="js-captions">
+							<# _.each( data.captions, function( caption ) { #>
+								<div id="js-caption-fields" class="caption-repeater repeater-row">
+									<input class="brightcove-captions" value="{{data.caption}}">
+
+									<div class="caption-secondary-fields">
+										<label class="-language">
+											<?php esc_html_e( 'Language', 'brightcove' )?>
+											<input type="text" class="brightcove-captions-language" value="{{data.srclang}}">
+										</label>
+
+										<label class="-label">
+											<?php esc_html_e( 'Label', 'brightcove' )?>
+											<input type="text" class="brightcove-captions-label" value="{{data.label}}">
+										</label>
+
+										<div class="action-row">
+											<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
+										</div>
+									</div>
+								</div>
+							<# }); #>
+							<div id="js-caption-empty-row" class="caption-repeater repeater-row empty-row">
+								<label class="-src">
+									<?php esc_html_e( 'File Source', 'brightcove' ); ?>
+									<input class="brightcove-captions" type="text">
 								</label>
+
+								<div class="caption-secondary-fields">
+									<label class="-language">
+										<?php esc_html_e( 'Language', 'brightcove' )?>
+										<input class="brightcove-captions-language" type="text">
+									</label>
+
+									<label class="-label">
+										<?php esc_html_e( 'Label', 'brightcove' )?>
+										<input class="brightcove-captions-label" type="text">
+									</label>
+
+									<div class="action-row">
+										<a href="#" class="delete"><?php esc_html_e( 'Delete Caption', 'brightcove' ); ?></a>
+									</div>
+								</div>
 							</div>
-						<# }); #>
+						</div>
 					</div>
+				</div>
+
+				<div id="brightcove-change-history">
+					<label class="setting history">
+						<span class="name"><?php esc_html_e( 'Change History', 'brightcove' ); ?></span>
+						<textarea class="brightcove-change-history" data-id="history" disabled="disabled"><?php esc_html_e( 'Nothing yet ...', 'brightcove' ); ?></textarea>
+					</label>
 				</div>
 			</div>
 			<div class="brightcove brightcove-buttons">

@@ -68,7 +68,6 @@ class BC_Setup {
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
-
 	}
 
 	/**
