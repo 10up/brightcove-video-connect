@@ -237,6 +237,20 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'poster', this.$el.find( '.brightcove-poster' ).val() );
 			this.model.set( 'thumbnail', this.$el.find( '.brightcove-thumbnail' ).val() );
 
+			// Captions
+			var captions = [];
+			this.$el.find( '.caption-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
+				var caption = $( this );
+				captions.push(
+					{
+						'source'  : caption.find( '.brightcove-captions' ).val(),
+						'language': caption.find( '.brightcove-captions-language' ).val(),
+						'label'   : caption.find( '.brightcove-captions-label' ).val()
+					}
+				);
+			} );
+			this.model.set( 'captions', captions );
+
 			// Custom fields
 			var custom = {},
 				custom_fields = this.model.get( 'custom' );
@@ -349,6 +363,9 @@ var VideoEditView = BrightcoveView.extend(
 			if ( this.model.get( 'thumbnail' ) ) {
 				this.displayAttachment( 'thumbnail' );
 			}
+
+			// Captions
+			// @TODO
 		}
 
 	}
