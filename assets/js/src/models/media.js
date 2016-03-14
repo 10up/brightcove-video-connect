@@ -60,6 +60,7 @@ var MediaModel = Backbone.Model.extend(
 					tags :             this.get( 'tags' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
+					history:           this.get( 'history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' )
 				} );

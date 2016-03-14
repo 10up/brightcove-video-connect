@@ -118,6 +118,36 @@ class BC_Admin_Media_API {
 				}
 			}
 
+			// Get a list of available custom fields
+			$fields = $this->cms_api->video_fields();
+			$use_history = false;
+			foreach( $fields['custom_fields'] as $item ) {
+				if ( '_change_history' == $item['id'] ) {
+					$use_history = true;
+					break;
+				}
+			}
+
+			// Build out history if it's supported
+			if ( $use_history ) {
+				$history = null;
+				if ( isset( $_POST['history'] ) ) {
+					$raw = wp_unslash( $_POST['history'] );
+					$history = json_decode( $raw, true );
+				}
+				if ( null === $history ) {
+					$history = array();
+				}
+
+				$user = wp_get_current_user();
+				$history[] = array(
+					'user' => $user->user_login,
+					'time' => date( 'Y-m-d H:i:s', time() ),
+				);
+
+				$custom['_change_history'] = json_encode( $history );
+			}
+
 			$updated_data['custom_fields'] = $custom;
 		}
 
@@ -573,6 +603,12 @@ class BC_Admin_Media_API {
 			$result['custom'] = $fields['custom_fields'];
 
 			foreach( $result['custom_fields'] as $id => $value ) {
+				// Extract the change tracking item explicitly
+				if ( $id == '_change_history' ) {
+					$result['history'] = $value;
+					continue;
+				}
+
 				foreach( $result['custom'] as &$field ) {
 					if ( $field['id'] === $id ) {
 						$field['value'] = $value;
