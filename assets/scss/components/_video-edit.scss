@@ -70,9 +70,15 @@
 	}
 
 	.caption-repeater {
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
 		clear: both;
-		padding: 0.75em 0;
+		padding: 1em;
 		width: 100%;
+
+		&:nth-child(even) {
+			background-color: #e2e2e2;
+		}
 
 		&.empty-row {
 			display: none;

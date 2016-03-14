@@ -161,6 +161,9 @@ class BC_Admin_Templates {
 						</div>
 					</div>
 				</div>
+
+				<div id="brightcove-custom-fields"></div>
+
 				<div class="setting captions">
 					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
 					<div class="setting-content">
@@ -218,8 +221,6 @@ class BC_Admin_Templates {
 						</div>
 					</div>
 				</div>
-
-				<div id="brightcove-custom-fields"></div>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
