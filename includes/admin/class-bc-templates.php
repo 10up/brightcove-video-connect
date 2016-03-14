@@ -176,9 +176,9 @@ class BC_Admin_Templates {
 						</button>
 						<a href="#" class="add-remote-caption">
 							<# if ( data.captions ) { #>
-								<?php esc_html_e( 'Add another remote file', 'brightcove' ); ?>
+								<?php esc_html_e( 'Add another remote caption file', 'brightcove' ); ?>
 							<# } else { #>
-								<?php esc_html_e( 'Use a remote file instead', 'brightcove' ); ?>
+								<?php esc_html_e( 'Use a remote caption file instead', 'brightcove' ); ?>
 							<# } #>
 						</a>
 
@@ -189,8 +189,12 @@ class BC_Admin_Templates {
 
 									<div class="caption-secondary-fields">
 										<label class="-language">
-											<?php esc_html_e( 'Language', 'brightcove' )?>
-											<input type="text" class="brightcove-captions-language" value="{{data.srclang}}">
+											<?php esc_html_e( 'Language', 'brightcove' ); ?>
+											<select class="brightcove-captions-language">
+												<# _.each( wpbc.languages, function( language ) { #>
+													<option value="{{language.code}}">{{language.nicename}}</option>
+												<# }); #>
+											</select>
 										</label>
 
 										<label class="-label">
@@ -213,7 +217,11 @@ class BC_Admin_Templates {
 								<div class="caption-secondary-fields">
 									<label class="-language">
 										<?php esc_html_e( 'Language', 'brightcove' )?>
-										<input class="brightcove-captions-language" type="text">
+										<select class="brightcove-captions-language">
+											<# _.each( wpbc.languages, function( language, key) { #>
+												<option value="{{language}}">{{key}}</option>
+											<# }); #>
+										</select>
 									</label>
 
 									<label class="-label">
