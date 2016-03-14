@@ -142,6 +142,15 @@ var VideoEditView = BrightcoveView.extend(
 				evnt.preventDefault();
 			}
 
+			var source = undefined;
+			if ( media ) {
+				source = medial.url;
+			}
+
+			this.addCaption( source );
+		},
+
+		addCaption: function( source, language, label ) {
 			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
 				container  = document.getElementById( 'js-captions' ),
 				captionUrl = document.getElementById( 'js-caption-url' );
@@ -151,13 +160,16 @@ var VideoEditView = BrightcoveView.extend(
 			newRow.removeAttr( 'id' );
 			newRow.removeClass( 'empty-row' );
 
-			// If added via Select File button, add the file source in the input field
-			if ( media ) {
-				var selectedMedia = {
-					src: media.url
-				};
+			if ( source ) {
+				newRow.find( '.brightcove-captions' ).val( source );
+			}
 
-				newRow.find( '.brightcove-captions' ).val( selectedMedia.src );
+			if ( language ) {
+				newRow.find( '.brightcove-captions-language' ).val( language );
+			}
+
+			if ( label ) {
+				newRow.find( '.brightcove-captions-label' ).val( label );
 			}
 
 			// Append our new row to the container
@@ -365,7 +377,13 @@ var VideoEditView = BrightcoveView.extend(
 			}
 
 			// Captions
-			// @TODO
+			if ( this.model.get( 'captions' ) ) {
+				var captions = this.model.get( 'captions' );
+				for ( var i = 0, l = captions.length; i < l; i++ ) {
+					var caption = captions[i];
+					this.addCaption( caption.source, caption.language, caption.label );
+				}
+			}
 		}
 
 	}

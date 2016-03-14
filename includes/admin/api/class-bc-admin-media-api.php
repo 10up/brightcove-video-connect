@@ -603,8 +603,9 @@ class BC_Admin_Media_API {
 		// Get a list of available custom fields
 		$fields = $this->cms_api->video_fields();
 
-		// Loop through results to remap the custom_fields array to a collection of objects with description, display name, id, etc
+		// Loop through results to remap items
 		foreach( $results as &$result ) {
+			// Map the custom_fields array to a collection of objects with description, display name, id, etc
 			$result['custom'] = $fields['custom_fields'];
 
 			foreach( $result['custom_fields'] as $id => $value ) {
@@ -622,7 +623,16 @@ class BC_Admin_Media_API {
 				}
 			}
 
+			// Massage the text tracks
+			$result['captions'] = array();
 
+			foreach( $result['text_tracks'] as $caption ) {
+				$result['captions'][] = array(
+					'source'   => $caption['src'],
+					'language' => $caption['srclang'],
+					'label'    => $caption['label'],
+				);
+			}
 		}
 
 		$bc_accounts->restore_default_account();
