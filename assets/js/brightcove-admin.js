@@ -656,12 +656,14 @@ var BrightcoveView = wp.Backbone.View.extend(
 			}
 
 			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
-			var accountId   = this.model.get( 'account_id' ).replace( /\D/g, '' );
-			var shortcode   = '';
+			var accountId    = this.model.get( 'account_id' ).replace( /\D/g, '' );
+			var playerId     = wpbc.selectedPlayer;
+			var shortcode    = '';
+
 
 			if ( this.mediaType === 'videos' ) {
 
-				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
 
 			} else {
 
@@ -1381,6 +1383,9 @@ var BrightcoveModalView = BrightcoveView.extend(
 				evnt.preventDefault();
 				return;
 			}
+
+			// Make the selected player available to the shortcode
+			wpbc.selectedPlayer = $( 'input[name="video-player-field"]:checked' ).val();
 
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
