@@ -190,9 +190,14 @@ class BC_Setup {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$js_variable = array(
-			'path'       => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
-			'preload'    => BC_Setup::preload_params(),
-			'wp_version' => $wp_version,
+			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
+			'preload'        => BC_Setup::preload_params(),
+			'wp_version'     => $wp_version,
+			'str_badformat'  => sprintf( esc_html__( 'This file is not the proper format. Please use .vtt files, see: %s ', 'brightcove' ), 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
+			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
+			'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),
+			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
+			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );

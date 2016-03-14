@@ -85,7 +85,7 @@ var VideoEditView = BrightcoveView.extend(
 					this.addCaptionRow( false, media );
 				} else {
 					// Alert the user that the file is not the correct format
-					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
+					alert( wpbc.str_badformat );
 				}
 			} else {
 				// Executed if the user is uploading a poster image or thumbnail
@@ -201,11 +201,11 @@ var VideoEditView = BrightcoveView.extend(
 				link   = $( '.add-remote-caption' );
 
 			if ( 1 < document.getElementsByClassName( 'caption-repeater' ).length ) {
-				button.text( 'Add Another Caption' );
-				link.text( 'Add another remote file' );
+				button.text( wpbc.str_addcaption );
+				link.text( wpbc.str_addremote );
 			} else {
-				button.text( 'Select File' );
-				link.text( 'Use a remote file instead' );
+				button.text( wpbc.str_selectfile );
+				link.text( wpbc.str_useremote );
 			}
 		},
 
