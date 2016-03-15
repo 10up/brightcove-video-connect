@@ -988,6 +988,7 @@ class BC_Utility {
 			esc_html__( 'Pashto', 'brightcove' )           => 'ps',
 			esc_html__( 'Portuguese', 'brightcove' )       => 'pt',
 			esc_html__( 'Quechua', 'brightcove' )          => 'qu',
+			esc_html__( 'Romanian', 'brightcove' )         => 'ro',
 			esc_html__( 'Romanish', 'brightcove' )         => 'rm',
 			esc_html__( 'Russian', 'brightcove' )          => 'ru',
 			esc_html__( 'Sanskrit', 'brightcove' )         => 'sa',
