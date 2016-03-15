@@ -39,9 +39,9 @@ class BC_Text_Track {
 	 * @param string [$label]
 	 * @param bool   [$default]
 	 */
-	public function __construct( $url, $language = 'en', $kind = 'captions', $label = '', $default = false ) {
+	public function __construct( $url, $language = 'en-US', $kind = 'captions', $label = '', $default = false ) {
 		$this->url = esc_url_raw( $url );
-		$this->srcLang = substr( sanitize_text_field( $language ), 0, 2 );
+		$this->srcLang = sanitize_text_field( $language );
 		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ) ) ) {
 			$this->kind = 'captions';
 		} else {
@@ -59,7 +59,7 @@ class BC_Text_Track {
 	public function toArray() {
 		$data = array(
 			'url'     => $this->url,
-			'srcLang' => $this->srcLang,
+			'srclang' => $this->srcLang,
 			'kind'    => $this->kind,
 			'default' => $this->default,
 		);
