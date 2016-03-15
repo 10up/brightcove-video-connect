@@ -202,10 +202,10 @@ var VideoEditView = BrightcoveView.extend(
 
 			if ( 1 < document.getElementsByClassName( 'caption-repeater' ).length ) {
 				button.text( 'Add Another Caption' );
-				link.text( 'Add another remote file' );
+				link.text( 'Add another remote caption file' );
 			} else {
 				button.text( 'Select File' );
-				link.text( 'Use a remote file instead' );
+				link.text( 'Use a remote caption file instead' );
 			}
 		},
 
