@@ -196,7 +196,7 @@ class BC_Setup {
 			'path'       => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'    => BC_Setup::preload_params(),
 			'wp_version' => $wp_version,
-			'languages'  => BC_Utility::languages()
+			'languages'  => BC_Utility::languages(),
 			'players'    => $players,
 		);
 
