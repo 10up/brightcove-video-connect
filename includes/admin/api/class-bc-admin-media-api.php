@@ -803,12 +803,19 @@ class BC_Admin_Media_API {
 				continue;
 			}
 
+
 			$url = esc_url( $caption['source'] );
 			$lang = sanitize_text_field( $caption['language'] );
 			if ( empty( $url ) || empty( $lang ) ) {
 				continue; // Attachment has no URL, fail
 			}
 			$label = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
+
+			$source = parse_url( $caption['source'] );
+			if ( 0 === strpos( $source['host'], 'brightcove' ) ) {
+				// If the hostname starts with "brightcove," assume this media has already been ingested
+				continue;
+			}
 
 			$captions[] = new BC_Text_Track( $url, $lang, 'captions', $label );
 		}
