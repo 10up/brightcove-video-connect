@@ -63,7 +63,8 @@ var MediaModel = Backbone.Model.extend(
 					custom_fields:     this.get( 'custom_fields' ),
 					history:           this.get( 'history' ),
 					poster:            this.get( 'poster' ),
-					thumbnail:         this.get( 'thumbnail' )
+					thumbnail:         this.get( 'thumbnail' ),
+					captions:          this.get( 'captions' )
 				} );
 
 				var video_ids = this.get( 'video_ids' );
@@ -2138,7 +2139,7 @@ var VideoEditView = BrightcoveView.extend(
 					this.addCaptionRow( false, media );
 				} else {
 					// Alert the user that the file is not the correct format
-					alert( 'This file is not the proper format. Please use .vtt files, see: https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' );
+					alert( wpbc.str_badformat );
 				}
 			} else {
 				// Executed if the user is uploading a poster image or thumbnail
@@ -2195,6 +2196,15 @@ var VideoEditView = BrightcoveView.extend(
 				evnt.preventDefault();
 			}
 
+			var source = undefined;
+			if ( media ) {
+				source = media.url;
+			}
+
+			this.addCaption( source );
+		},
+
+		addCaption: function( source, language, label ) {
 			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
 				container  = document.getElementById( 'js-captions' ),
 				captionUrl = document.getElementById( 'js-caption-url' );
@@ -2204,13 +2214,16 @@ var VideoEditView = BrightcoveView.extend(
 			newRow.removeAttr( 'id' );
 			newRow.removeClass( 'empty-row' );
 
-			// If added via Select File button, add the file source in the input field
-			if ( media ) {
-				var selectedMedia = {
-					src: media.url
-				};
+			if ( source ) {
+				newRow.find( '.brightcove-captions' ).val( source );
+			}
 
-				newRow.find( '.brightcove-captions' ).val( selectedMedia.src );
+			if ( language ) {
+				newRow.find( '.brightcove-captions-language' ).val( language );
+			}
+
+			if ( label ) {
+				newRow.find( '.brightcove-captions-label' ).val( label );
 			}
 
 			// Append our new row to the container
@@ -2254,11 +2267,11 @@ var VideoEditView = BrightcoveView.extend(
 				link   = $( '.add-remote-caption' );
 
 			if ( 1 < document.getElementsByClassName( 'caption-repeater' ).length ) {
-				button.text( 'Add Another Caption' );
-				link.text( 'Add another remote caption file' );
+				button.text( wpbc.str_addcaption );
+				link.text( wpbc.str_addremote );
 			} else {
-				button.text( 'Select File' );
-				link.text( 'Use a remote caption file instead' );
+				button.text( wpbc.str_selectfile );
+				link.text( wpbc.str_useremote );
 			}
 		},
 
@@ -2289,6 +2302,20 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'mediaType', 'videos' );
 			this.model.set( 'poster', this.$el.find( '.brightcove-poster' ).val() );
 			this.model.set( 'thumbnail', this.$el.find( '.brightcove-thumbnail' ).val() );
+
+			// Captions
+			var captions = [];
+			this.$el.find( '.caption-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
+				var caption = $( this );
+				captions.push(
+					{
+						'source'  : caption.find( '.brightcove-captions' ).val(),
+						'language': caption.find( '.brightcove-captions-language' ).val(),
+						'label'   : caption.find( '.brightcove-captions-label' ).val()
+					}
+				);
+			} );
+			this.model.set( 'captions', captions );
 
 			// Custom fields
 			var custom = {},
@@ -2401,6 +2428,15 @@ var VideoEditView = BrightcoveView.extend(
 
 			if ( this.model.get( 'thumbnail' ) ) {
 				this.displayAttachment( 'thumbnail' );
+			}
+
+			// Captions
+			if ( this.model.get( 'captions' ) ) {
+				var captions = this.model.get( 'captions' );
+				for ( var i = 0, l = captions.length; i < l; i++ ) {
+					var caption = captions[i];
+					this.addCaption( caption.source, caption.language, caption.label );
+				}
 			}
 		}
 

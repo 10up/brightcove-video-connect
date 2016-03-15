@@ -168,14 +168,14 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
 					<div class="setting-content">
 						<button class="button button-secondary -captions">
-							<# if ( data.captions ) { #>
+							<# if ( 0 !== data.text_tracks.length ) { #>
 								<?php esc_html_e( 'Add Another Caption', 'ms-research' ); ?>
 							<# } else { #>
 								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
 							<# } #>
 						</button>
 						<a href="#" class="add-remote-caption">
-							<# if ( data.captions ) { #>
+							<# if ( 0 !== data.text_tracks.length ) { #>
 								<?php esc_html_e( 'Add another remote caption file', 'brightcove' ); ?>
 							<# } else { #>
 								<?php esc_html_e( 'Use a remote caption file instead', 'brightcove' ); ?>
@@ -183,23 +183,25 @@ class BC_Admin_Templates {
 						</a>
 
 						<div id="js-captions">
-							<# _.each( data.captions, function( caption ) { #>
+							<# _.each( data.text_tracks, function( caption ) { #>
 								<div id="js-caption-fields" class="caption-repeater repeater-row">
-									<input class="brightcove-captions" value="{{data.caption}}">
+									<input class="brightcove-captions" value="{{caption.src}}">
 
 									<div class="caption-secondary-fields">
 										<label class="-language">
 											<?php esc_html_e( 'Language', 'brightcove' ); ?>
 											<select class="brightcove-captions-language">
-												<# _.each( wpbc.languages, function( language ) { #>
-													<option value="{{language.code}}">{{language.nicename}}</option>
+												<# _.each( wpbc.languages, function( language, key ) { #>
+													<option value="{{language}}" <# if ( language === caption.srclang ) { #>selected<# } #>>
+														{{key}}
+													</option>
 												<# }); #>
 											</select>
 										</label>
 
 										<label class="-label">
 											<?php esc_html_e( 'Label', 'brightcove' )?>
-											<input type="text" class="brightcove-captions-label" value="{{data.label}}">
+											<input type="text" class="brightcove-captions-label" value="{{caption.label}}">
 										</label>
 
 										<div class="action-row">

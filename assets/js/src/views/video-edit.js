@@ -144,7 +144,7 @@ var VideoEditView = BrightcoveView.extend(
 
 			var source = undefined;
 			if ( media ) {
-				source = medial.url;
+				source = media.url;
 			}
 
 			this.addCaption( source );
