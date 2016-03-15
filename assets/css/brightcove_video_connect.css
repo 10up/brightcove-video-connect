@@ -448,10 +448,12 @@ div.brightcove-message {
     height: auto;
     max-width: 100%; }
 
-.brightcove.video-edit .action-row .delete {
-  color: #a00;
-  display: inline-block;
-  padding-top: 6px; }
+.brightcove.video-edit .action-row {
+  clear: both; }
+  .brightcove.video-edit .action-row .delete {
+    color: #a00;
+    display: inline-block;
+    padding-top: 6px; }
 
 .brightcove.video-edit button.-captions,
 .brightcove.video-edit .caption-url {

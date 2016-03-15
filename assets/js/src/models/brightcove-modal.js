@@ -42,7 +42,6 @@ var BrightcoveModalModel = Backbone.Model.extend(
 					search :    '',
 					tags :      'all',
 					viewType :  'grid'
-
 				}
 			};
 

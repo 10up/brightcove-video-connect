@@ -196,6 +196,7 @@ class BC_Setup {
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => BC_Setup::preload_params(),
 			'wp_version'     => $wp_version,
+			'languages'  => BC_Utility::languages(),
 			'players'    => $players,
 			'str_badformat'  => sprintf( esc_html__( 'This file is not the proper format. Please use .vtt files, see: %s', 'brightcove' ), 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
