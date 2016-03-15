@@ -168,14 +168,14 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
 					<div class="setting-content">
 						<button class="button button-secondary -captions">
-							<# if ( data.text_tracks ) { #>
+							<# if ( 0 !== data.text_tracks.length ) { #>
 								<?php esc_html_e( 'Add Another Caption', 'ms-research' ); ?>
 							<# } else { #>
 								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
 							<# } #>
 						</button>
 						<a href="#" class="add-remote-caption">
-							<# if ( data.text_tracks ) { #>
+							<# if ( 0 !== data.text_tracks.length ) { #>
 								<?php esc_html_e( 'Add another remote caption file', 'brightcove' ); ?>
 							<# } else { #>
 								<?php esc_html_e( 'Use a remote caption file instead', 'brightcove' ); ?>
