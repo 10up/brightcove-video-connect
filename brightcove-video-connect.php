@@ -3,7 +3,7 @@
  * Plugin Name: Brightcove Video Connect
  * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
  * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version: 1.1.3
+ * Version: 1.2.0-dev
  * Author: 10up
  * Author URI: http://10up.com
  * License: GPLv2+
@@ -29,7 +29,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  021.0.2301  USA
  */
 
-define( 'BRIGHTCOVE_VERSION', '1.1.3' );
+define( 'BRIGHTCOVE_VERSION', '1.2.0-dev' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );

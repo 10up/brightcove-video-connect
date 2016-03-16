@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.5
-Stable tag:        1.1.3
+Stable tag:        1.2.0-dev
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,9 @@ The plugin simply pulls information directly from the Brightcove API for display
 = How can I increase Maximum upload file size? =
 Maximum file size is determined by your webserver and PHP configuration. You need to set the value of upload_max_filesize and post_max_size in your php.ini. php_ini_loaded_file() can help you find where your PHP.ini is located.
 
+= How do I enable change tracking so I can see who updated a video and when they did it? =
+Create a custom field on your account with the label `_change_history`. Whenever a video is updated, the username and current time will be added to a list of changes recorded in this field.
+
 For nginx:
 http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size (client_max_body_size)
 For apache:
@@ -184,6 +187,13 @@ Sample Video
 http://sample-videos.com/
 
 == Changelog ==
+
+= 1.2.0 =
+* Enhancement: Enable the presentation and control of custom fields on uploaded videos
+* Enhancement: Add support for custom video player selection during publication
+* Enhancement: Support ingestion of preroll (poster) images and video thumbnails
+* Enhancement: Support ingestion of closed captions
+* Enhancement: Track the name and date of any changes to a video
 
 = 1.1.3 =
 * Fix: Tags should automatically populate drop down on videos page
