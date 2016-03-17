@@ -2,6 +2,9 @@
 
 class BC_Setup {
 
+	/**
+	 * Generic bootstrap function that is hooked into the default `init` method
+	 */
 	public static function action_init() {
 
 		global $bc_accounts;
@@ -60,6 +63,10 @@ class BC_Setup {
 
 		new BC_Playlists();
 		new BC_Videos();
+
+		// Set up rewrites for the Brightcove callback endpoint
+		add_rewrite_tag( '%bc-api%', '([^&]+)' );
+		add_rewrite_rule( 'bc-api$', 'index.php?bc-api=1', 'top' );
 
 		add_action( 'admin_enqueue_scripts', array( 'BC_Setup', 'admin_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
