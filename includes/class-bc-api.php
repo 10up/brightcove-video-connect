@@ -23,4 +23,25 @@ class BC_API {
 	public static function flush_cache() {
 		BC_Utility::delete_cache_item( '*' );
 	}
+
+	/**
+	 * Fetch an array of URLs to be used as callbacks for the Dynamic Ingest API.
+	 *
+	 * @return array
+	 */
+	public static function callback_paths() {
+		$callbacks = array();
+
+		$api_url = home_url( 'bc-api' );
+		$callbacks[] = esc_url( $api_url );
+
+		/**
+		 * Filter the callback URLs passed for Dynamic Ingest requests
+		 *
+		 * @param array $callbacks
+		 */
+		$callbacks = apply_filters( 'brightcove_api_callbacks', $callbacks );
+
+		return $callbacks;
+	}
 }
