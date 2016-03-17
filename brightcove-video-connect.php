@@ -83,7 +83,7 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
-add_action( 'init', array( 'BC_API', 'setup' ), 9 );
+add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 
@@ -98,7 +98,7 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 
 // Add WP-CLI Support (should be before init).
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-api.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php' );
 
 // Check Brightcove status if is_admin().
 if ( is_admin() ) {

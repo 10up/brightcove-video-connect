@@ -484,7 +484,7 @@ class BC_CMS_API extends BC_API {
 
 		$data              = array( 'profile' => sanitize_text_field( $profile ) );
 		$data['master']    = array( 'url' => esc_url_raw( $video_url ) );
-		$data['callbacks'] = BC_API::callback_paths();
+		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
 	}
@@ -509,7 +509,7 @@ class BC_CMS_API extends BC_API {
 
 		// Build out the data
 		$data = array();
-		$data['callbacks'] = BC_API::callback_paths();
+		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		$data['poster'] = array(
 			'url' => esc_url_raw( $poster_url ),
@@ -546,7 +546,7 @@ class BC_CMS_API extends BC_API {
 
 		// Build out the data
 		$data = array();
-		$data['callbacks'] = BC_API::callback_paths();
+		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		$data['thumbnail'] = array(
 			'url' => esc_url_raw( $thumbnail_url ),
@@ -596,7 +596,7 @@ class BC_CMS_API extends BC_API {
 	public function text_track_upload( $video_id, $text_tracks ) {
 		// Prepare data
 		$data                = array();
-		$data['callbacks']   = BC_API::callback_paths();
+		$data['callbacks']   = BC_Notification_API::callback_paths();
 		$data['text_tracks'] = array();
 		foreach( $text_tracks as $track ) {
 			$data['text_tracks'][] = $track->toArray();

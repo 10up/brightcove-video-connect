@@ -4,13 +4,13 @@
  * Pseudo-namespace for wrapping API functionality for Brightcove callbacks
  */
 
-class BC_API {
+class BC_Notification_API {
 
 	/**
 	 * Wire up any actions or filters that need to be present
 	 */
 	public static function setup() {
-		add_action( 'brightcove_api_request', array( 'BC_API', 'flush_cache' ) );
+		add_action( 'brightcove_api_request', array( 'BC_Notification_API', 'flush_cache' ) );
 	}
 
 	/**
