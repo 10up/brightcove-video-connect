@@ -10,7 +10,9 @@ class BC_Notification_API {
 	 * Wire up any actions or filters that need to be present
 	 */
 	public static function setup() {
-		add_action( 'brightcove_api_request', array( 'BC_Notification_API', 'flush_cache' ) );
+		add_action( 'brightcove_api_request',     array( 'BC_Notification_API', 'flush_cache' ) );
+		add_action( 'brightcove_created_account', array( 'BC_Notification_API', 'create_subscription' ) );
+		add_action( 'brightcove_deleted_account', array( 'BC_Notification_API', 'remove_subscription' ) );
 	}
 
 	/**
@@ -68,7 +70,44 @@ class BC_Notification_API {
 
 		foreach( self::callback_paths() as $path ) {
 			// Subscribe to allthethings
-			$cms_api->create_subscription( $path, array( 'video-change' ) );
+			$subscription_id = $cms_api->create_subscription( $path, array( 'video-change' ) );
+			
+			if ( false !== $subscription_id ) {
+				add_option( 'bc_sub_' . $account_hash, $subscription_id, '', 'no' );
+			}
+		}
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+	}
+
+	/**
+	 * Remove a subscription listener for a specific account.
+	 * 
+	 * @global BC_Accounts $bc_accounts
+	 * 
+	 * @param string $account_hash
+	 */
+	public static function remove_subscription( $account_hash ) {
+		global $bc_accounts;
+
+		// Set up the account to which we're pushing data
+		$account = $bc_accounts->set_current_account( $account_hash );
+		if ( false === $account ) { // Account was invalid, fail
+			// Restore our global, default account
+			$bc_accounts->restore_default_account();
+			return;
+		}
+		
+		// Get the subscription ID so we can delete it
+		$subscription_id = get_option( 'bc_sub_' . $account_hash );
+		
+		if ( false !== $subscription_id ) {
+			// We're in a static method, so instantiate the API we need
+			$cms_api = new BC_CMS_API();
+
+			// Unsubscribe from the thing
+			$cms_api->remove_subscription( $subscription_id );
 		}
 
 		// Restore our global, default account

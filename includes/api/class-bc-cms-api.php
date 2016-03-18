@@ -623,7 +623,7 @@ class BC_CMS_API extends BC_API {
 	 * @param string $endpoint
 	 * @param array  $events
 	 * 
-	 * @return mixed|bool
+	 * @return string|bool Subscription ID on success, false on failure
 	 */
 	public function create_subscription( $endpoint, $events = array() ) {
 		$data = array();
@@ -634,6 +634,25 @@ class BC_CMS_API extends BC_API {
 		
 		$data['events'] = $events;
 		
-		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
+		$response = $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
+
+		if ( false === $response || ! isset( $response['id'] ) ) {
+			return false;
+		}
+
+		return $response['id'];
+	}
+
+	/**
+	 * Unsubscribe from Brightcove API events
+	 *
+	 * @param string $subscription_id
+	 *
+	 * @return mixed|bool
+	 */
+	public function remove_subscription( $subscription_id ) {
+		$subscription_id = sanitize_text_field( $subscription_id );
+
+		$this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions/' . $subscription_id ), 'DELETE' );
 	}
 }
