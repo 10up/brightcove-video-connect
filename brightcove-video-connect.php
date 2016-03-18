@@ -84,7 +84,8 @@ add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
-add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) );
+
+//add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) ); // @TODO Verify API as errors don't seem to match the documentation
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 

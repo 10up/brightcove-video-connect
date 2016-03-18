@@ -11,8 +11,10 @@ class BC_Notification_API {
 	 */
 	public static function setup() {
 		add_action( 'brightcove_api_request',     array( 'BC_Notification_API', 'flush_cache' ) );
-		add_action( 'brightcove_created_account', array( 'BC_Notification_API', 'create_subscription' ) );
-		add_action( 'brightcove_deleted_account', array( 'BC_Notification_API', 'remove_subscription' ) );
+
+		// @TODO Verify API as errors don't seem to match the documentation
+		// add_action( 'brightcove_created_account', array( 'BC_Notification_API', 'create_subscription' ) );
+		// add_action( 'brightcove_deleted_account', array( 'BC_Notification_API', 'remove_subscription' ) );
 	}
 
 	/**
