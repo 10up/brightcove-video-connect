@@ -835,23 +835,23 @@ class BC_Admin_Media_API {
 	/**
 	 * Return a set of the most recent videos for the specified account.
 	 *
-	 * @param string $account_hash
+	 * @param string $account_id
 	 * @param int    $count
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
 	 * @return array
 	 */
-	protected function fetch_videos( $account_hash, $count = 10 ) {
+	protected function fetch_videos( $account_id, $count = 10 ) {
 		global $bc_accounts;
 
-		$transient_key = substr( '_brightcove_req_heartbeat_' . $account_hash, 0, 45 );
+		$transient_key = substr( '_brightcove_req_heartbeat_' . $account_id, 0, 45 );
 		$results       = BC_Utility::get_cache_item( $transient_key );
 		$results       = is_array( $results ) ? $results : array();
 
 		if ( empty( $results ) ) {
 			// Set up the account from which we're fetching data
-			$account = $bc_accounts->set_current_account( $account_hash );
+			$account = $bc_accounts->set_current_account_by_id( $account_id );
 			if ( false === $account ) { // Account was invalid, fail
 				// Restore our global, default account
 				$bc_accounts->restore_default_account();
@@ -915,8 +915,8 @@ class BC_Admin_Media_API {
 	 * @return array
 	 */
 	public function heartbeat_received( $response, $data ) {
-		if ( isset( $data['bc_account_hash'] ) ) {
-			$response['bc_videos'] = $this->fetch_videos( $data['bc_account_hash'] );
+		if ( isset( $data['brightcove_heartbeat'] ) ) {
+			$response['bc_videos'] = $this->fetch_videos( $data['brightcove_heartbeat']['accountId'] );
 		}
 
 		return $response;

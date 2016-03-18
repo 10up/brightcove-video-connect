@@ -34,6 +34,8 @@ var MediaCollection = Backbone.Collection.extend(
 				this.fetch();
 			}
 
+
+
 			this.mediaType = options.mediaType;
 
 			if ( 'videos' === this.mediaType ) {
@@ -50,6 +52,7 @@ var MediaCollection = Backbone.Collection.extend(
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
+				wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': accountId }, true );
 				this.fetch();
 			} );
 
