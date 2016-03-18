@@ -627,15 +627,15 @@ class BC_CMS_API extends BC_API {
 	 */
 	public function create_subscription( $endpoint, $events = array() ) {
 		$data = array();
-		$data['endpoint'] = esc_url( $endpoint );
+		$data['endpoint'] = $endpoint;
 		
 		// Sanitize events
 		$events = array_map( 'sanitize_text_field', $events );
 		
 		$data['events'] = $events;
-		
-		$response = $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
 
+		$response = $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
+g
 		if ( false === $response || ! isset( $response['id'] ) ) {
 			return false;
 		}

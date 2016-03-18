@@ -48,6 +48,26 @@ class BC_Notification_API {
 	}
 
 	/**
+	 * If the installed version is less than 1.2, assume we need to add subscription listeners for
+	 * all existing accounts.
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 *
+	 * @param string $installed_version
+	 */
+	public static function maybe_backport_subscriptions( $installed_version ) {
+		if ( version_compare( $installed_version, '1.2.0', '<' ) ) {
+			global $bc_accounts;
+
+			$accounts = $bc_accounts->get_sanitized_all_accounts();
+			$hashes = array_keys( $accounts );
+
+			// Walk through each account and create an API change notification subscription
+			array_map( array( 'BC_Notification_API', 'create_subscription' ), $hashes );
+		}
+	}
+
+	/**
 	 * Add a subscription listener for a specific account
 	 *
 	 * @global BC_Accounts $bc_accounts
@@ -71,7 +91,7 @@ class BC_Notification_API {
 		foreach( self::callback_paths() as $path ) {
 			// Subscribe to allthethings
 			$subscription_id = $cms_api->create_subscription( $path, array( 'video-change' ) );
-			
+
 			if ( false !== $subscription_id ) {
 				add_option( 'bc_sub_' . $account_hash, $subscription_id, '', 'no' );
 			}
