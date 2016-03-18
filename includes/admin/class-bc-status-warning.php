@@ -35,7 +35,7 @@ class BC_Status_Warning {
 	public function __construct() {
 
 		$failed_services = $this->_check_for_failed();
-		$status_dismissed = filter_var( $_COOKIE['bc-status-dismissed'], FILTER_VALIDATE_BOOLEAN );
+		$status_dismissed = isset( $_COOKIE['bc-status-dismissed'] ) ? filter_var( $_COOKIE['bc-status-dismissed'], FILTER_VALIDATE_BOOLEAN ) : false;
 
 		if ( is_array( $failed_services ) && ! empty( $failed_services ) && false === $status_dismissed ) {
 
