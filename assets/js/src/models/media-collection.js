@@ -34,8 +34,6 @@ var MediaCollection = Backbone.Collection.extend(
 				this.fetch();
 			}
 
-
-
 			this.mediaType = options.mediaType;
 
 			if ( 'videos' === this.mediaType ) {
