@@ -51,6 +51,7 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ) );
 
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
+		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
 	}
 
 	protected function bc_helper_check_ajax() {
@@ -829,5 +830,95 @@ class BC_Admin_Media_API {
 
 		// Restore our global, default account
 		$bc_accounts->restore_default_account();
+	}
+
+	/**
+	 * Return a set of the most recent videos for the specified account.
+	 *
+	 * @param string $account_hash
+	 * @param int    $count
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 *
+	 * @return array
+	 */
+	protected function fetch_videos( $account_hash, $count = 10 ) {
+		global $bc_accounts;
+
+		$transient_key = substr( '_brightcove_req_heartbeat_' . $account_hash, 0, 45 );
+		$results       = BC_Utility::get_cache_item( $transient_key );
+		$results       = is_array( $results ) ? $results : array();
+
+		if ( empty( $results ) ) {
+			// Set up the account from which we're fetching data
+			$account = $bc_accounts->set_current_account( $account_hash );
+			if ( false === $account ) { // Account was invalid, fail
+				// Restore our global, default account
+				$bc_accounts->restore_default_account();
+				return array();
+			}
+
+			// Get a list of videos
+			$results = $this->cms_api->video_list( $count, 0, '', 'updated_at' );
+
+			// Get a list of available custom fields
+			$fields = $this->cms_api->video_fields();
+
+			// Loop through results to remap items
+			foreach( $results as &$result ) {
+				// Map the custom_fields array to a collection of objects with description, display name, id, etc
+				$result['custom'] = $fields['custom_fields'];
+
+				foreach( $result['custom_fields'] as $id => $value ) {
+					// Extract the change tracking item explicitly
+					if ( $id == '_change_history' ) {
+						$result['history'] = $value;
+						continue;
+					}
+
+					foreach( $result['custom'] as &$field ) {
+						if ( $field['id'] === $id ) {
+							$field['value'] = $value;
+							break;
+						}
+					}
+				}
+
+				// Massage the text tracks
+				$result['captions'] = array();
+
+				foreach( $result['text_tracks'] as $caption ) {
+					$result['captions'][] = array(
+						'source'   => $caption['src'],
+						'language' => $caption['srclang'],
+						'label'    => $caption['label'],
+					);
+				}
+			}
+
+			$bc_accounts->restore_default_account();
+
+			if ( ! empty( $results ) ) {
+				BC_Utility::set_cache_item( $transient_key, 'video_list', $results, 600 ); // High cache time due to high expense of fetching the data.
+			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * When a WP heartbeat is received with an account hash, respond with the most recent 10 videos available.
+	 *
+	 * @param array $response
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	public function heartbeat_received( $response, $data ) {
+		if ( isset( $data['bc_account_hash'] ) ) {
+			$response['bc_videos'] = $this->fetch_videos( $data['bc_account_hash'] );
+		}
+
+		return $response;
 	}
 }
