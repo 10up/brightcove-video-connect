@@ -616,4 +616,24 @@ class BC_CMS_API extends BC_API {
 
 		return $results;
 	}
+
+	/**
+	 * Subscribe to Brightcove API events
+	 * 
+	 * @param string $endpoint
+	 * @param array  $events
+	 * 
+	 * @return mixed|bool
+	 */
+	public function create_subscription( $endpoint, $events = array() ) {
+		$data = array();
+		$data['endpoint'] = esc_url( $endpoint );
+		
+		// Sanitize events
+		$events = array_map( 'sanitize_text_field', $events );
+		
+		$data['events'] = $events;
+		
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
+	}
 }

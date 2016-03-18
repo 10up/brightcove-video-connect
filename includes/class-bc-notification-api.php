@@ -44,4 +44,34 @@ class BC_Notification_API {
 
 		return $callbacks;
 	}
+
+	/**
+	 * Add a subscription listener for a specific account
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 *
+	 * @param string $account_hash
+	 */
+	public static function create_subscription( $account_hash ) {
+		global $bc_accounts;
+
+		// Set up the account to which we're pushing data
+		$account = $bc_accounts->set_current_account( $account_hash );
+		if ( false === $account ) { // Account was invalid, fail
+			// Restore our global, default account
+			$bc_accounts->restore_default_account();
+			return;
+		}
+
+		// We're in a static method, so instantiate the API we need
+		$cms_api = new BC_CMS_API();
+
+		foreach( self::callback_paths() as $path ) {
+			// Subscribe to allthethings
+			$cms_api->create_subscription( $path, array( 'video-change' ) );
+		}
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+	}
 }
