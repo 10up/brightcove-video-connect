@@ -916,7 +916,9 @@ class BC_Admin_Media_API {
 	 */
 	public function heartbeat_received( $response, $data ) {
 		if ( isset( $data['brightcove_heartbeat'] ) ) {
-			$response['bc_videos'] = $this->fetch_videos( $data['brightcove_heartbeat']['accountId'] );
+			$response['brightcove_heartbeat'] = array();
+			$response['brightcove_heartbeat']['videos'] = $this->fetch_videos( $data['brightcove_heartbeat']['accountId'] );
+			$response['brightcove_heartbeat']['account_id'] = $data['brightcove_heartbeat']['accountId'];
 		}
 
 		return $response;

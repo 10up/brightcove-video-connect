@@ -54,6 +54,12 @@ var MediaCollection = Backbone.Collection.extend(
 				this.fetch();
 			} );
 
+			$( document ).on( 'heartbeat-tick.brightcove_heartbeat', function( event, data ) {
+				if ( data.hasOwnProperty( 'brightcove_heartbeat' ) ) {
+					wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': data['brightcove_heartbeat']['account_id'] }, true );
+				}
+			} );
+
 			this.listenTo( wpbc.broadcast, 'change:searchTerm', function ( searchTerm ) {
 				this.searchTerm = searchTerm;
 				this.fetch();
