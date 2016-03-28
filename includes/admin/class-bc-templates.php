@@ -649,8 +649,8 @@ class BC_Admin_Templates {
 		<?php /* Admin notice */ ?>
 		<script type="text/html" id="tmpl-brightcove-badformat-notice">
 			<div class="notice error badformat is-dismissible">
-				<p>{{ wpbc.str_badformat }} <a href="{{ wpbc.badformat_link }}">the Brightcove Documentation page.</a></p>
-				<button type="button" class="badformat notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+				<p>{{ wpbc.str_badformat }} <a href="{{ wpbc.badformat_link }}"><?php esc_html_e( 'the Brightcove Documentation page.', 'brightcove' ); ?></a></p>
+				<button type="button" class="badformat notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
 			</div>
 		</script>
 
