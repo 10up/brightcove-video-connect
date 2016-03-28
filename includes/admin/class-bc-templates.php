@@ -116,7 +116,7 @@ class BC_Admin_Templates {
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
 				<div class="setting poster">
-					<span class="name"><?php esc_html_e( 'Poster', 'brightcove' )?></span>
+					<span class="name"><?php esc_html_e( 'Poster (Sugg. 480x360px)', 'brightcove' )?></span>
 					<div class="setting-content">
 						<div class="attachment <# if ( data.images.poster.src ) { #>active<# } #>">
 							<div class="-image">
@@ -139,7 +139,7 @@ class BC_Admin_Templates {
 					</div>
 				</div>
 				<div class="setting thumbnail">
-					<span class="name"><?php esc_html_e( 'Thumbnail', 'brightcove' )?></span>
+					<span class="name"><?php esc_html_e( 'Thumbnail (Sugg. 120x90px)', 'brightcove' )?></span>
 					<div class="setting-content">
 						<div class="attachment <# if ( data.images.thumbnail.src ) { #>active<# } #>">
 							<div class="-image">
@@ -644,6 +644,14 @@ class BC_Admin_Templates {
 						<input type="search" placeholder="Search" id="media-search-input" class="search">
 					</div>
 				<# }#>
+		</script>
+
+		<?php /* Admin notice */ ?>
+		<script type="text/html" id="tmpl-brightcove-badformat-notice">
+			<div class="notice error badformat is-dismissible">
+				<p>{{ wpbc.str_badformat }} <a href="{{ wpbc.badformat_link }}">the Brightcove Documentation page.</a></p>
+				<button type="button" class="badformat notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+			</div>
 		</script>
 
 	<?php

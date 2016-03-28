@@ -2138,8 +2138,17 @@ var VideoEditView = BrightcoveView.extend(
 				if ( 'vtt' === media.subtype ) {
 					this.addCaptionRow( false, media );
 				} else {
-					// Alert the user that the file is not the correct format
-					alert( wpbc.str_badformat );
+					var template = wp.template( 'brightcove-badformat-notice' );
+
+					// Throw a notice to the user that the file is not the correct format
+					$( '.brightcove-media-videos' ).prepend( template );
+
+					// Allow the user to dismiss the notice
+					$( '.badformat.notice-dismiss' ).on( 'click', function() {
+						$( '.notice.badformat' ).first().fadeOut( 500, function() {
+							$( this ).remove();
+						} );
+					} );
 				}
 			} else {
 				// Executed if the user is uploading a poster image or thumbnail
