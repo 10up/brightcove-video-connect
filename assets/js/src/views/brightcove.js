@@ -32,7 +32,7 @@ var BrightcoveView = wp.Backbone.View.extend(
 			}
 
 			if ( undefined !== this.mediaType ) {
-				if ( mediaType === 'videos' ) {
+				if ( this.mediaType === 'videos' ) {
 
 					shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
 
