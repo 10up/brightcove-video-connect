@@ -654,6 +654,14 @@ class BC_Admin_Templates {
 			</div>
 		</script>
 
+		<?php /* Incorrect mediaType notice */ ?>
+		<script type="text/html" id="tmpl-brightcove-mediatype-notice">
+			<div id="js-mediatype-notice" class="notice error is-dismissible">
+				<p><?php esc_html_e( 'This video was not able to be inserted into the page. Please try again later. This may be because the video is still processing. For more information, please visit ', 'brightcove' ); ?> <a href="http://status.brightcove.com/"><?php esc_html_e( 'the Brightcove Status page.', 'brightcove' ); ?></a></p>
+				<button type="button" id="js-mediatype-dismiss" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
+			</div>
+		</script>
+
 	<?php
 	}
 }
