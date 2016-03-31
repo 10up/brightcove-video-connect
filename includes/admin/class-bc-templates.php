@@ -15,7 +15,7 @@ class BC_Admin_Templates {
 		<script type="text/html" id="tmpl-brightcove-media">
 			<div class="brightcove media-frame-router"></div>
 			<div class="brightcove-message message hidden"></div>
-			<div class="brightcove media-frame-content"></div>
+			<div class="brightcove media-frame-content"><span class="spinner"></span></div>
 			<div class="brightcove media-frame-menu hidden"></div>
 			<div class="brightcove media-frame-details"></div>
 			<div class="brightcove media-frame-toolbar"></div>

@@ -31,9 +31,11 @@ var MediaCollectionView = BrightcoveView.extend(
 		},
 
 		initialize : function ( options ) {
-			this.fetchingResults = false;
 			this.listenTo( wpbc.broadcast, 'fetch:finished', function () {
 				this.fetchingResults = false;
+
+				// hide the spinner
+				$( '.brightcove.media-frame-content .spinner' ).css( 'display', 'none' );
 			} );
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
@@ -103,6 +105,7 @@ var MediaCollectionView = BrightcoveView.extend(
 		},
 
 		render : function () {
+			console.log( this );
 			this.$el.empty();
 			this.collection.each( function ( mediaModel ) {
 				mediaModel.view = new MediaView( {model : mediaModel} );
