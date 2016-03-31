@@ -262,7 +262,14 @@ var MediaCollection = Backbone.Collection.extend(
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
+				wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': accountId }, true );
 				this.fetch();
+			} );
+
+			$( document ).on( 'heartbeat-tick.brightcove_heartbeat', function( event, data ) {
+				if ( data.hasOwnProperty( 'brightcove_heartbeat' ) ) {
+					wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': data['brightcove_heartbeat']['account_id'] }, true );
+				}
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:searchTerm', function ( searchTerm ) {
@@ -510,6 +517,8 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 		},
 		initialize : function ( options ) {
 			_.defaults( options, this.defaults );
+
+			wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': wpbc.preload.defaultAccountId }, true );
 
 			var collection = new MediaCollection( [], {mediaType : options.mediaType} );
 			collection.reset();
@@ -2506,6 +2515,7 @@ var MediaCollectionView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'fetch:finished', function () {
 				this.fetchingResults = false;
 			} );
+
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
 			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
@@ -2574,6 +2584,11 @@ var MediaCollectionView = BrightcoveView.extend(
 		},
 
 		render : function () {
+			// hide the spinner when content has finished loading
+			this.listenTo( wpbc.broadcast, 'spinner:off', function() {
+				$( '#js-media-loading' ).css( 'display', 'none' );
+			} );
+
 			this.$el.empty();
 			this.collection.each( function ( mediaModel ) {
 				mediaModel.view = new MediaView( {model : mediaModel} );
@@ -2581,6 +2596,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				mediaModel.view.render();
 				mediaModel.view.delegateEvents();
 				mediaModel.view.$el.appendTo( this.$el );
+
+				wpbc.broadcast.trigger( 'spinner:off' );
 			}, this );
 		},
 

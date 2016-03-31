@@ -34,8 +34,13 @@
 
 	.spinner {
 		display: block;
+		float: none;
 		margin: 0 auto;
 		visibility: visible;
+
+		&.hidden {
+			visibility: hidden;
+		}
 	}
 
 	.menu-visible {
