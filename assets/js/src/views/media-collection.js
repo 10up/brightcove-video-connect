@@ -105,7 +105,6 @@ var MediaCollectionView = BrightcoveView.extend(
 		},
 
 		render : function () {
-			console.log( this );
 			this.$el.empty();
 			this.collection.each( function ( mediaModel ) {
 				mediaModel.view = new MediaView( {model : mediaModel} );
