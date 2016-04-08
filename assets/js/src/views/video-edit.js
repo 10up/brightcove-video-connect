@@ -43,6 +43,7 @@ var VideoEditView = BrightcoveView.extend(
 			var elem         = $( evnt.currentTarget ).parents( '.setting' ),
 				editor       = elem.data('editor'),
 				mediaManager = wp.media.frames.brightcove = wp.media(),
+				that         = this,
 				options      = {
 					state:    'insert',
 					title:    wp.media.view.l10n.addMedia,
@@ -53,12 +54,12 @@ var VideoEditView = BrightcoveView.extend(
 			mediaManager.open( editor, options );
 
 			// Listen for selection of media
-			this.listenTo( mediaManager, 'select', function() {
+			mediaManager.on( 'select', function() {
 				var media = mediaManager.state().get( 'selection' ).first().toJSON(),
 					field = $( evnt ).parents( '.setting' );
 
 				// Set the selected attachment to the correct field
-				this.setAttachment( media, field );
+				that.setAttachment( media, field );
 
 				// Make this action available to other areas of the application
 				wpbc.broadcast.trigger( 'media:selected' );
