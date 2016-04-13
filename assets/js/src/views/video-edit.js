@@ -262,14 +262,32 @@ var VideoEditView = BrightcoveView.extend(
 			// Captions
 			var captions = [];
 			this.$el.find( '.caption-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
-				var caption = $( this );
-				captions.push(
-					{
-						'source'  : caption.find( '.brightcove-captions' ).val(),
-						'language': caption.find( '.brightcove-captions-language' ).val(),
-						'label'   : caption.find( '.brightcove-captions-label' ).val()
-					}
-				);
+				var caption   = $( this ),
+					fileName  = caption.find( '.brightcove-captions' ).val(),
+					extension = fileName.split('.').pop();
+
+				if ( 'vtt' === extension ) {
+					captions.push(
+						{
+							'source'  : fileName,
+							'language': caption.find( '.brightcove-captions-language' ).val(),
+							'label'   : caption.find( '.brightcove-captions-label' ).val()
+						}
+					);
+				} else {
+					var template = wp.template( 'brightcove-badformat-notice' );
+
+					// Throw a notice to the user that the file is not the correct format
+					$( '.brightcove-media-videos' ).prepend( template );
+
+					// Allow the user to dismiss the notice
+					$( '.badformat.notice-dismiss' ).on( 'click', function() {
+						$( '.notice.badformat' ).first().fadeOut( 500, function() {
+							$( this ).remove();
+						} );
+					} );
+					return;
+				}
 			} );
 			this.model.set( 'captions', captions );
 
@@ -362,7 +380,7 @@ var VideoEditView = BrightcoveView.extend(
 				_.each( history, function( item ) {
 					historyStr += item.user + ' - ' + item.time + '\n';
 				} );
-				
+
 				if ( '' !== historyStr ) {
 					this.$el.find( 'textarea.brightcove-change-history' ).val( historyStr );
 				}
