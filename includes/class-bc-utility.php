@@ -850,7 +850,7 @@ class BC_Utility {
 
 		$html .= '<!-- End of Brightcove Player -->';
 
-		return $html;
+		return apply_filters( 'brightcove_video_html', $html, $type, $id, $account_id, $player_id, $width, $height );
 
 	}
 
