@@ -480,7 +480,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @return string|bool the id of the ingest request or false on failure
 	 */
-	public function video_upload( $video_id, $video_url, $profile = 'balanced-high-definition' ) {
+	public function video_upload( $video_id, $video_url, $profile = 'videocloud-default-v1' ) {
 
 		$data           = array( 'profile' => sanitize_text_field( $profile ) );
 		$data['master'] = array( 'url' => esc_url_raw( $video_url ) );
