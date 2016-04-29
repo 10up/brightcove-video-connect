@@ -31,15 +31,28 @@ var BrightcoveView = wp.Backbone.View.extend(
 				var playerId = 'default';
 			}
 
+			if ( undefined !== this.mediaType ) {
+				if ( this.mediaType === 'videos' ) {
 
-			if ( this.mediaType === 'videos' ) {
+					shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
 
-				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
+				} else {
 
+					shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+
+				}
 			} else {
+				var template = wp.template( 'brightcove-mediatype-notice' );
 
-				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+				// Throw a notice to the user that the file is not the correct format
+				$( '#lost-connection-notice' ).before( template );
 
+				// Allow the user to dismiss the notice
+				$( '#js-mediatype-dismiss' ).on( 'click', function() {
+					$( '#js-mediatype-notice' ).first().fadeOut( 500, function() {
+						$( this ).remove();
+					} );
+				} );
 			}
 
 			window.send_to_editor( shortcode );
