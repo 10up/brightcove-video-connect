@@ -8,6 +8,7 @@ div.brightcove-message {
 
 .brightcove-upload-queued-files {
   display: table;
+  width: -webkit-calc(100% - 20px);
   width: calc(100% - 20px);
   border: 1px solid #ddd; }
 
@@ -86,6 +87,7 @@ div.brightcove-message {
   float: left; }
 
 .brightcove-modal .pending-uploads {
+  width: -webkit-calc(100% - 40px);
   width: calc(100% - 40px);
   display: block;
   margin: 20px; }
@@ -99,6 +101,7 @@ div.brightcove-message {
   width: 100%; }
   @media screen and (min-width: 700px) {
     .brightcove-modal .brightcove.media-frame-content {
+      width: -webkit-calc(100% - 390px);
       width: calc(100% - 390px); } }
 
 .brightcove-modal .brightcove.video-preview {
@@ -108,7 +111,8 @@ div.brightcove-message {
   padding: 20px;
   box-sizing: border-box;
   border-right: 1px solid #ddd;
-  transform: translate3d(0, 0, 0); }
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
 
 .brightcove-modal .video-preview-frame .brightcove.brightcove.media-frame-menu {
   padding-top: 20px; }
@@ -126,6 +130,7 @@ div.brightcove-message {
   border-top: none;
   position: static;
   height: 600px;
+  width: -webkit-calc(100% - 370px);
   width: calc(100% - 370px);
   float: left;
   margin-right: 30px;
@@ -141,6 +146,7 @@ div.brightcove-message {
     float: right;
     margin-top: 20px; }
   .brightcove.media-frame-content.edit-view, .brightcove-media.playlist.edit-view {
+    width: -webkit-calc(100% - 20px);
     width: calc(100% - 20px);
     border-right: none;
     height: auto; }
@@ -196,11 +202,13 @@ div.brightcove-message {
 .brightcove .media-toolbar {
   position: relative;
   right: 10px;
+  width: -webkit-calc(100% - 10px);
   width: calc(100% - 10px);
   height: auto; }
   @media screen and (min-width: 782px) {
     .brightcove .media-toolbar {
       right: 20px;
+      width: -webkit-calc(100% - 20px);
       width: calc(100% - 20px); } }
 
 .brightcove .media-toolbar-secondary {
@@ -213,7 +221,6 @@ div.brightcove-message {
 .wp-core-ui .brightcove.attachment:focus,
 .wp-core-ui .selected.brightcove.attachment:focus,
 .wp-core-ui .brightcove.attachment.details:focus {
-  -webkit-box-shadow: none;
   box-shadow: none; }
 
 .brightcove.media-frame-content, .playlist-edit-container {
@@ -226,7 +233,6 @@ div.brightcove-message {
     .brightcove.media-frame-content .spinner.hidden, .playlist-edit-container .spinner.hidden {
       visibility: hidden; }
   .brightcove.media-frame-content .menu-visible .highlighted .thumbnail, .playlist-edit-container .menu-visible .highlighted .thumbnail {
-    -webkit-box-shadow: 0 0 2px 5px #5b9dd9;
     box-shadow: 0 0 2px 5px #5b9dd9;
     outline: none; }
   .brightcove.media-frame-content ul, .playlist-edit-container ul {
