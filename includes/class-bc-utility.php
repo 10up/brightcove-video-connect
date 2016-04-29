@@ -850,6 +850,19 @@ class BC_Utility {
 
 		$html .= '<!-- End of Brightcove Player -->';
 
+		/**
+		 * Filter the Brightcove Player HTML.
+		 *
+		 * @param string  $html       HTML markup of the Brightcove Player.
+		 * @param string  $type       "playlist" or "video".
+		 * @param string  $id         The brightcove player or video ID.
+		 * @param string  $account_id The Brightcove account ID.
+		 * @param string  $player_id  The brightcove player ID.
+		 * @param int     $width      The Width to display.
+		 * @param int     $height     The height to display.
+		 */
+		$html = apply_filters( 'brightcove_video_html', $html, $type, $id, $account_id, $player_id, $width, $height );
+
 		return $html;
 
 	}
