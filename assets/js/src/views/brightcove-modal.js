@@ -27,6 +27,9 @@ var BrightcoveModalView = BrightcoveView.extend(
 				return;
 			}
 
+			// Make the selected player available to the shortcode
+			wpbc.selectedPlayer = $( 'input[name="video-player-field"]:checked' ).val();
+
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
 			wpbc.broadcast.trigger( 'insert:shortcode' );

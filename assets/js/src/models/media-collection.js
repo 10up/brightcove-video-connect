@@ -50,7 +50,14 @@ var MediaCollection = Backbone.Collection.extend(
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
+				wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': accountId }, true );
 				this.fetch();
+			} );
+
+			$( document ).on( 'heartbeat-tick.brightcove_heartbeat', function( event, data ) {
+				if ( data.hasOwnProperty( 'brightcove_heartbeat' ) ) {
+					wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': data['brightcove_heartbeat']['account_id'] }, true );
+				}
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:searchTerm', function ( searchTerm ) {

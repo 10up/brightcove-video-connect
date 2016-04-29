@@ -32,6 +32,17 @@
 
 .brightcove.media-frame-content, .playlist-edit-container {
 
+	.spinner {
+		display: block;
+		float: none;
+		margin: 0 auto;
+		visibility: visible;
+
+		&.hidden {
+			visibility: hidden;
+		}
+	}
+
 	.menu-visible {
 
 		.highlighted .thumbnail {
@@ -218,6 +229,11 @@
 				width         : 100%;
 			}
 
+			.brightcove-player {
+				display: block;
+				padding: 3px 0;
+			}
+
             .account-name,
             .created-date,
             .playlist-id,
@@ -228,7 +244,8 @@
             .video-description,
             .video-id,
             .video-source,
-            .video-updated {
+            .video-updated,
+            .video-player {
 
 				clear   : both;
 				display : block;

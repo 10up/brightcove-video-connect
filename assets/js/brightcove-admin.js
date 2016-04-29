@@ -59,7 +59,12 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
-					type :             this.get( 'mediaType' )
+					type :             this.get( 'mediaType' ),
+					custom_fields:     this.get( 'custom_fields' ),
+					history:           this.get( 'history' ),
+					poster:            this.get( 'poster' ),
+					thumbnail:         this.get( 'thumbnail' ),
+					captions:          this.get( 'captions' )
 				} );
 
 				var video_ids = this.get( 'video_ids' );
@@ -257,7 +262,14 @@ var MediaCollection = Backbone.Collection.extend(
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
+				wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': accountId }, true );
 				this.fetch();
+			} );
+
+			$( document ).on( 'heartbeat-tick.brightcove_heartbeat', function( event, data ) {
+				if ( data.hasOwnProperty( 'brightcove_heartbeat' ) ) {
+					wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': data['brightcove_heartbeat']['account_id'] }, true );
+				}
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:searchTerm', function ( searchTerm ) {
@@ -499,10 +511,14 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 			type :    null, // enum[playlist, video]
 			preload : true,
 			search :  '',
-			account : wpbc.preload.defaultAccountId
+			account : wpbc.preload.defaultAccountId,
+			poster: {},
+			thumbnail: {}
 		},
 		initialize : function ( options ) {
 			_.defaults( options, this.defaults );
+
+			wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': wpbc.preload.defaultAccountId }, true );
 
 			var collection = new MediaCollection( [], {mediaType : options.mediaType} );
 			collection.reset();
@@ -541,7 +557,9 @@ var BrightcoveModalModel = Backbone.Model.extend(
 					preload :   true,
 					search :    '',
 					tags :      'all',
-					viewType :  'grid'
+					viewType :  'grid',
+					poster:     {},
+					thumbnail:  {}
 				},
 				'videos' :    {
 					accounts :  'all',
@@ -564,7 +582,6 @@ var BrightcoveModalModel = Backbone.Model.extend(
 					search :    '',
 					tags :      'all',
 					viewType :  'grid'
-
 				}
 			};
 
@@ -649,17 +666,36 @@ var BrightcoveView = wp.Backbone.View.extend(
 			}
 
 			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
-			var accountId   = this.model.get( 'account_id' ).replace( /\D/g, '' );
-			var shortcode   = '';
+			var accountId    = this.model.get( 'account_id' ).replace( /\D/g, '' );
+			var playerId     = wpbc.selectedPlayer;
+			var shortcode    = '';
 
-			if ( this.mediaType === 'videos' ) {
+			if ( ! playerId ) {
+				var playerId = 'default';
+			}
 
-				shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+			if ( undefined !== this.mediaType ) {
+				if ( this.mediaType === 'videos' ) {
 
+					shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
+
+				} else {
+
+					shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+
+				}
 			} else {
+				var template = wp.template( 'brightcove-mediatype-notice' );
 
-				shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
+				// Throw a notice to the user that the file is not the correct format
+				$( '#lost-connection-notice' ).before( template );
 
+				// Allow the user to dismiss the notice
+				$( '#js-mediatype-dismiss' ).on( 'click', function() {
+					$( '#js-mediatype-notice' ).first().fadeOut( 500, function() {
+						$( this ).remove();
+					} );
+				} );
 			}
 
 			window.send_to_editor( shortcode );
@@ -824,14 +860,15 @@ var UploadVideoManagerView = BrightcoveView.extend(
 
 		message : function ( message, type ) {
 			var messages       = this.$el.find( '.brightcove-messages' );
-			var messageClasses = 'brightcove-message ';
+			var messageClasses = '';
 			if ( 'success' === type ) {
-				messageClasses += 'notice updated';
+				messageClasses = 'notice updated';
 			} else if ( 'error' === type ) {
-				messageClasses += 'error';
+				messageClasses = 'error';
 			}
-			var newMessage = $( '<div class="wrap"><div class="' + messageClasses + '"><p>' + message + '</p></div></div>' );
+			var newMessage = $( '<div class="wrap"><div class="brightcove-message"><p class="message-text"></p></div></div>' );
 			messages.append( newMessage );
+			newMessage.addClass( messageClasses ).find( '.message-text' ).text( message );
 			newMessage.fadeOut( 6000, function () {
 				$( this ).remove();
 			} );
@@ -1373,6 +1410,9 @@ var BrightcoveModalView = BrightcoveView.extend(
 				evnt.preventDefault();
 				return;
 			}
+
+			// Make the selected player available to the shortcode
+			wpbc.selectedPlayer = $( 'input[name="video-player-field"]:checked' ).val();
 
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
@@ -2041,9 +2081,13 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' : 'saveSync',
-			'click .brightcove.delete' :           'deleteVideo',
-			'click .brightcove.button.back' :      'back'
+			'click .brightcove.button.save-sync' :      'saveSync',
+			'click .brightcove.delete' :                'deleteVideo',
+			'click .brightcove.button.back' :           'back',
+			'click .setting .button' :                  'openMediaManager',
+			'click .attachment .check' :                'removeAttachment',
+			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
+			'click .add-remote-caption' :               'addCaptionRow'
 		},
 
 		back : function ( event ) {
@@ -2064,8 +2108,206 @@ var VideoEditView = BrightcoveView.extend(
 			}
 		},
 
-		saveSync : function ( evnt ) {
+		/**
+		 * Allow the user to attach a video still or thumbnail.
+		 *
+		 * @param {Event} evnt
+		 */
+		openMediaManager: function ( evnt ) {
+			evnt.preventDefault();
 
+			var elem         = $( evnt.currentTarget ).parents( '.setting' ),
+				editor       = elem.data('editor'),
+				mediaManager = wp.media.frames.brightcove = wp.media(),
+				that         = this,
+				options      = {
+					state:    'insert',
+					title:    wp.media.view.l10n.addMedia,
+					multiple: false
+				};
+
+			// Open the media manager
+			mediaManager.open( editor, options );
+
+			// Listen for selection of media
+			mediaManager.on( 'select', function() {
+				var media = mediaManager.state().get( 'selection' ).first().toJSON(),
+					field = $( evnt ).parents( '.setting' );
+
+				// Set the selected attachment to the correct field
+				that.setAttachment( media, field );
+
+				// Make this action available to other areas of the application
+				wpbc.broadcast.trigger( 'media:selected' );
+			});
+		},
+
+		/**
+		 * Set the hidden input to the ID of the selected attachment.
+		 *
+		 * @param {Object} media
+		 * @param {String} field
+		 * @returns {boolean}
+		 */
+		setAttachment: function( media, field ) {
+			var field           = field.prevObject[0].currentTarget,
+				field           = $( field ).prev( 'input' ),
+				attachment      = field.parents( '.attachment' ),
+				preview         = attachment.find( '.-image' );
+
+			// Perform different setup actions based on the type of upload
+			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
+				// Executed if the user is uploading a closed caption
+				if ( 'vtt' === media.subtype ) {
+					this.addCaptionRow( false, media );
+				} else {
+					var template = wp.template( 'brightcove-badformat-notice' );
+
+					// Throw a notice to the user that the file is not the correct format
+					$( '.brightcove-media-videos' ).prepend( template );
+
+					// Allow the user to dismiss the notice
+					$( '.badformat.notice-dismiss' ).on( 'click', function() {
+						$( '.notice.badformat' ).first().fadeOut( 500, function() {
+							$( this ).remove();
+						} );
+					} );
+				}
+			} else {
+				// Executed if the user is uploading a poster image or thumbnail
+				var selectedMedia = {
+					url:    media.sizes.full.url,
+					width:  media.sizes.full.width,
+					height: media.sizes.full.height
+				};
+
+				// Set up our preview image
+				var image = document.createElement( 'img' );
+
+				// Set image properties
+				image.src       = media.sizes.full.url;
+				image.className = 'thumbnail';
+
+				// Display a preview image
+				attachment.addClass( 'active' );
+				preview.html( image ); // .html() considered okay because auth is required to view this screen
+			}
+
+			// Add our meta to the hidden field
+			field.val( JSON.stringify( selectedMedia ) );
+		},
+
+		/**
+		 * Allow the user to remove media from a given field.
+		 *
+		 * @param {Event} evnt
+		 * @returns {boolean}
+		 */
+		removeAttachment: function( evnt ) {
+			var container = $( evnt.currentTarget ).parents( '.attachment' ),
+				image     = container.find( '.-image' ),
+				field     = container.next( 'input' );
+
+			// Empty the field
+			field.val( '' );
+
+			// Remove the preview image
+			container.removeClass( 'active' );
+			image.empty();
+		},
+
+		/**
+		 * Add a caption row
+		 *
+		 * @param {Event} evnt
+		 * @param {Object} media
+		 */
+		addCaptionRow: function( evnt, media ) {
+			// If using the add remote file link, prevent the page from jumping to the top
+			if ( evnt ) {
+				evnt.preventDefault();
+			}
+
+			var source = undefined;
+			if ( media ) {
+				source = media.url;
+			}
+
+			this.addCaption( source );
+		},
+
+		addCaption: function( source, language, label ) {
+			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
+				container  = document.getElementById( 'js-captions' ),
+				captionUrl = document.getElementById( 'js-caption-url' );
+
+			// Clean up our cloned row
+			newRow.find( 'input' ).prop( 'disabled', false );
+			newRow.removeAttr( 'id' );
+			newRow.removeClass( 'empty-row' );
+
+			if ( source ) {
+				newRow.find( '.brightcove-captions' ).val( source );
+			}
+
+			if ( language ) {
+				newRow.find( '.brightcove-captions-language' ).val( language );
+			}
+
+			if ( label ) {
+				newRow.find( '.brightcove-captions-label' ).val( label );
+			}
+
+			// Append our new row to the container
+			$( container ).append( newRow );
+
+			// Update the context button text
+			this.updateCaptionText();
+		},
+
+		/**
+		 * Remove a caption
+		 *
+		 * @param {Event} evnt
+		 */
+		removeCaptionRow: function( evnt ) {
+			evnt.preventDefault();
+
+			var caption   = evnt.currentTarget,
+				container = $( caption ).parents( '.caption-repeater' ),
+				source    = container.find( '.brightcove-captions' ),
+				language  = container.find( '.brightcove-captions-launguage' ),
+				label     = container.find( '.brightcove-captions-label' );
+
+			// Empty the input fields
+			$( source ).val( '' );
+			$( language ).val( '' );
+			$( label ).val( '' );
+
+			// Remove the container entirely
+			container.remove();
+
+			// Update the context button text
+			this.updateCaptionText();
+		},
+
+		/**
+		 * Updates the caption text based on number of captions
+		 */
+		updateCaptionText: function() {
+			var button = $( '.captions .button-secondary' ),
+				link   = $( '.add-remote-caption' );
+
+			if ( 1 < document.getElementsByClassName( 'caption-repeater' ).length ) {
+				button.text( wpbc.str_addcaption );
+				link.text( wpbc.str_addremote );
+			} else {
+				button.text( wpbc.str_selectfile );
+				link.text( wpbc.str_useremote );
+			}
+		},
+
+		saveSync : function ( evnt ) {
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
 
@@ -2090,12 +2332,66 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'height', this.$el.find( '.brightcove-height' ).val() );
 			this.model.set( 'width', this.$el.find( '.brightcove-width' ).val() );
 			this.model.set( 'mediaType', 'videos' );
+			this.model.set( 'poster', this.$el.find( '.brightcove-poster' ).val() );
+			this.model.set( 'thumbnail', this.$el.find( '.brightcove-thumbnail' ).val() );
+
+			// Captions
+			var captions = [];
+			this.$el.find( '.caption-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
+				var caption   = $( this ),
+					fileName  = caption.find( '.brightcove-captions' ).val(),
+					extension = fileName.split('.').pop();
+
+				if ( 'vtt' === extension ) {
+					captions.push(
+						{
+							'source'  : fileName,
+							'language': caption.find( '.brightcove-captions-language' ).val(),
+							'label'   : caption.find( '.brightcove-captions-label' ).val()
+						}
+					);
+				} else {
+					var template = wp.template( 'brightcove-badformat-notice' );
+
+					// Throw a notice to the user that the file is not the correct format
+					$( '.brightcove-media-videos' ).prepend( template );
+
+					// Allow the user to dismiss the notice
+					$( '.badformat.notice-dismiss' ).on( 'click', function() {
+						$( '.notice.badformat' ).first().fadeOut( 500, function() {
+							$( this ).remove();
+						} );
+					} );
+					return;
+				}
+			} );
+			this.model.set( 'captions', captions );
+
+			// Custom fields
+			var custom = {},
+				custom_fields = this.model.get( 'custom' );
+
+			_.each( this.$el.find( '.brightcove-custom-string, .brightcove-custom-enum' ), function( item ) {
+				var key = item.getAttribute( 'data-id' ),
+					val = item.value.trim();
+
+				if ( '' !== val ) {
+					custom[ key ] = val;
+
+					var obj = _.find( custom_fields, function( item ) { return item.id == key } );
+					obj.value = val;
+				}
+			} );
+
+			this.model.set( 'custom_fields', custom );
+			this.model.set( 'custom', custom_fields );
+
 			this.model.save()
 				.done( function() {
-
-					// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-					var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
-						newTags      = _.difference( editTags, wpbc.preload.tags );
+					if ( $mediaFrame.length > 0 ) {
+						// Update the tag dropdown and wpbc.preload.tags with any new tag values.
+						var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+							newTags      = _.difference( editTags, wpbc.preload.tags );
 
 						// Add any new tags to the tags object and the dropdown.
 						_.each( newTags, function( newTag ){
@@ -2105,6 +2401,7 @@ var VideoEditView = BrightcoveView.extend(
 							}
 						} );
 						wpbc.preload.tags.sort();
+					}
 				} )
 				.always( function() {
 					// Re-enable the button when the request has completed.
@@ -2115,10 +2412,57 @@ var VideoEditView = BrightcoveView.extend(
 				} );
 		},
 
+		/**
+		 * Render the actual view for the Video Edit screen.
+		 *
+		 * @param {Object} options
+		 */
 		render : function ( options ) {
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
+
+			// Render the model into the template
 			this.$el.html( this.template( options ) );
+
+			// Render custom fields into the template
+			var customContainer = this.$el.find( '#brightcove-custom-fields' ),
+				stringTmp = wp.template( 'brightcove-video-edit-custom-string' ),
+				enumTmp = wp.template( 'brightcove-video-edit-custom-enum' );
+
+			_.each( this.model.get('custom'), function( custom ) {
+				if ( '_change_history' === custom.id ) {
+					return;
+				}
+
+				switch( custom.type ) {
+					case 'string':
+						customContainer.append( stringTmp( custom ) );
+						break;
+					case 'enum':
+						customContainer.append( enumTmp( custom ) );
+						break;
+				}
+			} );
+
+			// Render the change history
+			var history = this.model.get( 'history' );
+
+			if ( history !== undefined ) {
+				var historyStr = '';
+
+				// Parse our fetched JSON object
+				history = JSON.parse( history );
+
+				_.each( history, function( item ) {
+					historyStr += item.user + ' - ' + item.time + '\n';
+				} );
+
+				if ( '' !== historyStr ) {
+					this.$el.find( 'textarea.brightcove-change-history' ).val( historyStr );
+				}
+			}
+
+			// Configure a spinner to provide feedback during updates
 			var spinner = this.$el.find( '.spinner' );
 			this.listenTo( wpbc.broadcast, 'spinner:on', function () {
 				spinner.addClass( 'is-active' ).removeClass( 'hidden' );
@@ -2126,12 +2470,28 @@ var VideoEditView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
 				spinner.removeClass( 'is-active' ).addClass( 'hidden' );
 			} );
+
+			// If there's already a poster or thumbnail set, display it
+			if ( this.model.get( 'poster' ) ) {
+				this.displayAttachment( 'poster' );
+			}
+
+			if ( this.model.get( 'thumbnail' ) ) {
+				this.displayAttachment( 'thumbnail' );
+			}
+
+			// Captions
+			if ( this.model.get( 'captions' ) ) {
+				var captions = this.model.get( 'captions' );
+				for ( var i = 0, l = captions.length; i < l; i++ ) {
+					var caption = captions[i];
+					this.addCaption( caption.source, caption.language, caption.label );
+				}
+			}
 		}
 
 	}
 );
-
-
 var VideoPreviewView = BrightcoveView.extend(
 	{
 		tagName :   'div',
@@ -2186,6 +2546,7 @@ var MediaCollectionView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'fetch:finished', function () {
 				this.fetchingResults = false;
 			} );
+
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
 			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
@@ -2254,6 +2615,11 @@ var MediaCollectionView = BrightcoveView.extend(
 		},
 
 		render : function () {
+			// hide the spinner when content has finished loading
+			this.listenTo( wpbc.broadcast, 'spinner:off', function() {
+				$( '#js-media-loading' ).css( 'display', 'none' );
+			} );
+
 			this.$el.empty();
 			this.collection.each( function ( mediaModel ) {
 				mediaModel.view = new MediaView( {model : mediaModel} );
@@ -2261,6 +2627,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				mediaModel.view.render();
 				mediaModel.view.delegateEvents();
 				mediaModel.view.$el.appendTo( this.$el );
+
+				wpbc.broadcast.trigger( 'spinner:off' );
 			}, this );
 		},
 

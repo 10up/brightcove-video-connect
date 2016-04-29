@@ -93,6 +93,18 @@ class BC_Admin_Settings_Page {
 			);
 		}
 
+		/**
+		 * Filter the available actions for each source on the Brightcove admin settings page.
+		 *
+		 * Enables adding or removing source actions on the settings screen.
+		 *
+		 * @param array $actions {
+		 *      The array of available actions.
+		 *
+		 * 		@param string $action      The name of the action.
+		 * 		@param string $action_link The link for the action.
+		 * }
+		 */
 		$actions = apply_filters( 'brightcove_account_actions', $actions );
 		$html    = '<div class="row-actions">';
 		$links   = array();

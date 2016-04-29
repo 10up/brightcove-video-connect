@@ -7,10 +7,14 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 			type :    null, // enum[playlist, video]
 			preload : true,
 			search :  '',
-			account : wpbc.preload.defaultAccountId
+			account : wpbc.preload.defaultAccountId,
+			poster: {},
+			thumbnail: {}
 		},
 		initialize : function ( options ) {
 			_.defaults( options, this.defaults );
+
+			wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': wpbc.preload.defaultAccountId }, true );
 
 			var collection = new MediaCollection( [], {mediaType : options.mediaType} );
 			collection.reset();

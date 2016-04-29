@@ -2,8 +2,10 @@
 
 class BC_Setup {
 
+	/**
+	 * Generic bootstrap function that is hooked into the default `init` method
+	 */
 	public static function action_init() {
-
 		global $bc_accounts;
 
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-errors.php' );
@@ -14,6 +16,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-text-track.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
@@ -67,7 +70,6 @@ class BC_Setup {
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
-
 	}
 
 	/**
@@ -94,6 +96,12 @@ class BC_Setup {
 			new BC_Admin_Menu();
 
 		}
+
+		// Set up rewrites for the Brightcove callback endpoint
+		add_rewrite_tag( '%bc-api%', '([^&]+)' );
+		add_rewrite_rule( 'bc-api$', 'index.php?bc-api=1', 'top' );
+
+		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
 	}
 
 	public static function add_brightcove_media_button() {
@@ -189,10 +197,21 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+		$player_api = new BC_Player_Management_API();
+		$players    = $player_api->player_list();
+
 		$js_variable = array(
-			'path'       => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
-			'preload'    => BC_Setup::preload_params(),
-			'wp_version' => $wp_version,
+			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
+			'preload'        => BC_Setup::preload_params(),
+			'wp_version'     => $wp_version,
+			'languages'  => BC_Utility::languages(),
+			'players'    => $players,
+			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
+			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
+			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
+			'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),
+			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
+			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
@@ -327,5 +346,29 @@ class BC_Setup {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Hijack requests for potential callback processing.
+	 *
+	 * @param \WP_Query $query Main query instance.
+	 */
+	public static function redirect( $query ) {
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+
+		$type = get_query_var( 'bc-api' );
+		if ( empty( $type ) ) {
+			return;
+		}
+
+		/**
+		 * Fire an action when a request comes in to the /bc-api endpoint.
+		 */
+		do_action( 'brightcove_api_request' );
+
+		// Kill the response immediately
+		die;
 	}
 }

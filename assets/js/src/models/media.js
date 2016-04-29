@@ -58,7 +58,12 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
-					type :             this.get( 'mediaType' )
+					type :             this.get( 'mediaType' ),
+					custom_fields:     this.get( 'custom_fields' ),
+					history:           this.get( 'history' ),
+					poster:            this.get( 'poster' ),
+					thumbnail:         this.get( 'thumbnail' ),
+					captions:          this.get( 'captions' )
 				} );
 
 				var video_ids = this.get( 'video_ids' );

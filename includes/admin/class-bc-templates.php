@@ -15,7 +15,9 @@ class BC_Admin_Templates {
 		<script type="text/html" id="tmpl-brightcove-media">
 			<div class="brightcove media-frame-router"></div>
 			<div class="brightcove-message message hidden"></div>
-			<div class="brightcove media-frame-content"></div>
+			<div class="brightcove media-frame-content">
+				<span id="js-media-loading" class="spinner"></span>
+			</div>
 			<div class="brightcove media-frame-menu hidden"></div>
 			<div class="brightcove media-frame-details"></div>
 			<div class="brightcove media-frame-toolbar"></div>
@@ -115,6 +117,137 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
 				</label>
+				<div class="setting poster">
+					<span class="name"><?php esc_html_e( 'Poster (Sugg. 480x360px)', 'brightcove' )?></span>
+					<div class="setting-content">
+						<div class="attachment <# if ( data.images.poster.src ) { #>active<# } #>">
+							<div class="-image">
+								<# if ( data.images.poster.src ) { #>
+									<img src="{{data.images.poster.src}}" class="thumbnail">
+								<# } #>
+							</div>
+
+							<button type="button" class="button-link check" tabindex="-1">
+								<span class="media-modal-icon"></span>
+								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
+							</button>
+
+							<input type="hidden" class="brightcove-poster" value="{{data.poster}}">
+
+							<button class="button button-secondary -poster">
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="setting thumbnail">
+					<span class="name"><?php esc_html_e( 'Thumbnail (Sugg. 120x90px)', 'brightcove' )?></span>
+					<div class="setting-content">
+						<div class="attachment <# if ( data.images.thumbnail.src ) { #>active<# } #>">
+							<div class="-image">
+								<# if ( data.images.thumbnail.src ) { #>
+									<img src="{{data.images.thumbnail.src}}" class="thumbnail">
+								<# } #>
+							</div>
+
+							<button type="button" class="button-link check" tabindex="-1">
+								<span class="media-modal-icon"></span>
+								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
+							</button>
+
+							<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}">
+
+							<button class="button button-secondary -thumbnail">
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="brightcove-custom-fields"></div>
+
+				<div class="setting captions">
+					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' )?></span>
+					<div class="setting-content">
+						<button class="button button-secondary -captions">
+							<# if ( 0 !== data.text_tracks.length ) { #>
+								<?php esc_html_e( 'Add Another Caption', 'ms-research' ); ?>
+							<# } else { #>
+								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+							<# } #>
+						</button>
+						<a href="#" class="add-remote-caption">
+							<# if ( 0 !== data.text_tracks.length ) { #>
+								<?php esc_html_e( 'Add another remote caption file', 'brightcove' ); ?>
+							<# } else { #>
+								<?php esc_html_e( 'Use a remote caption file instead', 'brightcove' ); ?>
+							<# } #>
+						</a>
+
+						<div id="js-captions">
+							<# _.each( data.text_tracks, function( caption ) { #>
+								<div id="js-caption-fields" class="caption-repeater repeater-row">
+									<input class="brightcove-captions" value="{{caption.src}}">
+
+									<div class="caption-secondary-fields">
+										<label class="-language">
+											<?php esc_html_e( 'Language', 'brightcove' ); ?>
+											<select class="brightcove-captions-language">
+												<# _.each( wpbc.languages, function( language, key ) { #>
+													<option value="{{language}}" <# if ( language === caption.srclang ) { #>selected<# } #>>
+														{{key}}
+													</option>
+												<# }); #>
+											</select>
+										</label>
+
+										<label class="-label">
+											<?php esc_html_e( 'Label', 'brightcove' )?>
+											<input type="text" class="brightcove-captions-label" value="{{caption.label}}">
+										</label>
+
+										<div class="action-row">
+											<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
+										</div>
+									</div>
+								</div>
+							<# }); #>
+							<div id="js-caption-empty-row" class="caption-repeater repeater-row empty-row">
+								<label class="-src">
+									<?php esc_html_e( 'File Source', 'brightcove' ); ?>
+									<input class="brightcove-captions" type="text">
+								</label>
+
+								<div class="caption-secondary-fields">
+									<label class="-language">
+										<?php esc_html_e( 'Language', 'brightcove' )?>
+										<select class="brightcove-captions-language">
+											<# _.each( wpbc.languages, function( language, key) { #>
+												<option value="{{language}}">{{key}}</option>
+											<# }); #>
+										</select>
+									</label>
+
+									<label class="-label">
+										<?php esc_html_e( 'Label', 'brightcove' )?>
+										<input class="brightcove-captions-label" type="text">
+									</label>
+
+									<div class="action-row">
+										<a href="#" class="delete"><?php esc_html_e( 'Delete Caption', 'brightcove' ); ?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="brightcove-change-history">
+					<label class="setting history">
+						<span class="name"><?php esc_html_e( 'Change History', 'brightcove' ); ?></span>
+						<textarea class="brightcove-change-history" data-id="history" disabled="disabled"><?php esc_html_e( 'Nothing yet ...', 'brightcove' ); ?></textarea>
+					</label>
+				</div>
 			</div>
 			<div class="brightcove brightcove-buttons">
 				<span class="delete-action">
@@ -127,6 +260,26 @@ class BC_Admin_Templates {
 					<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
 				</span>
 			</div>
+		</script>
+		<script type="text/html" id="tmpl-brightcove-video-edit-custom-string">
+			<label class="setting custom">
+				<span class="name">{{data.display_name}}</span>
+				<input type="text" class="brightcove-custom-string" data-id="{{data.id}}" value="{{data.value}}" />
+			</label>
+		</script>
+		<script type="text/html" id="tmpl-brightcove-video-edit-custom-enum">
+			<label class="setting custom">
+				<span class="name">{{data.display_name}}</span>
+				<select class="brightcove-custom-enum" data-id="{{data.id}}">
+					<# _.each(data.enum_values, function (value, index) {
+						if (value === data.value) {
+						var selected = ' selected';
+						} #>
+
+						<option value="{{value}}"{{selected}}>{{value}}</option>
+						<# }); #>
+				</select>
+			</label>
 		</script>
 
 		<?php /* Used by views/video-preview.js */?>
@@ -383,6 +536,23 @@ class BC_Admin_Templates {
 					<span class="video-name">{{ data.name }}</span>
 					<div class="video-source"><span class="title"><?php esc_html_e( 'Source: ', 'brightcove' ); ?></span><span class="data">{{ data.account_name }}</span></div>
 					<div class="video-id"><span class="title"><?php esc_html_e( 'Video ID: ', 'brightcove' ); ?></span><span class="data">{{ data.id }}</span></div>
+					<?php
+						$screen      = get_current_screen();
+						$parent_base = $screen->parent_base;
+
+						if ( 'edit' === $parent_base ) { ?>
+							<div class="video-player">
+								<span class="title"><?php esc_html_e( 'Video Player: ', 'brightcove' ); ?></span>
+								<# _.each( wpbc.players.items, function ( player ) { #>
+									<label class="brightcove-player" for="player-{{ player.id }}">
+										<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}" <# if ( 'default' === player.id ) { #>checked <# } #>>
+										{{ player.name }}
+									</label>
+								<# }); #>
+							</div>
+							<?php
+						}
+					?>
 				</div>
 				<div class="media-actions">
 					<# if ('preview' === data.detailsMode) { #>
@@ -476,6 +646,22 @@ class BC_Admin_Templates {
 						<input type="search" placeholder="Search" id="media-search-input" class="search">
 					</div>
 				<# }#>
+		</script>
+
+		<?php /* Admin notice */ ?>
+		<script type="text/html" id="tmpl-brightcove-badformat-notice">
+			<div class="notice error badformat is-dismissible">
+				<p>{{ wpbc.str_badformat }} <a href="{{ wpbc.badformat_link }}"><?php esc_html_e( 'the Brightcove Documentation page.', 'brightcove' ); ?></a></p>
+				<button type="button" class="badformat notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
+			</div>
+		</script>
+
+		<?php /* Incorrect mediaType notice */ ?>
+		<script type="text/html" id="tmpl-brightcove-mediatype-notice">
+			<div id="js-mediatype-notice" class="notice error is-dismissible">
+				<p><?php esc_html_e( 'This video was not able to be inserted into the page. Please try again later. This may be because the video is still processing. For more information, please visit ', 'brightcove' ); ?> <a href="http://status.brightcove.com/"><?php esc_html_e( 'the Brightcove Status page.', 'brightcove' ); ?></a></p>
+				<button type="button" id="js-mediatype-dismiss" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
+			</div>
 		</script>
 
 	<?php

@@ -406,6 +406,13 @@ class BC_Accounts {
 		if ( $operation === 'delete' ) {
 			if ( isset( $existing_accounts[ $hash ] ) ) {
 				unset( $existing_accounts[ $hash ] );
+
+				/**
+				 * Fired after an account is deleted from the WordPress admin
+				 * 
+				 * @param string $hash Account hash according to Brightcove
+				 */
+				do_action( 'brightcove_deleted_account', $hash );
 			}
 		} else {
 			if ( isset( $existing_accounts[ $hash ] ) && 'add' === $operation ) {
@@ -425,6 +432,13 @@ class BC_Accounts {
 				unset( $account['operation'] ); // Remove the operation from stored value
 				if ( $operation !== 'update' ) {
 					$existing_accounts[ $hash ] = $account; // Add / update the account.
+
+					/**
+					 * Fired after an account is created in the WordPress admin
+					 *
+					 * @param string $hash Account hash according to Brightcove
+					 */
+					do_action( 'brightcove_created_account', $hash );
 				}
 			}
 		}
