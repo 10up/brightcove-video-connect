@@ -14,6 +14,8 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 		initialize : function ( options ) {
 			_.defaults( options, this.defaults );
 
+			wp.heartbeat.enqueue( 'brightcove_heartbeat', { 'accountId': wpbc.preload.defaultAccountId }, true );
+
 			var collection = new MediaCollection( [], {mediaType : options.mediaType} );
 			collection.reset();
 			/* Prevent empty element from living in our collection */
