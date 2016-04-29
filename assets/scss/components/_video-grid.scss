@@ -32,6 +32,17 @@
 
 .brightcove.media-frame-content, .playlist-edit-container {
 
+	.spinner {
+		display: block;
+		float: none;
+		margin: 0 auto;
+		visibility: visible;
+
+		&.hidden {
+			visibility: hidden;
+		}
+	}
+
 	.menu-visible {
 
 		.highlighted .thumbnail {

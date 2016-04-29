@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.2.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2016-03-29 17:06:23+00:00\n"
+"POT-Creation-Date: 2016-03-31 17:04:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,66 +18,66 @@ msgstr ""
 msgid "You do not have permission to use this Brightcove Account"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:59
-#: includes/admin/api/class-bc-admin-media-api.php:65
+#: includes/admin/api/class-bc-admin-media-api.php:60
+#: includes/admin/api/class-bc-admin-media-api.php:66
 msgid "Invalid Request"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:159
+#: includes/admin/api/class-bc-admin-media-api.php:160
 msgid "Type is not specified"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:165
-#: includes/admin/api/class-bc-admin-media-api.php:272
+#: includes/admin/api/class-bc-admin-media-api.php:166
+#: includes/admin/api/class-bc-admin-media-api.php:273
 msgid "No such account exists"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:214
+#: includes/admin/api/class-bc-admin-media-api.php:215
 msgid "Successfully updated "
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:218
+#: includes/admin/api/class-bc-admin-media-api.php:219
 msgid "Failed to sync with WordPress!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:222
+#: includes/admin/api/class-bc-admin-media-api.php:223
 msgid "Failed to update "
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:249
+#: includes/admin/api/class-bc-admin-media-api.php:250
 msgid "Type is not specified!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:265
+#: includes/admin/api/class-bc-admin-media-api.php:266
 msgid "Wrong type is specified!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:288
+#: includes/admin/api/class-bc-admin-media-api.php:289
 msgid "Unable to remove video from Brightcove!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:292
+#: includes/admin/api/class-bc-admin-media-api.php:293
 msgid "Successfully deleted your video."
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:302
+#: includes/admin/api/class-bc-admin-media-api.php:303
 msgid "Unable to remove playlist from Brightcove!"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:306
+#: includes/admin/api/class-bc-admin-media-api.php:307
 msgid "Successfully deleted your playlist."
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:377
+#: includes/admin/api/class-bc-admin-media-api.php:378
 msgid "Unable to process file, does it have a valid extension?"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:521
+#: includes/admin/api/class-bc-admin-media-api.php:522
 msgid "Invalid Search Type"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:18
-#: includes/admin/class-bc-templates.php:298
+#: includes/admin/class-bc-templates.php:300
 msgid "Brightcove"
 msgstr ""
 
@@ -87,9 +87,9 @@ msgid "Brightcove Videos"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:19
-#: includes/admin/class-bc-templates.php:303
-#: includes/admin/class-bc-templates.php:483
-#: includes/admin/class-bc-templates.php:581
+#: includes/admin/class-bc-templates.php:305
+#: includes/admin/class-bc-templates.php:485
+#: includes/admin/class-bc-templates.php:583
 msgid "Videos"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Brightcove Playlists"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:20
-#: includes/admin/class-bc-templates.php:303
+#: includes/admin/class-bc-templates.php:305
 msgid "Playlists"
 msgstr ""
 
@@ -273,247 +273,247 @@ msgstr ""
 msgid "the Brightcove Status page"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:44
+#: includes/admin/class-bc-templates.php:46
 msgid "Move up"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:45
+#: includes/admin/class-bc-templates.php:47
 msgid "Move Down"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:46
-#: includes/admin/class-bc-templates.php:130
-#: includes/admin/class-bc-templates.php:153
+#: includes/admin/class-bc-templates.php:48
+#: includes/admin/class-bc-templates.php:132
+#: includes/admin/class-bc-templates.php:155
 msgid "Remove"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:70
+#: includes/admin/class-bc-templates.php:72
 msgid "Add to playlist"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:80
+#: includes/admin/class-bc-templates.php:82
 msgid "Playlist Name"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:82
-#: includes/admin/class-bc-templates.php:257
-#: includes/admin/class-bc-templates.php:557
+#: includes/admin/class-bc-templates.php:84
+#: includes/admin/class-bc-templates.php:259
+#: includes/admin/class-bc-templates.php:559
 msgid "Back"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:102
-#: includes/admin/class-bc-templates.php:394
+#: includes/admin/class-bc-templates.php:104
+#: includes/admin/class-bc-templates.php:396
 msgid "Name"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:106
+#: includes/admin/class-bc-templates.php:108
 msgid "Description"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:110
+#: includes/admin/class-bc-templates.php:112
 msgid "Long Description"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:115
-#: includes/admin/class-bc-templates.php:398
+#: includes/admin/class-bc-templates.php:117
+#: includes/admin/class-bc-templates.php:400
 msgid "Tags"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:119
+#: includes/admin/class-bc-templates.php:121
 msgid "Poster (Sugg. 480x360px)"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:136
-#: includes/admin/class-bc-templates.php:159
-#: includes/admin/class-bc-templates.php:174 includes/class-bc-setup.php:205
+#: includes/admin/class-bc-templates.php:138
+#: includes/admin/class-bc-templates.php:161
+#: includes/admin/class-bc-templates.php:176 includes/class-bc-setup.php:205
 msgid "Select File"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:142
+#: includes/admin/class-bc-templates.php:144
 msgid "Thumbnail (Sugg. 120x90px)"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:168
+#: includes/admin/class-bc-templates.php:170
 msgid "Closed Captions"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:172 includes/class-bc-setup.php:203
+#: includes/admin/class-bc-templates.php:174 includes/class-bc-setup.php:203
 msgid "Add Another Caption"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:179
+#: includes/admin/class-bc-templates.php:181
 msgid "Add another remote caption file"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:181
+#: includes/admin/class-bc-templates.php:183
 msgid "Use a remote caption file instead"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:192
-#: includes/admin/class-bc-templates.php:221
+#: includes/admin/class-bc-templates.php:194
+#: includes/admin/class-bc-templates.php:223
 msgid "Language"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:203
-#: includes/admin/class-bc-templates.php:230
+#: includes/admin/class-bc-templates.php:205
+#: includes/admin/class-bc-templates.php:232
 msgid "Label"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:208
+#: includes/admin/class-bc-templates.php:210
 msgid "Remove Caption"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:215
+#: includes/admin/class-bc-templates.php:217
 msgid "File Source"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:235
+#: includes/admin/class-bc-templates.php:237
 msgid "Delete Caption"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:245
+#: includes/admin/class-bc-templates.php:247
 msgid "Change History"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:246
+#: includes/admin/class-bc-templates.php:248
 msgid "Nothing yet ..."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:252
+#: includes/admin/class-bc-templates.php:254
 msgid "Delete"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:258
+#: includes/admin/class-bc-templates.php:260
 msgid "Save and Sync Changes"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:293
+#: includes/admin/class-bc-templates.php:295
 msgid "Close media panel"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:303
+#: includes/admin/class-bc-templates.php:305
 msgid "Upload Files"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:313
+#: includes/admin/class-bc-templates.php:315
 msgid "Edit Selection"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:313
+#: includes/admin/class-bc-templates.php:315
 msgid "Clear"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:321
+#: includes/admin/class-bc-templates.php:323
 msgid "Insert Into Post"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:329
-#: includes/admin/class-bc-templates.php:419
+#: includes/admin/class-bc-templates.php:331
+#: includes/admin/class-bc-templates.php:421
 msgid "Drop files to upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:355
-#: includes/admin/class-bc-templates.php:390
+#: includes/admin/class-bc-templates.php:357
+#: includes/admin/class-bc-templates.php:392
 msgid "File Name"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:356
+#: includes/admin/class-bc-templates.php:358
 msgid "Size"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:357
-#: includes/admin/class-bc-templates.php:402
+#: includes/admin/class-bc-templates.php:359
+#: includes/admin/class-bc-templates.php:404
 msgid "Source"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:358
+#: includes/admin/class-bc-templates.php:360
 msgid "Progress"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:365
+#: includes/admin/class-bc-templates.php:367
 msgid "Start Upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:428
+#: includes/admin/class-bc-templates.php:430
 msgid "Upload Limit Exceeded"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:431
+#: includes/admin/class-bc-templates.php:433
 msgid "Drop files anywhere to upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:433
+#: includes/admin/class-bc-templates.php:435
 msgid "Select Files"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:448
+#: includes/admin/class-bc-templates.php:450
 msgid "Maximum upload file size: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:450
+#: includes/admin/class-bc-templates.php:452
 msgid ""
 "Please reference the readme.txt file of this plugin for further information "
 "on upload file size limits."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:481
-#: includes/admin/class-bc-templates.php:579
+#: includes/admin/class-bc-templates.php:483
+#: includes/admin/class-bc-templates.php:581
 msgid "Video"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:486
-#: includes/admin/class-bc-templates.php:584
+#: includes/admin/class-bc-templates.php:488
+#: includes/admin/class-bc-templates.php:586
 msgid "Smart"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:498
-#: includes/admin/class-bc-templates.php:559
-#: includes/admin/class-bc-templates.php:599
+#: includes/admin/class-bc-templates.php:500
+#: includes/admin/class-bc-templates.php:561
+#: includes/admin/class-bc-templates.php:601
 msgid "Edit"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:499
-#: includes/admin/class-bc-templates.php:560
+#: includes/admin/class-bc-templates.php:501
+#: includes/admin/class-bc-templates.php:562
 msgid "Preview"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:535
+#: includes/admin/class-bc-templates.php:537
 msgid "Source: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:536
+#: includes/admin/class-bc-templates.php:538
 msgid "Video ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:543
+#: includes/admin/class-bc-templates.php:545
 msgid "Video Player: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:591
+#: includes/admin/class-bc-templates.php:593
 msgid "Playlist ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:592
+#: includes/admin/class-bc-templates.php:594
 msgid "Account Name: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:593
+#: includes/admin/class-bc-templates.php:595
 msgid "Created At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:594
+#: includes/admin/class-bc-templates.php:596
 msgid "Updated At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:595
+#: includes/admin/class-bc-templates.php:597
 msgid "Playlist Type: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:652
+#: includes/admin/class-bc-templates.php:654
 msgid "the Brightcove Documentation page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:653
+#: includes/admin/class-bc-templates.php:655
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -1411,7 +1411,7 @@ msgstr ""
 msgid "http://10up.com"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:432
+#: includes/admin/class-bc-templates.php:434
 msgctxt "Uploader: Drop files here - or - Select Files"
 msgid "or"
 msgstr ""

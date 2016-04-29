@@ -35,6 +35,7 @@ var MediaCollectionView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'fetch:finished', function () {
 				this.fetchingResults = false;
 			} );
+
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
 			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
@@ -103,6 +104,11 @@ var MediaCollectionView = BrightcoveView.extend(
 		},
 
 		render : function () {
+			// hide the spinner when content has finished loading
+			this.listenTo( wpbc.broadcast, 'spinner:off', function() {
+				$( '#js-media-loading' ).css( 'display', 'none' );
+			} );
+
 			this.$el.empty();
 			this.collection.each( function ( mediaModel ) {
 				mediaModel.view = new MediaView( {model : mediaModel} );
@@ -110,6 +116,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				mediaModel.view.render();
 				mediaModel.view.delegateEvents();
 				mediaModel.view.$el.appendTo( this.$el );
+
+				wpbc.broadcast.trigger( 'spinner:off' );
 			}, this );
 		},
 
