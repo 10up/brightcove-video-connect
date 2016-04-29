@@ -83,6 +83,9 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
+add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
+
+//add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) ); // @TODO Verify API as errors don't seem to match the documentation
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 
@@ -97,6 +100,7 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 
 // Add WP-CLI Support (should be before init).
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php' );
 
 // Check Brightcove status if is_admin().
 if ( is_admin() ) {
@@ -104,4 +108,18 @@ if ( is_admin() ) {
 	require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-status-warning.php' );
 	new BC_Status_Warning();
 
+}
+
+// Upgrade routine
+$installed = get_option( 'brightcove_version' );
+if ( ! $installed || version_compare( $installed, BRIGHTCOVE_VERSION, '<' ) ) {
+	/**
+	 * Upgrade the Brightcove installation to add missing settings or event listeners.
+	 * 
+	 * @param string $installed
+	 */
+	do_action( 'brightcove_upgrade', $installed );
+
+	// Store the version installed for later
+	add_option( 'brightcove_version', BRIGHTCOVE_VERSION, '', 'yes' );
 }

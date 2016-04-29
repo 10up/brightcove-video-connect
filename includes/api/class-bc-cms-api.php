@@ -482,8 +482,9 @@ class BC_CMS_API extends BC_API {
 	 */
 	public function video_upload( $video_id, $video_url, $profile = 'videocloud-default-v1' ) {
 
-		$data           = array( 'profile' => sanitize_text_field( $profile ) );
-		$data['master'] = array( 'url' => esc_url_raw( $video_url ) );
+		$data              = array( 'profile' => sanitize_text_field( $profile ) );
+		$data['master']    = array( 'url' => esc_url_raw( $video_url ) );
+		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
 	}
@@ -508,6 +509,7 @@ class BC_CMS_API extends BC_API {
 
 		// Build out the data
 		$data = array();
+		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		$data['poster'] = array(
 			'url' => esc_url_raw( $poster_url ),
@@ -544,6 +546,7 @@ class BC_CMS_API extends BC_API {
 
 		// Build out the data
 		$data = array();
+		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		$data['thumbnail'] = array(
 			'url' => esc_url_raw( $thumbnail_url ),
@@ -592,7 +595,8 @@ class BC_CMS_API extends BC_API {
 	 */
 	public function text_track_upload( $video_id, $text_tracks ) {
 		// Prepare data
-		$data = array();
+		$data                = array();
+		$data['callbacks']   = BC_Notification_API::callback_paths();
 		$data['text_tracks'] = array();
 		foreach( $text_tracks as $track ) {
 			$data['text_tracks'][] = $track->toArray();
@@ -611,5 +615,44 @@ class BC_CMS_API extends BC_API {
 		$results = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/video_fields' ) );
 
 		return $results;
+	}
+
+	/**
+	 * Subscribe to Brightcove API events
+	 * 
+	 * @param string $endpoint
+	 * @param array  $events
+	 * 
+	 * @return string|bool Subscription ID on success, false on failure
+	 */
+	public function create_subscription( $endpoint, $events = array() ) {
+		$data = array();
+		$data['endpoint'] = $endpoint;
+		
+		// Sanitize events
+		$events = array_map( 'sanitize_text_field', $events );
+		
+		$data['events'] = $events;
+
+		$response = $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
+g
+		if ( false === $response || ! isset( $response['id'] ) ) {
+			return false;
+		}
+
+		return $response['id'];
+	}
+
+	/**
+	 * Unsubscribe from Brightcove API events
+	 *
+	 * @param string $subscription_id
+	 *
+	 * @return mixed|bool
+	 */
+	public function remove_subscription( $subscription_id ) {
+		$subscription_id = sanitize_text_field( $subscription_id );
+
+		$this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions/' . $subscription_id ), 'DELETE' );
 	}
 }

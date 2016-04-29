@@ -2,8 +2,10 @@
 
 class BC_Setup {
 
+	/**
+	 * Generic bootstrap function that is hooked into the default `init` method
+	 */
 	public static function action_init() {
-
 		global $bc_accounts;
 
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-errors.php' );
@@ -94,6 +96,12 @@ class BC_Setup {
 			new BC_Admin_Menu();
 
 		}
+
+		// Set up rewrites for the Brightcove callback endpoint
+		add_rewrite_tag( '%bc-api%', '([^&]+)' );
+		add_rewrite_rule( 'bc-api$', 'index.php?bc-api=1', 'top' );
+
+		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
 	}
 
 	public static function add_brightcove_media_button() {
@@ -338,5 +346,29 @@ class BC_Setup {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Hijack requests for potential callback processing.
+	 *
+	 * @param \WP_Query $query Main query instance.
+	 */
+	public static function redirect( $query ) {
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+
+		$type = get_query_var( 'bc-api' );
+		if ( empty( $type ) ) {
+			return;
+		}
+
+		/**
+		 * Fire an action when a request comes in to the /bc-api endpoint.
+		 */
+		do_action( 'brightcove_api_request' );
+
+		// Kill the response immediately
+		die;
 	}
 }
