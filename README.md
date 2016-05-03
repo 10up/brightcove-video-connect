@@ -57,6 +57,12 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.2.1
+* Enhancement: Add `brightcove_video_html` filter
+* Enhancement: Add support for the Heartbeat API
+* Fix: Issue where playlist shortcode was mistakenly inserted
+* Fix: Issue where spinners would not show on first load
+
 ##### 1.2.0
 * Enhancement: Enable the presentation and control of custom fields on uploaded videos
 * Enhancement: Add support for custom video player selection during publication
