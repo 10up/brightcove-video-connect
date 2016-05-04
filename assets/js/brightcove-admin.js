@@ -794,23 +794,32 @@ var ToolbarView = BrightcoveView.extend(
 			// Searches of fewer than three characters return no results.
 			if ( event.target.value.length > 2 ) {
 
-				// Trigger a search when the user pauses typing for one second.
-				_.debounce( _.bind( function(){
-					this.model.set( 'search', event.target.value );
-					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
-				}, this ), 1000 )();
-
 				// Enter / Carriage Return triggers immediate search.
-				if ( event.keyCode === 13 ) {
-					this.model.set( 'search', event.target.value );
-					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+				// But we only search if the search term has changed.
+				if ( event.keyCode === 13 && event.target.value !== this.model.get( 'search' ) ) {
+					this.model.set('search', event.target.value);
+					wpbc.broadcast.trigger('change:searchTerm', event.target.value);
+				} else {
+					// Trigger a search when the user pauses typing for one second.
+					this.throttledAutoSearch( event );
+
 				}
 			} else if ( 0 === event.target.value.length ) {
 				this.model.set( 'search', '' );
 				wpbc.broadcast.trigger( 'change:searchTerm', '' );
 
 			}
-		}
+		},
+
+		/**
+		 * Throttled search handler, called when the search handler receives a non Carriage Return KeyUp
+		 */
+		throttledAutoSearch : _.debounce( function( event ){
+			if ( event.target.value !== this.model.get( 'search' ) ) {
+				this.model.set( 'search', event.target.value );
+				wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+			}
+		}, 1000 )
 	}
 );
 
