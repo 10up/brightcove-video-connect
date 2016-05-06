@@ -47,7 +47,10 @@ The plugin simply pulls information directly from the Brightcove API for display
 ##### How can I increase Maximum upload file size?
 Maximum file size is determined by your webserver and PHP configuration. You need to set the value of upload_max_filesize and post_max_size in your php.ini. php_ini_loaded_file() can help you find where your PHP.ini is located.
 
-##### How do I enable change tracking so I can see who updated a video and when they did it? =
+##### How do I add custom fields?
+Custom fields must be created within your Brightcove Video Cloud account. Once created, the fields will be available within WordPress.
+
+##### How do I enable change tracking so I can see who updated a video and when they did it?
 Create a custom field of type 'text' with an internal name of '_change_history'. Whenever a video is updated, the username and current time will be added to a list of changes recorded in this field.
 
 For nginx:
