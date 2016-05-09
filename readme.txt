@@ -15,7 +15,7 @@ Brightcove integration plugin, manage your Brightcove video cloud from within Wo
 
 Are you looking to handle your Brightcove Video and Playlist library natively from within WordPress?
 
-With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within theWordPress admin interface.
+With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
 
 == Support Notice ==
 
