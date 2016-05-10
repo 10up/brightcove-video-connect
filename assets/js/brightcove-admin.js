@@ -2349,7 +2349,8 @@ var VideoEditView = BrightcoveView.extend(
 			this.$el.find( '.caption-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
 				var caption   = $( this ),
 					fileName  = caption.find( '.brightcove-captions' ).val(),
-					extension = fileName.split('.').pop();
+					extension = fileName.split( '?' )[0], // if the URL has a query string, strip it before validating filetype
+					extension = extension.split( '.' ).pop();
 
 				if ( 'vtt' === extension ) {
 					captions.push(
