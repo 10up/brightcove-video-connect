@@ -226,9 +226,8 @@ div.brightcove-message {
 .brightcove.media-frame-content, .playlist-edit-container {
   background-color: transparent; }
   .brightcove.media-frame-content .spinner, .playlist-edit-container .spinner {
-    display: block;
-    float: none;
-    margin: 0 auto;
+    display: inline-block;
+    margin: 7px;
     visibility: visible; }
     .brightcove.media-frame-content .spinner.hidden, .playlist-edit-container .spinner.hidden {
       visibility: hidden; }
