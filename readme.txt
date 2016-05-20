@@ -188,6 +188,19 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.2.2 =
+* Fix: Add strict parameter to use of `in_array`
+* Fix: Add .avi to list of accepted MIMEtypes
+* Fix: Issue where caption file types were deemed invalid if they had a query string attached
+* Fix: Add fallback to default player for playlist rendering
+* Fix: Issue where search would leave an empty screen
+
+= 1.2.1 =
+* Enhancement: Add brightcove_video_html filter
+* Enhancement: Add support for the Heartbeat API
+* Fix: Issue where playlist shortcode was mistakenly inserted
+* Fix: Issue where spinners would not show on first load
+
 = 1.2.0 =
 * Enhancement: Enable the presentation and control of custom fields on uploaded videos
 * Enhancement: Add support for custom video player selection during publication

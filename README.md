@@ -60,6 +60,13 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.2.2
+* Fix: Add strict parameter to use of `in_array`
+* Fix: Add .avi to list of accepted MIMEtypes
+* Fix: Issue where caption file types were deemed invalid if they had a query string attached
+* Fix: Add fallback to default player for playlist rendering
+* Fix: Issue where search would leave an empty screen
+
 ##### 1.2.1
 * Enhancement: Add `brightcove_video_html` filter
 * Enhancement: Add support for the Heartbeat API
