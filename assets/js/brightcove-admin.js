@@ -424,6 +424,8 @@ var MediaCollection = Backbone.Collection.extend(
 				this.pageNumber --;
 			}
 			wpbc.broadcast.trigger( 'fetch:finished' );
+			wpbc.broadcast.trigger( 'spinner:off' );
+			wpbc.broadcast.trigger( 'fetch:apiError' );
 			if ( 'abort' === status ) {
 				return;
 			}
@@ -441,7 +443,8 @@ var MediaCollection = Backbone.Collection.extend(
 		parse : function ( response, status, request, checksum ) {
 			wpbc.broadcast.trigger( 'fetch:finished' );
 			wpbc.broadcast.trigger( 'spinner:off' );
-			if ( ! _.contains( ['success', 'cached'], status ) ) {
+			if ( ! _.contains( ['success', 'cached'], status ) || ! response['success'] ) {
+				wpbc.broadcast.trigger( 'fetch:apiError' );
 				return false;
 			}
 
@@ -2557,6 +2560,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				this.fetchingResults = false;
 			} );
 
+			this.listenTo( wpbc.broadcast, 'fetch:apiError', this.handleAPIError );
+
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
 			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
@@ -2622,6 +2627,10 @@ var MediaCollectionView = BrightcoveView.extend(
 				// attachments get proper width applied.
 				_.defer( this.setColumns, this );
 			}
+		},
+
+		handleAPIError: function() {
+			this.el.innerText = wpbc.str_apifailure;
 		},
 
 		render : function () {

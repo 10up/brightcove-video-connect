@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.2.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2016-06-01 17:39:18+00:00\n"
+"POT-Creation-Date: 2016-06-03 17:43:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Unable to process file, does it have a valid extension?"
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:522
+#: includes/admin/api/class-bc-admin-media-api.php:523
 msgid "Invalid Search Type"
 msgstr ""
 
@@ -653,15 +653,21 @@ msgstr ""
 msgid "Use a remote file instead"
 msgstr ""
 
-#: includes/class-bc-setup.php:312
+#: includes/class-bc-setup.php:215
+msgid ""
+"Sorry! We weren't able to reach the Brightcove API even after trying a few "
+"times. Please try refreshing the page."
+msgstr ""
+
+#: includes/class-bc-setup.php:313
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:314
+#: includes/class-bc-setup.php:315
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:341
+#: includes/class-bc-setup.php:342
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "

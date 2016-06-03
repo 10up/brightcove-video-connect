@@ -526,6 +526,8 @@ class BC_Admin_Media_API {
 
 		global $bc_accounts;
 
+		$tries = apply_filters( 'wpbc_api_tries', 3 );
+
 		if ( 'videos' === $type ) {
 
 			$query_terms = array();
@@ -565,8 +567,21 @@ class BC_Admin_Media_API {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 
-			// Get a list of videos
-			$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, 'updated_at' );
+			// Get a list of videos.
+
+			for ( $i = 0; $i < $tries; $i++ ) {
+				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, 'updated_at' );
+
+				if ( ! is_wp_error( $results ) ) {
+					break;
+				} else {
+					sleep( 1 ); // Sleep for 1 second on a failure
+				}
+			}
+
+			if ( is_wp_error( $results ) ) {
+				wp_send_json_error();
+			}
 
 			/**
 			 * Since we use the video_list to fetch the videos for a playlist, it returns them to us
@@ -598,11 +613,36 @@ class BC_Admin_Media_API {
 		} else {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
-			$results = $this->cms_api->playlist_list();
+
+			for ( $i = 0; $i < $tries; $i++ ) {
+				$results = $this->cms_api->playlist_list();
+
+				if ( ! is_wp_error( $results ) ) {
+					break;
+				} else {
+					sleep( 1 ); // Sleep for 1 second on a failure
+				}
+			}
+
+			if ( is_wp_error( $results ) ) {
+				wp_send_json_error();
+			}
 		}
 
 		// Get a list of available custom fields
-		$fields = $this->cms_api->video_fields();
+		for ( $i = 0; $i < $tries; $i++ ) {
+			$fields = $this->cms_api->video_fields();
+
+			if ( ! is_wp_error( $fields ) ) {
+				break;
+			} else {
+				sleep( 1 ); // Sleep for 1 second on a failure
+			}
+		}
+
+		if ( is_wp_error( $fields ) ) {
+			wp_send_json_error();
+		}
 
 		// Loop through results to remap items
 		foreach( $results as &$result ) {
