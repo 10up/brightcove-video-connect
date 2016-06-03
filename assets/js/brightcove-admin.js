@@ -443,7 +443,7 @@ var MediaCollection = Backbone.Collection.extend(
 		parse : function ( response, status, request, checksum ) {
 			wpbc.broadcast.trigger( 'fetch:finished' );
 			wpbc.broadcast.trigger( 'spinner:off' );
-			if ( ! _.contains( ['success', 'cached'], status ) || ! response['success'] ) {
+			if ( ! _.contains( ['success', 'cached'], status ) || ( 'cached' !== status && ! response['success'] ) ) {
 				wpbc.broadcast.trigger( 'fetch:apiError' );
 				return false;
 			}
