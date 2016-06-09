@@ -63,7 +63,7 @@
 					playlistWidth = 500;
 				}
 
-				var player_id = bctiny.playlistEnabledPlayers[self.shortcode.attrs.named.account_id][0];
+				var player_id = bctiny.playlistEnabledPlayers[self.shortcode.attrs.named.account_id][0] || 'default';
 				self.content  = '<iframe style="width: ' + playlistWidth + 'px; height: ' + playlistHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/' + player_id + '_default/index.html?playlistId=' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.playlist_id ) + '" width="645" height="352" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
 				// add allowfullscreen attribute to main iframe to allow video preview in full screen
 				if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
@@ -119,7 +119,7 @@
 						playlistWidth = 500;
 					}
 
-					var player_id = bctiny.playlistEnabledPlayers[options.shortcode.attrs.named.account_id][0];
+					var player_id = bctiny.playlistEnabledPlayers[options.shortcode.attrs.named.account_id][0] || 'default';
 					this.content  = '<iframe style="width: ' + playlistWidth + 'px; height: ' + playlistHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.account_id ) + '/' + player_id + '_default/index.html?playlistId=' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.playlist_id ) + '" width="645" height="352" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
 					this.content = 'no';
 					// add allowfullscreen attribute to main iframe to allow video preview in full screen

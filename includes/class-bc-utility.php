@@ -422,6 +422,7 @@ class BC_Utility {
 			'mss'   => 'application/vnd.ms-sstr+xml',
 			'flv'   => 'video/x-flv',
 			'wmv'   => 'video/x-ms-wmv',
+			'avi'   => 'video/avi',
 
 		);
 	}

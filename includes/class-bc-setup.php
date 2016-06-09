@@ -212,6 +212,7 @@ class BC_Setup {
 			'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),
 			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
 			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
+			'str_apifailure'  => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );

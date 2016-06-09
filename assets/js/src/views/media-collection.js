@@ -36,6 +36,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				this.fetchingResults = false;
 			} );
 
+			this.listenTo( wpbc.broadcast, 'fetch:apiError', this.handleAPIError );
+
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
 			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
@@ -101,6 +103,10 @@ var MediaCollectionView = BrightcoveView.extend(
 				// attachments get proper width applied.
 				_.defer( this.setColumns, this );
 			}
+		},
+
+		handleAPIError: function() {
+			this.el.innerText = wpbc.str_apifailure;
 		},
 
 		render : function () {

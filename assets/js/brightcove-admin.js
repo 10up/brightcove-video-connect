@@ -424,6 +424,8 @@ var MediaCollection = Backbone.Collection.extend(
 				this.pageNumber --;
 			}
 			wpbc.broadcast.trigger( 'fetch:finished' );
+			wpbc.broadcast.trigger( 'spinner:off' );
+			wpbc.broadcast.trigger( 'fetch:apiError' );
 			if ( 'abort' === status ) {
 				return;
 			}
@@ -441,7 +443,8 @@ var MediaCollection = Backbone.Collection.extend(
 		parse : function ( response, status, request, checksum ) {
 			wpbc.broadcast.trigger( 'fetch:finished' );
 			wpbc.broadcast.trigger( 'spinner:off' );
-			if ( ! _.contains( ['success', 'cached'], status ) ) {
+			if ( ! _.contains( ['success', 'cached'], status ) || ( 'cached' !== status && ! response['success'] ) ) {
+				wpbc.broadcast.trigger( 'fetch:apiError' );
 				return false;
 			}
 
@@ -794,23 +797,32 @@ var ToolbarView = BrightcoveView.extend(
 			// Searches of fewer than three characters return no results.
 			if ( event.target.value.length > 2 ) {
 
-				// Trigger a search when the user pauses typing for one second.
-				_.debounce( _.bind( function(){
-					this.model.set( 'search', event.target.value );
-					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
-				}, this ), 1000 )();
-
 				// Enter / Carriage Return triggers immediate search.
-				if ( event.keyCode === 13 ) {
-					this.model.set( 'search', event.target.value );
-					wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+				// But we only search if the search term has changed.
+				if ( event.keyCode === 13 && event.target.value !== this.model.get( 'search' ) ) {
+					this.model.set('search', event.target.value);
+					wpbc.broadcast.trigger('change:searchTerm', event.target.value);
+				} else {
+					// Trigger a search when the user pauses typing for one second.
+					this.throttledAutoSearch( event );
+
 				}
 			} else if ( 0 === event.target.value.length ) {
 				this.model.set( 'search', '' );
 				wpbc.broadcast.trigger( 'change:searchTerm', '' );
 
 			}
-		}
+		},
+
+		/**
+		 * Throttled search handler, called when the search handler receives a non Carriage Return KeyUp
+		 */
+		throttledAutoSearch : _.debounce( function( event ){
+			if ( event.target.value !== this.model.get( 'search' ) ) {
+				this.model.set( 'search', event.target.value );
+				wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
+			}
+		}, 1000 )
 	}
 );
 
@@ -2340,7 +2352,8 @@ var VideoEditView = BrightcoveView.extend(
 			this.$el.find( '.caption-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
 				var caption   = $( this ),
 					fileName  = caption.find( '.brightcove-captions' ).val(),
-					extension = fileName.split('.').pop();
+					extension = fileName.split( '?' )[0], // if the URL has a query string, strip it before validating filetype
+					extension = extension.split( '.' ).pop();
 
 				if ( 'vtt' === extension ) {
 					captions.push(
@@ -2547,6 +2560,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				this.fetchingResults = false;
 			} );
 
+			this.listenTo( wpbc.broadcast, 'fetch:apiError', this.handleAPIError );
+
 			var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 			this.scrollHandler           = _.chain( this.scrollHandler ).bind( this ).throttle( scrollRefreshSensitivity ).value();
 			this.listenTo( wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler );
@@ -2612,6 +2627,10 @@ var MediaCollectionView = BrightcoveView.extend(
 				// attachments get proper width applied.
 				_.defer( this.setColumns, this );
 			}
+		},
+
+		handleAPIError: function() {
+			this.el.innerText = wpbc.str_apifailure;
 		},
 
 		render : function () {

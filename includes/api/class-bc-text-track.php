@@ -42,7 +42,7 @@ class BC_Text_Track {
 	public function __construct( $url, $language = 'en-US', $kind = 'captions', $label = '', $default = false ) {
 		$this->url = esc_url_raw( $url );
 		$this->srcLang = sanitize_text_field( $language );
-		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ) ) ) {
+		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ), true ) ) {
 			$this->kind = 'captions';
 		} else {
 			$this->kind = $kind;

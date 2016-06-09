@@ -4,8 +4,8 @@ Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghaky
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to:      4.5
-Stable tag:        1.2.1
+Tested up to:      4.5.2
+Stable tag:        1.2.3
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Brightcove integration plugin, manage your Brightcove video cloud from within Wo
 
 Are you looking to handle your Brightcove Video and Playlist library natively from within WordPress?
 
-With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within theWordPress admin interface.
+With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
 
 == Support Notice ==
 
@@ -187,6 +187,22 @@ Sample Video
 http://sample-videos.com/
 
 == Changelog ==
+
+= 1.2.3 =
+* Fix: Issue where API calls could fail silently
+
+= 1.2.2 =
+* Fix: Add strict parameter to use of `in_array`
+* Fix: Add .avi to list of accepted MIMEtypes
+* Fix: Issue where caption file types were deemed invalid if they had a query string attached
+* Fix: Add fallback to default player for playlist rendering
+* Fix: Issue where search would leave an empty screen
+
+= 1.2.1 =
+* Enhancement: Add brightcove_video_html filter
+* Enhancement: Add support for the Heartbeat API
+* Fix: Issue where playlist shortcode was mistakenly inserted
+* Fix: Issue where spinners would not show on first load
 
 = 1.2.0 =
 * Enhancement: Enable the presentation and control of custom fields on uploaded videos
