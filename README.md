@@ -60,6 +60,9 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.2.3
+* Fix: Issue where API calls could fail silently
+
 ##### 1.2.2
 * Fix: Add strict parameter to use of `in_array`
 * Fix: Add .avi to list of accepted MIMEtypes

@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.5.2
-Stable tag:        1.2.2
+Stable tag:        1.2.3
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,9 @@ Sample Video
 http://sample-videos.com/
 
 == Changelog ==
+
+= 1.2.3 =
+* Fix: Issue where API calls could fail silently
 
 = 1.2.2 =
 * Fix: Add strict parameter to use of `in_array`
