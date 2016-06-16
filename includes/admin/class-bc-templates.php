@@ -256,8 +256,6 @@ class BC_Admin_Templates {
 
 				<span class="more-actions">
 					<span class="spinner hidden"></span>
-					<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
-					<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
 				</span>
 			</div>
 		</script>
@@ -302,7 +300,9 @@ class BC_Admin_Templates {
                   </div>
                   <div class="media-frame-router">
                     <div class="media-router">
-                      <a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' )?></a><a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' )?></a><a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' )?></a>
+	                    <a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' )?></a>
+	                    <a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' )?></a>
+	                    <a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' )?></a>
                     </div>
                   </div>
                   <div class="media-frame-content">
@@ -310,6 +310,7 @@ class BC_Admin_Templates {
                   <div class="media-frame-toolbar">
                     <div class="media-toolbar">
                       <div class="media-toolbar-secondary">
+	                      <a href="#" class="button button-secondary button-large media-button brightcove back" style="display:none;"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
                         <div class="media-selection empty">
                           <div class="selection-info">
                             <span class="count">0 selected</span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
@@ -320,7 +321,8 @@ class BC_Admin_Templates {
                         </div>
                       </div>
                       <div class="media-toolbar-primary search-form">
-                        <a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
+	                      <a href="#" class="button button-primary button-large media-button brightcove save-sync" style="display:none;"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+	                      <a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
                       </div>
                     </div>
                   </div>
