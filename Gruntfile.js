@@ -66,7 +66,8 @@ module.exports = function ( grunt ) {
 
 						// Wrap our scripts to limit their scope.
 						banner: '( function( $ ){\n',
-						footer: '\n} )( jQuery );'
+						footer: '\n} )( jQuery );',
+						sourceMap: true
 					},
 
 					files : {
