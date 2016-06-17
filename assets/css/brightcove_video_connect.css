@@ -425,6 +425,13 @@ div.brightcove-uploader div.brightcove-messages .updated {
 .brightcove.video-edit .image-preview,
 .brightcove.video-edit .setting {
   margin-bottom: 8px; }
+  .brightcove.video-edit .image-preview .description,
+  .brightcove.video-edit .setting .description {
+    margin-left: 0px; }
+    @media screen and (min-width: 900px) {
+      .brightcove.video-edit .image-preview .description,
+      .brightcove.video-edit .setting .description {
+        margin-left: 252px; } }
 
 .brightcove.video-edit .setting-content,
 .brightcove.video-edit select {
