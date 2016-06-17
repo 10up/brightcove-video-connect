@@ -34,7 +34,8 @@ class BC_Admin_Templates {
 							<img src="{{data.images.thumbnail.src}}" width="162" height="94">
 						<# } else { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" width="162" height="94">
-						<# } #>
+							<span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span>
+							<# } #>
 						<div class="duration">
 							<span>{{data.duration}}</span>
 						</div>
@@ -61,7 +62,8 @@ class BC_Admin_Templates {
 						<img src="{{data.images.thumbnail.src}}" width="162" height="94">
 					<# } else { #>
 						<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" width="162" height="94">
-					<# } #>
+						<span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span>
+						<# } #>
 					<div class="duration">
 						<span>{{data.duration}}</span>
 					</div>
@@ -471,6 +473,7 @@ class BC_Admin_Templates {
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
 						<# } else { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
+							<span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span>
 						<# } #>
 					<# } #>
 					<# if ( data.duration ) { #>
@@ -527,7 +530,8 @@ class BC_Admin_Templates {
 						<img src="{{ data.images.poster.src }}" class="detail-icon" draggable="false" width="300" height="172"  />
 					<# } else { #>
 						<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="detail-icon" draggable="false" width="300" height="172"  />
-					<# } #>
+						<span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span>
+						<# } #>
 					<# if ( data.duration ) { #>
 						<div class="detail-duration">
 							<span>{{ data.duration }}</span>
