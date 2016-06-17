@@ -102,16 +102,15 @@ class BC_Admin_Templates {
 			<div class="settings">
 				<label class="setting video-name">
 					<span class="name"><?php esc_html_e( 'Name', 'brightcove' )?></span>
-					<input type="text" class="brightcove-name" value="{{data.name}}" />
+					<input type="text" class="brightcove-name" maxlength="255" value="{{data.name}}" />
 				</label>
 				<label class="setting short-description">
 					<span class="name"><?php esc_html_e( 'Description', 'brightcove' )?></span>
-					<textarea class="brightcove-description">{{data.description}}</textarea>
+					<textarea class="brightcove-description" maxlength="250">{{data.description}}</textarea>
 				</label>
 				<label class="setting long-description">
 					<span class="name"><?php esc_html_e( 'Long Description', 'brightcove' )?></span>
-					<textarea class="brightcove-long-description">{{data.long_description}}</textarea>
-
+					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
 				</label>
 				<label class="setting tags">
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
