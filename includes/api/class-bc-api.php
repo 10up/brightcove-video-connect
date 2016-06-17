@@ -225,7 +225,7 @@ abstract class BC_API {
 				} else {
 					$this->errors[] = array(
 						'url'   => $url,
-						'error' => new WP_Error( 'unauthorized-oauth', 'API says permission denied, check your client ID and client secret' ),
+						'error' => new WP_Error( 'unauthorized-oauth', __( 'API says permission denied, check your client ID and client secret', 'brightcove' ) ),
 					);
 
 					return false;
