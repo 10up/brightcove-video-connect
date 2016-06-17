@@ -364,7 +364,7 @@ class BC_Admin_Templates {
 						</tbody>
 					</table>
 					<br>
-					<button class="brightcove-start-upload button action"><?php esc_html_e( 'Start Upload', 'brightcove' ); ?></button>
+					<button class="brightcove-start-upload button action button-primary button-large"><?php esc_html_e( 'Start Upload', 'brightcove' ); ?></button>
 				</div>
 			</div>
 			<div class="brightcove-messages"></div>
