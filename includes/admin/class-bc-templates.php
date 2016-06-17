@@ -349,6 +349,7 @@ class BC_Admin_Templates {
 
 		<?php /* Used by views/upload-video-manager.js */?>
 		<script type="text/html" id="tmpl-brightcove-uploader-queued-files">
+			<div class="brightcove-messages"></div>
 			<div class="brightcove-upload-queued-files">
 				<div class="pending-uploads">
 					<table class="wp-list-table widefat">
@@ -367,7 +368,6 @@ class BC_Admin_Templates {
 					<button class="brightcove-start-upload button action button-primary button-large"><?php esc_html_e( 'Start Upload', 'brightcove' ); ?></button>
 				</div>
 			</div>
-			<div class="brightcove-messages"></div>
 		</script>
 
 		<?php /* Used by views/upload.js */?>

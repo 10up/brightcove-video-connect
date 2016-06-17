@@ -1,7 +1,12 @@
-div.brightcove-message {
-  text-align: left; }
-  .brightcove-uploader div.brightcove-message.updated {
-    margin-top: 20px; }
+div.brightcove-messages {
+  text-align: left;
+  width: calc(100% - 4px); }
+  div.brightcove-messages .updated {
+    margin-left: 0px;
+    margin-bottom: 15px; }
+
+div.brightcove-uploader div.brightcove-messages .updated {
+  margin: 20px 15px 2px; }
 
 .brightcove-file-uploader {
   text-align: center; }
