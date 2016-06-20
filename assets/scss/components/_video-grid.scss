@@ -100,7 +100,7 @@
 				height   : auto;
 			}
 
-			span{
+			.processing{
 				position: absolute;
 				z-index: 9999;
 				top: 0px;
@@ -111,7 +111,14 @@
 				color: #fff;
 				font-size: 12px;
 				height: 100%;
-				line-height: 80px;
+				span{
+					position: absolute;
+					top: 50%;
+					margin-top: -9px;
+					width: 100%;
+					left: 0;
+					text-align: center;
+				}
 			}
 
 			.duration,
@@ -181,18 +188,6 @@
 
 }
 
-.media-modal{
-	.attachment-preview {
-		.thumbnail {
-			span {
-				line-height: 94px !important;
-			}
-		}
-	}
-}
-
-
-
 .brightcove.media-frame-menu {
 
 	height     : 100%;
@@ -211,18 +206,25 @@
 				height    : auto;
 			}
 
-			span{
+			.processing{
 				position: absolute;
 				z-index: 9999;
-				top: 0;
-				left: 0;
+				top: 0px;
+				left: 0px;
 				width: 100%;
 				text-align: center;
 				background: rgba(50,50,50,.7);
 				color: #fff;
-				font-size: 16px;
+				font-size: 12px;
 				height: 100%;
-				line-height: 174px;
+				span{
+					position: absolute;
+					top: 50%;
+					margin-top: -6px;
+					width: 100%;
+					left: 0;
+					text-align: center;
+				}
 			}
 
 			.detail-duration,
