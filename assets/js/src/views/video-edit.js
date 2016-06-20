@@ -5,9 +5,7 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :      'saveSync',
 			'click .brightcove.delete' :                'deleteVideo',
-			'click .brightcove.button.back' :           'back',
 			'click .setting .button' :                  'openMediaManager',
 			'click .attachment .check' :                'removeAttachment',
 			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
@@ -335,6 +333,9 @@ var VideoEditView = BrightcoveView.extend(
 					// Show the delete link.
 					$mediaFrame.find( '.delete-action' ).show();
 				} );
+
+			// Hide the video edit screen after save.
+			wpbc.broadcast.trigger( 'start:gridview' );
 		},
 
 		/**
@@ -343,6 +344,9 @@ var VideoEditView = BrightcoveView.extend(
 		 * @param {Object} options
 		 */
 		render : function ( options ) {
+			this.listenTo( wpbc.broadcast, 'save:media', this.saveSync );
+			this.listenTo( wpbc.broadcast, 'back:editvideo', this.back );
+
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
 
@@ -414,6 +418,5 @@ var VideoEditView = BrightcoveView.extend(
 				}
 			}
 		}
-
 	}
 );
