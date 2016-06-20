@@ -160,8 +160,8 @@ class BC_Status_Warning {
 
 		printf(
 			'<div class="error brightcove-service-error notice is-dismissible"><p>%s <a href="http://status.brightcove.com/" target="_blank">%s.</a> </p></div>',
-			esc_html__( 'One or more Brightcove services are reporting errors. This may effect your Brightcove experience. For more information please visit', 'brightcove-video-connect' ),
-			esc_html__( 'the Brightcove Status page', 'brightcove-video-connect' )
+			esc_html__( 'One or more Brightcove services are reporting errors. This may effect your Brightcove experience. For more information please visit', 'brightcove' ),
+			esc_html__( 'the Brightcove Status page', 'brightcove' )
 		);
 
 	}
