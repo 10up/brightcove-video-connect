@@ -103,10 +103,8 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.$el.html( this.template( options ) );
 			if ( this.collection.length ) {
 				this.$el.find( '.brightcove-start-upload' ).show();
-				console.log('show');
 			} else {
 				this.$el.find( '.brightcove-start-upload' ).hide();
-				console.log('hide');
 			}
 		}
 	}
