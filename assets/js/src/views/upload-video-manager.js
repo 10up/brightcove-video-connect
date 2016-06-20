@@ -25,6 +25,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'uploader:successMessage', this.successMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:errorMessage', this.errorMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
+			this.listenTo( wpbc.broadcast, 'upload:video', this.resetUploads );
 		},
 
 		resetUploads : function () {
@@ -102,8 +103,10 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.$el.html( this.template( options ) );
 			if ( this.collection.length ) {
 				this.$el.find( '.brightcove-start-upload' ).show();
+				console.log('show');
 			} else {
 				this.$el.find( '.brightcove-start-upload' ).hide();
+				console.log('hide');
 			}
 		}
 	}

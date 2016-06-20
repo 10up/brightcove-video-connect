@@ -854,6 +854,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'uploader:successMessage', this.successMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:errorMessage', this.errorMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
+			this.listenTo( wpbc.broadcast, 'upload:video', this.resetUploads );
 		},
 
 		resetUploads : function () {
@@ -921,6 +922,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 		},
 
 		render : function ( options ) {
+			console.log('render');
 			if ( this.collection.length ) {
 				this.template = wp.template( 'brightcove-uploader-queued-files' );
 			} else {
@@ -931,8 +933,10 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.$el.html( this.template( options ) );
 			if ( this.collection.length ) {
 				this.$el.find( '.brightcove-start-upload' ).show();
+				console.log('show');
 			} else {
 				this.$el.find( '.brightcove-start-upload' ).hide();
+				console.log('hide');
 			}
 		}
 	}
@@ -1274,15 +1278,15 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 		showUploader : function () {
 
-			if ( 'manager' === this.model.get( 'mode' ) ) {
+			//if ( 'manager' === this.model.get( 'mode' ) ) {
 
 				this.model.set( 'mode', 'uploader' );
 
-			} else {
+		//	} else {
 
-				this.model.set( 'mode', 'manager' );
+			//	this.model.set( 'mode', 'manager' );
 
-			}
+		//	}
 
 			this.render();
 
@@ -2881,6 +2885,7 @@ var MediaCollectionView = BrightcoveView.extend(
 			$('.brightcove-add-new-video').on('click', function(e) {
 				e.preventDefault();
 				wpbc.broadcast.trigger('upload:video');
+
 			});
 
 			$('.brightcove-add-media').on('click', function() {
