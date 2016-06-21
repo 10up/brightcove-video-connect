@@ -81,7 +81,11 @@ class BC_Accounts {
 		return update_option( $option_key_sync_type, $sync_val );
 	}
 
-	public function add_account( $account_id, $client_id, $client_secret, $account_name = 'New Account', $set_default = '', $allow_update = true ) {
+	public function add_account( $account_id, $client_id, $client_secret, $account_name = '', $set_default = '', $allow_update = true ) {
+
+		if ( empty( $account_name ) ) {
+			$account_name = __( 'New Account', 'brightcove' );
+		}
 
 		// Check if WP CLI is working and bail in admin if it is.
 		if ( defined( 'WP_CLI' ) && ! WP_CLI ) {
@@ -455,21 +459,21 @@ class BC_Accounts {
 		$cms_api = new BC_CMS_API();
 
 		// Create a video
-		$video_creation = $cms_api->video_add( 'Brightcove WordPress plugin test video' );
+		$video_creation = $cms_api->video_add( __( 'Brightcove WordPress plugin test video', 'brightcove' ) );
 		if ( ! $video_creation || is_wp_error( $video_creation ) ) {
 			$errors[] = new WP_Error( 'account-can-not-create-videos', esc_html__( 'Supplied account can not create videos', 'brightcove' ) );
 		} else {
 			$video_id = $video_creation['id'];
 
 			// Update a video
-			$renamed_title = 'Brightcove WordPress plugin test video renamed';
+			$renamed_title = __( 'Brightcove WordPress plugin test video renamed', 'brightcove' );
 			$video_renamed = $cms_api->video_update( $video_id, array( 'name' => $renamed_title ) );
 			if ( ! $video_renamed || $renamed_title !== $video_renamed['name'] ) {
 				$errors[] = new WP_Error( 'account-can-not-update-videos', esc_html__( 'Supplied account can not update videos', 'brightcove' ) );
 			}
 		}
 
-		$playlist = $cms_api->playlist_add( 'Brightcove WordPress plugin test playlist' );
+		$playlist = $cms_api->playlist_add( __( 'Brightcove WordPress plugin test playlist', 'brightcove' ) );
 		if ( ! $playlist || ! is_array( $playlist ) || ! isset( $playlist['id'] ) ) {
 			$errors[] = new WP_Error( 'account-can-not-create-playlists', esc_html__( 'Supplied account cannot create playlists', 'brightcove' ) );
 		} else {
