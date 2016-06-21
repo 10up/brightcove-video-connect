@@ -87,12 +87,12 @@ class BC_Admin_Templates {
 			</div>
 
 			<div class="playlist-videos-list">
-				<h2>Playlist videos</h2>
+				<h2><?php esc_html_e( 'Playlist videos', 'brightcove' );?></h2>
 				<ul class="existing-videos"></ul>
 			</div>
 
 			<div class="playlist-add-videos-list">
-				<h2>Video search</h2>
+				<h2><?php esc_html_e( 'Video search', 'brightcove' ); ?></h2>
 				<ul class="library-videos"></ul>
 			</div>
 		</script>
@@ -135,7 +135,7 @@ class BC_Admin_Templates {
 							<input type="hidden" class="brightcove-poster" value="{{data.poster}}">
 
 							<button class="button button-secondary -poster">
-								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+								<?php esc_html_e( 'Select File', 'brightcove' ); ?>
 							</button>
 						</div>
 					</div>
@@ -158,7 +158,7 @@ class BC_Admin_Templates {
 							<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}">
 
 							<button class="button button-secondary -thumbnail">
-								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+								<?php esc_html_e( 'Select File', 'brightcove' ); ?>
 							</button>
 						</div>
 					</div>
@@ -171,9 +171,9 @@ class BC_Admin_Templates {
 					<div class="setting-content">
 						<button class="button button-secondary -captions">
 							<# if ( 0 !== data.text_tracks.length ) { #>
-								<?php esc_html_e( 'Add Another Caption', 'ms-research' ); ?>
+								<?php esc_html_e( 'Add Another Caption', 'brightcove' ); ?>
 							<# } else { #>
-								<?php esc_html_e( 'Select File', 'ms-research' ); ?>
+								<?php esc_html_e( 'Select File', 'brightcove' ); ?>
 							<# } #>
 						</button>
 						<a href="#" class="add-remote-caption">
@@ -256,8 +256,6 @@ class BC_Admin_Templates {
 
 				<span class="more-actions">
 					<span class="spinner hidden"></span>
-					<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
-					<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
 				</span>
 			</div>
 		</script>
@@ -302,7 +300,9 @@ class BC_Admin_Templates {
                   </div>
                   <div class="media-frame-router">
                     <div class="media-router">
-                      <a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' )?></a><a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' )?></a><a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' )?></a>
+	                    <a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' )?></a>
+	                    <a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' )?></a>
+	                    <a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' )?></a>
                     </div>
                   </div>
                   <div class="media-frame-content">
@@ -310,9 +310,10 @@ class BC_Admin_Templates {
                   <div class="media-frame-toolbar">
                     <div class="media-toolbar">
                       <div class="media-toolbar-secondary">
+	                      <a href="#" class="button button-secondary button-large media-button brightcove back" style="display:none;"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
                         <div class="media-selection empty">
                           <div class="selection-info">
-                            <span class="count">0 selected</span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
+                            <span class="count">0 <?php esc_html_e( 'selected', 'brightcove' ); ?></span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
                           </div>
                           <div class="selection-view">
                             <ul tabindex="-1" class="attachments" id="__attachments-view-71"></ul>
@@ -320,7 +321,8 @@ class BC_Admin_Templates {
                         </div>
                       </div>
                       <div class="media-toolbar-primary search-form">
-                        <a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
+	                      <a href="#" class="button button-primary button-large media-button brightcove save-sync" style="display:none;"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+	                      <a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
                       </div>
                     </div>
                   </div>
@@ -431,7 +433,7 @@ class BC_Admin_Templates {
 				<?php else : ?>
 					<div class="upload-ui">
 						<h3 class="upload-instructions drop-instructions"><?php esc_html_e( 'Drop files anywhere to upload', 'brightcove' ); ?></h3>
-						<p class="upload-instructions drop-instructions"><?php _ex( 'or', 'Uploader: Drop files here - or - Select Files' ); ?></p>
+						<p class="upload-instructions drop-instructions"><?php _ex( 'or', 'Uploader: Drop files here - or - Select Files', 'brightcove' ); ?></p>
 						<a href="#" id="brightcove-select-files-button" class="browser button button-hero"><?php esc_html_e( 'Select Files', 'brightcove' ); ?></a>
 					</div>
 
@@ -449,7 +451,7 @@ class BC_Admin_Templates {
 						<?php
 						printf( esc_html__( 'Maximum upload file size: ', 'brightcove' ) . esc_html( size_format( $max_upload_size ) ) . '.' ); ?><br>
 						<?php
-						_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
+						_esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
 						?>
 						</p>
 
@@ -607,7 +609,7 @@ class BC_Admin_Templates {
 		<?php /* Used by views/toolbar.js */?>
 		<script type="text/html" id="tmpl-brightcove-media-toolbar">
 				<div class="media-toolbar-secondary">
-					<label for="brightcove-media-source" class="screen-reader-text">Filter by source</label>
+					<label for="brightcove-media-source" class="screen-reader-text"><?php esc_html_e( 'Filter by source', 'brightcove' );?></label>
 					<select id="brightcove-media-source" class="brightcove-media-source attachment-filters">
 						<# _.each(data.accounts, function (account) { #>
 							<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #>>{{ account.account_name }}</option>
@@ -623,9 +625,9 @@ class BC_Admin_Templates {
 								<# }); #>
 						</select> -->
 
-						<label for="media-attachment-tags-filters" class="screen-reader-text">Filter by tag</label>
+						<label for="media-attachment-tags-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by tag', 'brightcove' );?></label>
 						<select id="media-attachment-tags-filters" class="brightcove-media-tags attachment-filters">
-							<option value="all">All tags</option>
+							<option value="all"><?php esc_html_e( 'All tags', 'brightcove' ); ?></option>
 							<# _.each(data.tags, function (tagName, tagId) { #>
 								<option value="{{ tagId }}">{{ tagName }}</option>
 							<# }); #>
@@ -634,16 +636,16 @@ class BC_Admin_Templates {
 
 					<# if( data.mediaType === 'playlists' ) { #>
 						<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
-						<label for="brightcove-empty-playlists">Hide Empty Playlists</label>
+						<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
 					<# } #>
 
-					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled">Delete Selected</a>
+					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled"><?php esc_html_e( 'Delete Selected', 'brightcove' ); ?></a>
 				</div>
 				<# if (data.mediaType === 'videos') { #>
 					<div class="media-toolbar-primary search-form">
 						<span class="spinner"></span>
-						<label for="media-search-input" class="screen-reader-text">Search Media</label>
-						<input type="search" placeholder="Search" id="media-search-input" class="search">
+						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>
+						<input type="search" placeholder="<?php esc_attr_e( 'Search', 'brightcove' ); ?>" id="media-search-input" class="search">
 					</div>
 				<# }#>
 		</script>

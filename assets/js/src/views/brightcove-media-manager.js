@@ -64,10 +64,11 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 			} );
 
 			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
-
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
+				// Disable "Insert Into Post" button since no video would be selected.
+				wpbc.broadcast.trigger( 'toggle:insertButton' );
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
