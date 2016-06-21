@@ -135,10 +135,7 @@ class BC_Admin_Sources {
 
 				BC_Logging::log( sprintf( 'BC OAUTH ERROR: %s', $error_message ) );
 
-				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
-
 				return new WP_Error( 'bc-oauth-error', $error_message );
-
 			}
 
 			BC_Utility::delete_cache_item( '*' );
