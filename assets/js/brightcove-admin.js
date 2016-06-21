@@ -1005,10 +1005,11 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 			} );
 
 			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
-
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
+				// Disable "Insert Into Post" button since no video would be selected.
+				wpbc.broadcast.trigger( 'toggle:insertButton' );
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
@@ -1402,9 +1403,11 @@ var BrightcoveModalView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-media-modal' ),
 
 		events : {
-			'click .brightcove.media-menu-item' :     'changeTab',
+			'click .brightcove.media-menu-item'     : 'changeTab',
 			'click .brightcove.media-button-insert' : 'insertIntoPost',
-			'click .brightcove.media-modal-icon' :   'closeModal'
+			'click .brightcove.media-modal-icon'    : 'closeModal',
+			'click .brightcove.save-sync'           : 'saveSync',
+			'click .brightcove.button.back'         : 'back'
 		},
 
 		initialize : function ( options ) {
@@ -1415,6 +1418,16 @@ var BrightcoveModalView = BrightcoveView.extend(
 				this.toggleInsertButton( state );
 			} );
 			this.listenTo( wpbc.broadcast, 'close:modal', this.closeModal );
+		},
+
+		saveSync : function( evnt ) {
+			// This event is triggered when the "Save and Sync Changes" button is clicked from edit video screen.
+			wpbc.broadcast.trigger( 'save:media', evnt );
+		},
+
+		back : function( evnt ) {
+			// This event is triggered when the "Back" button is clicked from edit video screen.
+			wpbc.broadcast.trigger( 'back:editvideo', evnt );
 		},
 
 		insertIntoPost : function ( evnt ) {
@@ -1490,6 +1503,20 @@ var BrightcoveModalView = BrightcoveView.extend(
 
 			this.brightcoveMediaManager.render();
 			this.brightcoveMediaManager.$el.appendTo( this.$el.find( '.media-frame-content' ) );
+
+			this.listenTo( wpbc.broadcast, 'edit:media', function() {
+				// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
+				this.$el.find( '.brightcove.button.save-sync' ).show();
+				this.$el.find( '.brightcove.button.back' ).show();
+				this.$el.find( '.brightcove.media-button-insert' ).hide();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'save:media back:editvideo', function() {
+				this.$el.find( '.brightcove.button.save-sync' ).hide();
+				this.$el.find( '.brightcove.button.back' ).hide();
+				this.$el.find( '.brightcove.media-button-insert' ).show();
+				wpbc.broadcast.trigger( 'toggle:insertButton' );
+			} );
 		}
 
 	}
@@ -2094,9 +2121,7 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :      'saveSync',
 			'click .brightcove.delete' :                'deleteVideo',
-			'click .brightcove.button.back' :           'back',
 			'click .setting .button' :                  'openMediaManager',
 			'click .attachment .check' :                'removeAttachment',
 			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
@@ -2425,6 +2450,9 @@ var VideoEditView = BrightcoveView.extend(
 					// Show the delete link.
 					$mediaFrame.find( '.delete-action' ).show();
 				} );
+
+			// Hide the video edit screen after save.
+			wpbc.broadcast.trigger( 'start:gridview' );
 		},
 
 		/**
@@ -2433,6 +2461,9 @@ var VideoEditView = BrightcoveView.extend(
 		 * @param {Object} options
 		 */
 		render : function ( options ) {
+			this.listenTo( wpbc.broadcast, 'save:media', this.saveSync );
+			this.listenTo( wpbc.broadcast, 'back:editvideo', this.back );
+
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
 
@@ -2504,7 +2535,6 @@ var VideoEditView = BrightcoveView.extend(
 				}
 			}
 		}
-
 	}
 );
 var VideoPreviewView = BrightcoveView.extend(
@@ -2911,3 +2941,4 @@ var MediaCollectionView = BrightcoveView.extend(
 	} );
 
 } )( jQuery );
+//# sourceMappingURL=brightcove-admin.js.map
