@@ -62,6 +62,8 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		changeTab : function ( event ) {
+			event.preventDefault();
+
 			if ( $( event.target ).hasClass( 'active' ) ) {
 				return; // Clicking the already active tab
 			}

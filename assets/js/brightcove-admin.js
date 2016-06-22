@@ -1463,6 +1463,8 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		changeTab : function ( event ) {
+			event.preventDefault();
+
 			if ( $( event.target ).hasClass( 'active' ) ) {
 				return; // Clicking the already active tab
 			}
@@ -2923,7 +2925,8 @@ var MediaCollectionView = BrightcoveView.extend(
 				wpbc.broadcast.trigger('upload:video');
 			});
 
-			$('.brightcove-add-media').on('click', function() {
+			$('.brightcove-add-media').on('click', function( e ) {
+				e.preventDefault();
 				wpbc.triggerModal();
 			});
 
