@@ -168,6 +168,10 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 						return true;
 					}
 
+					// hide the previous notification
+					var messages = this.$el.find( '.brightcove-message' );
+					messages.addClass( 'hidden' );
+
 					this.editView = new VideoEditView( {model : model} );
 
 					this.registerSubview( this.editView );

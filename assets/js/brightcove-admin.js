@@ -1108,6 +1108,10 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 						return true;
 					}
 
+					// hide the previous notification
+					var messages = this.$el.find( '.brightcove-message' );
+					messages.addClass( 'hidden' );
+
 					this.editView = new VideoEditView( {model : model} );
 
 					this.registerSubview( this.editView );
@@ -2120,8 +2124,6 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :      'saveSync',
-			'click .brightcove.button.back' :           'back',
 			'click .brightcove.delete' :                'deleteVideo',
 			'click .setting .button' :                  'openMediaManager',
 			'click .attachment .check' :                'removeAttachment',
