@@ -81,7 +81,7 @@ class BC_Admin_Templates {
 				<label class="playlist-name">
 					<span class="name"><?php esc_html_e( 'Playlist Name', 'brightcove' )?></span>
 					<input type="text" class="brightcove-name" value="{{data.name}}" />
-					<a href="#" class="button button-primary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+					<a href="#" class="button button-primary button-large media-button brightcove playlist-back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
 					<span class="spinner is-active"></span>
 				</label>
 			</div>
@@ -256,6 +256,14 @@ class BC_Admin_Templates {
 
 				<span class="more-actions">
 					<span class="spinner hidden"></span>
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'brightcove' === $parent_base ) { ?>
+						<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+						<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+					<?php } ?>
 				</span>
 			</div>
 		</script>
@@ -451,7 +459,7 @@ class BC_Admin_Templates {
 						<?php
 						printf( esc_html__( 'Maximum upload file size: ', 'brightcove' ) . esc_html( size_format( $max_upload_size ) ) . '.' ); ?><br>
 						<?php
-						_esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
+						esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
 						?>
 						</p>
 
