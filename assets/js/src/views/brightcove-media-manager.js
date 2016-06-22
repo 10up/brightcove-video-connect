@@ -64,10 +64,11 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 			} );
 
 			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
-
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
+				// Disable "Insert Into Post" button since no video would be selected.
+				wpbc.broadcast.trigger( 'toggle:insertButton' );
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
@@ -166,6 +167,10 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					if ( 'editVideo' === this.model.get( 'mode' ) ) {
 						return true;
 					}
+
+					// hide the previous notification
+					var messages = this.$el.find( '.brightcove-message' );
+					messages.addClass( 'hidden' );
 
 					this.editView = new VideoEditView( {model : model} );
 
