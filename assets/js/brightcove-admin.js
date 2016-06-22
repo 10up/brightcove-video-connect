@@ -2432,8 +2432,14 @@ var VideoEditView = BrightcoveView.extend(
 				.done( function() {
 					if ( $mediaFrame.length > 0 ) {
 						// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-						var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+						var tagInput =  $mediaFrame.find( '.brightcove-tags' ).val(),
+							editTags,
+							newTags;
+
+						if ( tagInput ) {
+							editTags     = tagInput.split( ',' );
 							newTags      = _.difference( editTags, wpbc.preload.tags );
+						}
 
 						// Add any new tags to the tags object and the dropdown.
 						_.each( newTags, function( newTag ){
