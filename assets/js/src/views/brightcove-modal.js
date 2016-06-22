@@ -108,14 +108,21 @@ var BrightcoveModalView = BrightcoveView.extend(
 			this.brightcoveMediaManager.render();
 			this.brightcoveMediaManager.$el.appendTo( this.$el.find( '.media-frame-content' ) );
 
-			this.listenTo( wpbc.broadcast, 'edit:media', function() {
-				// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
-				this.$el.find( '.brightcove.button.save-sync' ).show();
-				this.$el.find( '.brightcove.button.back' ).show();
-				this.$el.find( '.brightcove.media-button-insert' ).hide();
+			this.listenTo( wpbc.broadcast, 'edit:media', function( model, mediaType ) {
+				if ( 'videos' === mediaType ) {
+					// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
+					this.$el.find( '.brightcove.button.save-sync' ).show();
+					this.$el.find( '.brightcove.button.back' ).show();
+					this.$el.find( '.brightcove.media-button-insert' ).hide();
+				} else {
+					// When edit playlist screen is opened, hide all the buttons.
+					this.$el.find( '.brightcove.button.save-sync' ).hide();
+					this.$el.find( '.brightcove.button.back' ).hide();
+					this.$el.find( '.brightcove.media-button-insert' ).hide();
+				}
 			} );
 
-			this.listenTo( wpbc.broadcast, 'save:media back:editvideo', function() {
+			this.listenTo( wpbc.broadcast, 'save:media back:editvideo start:gridView', function() {
 				this.$el.find( '.brightcove.button.save-sync' ).hide();
 				this.$el.find( '.brightcove.button.back' ).hide();
 				this.$el.find( '.brightcove.media-button-insert' ).show();

@@ -81,7 +81,7 @@ class BC_Admin_Templates {
 				<label class="playlist-name">
 					<span class="name"><?php esc_html_e( 'Playlist Name', 'brightcove' )?></span>
 					<input type="text" class="brightcove-name" value="{{data.name}}" />
-					<a href="#" class="button button-primary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+					<a href="#" class="button button-primary button-large media-button brightcove playlist-back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
 					<span class="spinner is-active"></span>
 				</label>
 			</div>

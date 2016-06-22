@@ -21,7 +21,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		triggerEditMedia : function ( event ) {
 			event.preventDefault();
-			wpbc.broadcast.trigger( 'edit:media', this.model );
+			wpbc.broadcast.trigger( 'edit:media', this.model, this.mediaType );
 		},
 
 		triggerPreviewMedia : function ( event ) {

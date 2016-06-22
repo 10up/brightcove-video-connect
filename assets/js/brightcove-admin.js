@@ -1509,14 +1509,21 @@ var BrightcoveModalView = BrightcoveView.extend(
 			this.brightcoveMediaManager.render();
 			this.brightcoveMediaManager.$el.appendTo( this.$el.find( '.media-frame-content' ) );
 
-			this.listenTo( wpbc.broadcast, 'edit:media', function() {
-				// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
-				this.$el.find( '.brightcove.button.save-sync' ).show();
-				this.$el.find( '.brightcove.button.back' ).show();
-				this.$el.find( '.brightcove.media-button-insert' ).hide();
+			this.listenTo( wpbc.broadcast, 'edit:media', function( model, mediaType ) {
+				if ( 'videos' === mediaType ) {
+					// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
+					this.$el.find( '.brightcove.button.save-sync' ).show();
+					this.$el.find( '.brightcove.button.back' ).show();
+					this.$el.find( '.brightcove.media-button-insert' ).hide();
+				} else {
+					// When edit playlist screen is opened, hide all the buttons.
+					this.$el.find( '.brightcove.button.save-sync' ).hide();
+					this.$el.find( '.brightcove.button.back' ).hide();
+					this.$el.find( '.brightcove.media-button-insert' ).hide();
+				}
 			} );
 
-			this.listenTo( wpbc.broadcast, 'save:media back:editvideo', function() {
+			this.listenTo( wpbc.broadcast, 'save:media back:editvideo start:gridView', function() {
 				this.$el.find( '.brightcove.button.save-sync' ).hide();
 				this.$el.find( '.brightcove.button.back' ).hide();
 				this.$el.find( '.brightcove.media-button-insert' ).show();
@@ -1551,7 +1558,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		triggerEditMedia : function ( event ) {
 			event.preventDefault();
-			wpbc.broadcast.trigger( 'edit:media', this.model );
+			wpbc.broadcast.trigger( 'edit:media', this.model, this.mediaType );
 		},
 
 		triggerPreviewMedia : function ( event ) {
@@ -1706,7 +1713,7 @@ var PlaylistEditView = BrightcoveView.extend(
 
 		events : {
 			'click .brightcove.button.save-sync' : 'saveSync',
-			'click .brightcove.back' :             'back',
+			'click .brightcove.playlist-back' :    'back',
 			'change .brightcove-name' :            'updatedName'
 		},
 
