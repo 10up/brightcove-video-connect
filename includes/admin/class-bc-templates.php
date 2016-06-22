@@ -451,7 +451,7 @@ class BC_Admin_Templates {
 						<?php
 						printf( esc_html__( 'Maximum upload file size: ', 'brightcove' ) . esc_html( size_format( $max_upload_size ) ) . '.' ); ?><br>
 						<?php
-						_esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
+						esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
 						?>
 						</p>
 
