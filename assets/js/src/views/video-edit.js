@@ -5,7 +5,9 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
+			'click .brightcove.button.save-sync' :      'saveSync',
 			'click .brightcove.delete' :                'deleteVideo',
+			'click .brightcove.button.back' :           'back',
 			'click .setting .button' :                  'openMediaManager',
 			'click .attachment .check' :                'removeAttachment',
 			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
@@ -230,6 +232,8 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		saveSync : function ( evnt ) {
+			evnt.preventDefault();
+
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link' );
 

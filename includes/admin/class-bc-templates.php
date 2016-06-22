@@ -256,6 +256,14 @@ class BC_Admin_Templates {
 
 				<span class="more-actions">
 					<span class="spinner hidden"></span>
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'brightcove' === $parent_base ) { ?>
+						<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+						<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+					<?php } ?>
 				</span>
 			</div>
 		</script>
