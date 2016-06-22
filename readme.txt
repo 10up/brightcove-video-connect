@@ -188,6 +188,13 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.2.4 =
+
+* Fix: Fixed issues with "Insert into Post" button
+* Enhancement: Make all text translatable.
+* Enhancement: Enhancements to Add source screen
+* Enhancement: Fixed all PHP warnings
+
 = 1.2.3 =
 * Fix: Issue where API calls could fail silently
 
@@ -301,6 +308,9 @@ http://sample-videos.com/
 * First release
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+Fixed issues with "Insert into Post" button
 
 = 1.1.3 =
 1.1.3 solves many JavaScript errors that users have been experiencing and is recommended for all users
