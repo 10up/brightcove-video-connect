@@ -1450,7 +1450,10 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		toggleInsertButton : function ( state ) {
-			var button = this.$el.find( '.brightcove.media-button' );
+			var button = this.$el.find( '.brightcove.media-button-insert' );
+
+			button.show();
+
 			if ( 'enabled' === state ) {
 				button.removeAttr( 'disabled' );
 			} else if ( 'disabled' === state ) {
