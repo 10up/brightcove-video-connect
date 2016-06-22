@@ -131,7 +131,6 @@
 					wpbc.broadcast.trigger( 'triggerModal' );
 				},
 				getHtml :    function () {
-					console.log('playlist');
 					return this.content;
 				}
 			}
