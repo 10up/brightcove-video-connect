@@ -881,7 +881,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			var newMessage = $( '<div class="wrap"><div class="brightcove-message"><p class="message-text"></p></div></div>' );
 			messages.append( newMessage );
 			newMessage.addClass( messageClasses ).find( '.message-text' ).text( message );
-			newMessage.fadeOut( 6000, function () {
+			newMessage.delay( 4000 ).fadeOut( 500, function () {
 				$( this ).remove();
 			} );
 		},
