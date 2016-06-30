@@ -44,6 +44,7 @@ var MediaModel = Backbone.Model.extend(
 					action : 'bc_media_fetch',
 					id :     this.id
 				} );
+
 				return wp.media.ajax( options );
 
 				// Overload the `update` request so properties can be saved.
@@ -61,7 +62,7 @@ var MediaModel = Backbone.Model.extend(
 					tags :             this.get( 'tags' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
-					history:           this.get( 'history' ),
+					history:           this.get( '_change_history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' ),
 					captions:          this.get( 'captions' )
@@ -882,7 +883,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			var newMessage = $( '<div class="wrap"><div class="brightcove-message"><p class="message-text"></p></div></div>' );
 			messages.append( newMessage );
 			newMessage.addClass( messageClasses ).find( '.message-text' ).text( message );
-			newMessage.fadeOut( 6000, function () {
+			newMessage.delay( 4000 ).fadeOut( 500, function () {
 				$( this ).remove();
 			} );
 		},
@@ -1012,23 +1013,24 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				wpbc.broadcast.trigger( 'toggle:insertButton' );
 			} );
 
-			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
+			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( hideEmptyPlaylists ) {
 
 				var mediaCollectionView = this.model.get( 'media-collection-view' );
 				this.model.set( 'mode', 'manager' );
 
-				_.each( mediaCollectionView.collection.models, function ( mediaObject ) {
+				_.each( mediaCollectionView.collection.models, function ( playlistModel ) {
 
-					if ( ! ( 'undefined' !== typeof mediaObject.get( 'video_ids' ) && 1 <= mediaObject.get( 'video_ids' ).length && mediaObject && mediaObject.view && mediaObject.view.$el ) ) {
+					// Don't hide smart playlists. Only Manual playlists will have playlistType as 'EXPLICIT'.
+					if ( 'EXPLICIT' !== playlistModel.get ( 'type' ) ) {
+						return;
+					}
 
-						if ( emptyPlaylists ) {
-
-							mediaObject.view.$el.hide();
-
+					// Manual play list will have videos populated in video_ids. Empty playlists will have zero video_ids.
+					if ( playlistModel.get( 'video_ids' ).length === 0 ) {
+						if ( hideEmptyPlaylists ) {
+							playlistModel.view.$el.hide();
 						} else {
-
-							mediaObject.view.$el.show();
-
+							playlistModel.view.$el.show();
 						}
 					}
 				} );
@@ -1108,6 +1110,10 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					if ( 'editVideo' === this.model.get( 'mode' ) ) {
 						return true;
 					}
+
+					// hide the previous notification
+					var messages = this.$el.find( '.brightcove-message' );
+					messages.addClass( 'hidden' );
 
 					this.editView = new VideoEditView( {model : model} );
 
@@ -1438,7 +1444,10 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		toggleInsertButton : function ( state ) {
-			var button = this.$el.find( '.brightcove.media-button' );
+			var button = this.$el.find( '.brightcove.media-button-insert' );
+
+			button.show();
+
 			if ( 'enabled' === state ) {
 				button.removeAttr( 'disabled' );
 			} else if ( 'disabled' === state ) {
@@ -1451,6 +1460,8 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		changeTab : function ( event ) {
+			event.preventDefault();
+
 			if ( $( event.target ).hasClass( 'active' ) ) {
 				return; // Clicking the already active tab
 			}
@@ -1495,14 +1506,21 @@ var BrightcoveModalView = BrightcoveView.extend(
 			this.brightcoveMediaManager.render();
 			this.brightcoveMediaManager.$el.appendTo( this.$el.find( '.media-frame-content' ) );
 
-			this.listenTo( wpbc.broadcast, 'edit:media', function() {
-				// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
-				this.$el.find( '.brightcove.button.save-sync' ).show();
-				this.$el.find( '.brightcove.button.back' ).show();
-				this.$el.find( '.brightcove.media-button-insert' ).hide();
+			this.listenTo( wpbc.broadcast, 'edit:media', function( model, mediaType ) {
+				if ( 'videos' === mediaType ) {
+					// When edit Video screen is opened, hide the "Insert Into Post" button and show video save button.
+					this.$el.find( '.brightcove.button.save-sync' ).show();
+					this.$el.find( '.brightcove.button.back' ).show();
+					this.$el.find( '.brightcove.media-button-insert' ).hide();
+				} else {
+					// When edit playlist screen is opened, hide all the buttons.
+					this.$el.find( '.brightcove.button.save-sync' ).hide();
+					this.$el.find( '.brightcove.button.back' ).hide();
+					this.$el.find( '.brightcove.media-button-insert' ).hide();
+				}
 			} );
 
-			this.listenTo( wpbc.broadcast, 'save:media back:editvideo', function() {
+			this.listenTo( wpbc.broadcast, 'save:media back:editvideo start:gridView', function() {
 				this.$el.find( '.brightcove.button.save-sync' ).hide();
 				this.$el.find( '.brightcove.button.back' ).hide();
 				this.$el.find( '.brightcove.media-button-insert' ).show();
@@ -1537,7 +1555,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		triggerEditMedia : function ( event ) {
 			event.preventDefault();
-			wpbc.broadcast.trigger( 'edit:media', this.model );
+			wpbc.broadcast.trigger( 'edit:media', this.model, this.mediaType );
 		},
 
 		triggerPreviewMedia : function ( event ) {
@@ -1692,7 +1710,7 @@ var PlaylistEditView = BrightcoveView.extend(
 
 		events : {
 			'click .brightcove.button.save-sync' : 'saveSync',
-			'click .brightcove.back' :             'back',
+			'click .brightcove.playlist-back' :    'back',
 			'change .brightcove-name' :            'updatedName'
 		},
 
@@ -2112,7 +2130,9 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
+			'click .brightcove.button.save-sync' :      'saveSync',
 			'click .brightcove.delete' :                'deleteVideo',
+			'click .brightcove.button.back' :           'back',
 			'click .setting .button' :                  'openMediaManager',
 			'click .attachment .check' :                'removeAttachment',
 			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
@@ -2337,8 +2357,11 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		saveSync : function ( evnt ) {
+			evnt.preventDefault();
+
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
-				$allButtons = $mediaFrame.find( '.button, .button-link' );
+				$allButtons = $mediaFrame.find( '.button, .button-link'),
+				SELF = this;
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
@@ -2420,8 +2443,14 @@ var VideoEditView = BrightcoveView.extend(
 				.done( function() {
 					if ( $mediaFrame.length > 0 ) {
 						// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-						var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+						var tagInput =  $mediaFrame.find( '.brightcove-tags' ).val(),
+							editTags,
+							newTags;
+
+						if ( tagInput ) {
+							editTags     = tagInput.split( ',' );
 							newTags      = _.difference( editTags, wpbc.preload.tags );
+						}
 
 						// Add any new tags to the tags object and the dropdown.
 						_.each( newTags, function( newTag ){
@@ -2906,7 +2935,8 @@ var MediaCollectionView = BrightcoveView.extend(
 
 			});
 
-			$('.brightcove-add-media').on('click', function() {
+			$('.brightcove-add-media').on('click', function( e ) {
+				e.preventDefault();
 				wpbc.triggerModal();
 			});
 

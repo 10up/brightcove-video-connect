@@ -68,7 +68,8 @@
 
 			});
 
-			$('.brightcove-add-media').on('click', function() {
+			$('.brightcove-add-media').on('click', function( e ) {
+				e.preventDefault();
 				wpbc.triggerModal();
 			});
 
