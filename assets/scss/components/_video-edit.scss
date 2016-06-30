@@ -2,6 +2,12 @@
 	.image-preview,
 	.setting {
 		margin-bottom: 8px;
+		.description{
+			margin-left: 0px;
+			@media screen and (min-width: 900px) {
+				margin-left: 252px;
+			}
+		}
 	}
 
 	.setting-content,

@@ -649,17 +649,19 @@ class BC_Admin_Media_API {
 			// Map the custom_fields array to a collection of objects with description, display name, id, etc
 			$result['custom'] = $fields['custom_fields'];
 
-			foreach( $result['custom_fields'] as $id => $value ) {
-				// Extract the change tracking item explicitly
-				if ( $id == '_change_history' ) {
-					$result['history'] = $value;
-					continue;
-				}
+			if ( isset( $result['custom_fields'] ) ) {
+				foreach( $result['custom_fields'] as $id => $value ) {
+					// Extract the change tracking item explicitly
+					if ( $id == '_change_history' ) {
+						$result['history'] = $value;
+						continue;
+					}
 
-				foreach( $result['custom'] as &$field ) {
-					if ( $field['id'] === $id ) {
-						$field['value'] = $value;
-						break;
+					foreach( $result['custom'] as &$field ) {
+						if ( $field['id'] === $id ) {
+							$field['value'] = $value;
+							break;
+						}
 					}
 				}
 			}
@@ -667,12 +669,14 @@ class BC_Admin_Media_API {
 			// Massage the text tracks
 			$result['captions'] = array();
 
-			foreach( $result['text_tracks'] as $caption ) {
-				$result['captions'][] = array(
-					'source'   => $caption['src'],
-					'language' => $caption['srclang'],
-					'label'    => $caption['label'],
-				);
+			if ( isset( $result['test_tracks'] ) ) {
+				foreach( $result['text_tracks'] as $caption ) {
+					$result['captions'][] = array(
+						'source'   => $caption['src'],
+						'language' => $caption['srclang'],
+						'label'    => $caption['label'],
+					);
+				}
 			}
 		}
 

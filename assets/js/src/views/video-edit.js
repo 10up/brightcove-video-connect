@@ -5,7 +5,9 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
+			'click .brightcove.button.save-sync' :      'saveSync',
 			'click .brightcove.delete' :                'deleteVideo',
+			'click .brightcove.button.back' :           'back',
 			'click .setting .button' :                  'openMediaManager',
 			'click .attachment .check' :                'removeAttachment',
 			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
@@ -230,6 +232,8 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		saveSync : function ( evnt ) {
+			evnt.preventDefault();
+
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
 				$allButtons = $mediaFrame.find( '.button, .button-link'),
 				SELF = this;
@@ -314,8 +318,14 @@ var VideoEditView = BrightcoveView.extend(
 				.done( function() {
 					if ( $mediaFrame.length > 0 ) {
 						// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-						var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+						var tagInput =  $mediaFrame.find( '.brightcove-tags' ).val(),
+							editTags,
+							newTags;
+
+						if ( tagInput ) {
+							editTags     = tagInput.split( ',' );
 							newTags      = _.difference( editTags, wpbc.preload.tags );
+						}
 
 						// Add any new tags to the tags object and the dropdown.
 						_.each( newTags, function( newTag ){
