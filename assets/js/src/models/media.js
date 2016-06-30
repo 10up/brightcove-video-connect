@@ -43,6 +43,7 @@ var MediaModel = Backbone.Model.extend(
 					action : 'bc_media_fetch',
 					id :     this.id
 				} );
+
 				return wp.media.ajax( options );
 
 				// Overload the `update` request so properties can be saved.
@@ -60,7 +61,7 @@ var MediaModel = Backbone.Model.extend(
 					tags :             this.get( 'tags' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
-					history:           this.get( 'history' ),
+					history:           this.get( '_change_history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' ),
 					captions:          this.get( 'captions' )
