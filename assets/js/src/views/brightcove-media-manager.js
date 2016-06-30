@@ -64,29 +64,31 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 			} );
 
 			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
-
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
+				// Disable "Insert Into Post" button since no video would be selected.
+				wpbc.broadcast.trigger( 'toggle:insertButton' );
 			} );
 
-			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
+			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( hideEmptyPlaylists ) {
 
 				var mediaCollectionView = this.model.get( 'media-collection-view' );
 				this.model.set( 'mode', 'manager' );
 
-				_.each( mediaCollectionView.collection.models, function ( mediaObject ) {
+				_.each( mediaCollectionView.collection.models, function ( playlistModel ) {
 
-					if ( ! ( 'undefined' !== typeof mediaObject.get( 'video_ids' ) && 1 <= mediaObject.get( 'video_ids' ).length && mediaObject && mediaObject.view && mediaObject.view.$el ) ) {
+					// Don't hide smart playlists. Only Manual playlists will have playlistType as 'EXPLICIT'.
+					if ( 'EXPLICIT' !== playlistModel.get ( 'type' ) ) {
+						return;
+					}
 
-						if ( emptyPlaylists ) {
-
-							mediaObject.view.$el.hide();
-
+					// Manual play list will have videos populated in video_ids. Empty playlists will have zero video_ids.
+					if ( playlistModel.get( 'video_ids' ).length === 0 ) {
+						if ( hideEmptyPlaylists ) {
+							playlistModel.view.$el.hide();
 						} else {
-
-							mediaObject.view.$el.show();
-
+							playlistModel.view.$el.show();
 						}
 					}
 				} );
@@ -166,6 +168,10 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					if ( 'editVideo' === this.model.get( 'mode' ) ) {
 						return true;
 					}
+
+					// hide the previous notification
+					var messages = this.$el.find( '.brightcove-message' );
+					messages.addClass( 'hidden' );
 
 					this.editView = new VideoEditView( {model : model} );
 

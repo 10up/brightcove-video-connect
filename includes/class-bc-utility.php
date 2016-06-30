@@ -471,7 +471,7 @@ class BC_Utility {
 	public static function bc_plugin_action_links( $links ) {
 
 		$bc_settings_page = array(
-			'<a href="' . esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ) . '">Settings</a>',
+			'<a href="' . esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ) . '">' . esc_html__( 'Settings', 'brightcove') . '</a>',
 		);
 
 		return array_merge( $links, $bc_settings_page );
