@@ -340,16 +340,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 		showUploader : function () {
 
-			if ( 'manager' === this.model.get( 'mode' ) ) {
-
-				this.model.set( 'mode', 'uploader' );
-
-			} else {
-
-				this.model.set( 'mode', 'manager' );
-
-			}
-
+			this.model.set( 'mode', 'uploader' );
 			this.render();
 
 		},

@@ -25,6 +25,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'uploader:successMessage', this.successMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:errorMessage', this.errorMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
+			this.listenTo( wpbc.broadcast, 'upload:video', this.resetUploads );
 		},
 
 		resetUploads : function () {
