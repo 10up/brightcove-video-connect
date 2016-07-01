@@ -423,7 +423,7 @@ class BC_Utility {
 			'flv'   => 'video/x-flv',
 			'wmv'   => 'video/x-ms-wmv',
 			'avi'   => 'video/avi',
-
+			'mov'   => 'video/quicktime',
 		);
 	}
 

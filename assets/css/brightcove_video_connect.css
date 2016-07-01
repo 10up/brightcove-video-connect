@@ -1,5 +1,6 @@
 div.brightcove-messages {
   text-align: left;
+  width: -webkit-calc(100% - 4px);
   width: calc(100% - 4px); }
   div.brightcove-messages .updated {
     margin-left: 0px;
@@ -13,6 +14,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
 
 .brightcove-upload-queued-files {
   display: table;
+  width: -webkit-calc(100% - 20px);
   width: calc(100% - 20px);
   border: 1px solid #ddd; }
 
@@ -91,6 +93,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   float: left; }
 
 .brightcove-modal .pending-uploads {
+  width: -webkit-calc(100% - 40px);
   width: calc(100% - 40px);
   display: block;
   margin: 20px; }
@@ -104,6 +107,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   width: 100%; }
   @media screen and (min-width: 700px) {
     .brightcove-modal .brightcove.media-frame-content {
+      width: -webkit-calc(100% - 390px);
       width: calc(100% - 390px); } }
 
 .brightcove-modal .brightcove.video-preview {
@@ -132,6 +136,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   border-top: none;
   position: static;
   height: 600px;
+  width: -webkit-calc(100% - 370px);
   width: calc(100% - 370px);
   float: left;
   margin-right: 30px;
@@ -147,6 +152,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
     float: right;
     margin-top: 20px; }
   .brightcove.media-frame-content.edit-view, .brightcove-media.playlist.edit-view {
+    width: -webkit-calc(100% - 20px);
     width: calc(100% - 20px);
     border-right: none;
     height: auto; }
@@ -202,11 +208,13 @@ div.brightcove-uploader div.brightcove-messages .updated {
 .brightcove .media-toolbar {
   position: relative;
   right: 10px;
+  width: -webkit-calc(100% - 10px);
   width: calc(100% - 10px);
   height: auto; }
   @media screen and (min-width: 782px) {
     .brightcove .media-toolbar {
       right: 20px;
+      width: -webkit-calc(100% - 20px);
       width: calc(100% - 20px); } }
 
 .brightcove .media-toolbar-secondary {
