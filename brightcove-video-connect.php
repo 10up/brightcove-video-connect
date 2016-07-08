@@ -102,8 +102,8 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php' );
 
-// Check Brightcove status if is_admin().
-if ( is_admin() ) {
+// Check Brightcove status if is_admin() and not an ajax request
+if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 
 	require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-status-warning.php' );
 	new BC_Status_Warning();
