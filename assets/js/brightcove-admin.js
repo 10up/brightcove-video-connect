@@ -1444,11 +1444,14 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		toggleInsertButton : function ( state ) {
-			var button = this.$el.find( '.brightcove.media-button-insert' );
+			var button     = this.$el.find( '.brightcove.media-button-insert' ),
+				processing = $('.attachment.highlighted' ).find( '.processing' ).length;
 
 			button.show();
 
-			if ( 'enabled' === state ) {
+			if ( 1 === processing ) {
+				button.attr( 'disabled', 'disabled' );
+			} else if ( 'enabled' === state ) {
 				button.removeAttr( 'disabled' );
 			} else if ( 'disabled' === state ) {
 				button.attr( 'disabled', 'disabled' );

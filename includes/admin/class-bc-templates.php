@@ -576,10 +576,11 @@ class BC_Admin_Templates {
 					<# } else { #>
 						<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
 							<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+							<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 						<# } else { #>
 							<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+							<a href="#" class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 						<# } #>
-						<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 					<# } #>
 				</div>
 			</div>
