@@ -6,7 +6,7 @@ var PlaylistEditView = BrightcoveView.extend(
 
 		events : {
 			'click .brightcove.button.save-sync' : 'saveSync',
-			'click .brightcove.back' :             'back',
+			'click .brightcove.playlist-back' :    'back',
 			'change .brightcove-name' :            'updatedName'
 		},
 

@@ -100,6 +100,27 @@
 				height   : auto;
 			}
 
+			.processing{
+				position: absolute;
+				z-index: 9999;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				text-align: center;
+				background: rgba(50,50,50,.7);
+				color: #fff;
+				font-size: 12px;
+				height: 100%;
+				span{
+					position: absolute;
+					top: 50%;
+					margin-top: -9px;
+					width: 100%;
+					left: 0;
+					text-align: center;
+				}
+			}
+
 			.duration,
 			.video-count {
 				background-color : $white;
@@ -183,6 +204,27 @@
 				display   : block;
 				max-width : 100%;
 				height    : auto;
+			}
+
+			.processing{
+				position: absolute;
+				z-index: 9999;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				text-align: center;
+				background: rgba(50,50,50,.7);
+				color: #fff;
+				font-size: 12px;
+				height: 100%;
+				span{
+					position: absolute;
+					top: 50%;
+					margin-top: -6px;
+					width: 100%;
+					left: 0;
+					text-align: center;
+				}
 			}
 
 			.detail-duration,

@@ -34,7 +34,8 @@ class BC_Admin_Templates {
 							<img src="{{data.images.thumbnail.src}}" width="162" height="94">
 						<# } else { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" width="162" height="94">
-						<# } #>
+							<div class="processing"><span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span></div>
+							<# } #>
 						<div class="duration">
 							<span>{{data.duration}}</span>
 						</div>
@@ -61,7 +62,8 @@ class BC_Admin_Templates {
 						<img src="{{data.images.thumbnail.src}}" width="162" height="94">
 					<# } else { #>
 						<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" width="162" height="94">
-					<# } #>
+						<span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span>
+						<# } #>
 					<div class="duration">
 						<span>{{data.duration}}</span>
 					</div>
@@ -81,7 +83,7 @@ class BC_Admin_Templates {
 				<label class="playlist-name">
 					<span class="name"><?php esc_html_e( 'Playlist Name', 'brightcove' )?></span>
 					<input type="text" class="brightcove-name" value="{{data.name}}" />
-					<a href="#" class="button button-primary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+					<a href="#" class="button button-primary button-large media-button brightcove playlist-back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
 					<span class="spinner is-active"></span>
 				</label>
 			</div>
@@ -102,16 +104,18 @@ class BC_Admin_Templates {
 			<div class="settings">
 				<label class="setting video-name">
 					<span class="name"><?php esc_html_e( 'Name', 'brightcove' )?></span>
-					<input type="text" class="brightcove-name" value="{{data.name}}" />
+					<input type="text" class="brightcove-name" maxlength="255" value="{{data.name}}" />
+					<p class="description"><?php esc_html_e( 'The name is limited to 255 characters.', 'brightcove' )?></p>
 				</label>
 				<label class="setting short-description">
 					<span class="name"><?php esc_html_e( 'Description', 'brightcove' )?></span>
-					<textarea class="brightcove-description">{{data.description}}</textarea>
+					<textarea class="brightcove-description" maxlength="250">{{data.description}}</textarea>
+					<p class="description"><?php esc_html_e( 'The description is limited to 250 characters.', 'brightcove' )?></p>
 				</label>
 				<label class="setting long-description">
 					<span class="name"><?php esc_html_e( 'Long Description', 'brightcove' )?></span>
-					<textarea class="brightcove-long-description">{{data.long_description}}</textarea>
-
+					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
+					<p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' )?></p>
 				</label>
 				<label class="setting tags">
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
@@ -256,6 +260,14 @@ class BC_Admin_Templates {
 
 				<span class="more-actions">
 					<span class="spinner hidden"></span>
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'brightcove' === $parent_base ) { ?>
+						<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+						<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+					<?php } ?>
 				</span>
 			</div>
 		</script>
@@ -351,6 +363,7 @@ class BC_Admin_Templates {
 
 		<?php /* Used by views/upload-video-manager.js */?>
 		<script type="text/html" id="tmpl-brightcove-uploader-queued-files">
+			<div class="brightcove-messages"></div>
 			<div class="brightcove-upload-queued-files">
 				<div class="pending-uploads">
 					<table class="wp-list-table widefat">
@@ -366,10 +379,9 @@ class BC_Admin_Templates {
 						</tbody>
 					</table>
 					<br>
-					<button class="brightcove-start-upload button action"><?php esc_html_e( 'Start Upload', 'brightcove' ); ?></button>
+					<button class="brightcove-start-upload button action button-primary button-large"><?php esc_html_e( 'Start Upload', 'brightcove' ); ?></button>
 				</div>
 			</div>
-			<div class="brightcove-messages"></div>
 		</script>
 
 		<?php /* Used by views/upload.js */?>
@@ -451,7 +463,7 @@ class BC_Admin_Templates {
 						<?php
 						printf( esc_html__( 'Maximum upload file size: ', 'brightcove' ) . esc_html( size_format( $max_upload_size ) ) . '.' ); ?><br>
 						<?php
-						_esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
+						esc_html_e( 'Please reference the readme.txt file of this plugin for further information on upload file size limits.', 'brightcove' );
 						?>
 						</p>
 
@@ -471,6 +483,7 @@ class BC_Admin_Templates {
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
 						<# } else { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
+							<div class="processing"><span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span></div>
 						<# } #>
 					<# } #>
 					<# if ( data.duration ) { #>
@@ -527,7 +540,8 @@ class BC_Admin_Templates {
 						<img src="{{ data.images.poster.src }}" class="detail-icon" draggable="false" width="300" height="172"  />
 					<# } else { #>
 						<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="detail-icon" draggable="false" width="300" height="172"  />
-					<# } #>
+						<div class="processing"><span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span></div>
+						<# } #>
 					<# if ( data.duration ) { #>
 						<div class="detail-duration">
 							<span>{{ data.duration }}</span>
@@ -560,7 +574,11 @@ class BC_Admin_Templates {
 					<# if ('preview' === data.detailsMode) { #>
 						<a href="#" class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
 					<# } else { #>
-						<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+						<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
+							<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+						<# } else { #>
+							<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+						<# } #>
 						<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 					<# } #>
 				</div>

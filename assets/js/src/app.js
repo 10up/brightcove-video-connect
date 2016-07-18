@@ -65,9 +65,11 @@
 			$('.brightcove-add-new-video').on('click', function(e) {
 				e.preventDefault();
 				wpbc.broadcast.trigger('upload:video');
+
 			});
 
-			$('.brightcove-add-media').on('click', function() {
+			$('.brightcove-add-media').on('click', function( e ) {
+				e.preventDefault();
 				wpbc.triggerModal();
 			});
 
