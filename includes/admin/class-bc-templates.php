@@ -655,7 +655,11 @@ class BC_Admin_Templates {
 					<# if( data.mediaType === 'playlists' ) { #>
 						<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
 						<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
-						<span><?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?></span>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
 					<# } #>
 
 					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled"><?php esc_html_e( 'Delete Selected', 'brightcove' ); ?></a>
