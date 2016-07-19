@@ -576,10 +576,11 @@ class BC_Admin_Templates {
 					<# } else { #>
 						<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
 							<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+							<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 						<# } else { #>
 							<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+							<a href="#" class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 						<# } #>
-						<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
 					<# } #>
 				</div>
 			</div>
@@ -671,6 +672,7 @@ class BC_Admin_Templates {
 						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>
 						<input type="search" placeholder="<?php esc_attr_e( 'Search', 'brightcove' ); ?>" id="media-search-input" class="search">
+						<a class="brightcove-toolbar" href="#"><?php esc_html_e( 'help', 'brightcove' ); ?></a>
 					</div>
 				<# }#>
 		</script>
@@ -691,6 +693,13 @@ class BC_Admin_Templates {
 			</div>
 		</script>
 
+		<?php /* ToolTip help on Search */ ?>
+		<script type="text/html" id="tmpl-brightcove-tooltip-notice">
+			<div id="js-tooltip-notice" class="notice notice-info is-dismissible">
+				<p><?php esc_html_e( 'Search exact word or phrases by wrapping search in quotes.', 'brightcove' ); ?><br /><small><?php esc_html_e( 'Example:"My Favorite Video"', 'brightcove' ); ?></small></p>
+				<button type="button" id="js-tooltip-dismiss" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
+			</div>
+</script>
 	<?php
 	}
 }
