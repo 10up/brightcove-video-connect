@@ -1020,7 +1020,9 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
-			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
+			this.listenTo( wpbc.broadcast, 'cancelPreview:media', function ( settings ) {
+				this.clearPreview();
+				this.detailsView = undefined;
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
@@ -1183,7 +1185,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.clearPreview();
 			} );
 
-			this.listenTo( wpbc.broadcast, 'view:toggled', function ( mediaView ) {
+			this.listenTo( wpbc.broadcast, 'select:media', function ( mediaView ) {
 
 				/* If user selects same thumbnail they want to hide the details view */
 				if ( this.detailsView && this.detailsView.model === mediaView.model ) {
@@ -1568,7 +1570,7 @@ var MediaDetailsView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
-			'click .brightcove.back.button' :    'backButton'
+			'click .brightcove.back.button' :    'triggerCancelPreviewMedia'
 		},
 
 		triggerEditMedia : function ( event ) {
@@ -1581,8 +1583,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'preview:media', this.model );
 		},
 
-		backButton : function ( event ) {
-			wpbc.broadcast.trigger( 'backButton', this.mediaType );
+		triggerCancelPreviewMedia : function ( event ) {
+			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
 		},
 
 		initialize : function ( options ) {
@@ -1699,7 +1701,7 @@ var MediaView = BrightcoveView.extend(
 		},
 
 		toggleDetailView : function () {
-			wpbc.broadcast.trigger( 'view:toggled', this );
+			wpbc.broadcast.trigger( 'select:media', this );
 		},
 
 		videoMoveUp : function () {

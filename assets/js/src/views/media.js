@@ -74,7 +74,7 @@ var MediaView = BrightcoveView.extend(
 		},
 
 		toggleDetailView : function () {
-			wpbc.broadcast.trigger( 'view:toggled', this );
+			wpbc.broadcast.trigger( 'select:media', this );
 		},
 
 		videoMoveUp : function () {
