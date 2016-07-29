@@ -70,6 +70,7 @@ class BC_Setup {
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
+
 	}
 
 	/**
@@ -102,6 +103,7 @@ class BC_Setup {
 		add_rewrite_rule( 'bc-api$', 'index.php?bc-api=1', 'top' );
 
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
+		add_action( 'init',  array( 'BC_Setup', 'register_post_types' ) );
 	}
 
 	public static function add_brightcove_media_button() {
@@ -320,6 +322,19 @@ class BC_Setup {
 			BC_Utility::admin_notice_messages( $notices );
 
 		}
+	}
+	public static function register_post_types() {
+		$labels = array(
+			'name'               => __( 'BC Videos',  'brightcove' )
+		);
+
+		$args = array(
+			'labels'             => $labels,
+			'public'             => false,
+		);
+
+		register_post_type( 'bc-video-copy', $args );
+
 	}
 
 	public static function bc_check_minimum_wp_version() {

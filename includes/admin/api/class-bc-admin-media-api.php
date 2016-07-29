@@ -49,7 +49,7 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_poster_upload',  array( $this, 'ajax_poster_upload' ) );
 		add_action( 'wp_ajax_bc_thumb_upload',   array( $this, 'ajax_thumb_upload' ) );
 		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ) );
-
+		add_action( 'wp_ajax_bc_videocpt_copy',  array( $this, 'ajax_bc_videocpt_copy' ) );
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
 	}
@@ -874,6 +874,29 @@ class BC_Admin_Media_API {
 
 		// Restore our global, default account
 		$bc_accounts->restore_default_account();
+	}
+
+	/**
+	 * Create a copy of the video details that are sent to BrightCove
+	 *
+	 * Once the video has been successfully added to BrightCove's Dynamic Ingest API,
+	 * delete the video custom post type post that we created.
+	 *
+	 * @param $bc_id
+	 * @param array $video_attributes
+	 */
+	protected function ajax_bc_videocpt_copy (){
+
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], '_bc_ajax_search_nonce' ) ) {
+			wp_send_json_error();
+		}
+		if ( ! isset( $_POST['video'] ) ){
+			wp_send_json_error();
+		}
+
+		$video = array_map( 'sanitize_text_field', $_POST['video'] );
+
+		$this->videos->add_or_update_wp_video($video);
 	}
 
 	/**

@@ -22,6 +22,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.listenTo( this.collection, 'add', this.fileAdded );
 			this.listenTo( wpbc.broadcast, 'pendingUpload:selectedItem', this.selectedItem );
 			this.listenTo( wpbc.broadcast, 'uploader:prepareUpload', this.prepareUpload );
+			this.listenTo( wpbc.broadcast, 'uploader:postTypeCopy', this.postTypeCopy );
 			this.listenTo( wpbc.broadcast, 'uploader:successMessage', this.successMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:errorMessage', this.errorMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
@@ -68,6 +69,23 @@ var UploadVideoManagerView = BrightcoveView.extend(
 				};
 			} );
 			wpbc.broadcast.trigger( 'uploader:startUpload' );
+		},
+
+		postTypeCopy: function ( model ) {
+			var data = data || {};
+			data =  {
+				action: 'bc_videocpt_copy',
+				nonce: wpbc.preload.nonce,
+				video: JSON.stringify(this.model.attributes)
+			};
+			var request = $.ajax({
+				type: 'POST',
+				url: wp.ajax.settings.url,
+				context: this,
+				data: data
+			}).done(function (response, status, request) {
+				this.parse(response, status, request, requestChecksum);
+			}).fail(this.fetchFail);
 		},
 
 		fileAdded : function ( model, collection ) {
