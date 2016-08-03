@@ -543,7 +543,9 @@ class BC_Admin_Media_API {
 			$query_terms = array();
 
 			if ( $tag_name ) {
-				$query_terms[] = "tags:$tag_name";
+				// Tag Dropdown Search should use quotes to signify an exact match.
+				// Handles single and multi-word tags
+				$query_terms[] = 'tags:"'.$tag_name.'"';
 			}
 
 			if ( $dates ) {
