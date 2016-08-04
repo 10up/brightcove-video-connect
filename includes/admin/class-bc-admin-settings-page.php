@@ -63,7 +63,7 @@ class BC_Admin_Settings_Page {
 			</table>
 
 			<p>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-source' ) ); ?>" class="button action"><?php esc_html_e( 'Add Source', 'brightcove' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-source' ) ); ?>" class="button action"><?php esc_html_e( 'Add Brightcove Account', 'brightcove' ); ?></a>
 			</p>
 
 		</div>

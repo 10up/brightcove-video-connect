@@ -217,7 +217,7 @@ class BC_Admin_Sources {
 		<div class="wrap">
 			<h2><?php
 				printf( '<img src="%s" class="bc-page-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
-				?><?php esc_html_e( 'Add Source', 'brightcove' ) ?></h2>
+				?><?php esc_html_e( 'Add Brightcove Account', 'brightcove' ) ?></h2>
 
 			<form action="" method="post">
 				<table class="form-table brightcove-add-source-name">
