@@ -290,6 +290,8 @@ class BC_Setup {
 	}
 
 	public static function bc_activation_admin_notices() {
+		var_dump("**********");
+		var_dump(get_current_screen());
 
 		global $bc_accounts;
 
@@ -305,6 +307,7 @@ class BC_Setup {
 		     && current_user_can( 'manage_options' )
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-sources'
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
+			 && get_current_screen()->base !== 'admin_page_page-brightcove-edit-source'
 		) {
 
 			$notices[] = array(
