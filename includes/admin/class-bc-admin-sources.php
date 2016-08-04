@@ -156,10 +156,13 @@ class BC_Admin_Sources {
 
 		$this->notices[] = array(
 			'message' => sprintf(
-				'%s <a href="%s">%s</a>.',
-				esc_html__( 'Congratulations! Your credentials have been authenticated. Return to', 'brightcove' ),
-				admin_url( 'admin.php?page=brightcove-sources ' ),
-				esc_html__( 'Settings', 'brightcove' )
+				'%s <a href="%s">%s</a> %s <a href="%s">%s</a>.',
+				esc_html__( 'Congratulations! Your credentials have been authenticated. You can now ', 'brightcove' ),
+				admin_url( 'admin.php?page=page-brightcove-videos' ),
+				esc_html__( 'add videos', 'brightcove' ),
+				esc_html__('or', 'brightcove'),
+		        admin_url( 'admin.php?page=brightcove-sources' ),
+				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
 			'type'    => 'updated',
 		);
