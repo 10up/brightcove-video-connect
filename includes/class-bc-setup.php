@@ -290,8 +290,6 @@ class BC_Setup {
 	}
 
 	public static function bc_activation_admin_notices() {
-		var_dump("**********");
-		var_dump(get_current_screen());
 
 		global $bc_accounts;
 
