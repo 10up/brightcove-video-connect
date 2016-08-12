@@ -198,7 +198,7 @@ class BC_Setup {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$player_api = new BC_Player_Management_API();
-		$players    = $player_api->player_list();
+        $players    = $player_api->all_player_by_account();
 
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),

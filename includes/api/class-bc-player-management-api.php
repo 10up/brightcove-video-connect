@@ -133,6 +133,31 @@ class BC_Player_Management_API extends BC_API {
 
 	}
 
+    /**
+     * List all players for all accounts available
+     *
+     * Returns a list of available players for each accounts, as well as
+     * the total count of players available, grouped by account
+     *
+     * @since 1.2.3
+     *
+     * @return array|bool Array of available players or false if error
+     */
+    public function all_player_by_account() {
+
+        global $bc_accounts;
+
+        $all_accounts_id = $bc_accounts->get_all_accounts_id();
+        $players = false;
+
+        foreach ($all_accounts_id as $account_id) {
+            $url = esc_url_raw( self::BASE_URL . $account_id . '/players/');
+            $players[$account_id] = $this->send_request($url);
+        }
+
+        return $players;
+    }
+
 	/**
 	 * Update a player
 	 *
