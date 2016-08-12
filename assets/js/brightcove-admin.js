@@ -955,6 +955,15 @@ var UploadVideoManagerView = BrightcoveView.extend(
 	}
 );
 
+var BrightcoveRouter = Backbone.Router.extend({
+	routes: {
+		'add-new-brightcove-video' : "addNew"
+	},
+	addNew: function() {
+		wpbc.broadcast.trigger('upload:video');
+	}
+});
+
 var BrightcoveMediaManagerView = BrightcoveView.extend(
 	{
 		tagName :   'div',
@@ -2917,6 +2926,8 @@ var MediaCollectionView = BrightcoveView.extend(
 
 		loaded: function() {
 			var brightcoveModalContainer = $('.brightcove-modal');
+
+			var router = new BrightcoveRouter;
 			wpbc.triggerModal = function() {
 				if (!wpbc.modal) {
 					wpbc.modal = new BrightcoveModalView({
@@ -2951,8 +2962,7 @@ var MediaCollectionView = BrightcoveView.extend(
 
 			$('.brightcove-add-new-video').on('click', function(e) {
 				e.preventDefault();
-				wpbc.broadcast.trigger('upload:video');
-
+				router.navigate('add-new-brightcove-video', { trigger:true });
 			});
 
 			$('.brightcove-add-media').on('click', function( e ) {
@@ -2979,6 +2989,8 @@ var MediaCollectionView = BrightcoveView.extend(
 
 	jQuery( document ).ready( function() {
 		App.load();
+		var router = new BrightcoveRouter;
+		Backbone.history.start();
 	} );
 
 } )( jQuery );
