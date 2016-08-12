@@ -241,11 +241,16 @@ class BC_Admin_Sources {
 				<h3><?php esc_html_e( 'Credentials', 'brightcove' ) ?></h3>
 
 				<p class="description">
-					<?php esc_html_e( 'Each token has a set of API permissions defined when registering a new client.', 'brightcove' ) ?>
+					 <?php echo sprintf( '%s <a target="_blank" href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a> %s.',
+	                    esc_html__( 'The following information can be found by logging into your', 'brightcove' ),
+	                    esc_html__( 'Video Cloud Studio', 'brightcove' ),
+					    esc_html__( 'account', 'brightcove' )
+					);
+					?>
 					<br>
-					<?php echo sprintf( '%s <a href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a>.',
-					                    esc_html__( 'You can check the permissions and find out more about the settings below in', 'brightcove' ),
-					                    esc_html__( 'Video Cloud Studio', 'brightcove' )
+					<?php echo sprintf( '%s <a target="_blank" href="https://support.brightcove.com/en/video-cloud/docs/managing-api-authentication-credentials">%s</a>.',
+						esc_html__( 'For more details on the different API permissions or settings below, please check out our documentation at', 'brightcove' ),
+						esc_html__( 'Managing API Authentication Credentials', 'brightcove' )
 					);
 					?>
 				</p>

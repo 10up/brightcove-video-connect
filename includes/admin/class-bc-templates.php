@@ -559,7 +559,7 @@ class BC_Admin_Templates {
 						if ( 'edit' === $parent_base ) { ?>
 							<div class="video-player">
 								<span class="title"><?php esc_html_e( 'Video Player: ', 'brightcove' ); ?></span>
-								<# _.each( wpbc.players.items, function ( player ) { #>
+                                <# _.each( wpbc.players[data.account_id].items, function ( player ) { #>
 									<label class="brightcove-player" for="player-{{ player.id }}">
 										<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}" <# if ( 'default' === player.id ) { #>checked <# } #>>
 										{{ player.name }}
