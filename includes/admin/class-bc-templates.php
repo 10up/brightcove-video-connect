@@ -559,7 +559,7 @@ class BC_Admin_Templates {
 						if ( 'edit' === $parent_base ) { ?>
 							<div class="video-player">
 								<span class="title"><?php esc_html_e( 'Video Player: ', 'brightcove' ); ?></span>
-								<# _.each( wpbc.players.items, function ( player ) { #>
+                                <# _.each( wpbc.players[data.account_id].items, function ( player ) { #>
 									<label class="brightcove-player" for="player-{{ player.id }}">
 										<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}" <# if ( 'default' === player.id ) { #>checked <# } #>>
 										{{ player.name }}
@@ -654,8 +654,15 @@ class BC_Admin_Templates {
 					<# }#>
 
 					<# if( data.mediaType === 'playlists' ) { #>
-						<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
-						<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<p>
+							<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
+							<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
+						</p>
 					<# } #>
 
 					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled"><?php esc_html_e( 'Delete Selected', 'brightcove' ); ?></a>
@@ -665,6 +672,7 @@ class BC_Admin_Templates {
 						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>
 						<input type="search" placeholder="<?php esc_attr_e( 'Search', 'brightcove' ); ?>" id="media-search-input" class="search">
+						<a class="brightcove-toolbar" href="#"><?php esc_html_e( 'help', 'brightcove' ); ?></a>
 					</div>
 				<# }#>
 		</script>
@@ -685,6 +693,13 @@ class BC_Admin_Templates {
 			</div>
 		</script>
 
+		<?php /* ToolTip help on Search */ ?>
+		<script type="text/html" id="tmpl-brightcove-tooltip-notice">
+			<div id="js-tooltip-notice" class="notice notice-info is-dismissible">
+				<p><?php esc_html_e( 'Search exact word or phrases by wrapping search in quotes.', 'brightcove' ); ?><br /><small><?php esc_html_e( 'Example:"My Favorite Video"', 'brightcove' ); ?></small></p>
+				<button type="button" id="js-tooltip-dismiss" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
+			</div>
+</script>
 	<?php
 	}
 }

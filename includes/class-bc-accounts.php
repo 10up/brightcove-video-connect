@@ -36,6 +36,16 @@ class BC_Accounts {
 		$this->current_account  = $this->original_account;
 	}
 
+    public function get_all_accounts_id() {
+        $all_accounts = $this->get_all_accounts();
+        $account_ids = array();
+
+        foreach ($all_accounts as $account) {
+            $account_ids[] = $account["account_id"];
+        }
+        return $account_ids;
+    }
+
 	public function get_account_id() {
 
 		return $this->current_account ? $this->current_account['account_id'] : false;

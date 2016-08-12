@@ -57,13 +57,6 @@ class BC_Status_Warning {
 	 */
 	protected function _check_for_failed() {
 
-		if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
-			$status_response = vip_safe_wp_remote_get( $this->status_endpoint );
-		} else {
-			$status_response = wp_remote_get( $this->status_endpoint );
-		}
-		$statuses        = array();
-
 		if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 			$failed_services = get_site_transient( 'brightcove_failed_services' );
 		} else {
@@ -73,6 +66,13 @@ class BC_Status_Warning {
 
 		if ( false === $failed_services ) {
 
+			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
+				$status_response = vip_safe_wp_remote_get( $this->status_endpoint );
+			} else {
+				$status_response = wp_remote_get( $this->status_endpoint );
+			}
+			$statuses        = array();
+			
 			$failed_services = array();
 			$timeout         = 300; // Used for transient. 5 min if a problem, 60 if all is well.
 

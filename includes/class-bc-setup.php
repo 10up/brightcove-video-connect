@@ -200,7 +200,7 @@ class BC_Setup {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$player_api = new BC_Player_Management_API();
-		$players    = $player_api->player_list();
+        $players    = $player_api->all_player_by_account();
 
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
@@ -215,6 +215,7 @@ class BC_Setup {
 			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
 			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
 			'str_apifailure'  => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
+			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ),
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
@@ -307,6 +308,7 @@ class BC_Setup {
 		     && current_user_can( 'manage_options' )
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-sources'
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
+			 && get_current_screen()->base !== 'admin_page_page-brightcove-edit-source'
 		) {
 
 			$notices[] = array(

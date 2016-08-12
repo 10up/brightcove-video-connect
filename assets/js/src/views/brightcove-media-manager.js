@@ -63,7 +63,9 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
-			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
+			this.listenTo( wpbc.broadcast, 'cancelPreview:media', function ( settings ) {
+				this.clearPreview();
+				this.detailsView = undefined;
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
@@ -226,7 +228,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.clearPreview();
 			} );
 
-			this.listenTo( wpbc.broadcast, 'view:toggled', function ( mediaView ) {
+			this.listenTo( wpbc.broadcast, 'select:media', function ( mediaView ) {
 
 				/* If user selects same thumbnail they want to hide the details view */
 				if ( this.detailsView && this.detailsView.model === mediaView.model ) {

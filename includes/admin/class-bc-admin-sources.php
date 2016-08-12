@@ -156,10 +156,13 @@ class BC_Admin_Sources {
 
 		$this->notices[] = array(
 			'message' => sprintf(
-				'%s <a href="%s">%s</a>.',
-				esc_html__( 'Congratulations! Your credentials have been authenticated. Return to', 'brightcove' ),
-				admin_url( 'admin.php?page=brightcove-sources ' ),
-				esc_html__( 'Settings', 'brightcove' )
+				'%s <a href="%s">%s</a> %s <a href="%s">%s</a>.',
+				esc_html__( 'Congratulations! Your credentials have been authenticated. You can now ', 'brightcove' ),
+				admin_url( 'admin.php?page=page-brightcove-videos' ),
+				esc_html__( 'add videos', 'brightcove' ),
+				esc_html__('or', 'brightcove'),
+		        admin_url( 'admin.php?page=brightcove-sources' ),
+				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
 			'type'    => 'updated',
 		);
@@ -217,7 +220,7 @@ class BC_Admin_Sources {
 		<div class="wrap">
 			<h2><?php
 				printf( '<img src="%s" class="bc-page-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
-				?><?php esc_html_e( 'Add Source', 'brightcove' ) ?></h2>
+				?><?php esc_html_e( 'Add Brightcove Account', 'brightcove' ) ?></h2>
 
 			<form action="" method="post">
 				<table class="form-table brightcove-add-source-name">
@@ -238,11 +241,16 @@ class BC_Admin_Sources {
 				<h3><?php esc_html_e( 'Credentials', 'brightcove' ) ?></h3>
 
 				<p class="description">
-					<?php esc_html_e( 'Each token has a set of API permissions defined when registering a new client.', 'brightcove' ) ?>
+					 <?php echo sprintf( '%s <a target="_blank" href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a> %s.',
+	                    esc_html__( 'The following information can be found by logging into your', 'brightcove' ),
+	                    esc_html__( 'Video Cloud Studio', 'brightcove' ),
+					    esc_html__( 'account', 'brightcove' )
+					);
+					?>
 					<br>
-					<?php echo sprintf( '%s <a href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a>.',
-					                    esc_html__( 'You can check the permissions and find out more about the settings below in', 'brightcove' ),
-					                    esc_html__( 'Video Cloud Studio', 'brightcove' )
+					<?php echo sprintf( '%s <a target="_blank" href="https://support.brightcove.com/en/video-cloud/docs/managing-api-authentication-credentials">%s</a>.',
+						esc_html__( 'For more details on the different API permissions or settings below, please check out our documentation at', 'brightcove' ),
+						esc_html__( 'Managing API Authentication Credentials', 'brightcove' )
 					);
 					?>
 				</p>

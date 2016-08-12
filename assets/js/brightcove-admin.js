@@ -358,7 +358,7 @@ var MediaCollection = Backbone.Collection.extend(
 					action :         'bc_media_query',
 					account :        this.activeAccount || wpbc.preload.defaultAccountId,
 					dates :          this.date,
-					posts_per_page : 100,
+					posts_per_page : wpbc.posts_per_page,
 					page_number :    this.pageNumber,
 					nonce :          wpbc.preload.nonce,
 					search :         this.searchTerm,
@@ -723,6 +723,7 @@ var ToolbarView = BrightcoveView.extend(
 		events : {
 			'click .view-list' :                   'toggleList',
 			'click .view-grid' :                   'toggleGrid',
+			'click .brightcove-toolbar':           'toggleToolbar',
 			'change .brightcove-media-source' :    'sourceChanged',
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
@@ -770,6 +771,20 @@ var ToolbarView = BrightcoveView.extend(
 			this.trigger( 'viewType', 'grid' );
 			this.$el.find( '.view-grid' ).addClass( 'current' );
 			this.$el.find( '.view-list' ).removeClass( 'current' );
+		},
+
+		// Toggle toolbar help
+		toggleToolbar : function () {
+			var template = wp.template( 'brightcove-tooltip-notice' );
+
+			// Throw a notice to the user that the file is not the correct format
+			$( '.brightcove-media-videos' ).before( template );
+			// Allow the user to dismiss the notice
+			$( '#js-tooltip-dismiss' ).on( 'click', function() {
+				$( '#js-tooltip-notice' ).first().fadeOut( 500, function() {
+					$( this ).remove();
+				} );
+			} );
 		},
 
 		// Brightcove source changed
@@ -1023,7 +1038,9 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
-			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
+			this.listenTo( wpbc.broadcast, 'cancelPreview:media', function ( settings ) {
+				this.clearPreview();
+				this.detailsView = undefined;
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
@@ -1186,7 +1203,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.clearPreview();
 			} );
 
-			this.listenTo( wpbc.broadcast, 'view:toggled', function ( mediaView ) {
+			this.listenTo( wpbc.broadcast, 'select:media', function ( mediaView ) {
 
 				/* If user selects same thumbnail they want to hide the details view */
 				if ( this.detailsView && this.detailsView.model === mediaView.model ) {
@@ -1571,7 +1588,7 @@ var MediaDetailsView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
-			'click .brightcove.back.button' :    'backButton'
+			'click .brightcove.back.button' :    'triggerCancelPreviewMedia'
 		},
 
 		triggerEditMedia : function ( event ) {
@@ -1584,8 +1601,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'preview:media', this.model );
 		},
 
-		backButton : function ( event ) {
-			wpbc.broadcast.trigger( 'backButton', this.mediaType );
+		triggerCancelPreviewMedia : function ( event ) {
+			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
 		},
 
 		initialize : function ( options ) {
@@ -1702,7 +1719,7 @@ var MediaView = BrightcoveView.extend(
 		},
 
 		toggleDetailView : function () {
-			wpbc.broadcast.trigger( 'view:toggled', this );
+			wpbc.broadcast.trigger( 'select:media', this );
 		},
 
 		videoMoveUp : function () {
