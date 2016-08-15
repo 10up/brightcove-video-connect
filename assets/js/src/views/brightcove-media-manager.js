@@ -1,3 +1,12 @@
+var BrightcoveRouter = Backbone.Router.extend({
+	routes: {
+		'add-new-brightcove-video' : "addNew"
+	},
+	addNew: function() {
+		wpbc.broadcast.trigger('upload:video');
+	}
+});
+
 var BrightcoveMediaManagerView = BrightcoveView.extend(
 	{
 		tagName :   'div',
