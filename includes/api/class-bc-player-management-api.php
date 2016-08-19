@@ -155,7 +155,7 @@ class BC_Player_Management_API extends BC_API {
             $players[$account_id] = $this->send_request($url);
         }
 
-        return $players;
+        return apply_filters( 'brightcove_all_player_by_account', $players );
     }
 
 	/**
