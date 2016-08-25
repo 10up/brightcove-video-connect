@@ -69,13 +69,11 @@ var UploadView = BrightcoveView.extend(
 		successfulUploadIngest : function ( file ) {
 			// Make sure we're acting on the right file.
 			if ( file.id === this.model.get( 'id' ) ) {
-				console.log(JSON.stringify(this.model.attributes));
 				wpbc.broadcast.trigger( 'uploader:successMessage', wpbc.preload.messages.successUpload.replace( '%%s%%', this.model.get( 'fileName' ) ) );
-				wpbc.broadcast.trigger( 'uploader:postTypeCopy', this.model );
-
 				this.render();
 			}
 		},
+
 		/**
 		 * Render if we're the active upload.
 		 * Re-render if we thought we were but we no longer are.

@@ -68,9 +68,9 @@ class BC_Setup {
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
+
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
-
 	}
 
 	/**
@@ -325,18 +325,21 @@ class BC_Setup {
 
 		}
 	}
+
+	/**
+	 * Register `in-process` hidden video post type.
+	 */
 	public static function register_post_types() {
 		$labels = array(
-			'name'               => __( 'BC Videos',  'brightcove' )
+			'name' => __( 'BC In Process Videos', 'brightcove' )
 		);
 
 		$args = array(
-			'labels'             => $labels,
-			'public'             => false,
+			'labels' => $labels,
+			'public' => true,
 		);
 
-		register_post_type( 'bc-video-copy', $args );
-
+		register_post_type( 'bc-in-process-video', $args );
 	}
 
 	public static function bc_check_minimum_wp_version() {

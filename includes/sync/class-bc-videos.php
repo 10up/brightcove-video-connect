@@ -2,7 +2,7 @@
 
 class BC_Videos {
 
-	public $video_cpt = 'brightcove-video-copy';
+	public $video_cpt = 'bc-in-process-video';
 
 	protected $cms_api;
 	protected $tags;
@@ -82,12 +82,11 @@ class BC_Videos {
 	 * create/update WP data store with Brightcove data.
 	 *
 	 * @param      $video
-	 * @boolean       $add_only true denotes that we know the object is not in our library and we are adding it first time to the library. This is to improve the initial sync.
+	 * @param bool $add_only True denotes that we know the object is not in our library and we are adding it first time to the library. This is to improve the initial sync.
 	 *
 	 * @return bool|WP_Error
 	 */
 	public function add_or_update_wp_video( $video, $add_only = false ) {
-
 		$hash     = BC_Utility::get_hash_for_object( $video );
 		$video_id = $video['id'];
 
