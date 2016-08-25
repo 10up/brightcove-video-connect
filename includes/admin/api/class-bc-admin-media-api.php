@@ -51,6 +51,7 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ) );
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
+		add_filter( 'brightcove_media_query_results', array( $this, 'add_in_process_videos' ), 10, 2 );
 	}
 
 	protected function bc_helper_check_ajax() {
@@ -682,8 +683,15 @@ class BC_Admin_Media_API {
 		}
 
 		$bc_accounts->restore_default_account();
-		wp_send_json_success( $results );
 
+		/**
+		 * Filter media query results.
+		 *
+		 * @since 1.3
+		 */
+		$results = apply_filters( 'brightcove_media_query_results', $results, $type );
+
+		wp_send_json_success( $results );
 	}
 
 	/**
@@ -973,5 +981,29 @@ class BC_Admin_Media_API {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Add in process videos to media query results.
+	 * Also clear in process videos if they are already returned by brightcove.
+	 *
+	 * @param array $videos List of videos.
+	 *
+	 * @return array Processed list of videos.
+	 */
+	public function add_in_process_videos( $videos ) {
+		$video_ids      = wp_list_pluck( $videos, 'id' );
+		$video_post_ids = $this->videos->get_in_progress_videos();
+
+		foreach ( $video_post_ids as $video_post_id ) {
+			$in_process_video_id = BC_Utility::get_sanitized_video_id( $video_post_id );
+			if ( in_array( $in_process_video_id, $video_ids ) ) {
+				wp_delete_post( $video_post_id, true );
+			} else {
+				$videos[] = get_post_meta( $video_post_id, '_brightcove_video_object', true );
+			}
+		}
+
+		return $videos;
 	}
 }

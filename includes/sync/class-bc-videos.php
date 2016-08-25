@@ -8,10 +8,8 @@ class BC_Videos {
 	protected $tags;
 
 	public function __construct() {
-
 		$this->cms_api = new BC_CMS_API();
 		$this->tags    = new BC_Tags();
-
 	}
 
 	/**
@@ -207,21 +205,32 @@ class BC_Videos {
 		}
 
 		return end( $existing_video->posts );
-
 	}
+
 	public function get_video_hash_by_id( $video_id ) {
+		$video = $this->get_video_by_id( $video_id );
 
-	$video = $this->get_video_by_id( $video_id );
-
-	if ( !$video ) {
-
-		return false;
-
-	} else {
-
-		return get_post_meta( $video->ID, '_brightcove_hash', true );
-
+		if ( !$video ) {
+			return false;
+		} else {
+			return get_post_meta( $video->ID, '_brightcove_hash', true );
+		}
 	}
 
-}
+	/**
+	 * Get the list of videos that are in progress.
+	 *
+	 * @return array List of videos
+	 */
+	public function get_in_progress_videos() {
+		$args = array(
+			'no_rows_found' => true,
+			'fields' => 'ids',
+			'post_type' => $this->video_cpt,
+			'post_status' => array( 'publish', 'future' ),
+		);
+
+		$wp_query = new \WP_Query();
+		return $wp_query->query( $args);
+	}
 }
