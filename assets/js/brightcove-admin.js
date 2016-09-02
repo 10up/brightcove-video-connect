@@ -2111,6 +2111,7 @@ var UploadView = BrightcoveView.extend(
 				this.render();
 			}
 		},
+
 		/**
 		 * Render if we're the active upload.
 		 * Re-render if we thought we were but we no longer are.

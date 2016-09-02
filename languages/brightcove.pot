@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.2.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2016-08-12 16:47:47+00:00\n"
+"POT-Creation-Date: 2016-08-25 04:48:36+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -379,7 +379,7 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:142
 #: includes/admin/class-bc-templates.php:165
-#: includes/admin/class-bc-templates.php:180 includes/class-bc-setup.php:213
+#: includes/admin/class-bc-templates.php:180 includes/class-bc-setup.php:215
 msgid "Select File"
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr ""
 msgid "Closed Captions"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:178 includes/class-bc-setup.php:211
+#: includes/admin/class-bc-templates.php:178 includes/class-bc-setup.php:213
 msgid "Add Another Caption"
 msgstr ""
 
@@ -743,65 +743,69 @@ msgid ""
 "Writing to the syslog instead."
 msgstr ""
 
-#: includes/class-bc-setup.php:110
+#: includes/class-bc-setup.php:112
 msgid "Brightcove Media"
 msgstr ""
 
-#: includes/class-bc-setup.php:162
+#: includes/class-bc-setup.php:164
 msgid "Allowed Files"
 msgstr ""
 
-#: includes/class-bc-setup.php:172
+#: includes/class-bc-setup.php:174
 msgid ""
 "Deleting this video will prevent it from showing in any existing posts. Are "
 "you sure you want to delete?"
 msgstr ""
 
-#: includes/class-bc-setup.php:173
+#: includes/class-bc-setup.php:175
 msgid ""
 "We are currently performing a sync of your new Brightcove source, you may "
 "not see all videos and playlists until that is complete."
 msgstr ""
 
-#: includes/class-bc-setup.php:174
+#: includes/class-bc-setup.php:176
 msgid "Successfully uploaded file with name %%s%%."
 msgstr ""
 
-#: includes/class-bc-setup.php:175
+#: includes/class-bc-setup.php:177
 msgid ""
 "We were unable to upload the file with name %%s%% Please try reuploading it "
 "again."
 msgstr ""
 
-#: includes/class-bc-setup.php:209
+#: includes/class-bc-setup.php:211
 msgid ""
 "This file is not the proper format. Please use .vtt files, for more "
 "information visit"
 msgstr ""
 
-#: includes/class-bc-setup.php:212
+#: includes/class-bc-setup.php:214
 msgid "Add another remote file"
 msgstr ""
 
-#: includes/class-bc-setup.php:214
+#: includes/class-bc-setup.php:216
 msgid "Use a remote file instead"
 msgstr ""
 
-#: includes/class-bc-setup.php:215
+#: includes/class-bc-setup.php:217
 msgid ""
 "Sorry! We weren't able to reach the Brightcove API even after trying a few "
 "times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:315
+#: includes/class-bc-setup.php:317
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:317
+#: includes/class-bc-setup.php:319
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:344
+#: includes/class-bc-setup.php:330
+msgid "BC Videos"
+msgstr ""
+
+#: includes/class-bc-setup.php:359
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "
@@ -1539,6 +1543,14 @@ msgstr ""
 
 #: includes/class-bc-video-upload.php:87
 msgid "Unable to create a video on brightcove side"
+msgstr ""
+
+#: includes/sync/class-bc-videos.php:142
+msgid "The video has not been created in WordPress"
+msgstr ""
+
+#: includes/sync/class-bc-videos.php:149
+msgid "BC WORDPRESS: Video with ID #%d has been created"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
