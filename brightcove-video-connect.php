@@ -71,6 +71,7 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
 
 	global $bc_accounts;
 
@@ -115,7 +116,7 @@ $installed = get_option( 'brightcove_version' );
 if ( ! $installed || version_compare( $installed, BRIGHTCOVE_VERSION, '<' ) ) {
 	/**
 	 * Upgrade the Brightcove installation to add missing settings or event listeners.
-	 * 
+	 *
 	 * @param string $installed
 	 */
 	do_action( 'brightcove_upgrade', $installed );
