@@ -69,7 +69,7 @@
 				router.navigate('add-new-brightcove-video', { trigger:true });
 			});
 
-			$('.brightcove-add-media').on('click', function( e ) {
+			$(document).on('click', '.brightcove-add-media', function( e ) {
 				e.preventDefault();
 				wpbc.triggerModal();
 			});
