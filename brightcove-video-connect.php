@@ -102,14 +102,6 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php' );
 
-// Check Brightcove status if is_admin().
-if ( is_admin() ) {
-
-	require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-status-warning.php' );
-	new BC_Status_Warning();
-
-}
-
 // Upgrade routine
 $installed = get_option( 'brightcove_version' );
 if ( ! $installed || version_compare( $installed, BRIGHTCOVE_VERSION, '<' ) ) {
