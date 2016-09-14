@@ -2111,6 +2111,7 @@ var UploadView = BrightcoveView.extend(
 				this.render();
 			}
 		},
+
 		/**
 		 * Render if we're the active upload.
 		 * Re-render if we thought we were but we no longer are.
@@ -2965,7 +2966,7 @@ var MediaCollectionView = BrightcoveView.extend(
 				router.navigate('add-new-brightcove-video', { trigger:true });
 			});
 
-			$('.brightcove-add-media').on('click', function( e ) {
+			$(document).on('click', '.brightcove-add-media', function( e ) {
 				e.preventDefault();
 				wpbc.triggerModal();
 			});
