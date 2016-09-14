@@ -60,6 +60,10 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.2.5
+
+* Enhancement: Removed call to Brightcove status API
+
 ##### 1.2.4
 
 * Fix: Fixed issues with "Insert into Post" button
