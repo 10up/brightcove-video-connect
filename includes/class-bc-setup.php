@@ -336,7 +336,7 @@ class BC_Setup {
 
 		$args = array(
 			'labels' => $labels,
-			'public' => true,
+			'public' => false,
 		);
 
 		register_post_type( 'bc-in-process-video', $args );
