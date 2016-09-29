@@ -55,6 +55,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			newMessage.addClass( messageClasses ).find( '.message-text' ).text( message );
 			newMessage.delay( 4000 ).fadeOut( 500, function () {
 				$( this ).remove();
+				wpbc.broadcast.trigger('upload:video');
 			} );
 		},
 
