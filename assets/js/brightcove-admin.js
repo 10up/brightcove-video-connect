@@ -888,7 +888,6 @@ var UploadVideoManagerView = BrightcoveView.extend(
 		},
 
 		message : function ( message, type ) {
-			var self = this;
 			var messages       = this.$el.find( '.brightcove-messages' );
 			var messageClasses = '';
 			if ( 'success' === type ) {
