@@ -44,6 +44,7 @@ var MediaModel = Backbone.Model.extend(
 					action : 'bc_media_fetch',
 					id :     this.id
 				} );
+
 				return wp.media.ajax( options );
 
 				// Overload the `update` request so properties can be saved.
@@ -61,7 +62,7 @@ var MediaModel = Backbone.Model.extend(
 					tags :             this.get( 'tags' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
-					history:           this.get( 'history' ),
+					history:           this.get( '_change_history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' ),
 					captions:          this.get( 'captions' )
@@ -357,7 +358,7 @@ var MediaCollection = Backbone.Collection.extend(
 					action :         'bc_media_query',
 					account :        this.activeAccount || wpbc.preload.defaultAccountId,
 					dates :          this.date,
-					posts_per_page : 100,
+					posts_per_page : wpbc.posts_per_page,
 					page_number :    this.pageNumber,
 					nonce :          wpbc.preload.nonce,
 					search :         this.searchTerm,
@@ -722,6 +723,7 @@ var ToolbarView = BrightcoveView.extend(
 		events : {
 			'click .view-list' :                   'toggleList',
 			'click .view-grid' :                   'toggleGrid',
+			'click .brightcove-toolbar':           'toggleToolbar',
 			'change .brightcove-media-source' :    'sourceChanged',
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
@@ -769,6 +771,20 @@ var ToolbarView = BrightcoveView.extend(
 			this.trigger( 'viewType', 'grid' );
 			this.$el.find( '.view-grid' ).addClass( 'current' );
 			this.$el.find( '.view-list' ).removeClass( 'current' );
+		},
+
+		// Toggle toolbar help
+		toggleToolbar : function () {
+			var template = wp.template( 'brightcove-tooltip-notice' );
+
+			// Throw a notice to the user that the file is not the correct format
+			$( '.brightcove-media-videos' ).before( template );
+			// Allow the user to dismiss the notice
+			$( '#js-tooltip-dismiss' ).on( 'click', function() {
+				$( '#js-tooltip-notice' ).first().fadeOut( 500, function() {
+					$( this ).remove();
+				} );
+			} );
 		},
 
 		// Brightcove source changed
@@ -854,6 +870,7 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			this.listenTo( wpbc.broadcast, 'uploader:successMessage', this.successMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:errorMessage', this.errorMessage );
 			this.listenTo( wpbc.broadcast, 'uploader:clear', this.resetUploads );
+			this.listenTo( wpbc.broadcast, 'upload:video', this.resetUploads );
 		},
 
 		resetUploads : function () {
@@ -881,8 +898,9 @@ var UploadVideoManagerView = BrightcoveView.extend(
 			var newMessage = $( '<div class="wrap"><div class="brightcove-message"><p class="message-text"></p></div></div>' );
 			messages.append( newMessage );
 			newMessage.addClass( messageClasses ).find( '.message-text' ).text( message );
-			newMessage.fadeOut( 6000, function () {
+			newMessage.delay( 4000 ).fadeOut( 500, function () {
 				$( this ).remove();
+				wpbc.broadcast.trigger('upload:video');
 			} );
 		},
 
@@ -937,6 +955,15 @@ var UploadVideoManagerView = BrightcoveView.extend(
 		}
 	}
 );
+
+var BrightcoveRouter = Backbone.Router.extend({
+	routes: {
+		'add-new-brightcove-video' : "addNew"
+	},
+	addNew: function() {
+		wpbc.broadcast.trigger('upload:video');
+	}
+});
 
 var BrightcoveMediaManagerView = BrightcoveView.extend(
 	{
@@ -1003,7 +1030,9 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
-			this.listenTo( wpbc.broadcast, 'backButton', function ( settings ) {
+			this.listenTo( wpbc.broadcast, 'cancelPreview:media', function ( settings ) {
+				this.clearPreview();
+				this.detailsView = undefined;
 				this.model.set( 'mode', 'manager' );
 				this.render();
 
@@ -1011,23 +1040,24 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				wpbc.broadcast.trigger( 'toggle:insertButton' );
 			} );
 
-			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( emptyPlaylists ) {
+			this.listenTo( wpbc.broadcast, 'change:emptyPlaylists', function ( hideEmptyPlaylists ) {
 
 				var mediaCollectionView = this.model.get( 'media-collection-view' );
 				this.model.set( 'mode', 'manager' );
 
-				_.each( mediaCollectionView.collection.models, function ( mediaObject ) {
+				_.each( mediaCollectionView.collection.models, function ( playlistModel ) {
 
-					if ( ! ( 'undefined' !== typeof mediaObject.get( 'video_ids' ) && 1 <= mediaObject.get( 'video_ids' ).length && mediaObject && mediaObject.view && mediaObject.view.$el ) ) {
+					// Don't hide smart playlists. Only Manual playlists will have playlistType as 'EXPLICIT'.
+					if ( 'EXPLICIT' !== playlistModel.get ( 'type' ) ) {
+						return;
+					}
 
-						if ( emptyPlaylists ) {
-
-							mediaObject.view.$el.hide();
-
+					// Manual play list will have videos populated in video_ids. Empty playlists will have zero video_ids.
+					if ( playlistModel.get( 'video_ids' ).length === 0 ) {
+						if ( hideEmptyPlaylists ) {
+							playlistModel.view.$el.hide();
 						} else {
-
-							mediaObject.view.$el.show();
-
+							playlistModel.view.$el.show();
 						}
 					}
 				} );
@@ -1165,7 +1195,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.clearPreview();
 			} );
 
-			this.listenTo( wpbc.broadcast, 'view:toggled', function ( mediaView ) {
+			this.listenTo( wpbc.broadcast, 'select:media', function ( mediaView ) {
 
 				/* If user selects same thumbnail they want to hide the details view */
 				if ( this.detailsView && this.detailsView.model === mediaView.model ) {
@@ -1279,16 +1309,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 		showUploader : function () {
 
-			if ( 'manager' === this.model.get( 'mode' ) ) {
-
-				this.model.set( 'mode', 'uploader' );
-
-			} else {
-
-				this.model.set( 'mode', 'manager' );
-
-			}
-
+			this.model.set( 'mode', 'uploader' );
 			this.render();
 
 		},
@@ -1450,11 +1471,14 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		toggleInsertButton : function ( state ) {
-			var button = this.$el.find( '.brightcove.media-button-insert' );
+			var button     = this.$el.find( '.brightcove.media-button-insert' ),
+				processing = $('.attachment.highlighted' ).find( '.processing' ).length;
 
 			button.show();
 
-			if ( 'enabled' === state ) {
+			if ( 1 === processing ) {
+				button.attr( 'disabled', 'disabled' );
+			} else if ( 'enabled' === state ) {
 				button.removeAttr( 'disabled' );
 			} else if ( 'disabled' === state ) {
 				button.attr( 'disabled', 'disabled' );
@@ -1556,7 +1580,7 @@ var MediaDetailsView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
-			'click .brightcove.back.button' :    'backButton'
+			'click .brightcove.back.button' :    'triggerCancelPreviewMedia'
 		},
 
 		triggerEditMedia : function ( event ) {
@@ -1569,8 +1593,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'preview:media', this.model );
 		},
 
-		backButton : function ( event ) {
-			wpbc.broadcast.trigger( 'backButton', this.mediaType );
+		triggerCancelPreviewMedia : function ( event ) {
+			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
 		},
 
 		initialize : function ( options ) {
@@ -1687,7 +1711,7 @@ var MediaView = BrightcoveView.extend(
 		},
 
 		toggleDetailView : function () {
-			wpbc.broadcast.trigger( 'view:toggled', this );
+			wpbc.broadcast.trigger( 'select:media', this );
 		},
 
 		videoMoveUp : function () {
@@ -2088,6 +2112,7 @@ var UploadView = BrightcoveView.extend(
 				this.render();
 			}
 		},
+
 		/**
 		 * Render if we're the active upload.
 		 * Re-render if we thought we were but we no longer are.
@@ -2366,7 +2391,8 @@ var VideoEditView = BrightcoveView.extend(
 			evnt.preventDefault();
 
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
-				$allButtons = $mediaFrame.find( '.button, .button-link' );
+				$allButtons = $mediaFrame.find( '.button, .button-link'),
+				SELF = this;
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
@@ -2902,6 +2928,8 @@ var MediaCollectionView = BrightcoveView.extend(
 
 		loaded: function() {
 			var brightcoveModalContainer = $('.brightcove-modal');
+
+			var router = new BrightcoveRouter;
 			wpbc.triggerModal = function() {
 				if (!wpbc.modal) {
 					wpbc.modal = new BrightcoveModalView({
@@ -2936,10 +2964,10 @@ var MediaCollectionView = BrightcoveView.extend(
 
 			$('.brightcove-add-new-video').on('click', function(e) {
 				e.preventDefault();
-				wpbc.broadcast.trigger('upload:video');
+				router.navigate('add-new-brightcove-video', { trigger:true });
 			});
 
-			$('.brightcove-add-media').on('click', function( e ) {
+			$(document).on('click', '.brightcove-add-media', function( e ) {
 				e.preventDefault();
 				wpbc.triggerModal();
 			});
@@ -2963,6 +2991,8 @@ var MediaCollectionView = BrightcoveView.extend(
 
 	jQuery( document ).ready( function() {
 		App.load();
+		var router = new BrightcoveRouter;
+		Backbone.history.start();
 	} );
 
 } )( jQuery );

@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.6.1
-Stable tag:        1.2.5
+Stable tag:        1.3.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,10 @@ Sample Video
 http://sample-videos.com/
 
 == Changelog ==
+
+= 1.3.0 =
+
+* Various bug fixes
 
 = 1.2.5 =
 

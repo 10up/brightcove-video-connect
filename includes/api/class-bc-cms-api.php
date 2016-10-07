@@ -52,7 +52,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @param string $name the name of the playlst
 	 * @param string $type the type of playlist (see BC CMS API docs)
-	 * @param array  $args Array of other attributes for the playlist
+	 * @param array $args Array of other attributes for the playlist
 	 *
 	 * @return array|bool Array of playlist data or false if failure
 	 */
@@ -201,7 +201,7 @@ class BC_CMS_API extends BC_API {
 	 * @since 1.0.0
 	 *
 	 * @param string $playlist_id the id of the playlist to update
-	 * @param array  $args        optional array of other arguments to update in the playlist
+	 * @param array $args optional array of other arguments to update in the playlist
 	 *
 	 * @return array|bool array of data about the updated playlist or false on failure.
 	 */
@@ -221,7 +221,7 @@ class BC_CMS_API extends BC_API {
 	 * @since 1.0.0
 	 *
 	 * @param string $name the name of the video
-	 * @param array  $args optional array of other arguments used in video creation
+	 * @param array $args optional array of other arguments used in video creation
 	 *
 	 * @return array|bool array of data about the new video or false on failure.
 	 */
@@ -361,11 +361,11 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int    $limit    Number of videos to return - must be an integer between 1 and 100.
-	 * @param int    $offset   Number of videos to skip (for paging results). Must be a positive integer.
-	 * @param string $query    Query terms to search for.
-	 * @param string $sort     A string that specifies the field to sort by. Start with - to sort descending.
-	 * @param bool   $playable Available at the /videos endpoint.
+	 * @param int $limit Number of videos to return - must be an integer between 1 and 100.
+	 * @param int $offset Number of videos to skip (for paging results). Must be a positive integer.
+	 * @param string $query Query terms to search for.
+	 * @param string $sort A string that specifies the field to sort by. Start with - to sort descending.
+	 * @param bool $playable Available at the /videos endpoint.
 	 *
 	 * @return array|bool array of available videos retrieved or false if error
 	 */
@@ -419,10 +419,17 @@ class BC_CMS_API extends BC_API {
 		}
 
 		if ( '' != sanitize_text_field( $query ) ) {
+
+			// If Post variables are being escaped, the encoded quote do not return the intended results from the API.
+			$query = stripslashes( $query );
+
 			$args['q'] = sanitize_text_field( $query );
+
 		}
 
-		$url = add_query_arg(
+		// rawurlencode will convert spaces to %20, which is required according to BC API Docs.
+		$args = array_map( 'rawurlencode', $args );
+		$url  = add_query_arg(
 			$args,
 			self::CMS_BASE_URL . $this->get_account_id() . '/videos'
 		);
@@ -452,7 +459,7 @@ class BC_CMS_API extends BC_API {
 	 * @since 1.0.0
 	 *
 	 * @param string $video_id the id of the video to update
-	 * @param array  $args     optional array of other arguments used in video creation
+	 * @param array $args optional array of other arguments used in video creation
 	 *
 	 * @return array|bool array of data about the updated video or false on failure.
 	 */
@@ -474,9 +481,9 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $video_id  the ID of the video we're adding the master to
+	 * @param string $video_id the ID of the video we're adding the master to
 	 * @param string $video_url the url of the video stored locally
-	 * @param string $profile   the profile to use for processing
+	 * @param string $profile the profile to use for processing
 	 *
 	 * @return string|bool the id of the ingest request or false on failure
 	 */
@@ -494,10 +501,10 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends a URL of the video's poster image to the Dynamic Ingest API for processing.
 	 *
-	 * @param string $video_id   Video cloud ID
+	 * @param string $video_id Video cloud ID
 	 * @param string $poster_url URL for the video poster image
-	 * @param int    [$height]   Pixel height of the image
-	 * @param int    [$width]    Pixel width of the image
+	 * @param int [$height]   Pixel height of the image
+	 * @param int [$width]    Pixel width of the image
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
@@ -508,7 +515,7 @@ class BC_CMS_API extends BC_API {
 		$video_id = urlencode( $video_id );
 
 		// Build out the data
-		$data = array();
+		$data              = array();
 		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		$data['poster'] = array(
@@ -531,10 +538,10 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends a URL of the video's thumbnail image to the Dynamic Ingest API for processing.
 	 *
-	 * @param string $video_id      Video cloud ID
+	 * @param string $video_id Video cloud ID
 	 * @param string $thumbnail_url URL for the thumbnail image
-	 * @param int    [$height]      Pixel height of the image
-	 * @param int    [$width]       Pixel width of the image
+	 * @param int [$height]      Pixel height of the image
+	 * @param int [$width]       Pixel width of the image
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
@@ -545,7 +552,7 @@ class BC_CMS_API extends BC_API {
 		$video_id = urlencode( $video_id );
 
 		// Build out the data
-		$data = array();
+		$data              = array();
 		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		$data['thumbnail'] = array(
@@ -568,7 +575,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends a URL of the video's caption file to the Dynamic Ingest API for processing.
 	 *
-	 * @param string $video_id         Video cloud ID
+	 * @param string $video_id Video cloud ID
 	 * @param string $caption_file_url URL for a WebVTT file
 	 * @param string [$language]       ISO 639 2-letter language code for text tracks
 	 * @param string [$label]          User-readable title
@@ -588,7 +595,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends the URLs of various video text track files to the Dynamic Ingest API for processing.
 	 *
-	 * @param string          $video_id
+	 * @param string $video_id
 	 * @param BC_Text_Track[] $text_tracks
 	 *
 	 * @return string|bool The ingest request ID or false on failure
@@ -598,7 +605,7 @@ class BC_CMS_API extends BC_API {
 		$data                = array();
 		$data['callbacks']   = BC_Notification_API::callback_paths();
 		$data['text_tracks'] = array();
-		foreach( $text_tracks as $track ) {
+		foreach ( $text_tracks as $track ) {
 			$data['text_tracks'][] = $track->toArray();
 		}
 
@@ -619,19 +626,19 @@ class BC_CMS_API extends BC_API {
 
 	/**
 	 * Subscribe to Brightcove API events
-	 * 
+	 *
 	 * @param string $endpoint
-	 * @param array  $events
-	 * 
+	 * @param array $events
+	 *
 	 * @return string|bool Subscription ID on success, false on failure
 	 */
 	public function create_subscription( $endpoint, $events = array() ) {
-		$data = array();
+		$data             = array();
 		$data['endpoint'] = $endpoint;
-		
+
 		// Sanitize events
 		$events = array_map( 'sanitize_text_field', $events );
-		
+
 		$data['events'] = $events;
 
 		$response = $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions' ), 'POST', $data );
