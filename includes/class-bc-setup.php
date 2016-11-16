@@ -250,7 +250,11 @@ class BC_Setup {
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
 		wp_enqueue_script( 'brightcove-admin' );
 
-		wp_enqueue_media( array( 'post' => $GLOBALS['post_ID'] ) );
+		if ( isset( $GLOBALS['post_ID'] ) ) {
+			wp_enqueue_media( array( 'post' => $GLOBALS['post_ID'] ) );
+		} else {
+			wp_enqueue_media();
+		}
 
 		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array() );
 		wp_enqueue_style( 'brightcove-video-connect' );
