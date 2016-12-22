@@ -153,6 +153,13 @@ class BC_Player_Management_API extends BC_API {
         foreach ($all_accounts_id as $account_id) {
             $url = esc_url_raw( self::BASE_URL . $account_id . '/players/');
             $players[$account_id] = $this->send_request($url);
+
+            $default_player = get_option( '_brightcove_default_player_' . $account_id );
+            if ( ! $default_player ) {
+                $default_player = 'default';
+            }
+
+            $players[$account_id]['default'] = $default_player;
         }
 
         return apply_filters( 'brightcove_all_player_by_account', $players );
