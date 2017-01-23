@@ -12,8 +12,8 @@ class BC_Admin_Settings_Page {
 	public function delete_source() {
 
 		global $bc_accounts;
-
-		if ( ! isset( $_GET['_wpnonce'] ) ) {
+						
+		if ( ! isset( $_GET['_wpnonce'] ) || ! isset( $_GET['account'] ) ) {
 			return false;
 		}
 
