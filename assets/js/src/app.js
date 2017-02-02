@@ -72,6 +72,7 @@
 			$(document).on('click', '.brightcove-add-media', function( e ) {
 				e.preventDefault();
 				wpbc.triggerModal();
+				wpbc.modal.target = e.currentTarget.dataset.target;
 			});
 
 			$(document).keyup(function(e) {
