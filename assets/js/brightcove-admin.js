@@ -1455,9 +1455,10 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		insertIntoPost : function ( evnt ) {
+			evnt.preventDefault();
+
 			// Exit if the 'button' is disabled.
 			if ( $( evnt.currentTarget ).hasClass( 'disabled' ) ) {
-				evnt.preventDefault();
 				return;
 			}
 
