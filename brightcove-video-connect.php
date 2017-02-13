@@ -71,6 +71,8 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-logging.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
 
 	global $bc_accounts;
 
