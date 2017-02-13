@@ -289,11 +289,12 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @return array|bool array of the video information retrieved or false if error
 	 */
-	public function video_get( $video_id ) {
+	public function video_get( $video_id, $account_id = null ) {
 
 		$video_id = sanitize_title_with_dashes( $video_id );
+		$account_id = is_numeric($account_id) ? $account_id : $this->get_account_id();
 
-		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id ) );
+		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $account_id . '/videos/' . $video_id ) );
 	}
 
 	/**
