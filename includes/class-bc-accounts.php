@@ -36,6 +36,16 @@ class BC_Accounts {
 		$this->current_account  = $this->original_account;
 	}
 
+    public function get_all_accounts_id() {
+        $all_accounts = $this->get_all_accounts();
+        $account_ids = array();
+
+        foreach ($all_accounts as $account) {
+            $account_ids[] = $account["account_id"];
+        }
+        return $account_ids;
+    }
+
 	public function get_account_id() {
 
 		return $this->current_account ? $this->current_account['account_id'] : false;
@@ -81,7 +91,11 @@ class BC_Accounts {
 		return update_option( $option_key_sync_type, $sync_val );
 	}
 
-	public function add_account( $account_id, $client_id, $client_secret, $account_name = 'New Account', $set_default = '', $allow_update = true ) {
+	public function add_account( $account_id, $client_id, $client_secret, $account_name = '', $set_default = '', $allow_update = true ) {
+
+		if ( empty( $account_name ) ) {
+			$account_name = __( 'New Account', 'brightcove' );
+		}
 
 		// Check if WP CLI is working and bail in admin if it is.
 		if ( defined( 'WP_CLI' ) && ! WP_CLI ) {
@@ -409,7 +423,7 @@ class BC_Accounts {
 
 				/**
 				 * Fired after an account is deleted from the WordPress admin
-				 * 
+				 *
 				 * @param string $hash Account hash according to Brightcove
 				 */
 				do_action( 'brightcove_deleted_account', $hash );
@@ -447,31 +461,37 @@ class BC_Accounts {
 		return $hash;
 	}
 
+	/**
+	 * Check permission level for an account.
+	 *
+	 * @return array List of permission issues.
+	 */
 	protected function check_permissions_level() {
 
-		$errors   = array();
-		$video_id = false;
+		$permission_issues = array();
+		$video_id          = false;
+
 		// Start enumerating permissions that we'll need to ensure the account is good.
 		$cms_api = new BC_CMS_API();
 
 		// Create a video
-		$video_creation = $cms_api->video_add( 'Brightcove WordPress plugin test video' );
+		$video_creation = $cms_api->video_add( __( 'Brightcove WordPress plugin test video', 'brightcove' ) );
 		if ( ! $video_creation || is_wp_error( $video_creation ) ) {
-			$errors[] = new WP_Error( 'account-can-not-create-videos', esc_html__( 'Supplied account can not create videos', 'brightcove' ) );
+			$permission_issues[] = esc_html__( 'create videos', 'brightcove' );
 		} else {
 			$video_id = $video_creation['id'];
 
 			// Update a video
-			$renamed_title = 'Brightcove WordPress plugin test video renamed';
+			$renamed_title = __( 'Brightcove WordPress plugin test video renamed', 'brightcove' );
 			$video_renamed = $cms_api->video_update( $video_id, array( 'name' => $renamed_title ) );
 			if ( ! $video_renamed || $renamed_title !== $video_renamed['name'] ) {
-				$errors[] = new WP_Error( 'account-can-not-update-videos', esc_html__( 'Supplied account can not update videos', 'brightcove' ) );
+				$permission_issues[] = esc_html__( 'modify videos', 'brightcove' );
 			}
 		}
 
-		$playlist = $cms_api->playlist_add( 'Brightcove WordPress plugin test playlist' );
+		$playlist = $cms_api->playlist_add( __( 'Brightcove WordPress plugin test playlist', 'brightcove' ) );
 		if ( ! $playlist || ! is_array( $playlist ) || ! isset( $playlist['id'] ) ) {
-			$errors[] = new WP_Error( 'account-can-not-create-playlists', esc_html__( 'Supplied account cannot create playlists', 'brightcove' ) );
+			$permission_issues[] = esc_html__( 'create playlists', 'brightcove' );
 		} else {
 			// For use through other Playlist test API calls.
 			$playlist_id = $playlist['id'];
@@ -480,18 +500,18 @@ class BC_Accounts {
 			$updated_playlist = $cms_api->playlist_update( $playlist_id, $update_data );
 
 			if ( ! $updated_playlist || ! is_array( $updated_playlist ) || ! isset( $updated_playlist['id'] ) ) {
-				$errors[] = new WP_Error( 'account-can-not-update-playlists', esc_html__( 'Supplied account cannot modify playlists', 'brightcove' ) );
+				$permission_issues[] = esc_html__( 'modify playlists', 'brightcove' );
 			}
 
 			// Delete a playlist
 			if ( ! $cms_api->playlist_delete( $playlist_id ) ) {
-				$errors[] = new WP_Error( 'account-can-not-delete-playlists', esc_html__( 'Supplied playlist cannot delete playlists', 'brightcove' ) );
+				$permission_issues[] = esc_html__( 'delete playlists', 'brightcove' );
 			}
 		}
 
 		// Delete a video
 		if ( ! $cms_api->video_delete( $video_id ) ) {
-			$errors[] = new WP_Error( 'account-can-not-delete-videos', esc_html__( 'Supplied account can not delete videos', 'brightcove' ) );
+			$permission_issues[] = esc_html__( 'delete videos', 'brightcove' );
 		}
 
 		$player_api = new BC_Player_Management_API( $this );
@@ -499,10 +519,10 @@ class BC_Accounts {
 		// Fetch all players
 		$players = $player_api->player_list();
 		if ( is_wp_error( $players ) || ! is_array( $players['items'] ) ) {
-			$errors[] = new WP_Error( 'account-can-not-fetch-players', esc_html__( 'Supplied account can not fetch players', 'brightcove' ) );
+			$permission_issues[] = esc_html__( 'fetch players', 'brightcove' );
 		}
 
-		return $errors;
+		return $permission_issues;
 	}
 
 	protected function is_valid_account( $account_id, $client_id, $client_secret, $account_name, $check_access = true ) {
@@ -532,7 +552,15 @@ class BC_Accounts {
 		if ( ! $valid_credentials ) {
 			$errors[] = new WP_Error( 'account-invalid-credentials', esc_html__( 'Invalid account credentials', 'brightcove' ) );
 		} else if ( $check_access ) {
-			$errors = array_merge( $errors, $this->check_permissions_level() );
+			$permission_issues = $this->check_permissions_level();
+			if ( count ( $permission_issues ) > 0 ) {
+				$errors[] = new WP_Error(
+					'account-permission-issue',
+					esc_html__( "Supplied account doesn't have the following permissions: ", 'brightcove' ) . 
+						implode( ', ', $permission_issues ) . '. ' .
+			            esc_html__( 'Please use an account that has these permissions.' , 'brightcove' )
+				);
+			}
 		}
 
 		// Restore current account transient (if exists).

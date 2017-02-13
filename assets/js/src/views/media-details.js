@@ -16,12 +16,12 @@ var MediaDetailsView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
-			'click .brightcove.back.button' :    'backButton'
+			'click .brightcove.back.button' :    'triggerCancelPreviewMedia'
 		},
 
 		triggerEditMedia : function ( event ) {
 			event.preventDefault();
-			wpbc.broadcast.trigger( 'edit:media', this.model );
+			wpbc.broadcast.trigger( 'edit:media', this.model, this.mediaType );
 		},
 
 		triggerPreviewMedia : function ( event ) {
@@ -29,8 +29,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'preview:media', this.model );
 		},
 
-		backButton : function ( event ) {
-			wpbc.broadcast.trigger( 'backButton', this.mediaType );
+		triggerCancelPreviewMedia : function ( event ) {
+			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
 		},
 
 		initialize : function ( options ) {

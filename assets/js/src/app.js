@@ -30,6 +30,8 @@
 
 		loaded: function() {
 			var brightcoveModalContainer = $('.brightcove-modal');
+
+			var router = new BrightcoveRouter;
 			wpbc.triggerModal = function() {
 				if (!wpbc.modal) {
 					wpbc.modal = new BrightcoveModalView({
@@ -64,10 +66,11 @@
 
 			$('.brightcove-add-new-video').on('click', function(e) {
 				e.preventDefault();
-				wpbc.broadcast.trigger('upload:video');
+				router.navigate('add-new-brightcove-video', { trigger:true });
 			});
 
-			$('.brightcove-add-media').on('click', function() {
+			$(document).on('click', '.brightcove-add-media', function( e ) {
+				e.preventDefault();
 				wpbc.triggerModal();
 			});
 
@@ -90,4 +93,6 @@
 
 	jQuery( document ).ready( function() {
 		App.load();
+		var router = new BrightcoveRouter;
+		Backbone.history.start();
 	} );

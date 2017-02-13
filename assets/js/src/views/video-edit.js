@@ -232,8 +232,11 @@ var VideoEditView = BrightcoveView.extend(
 		},
 
 		saveSync : function ( evnt ) {
+			evnt.preventDefault();
+
 			var $mediaFrame = $( evnt.currentTarget ).parents( '.media-modal' ),
-				$allButtons = $mediaFrame.find( '.button, .button-link' );
+				$allButtons = $mediaFrame.find( '.button, .button-link'),
+				SELF = this;
 
 			// Exit if the 'button' is disabled.
 			if ( $allButtons.hasClass( 'disabled' ) ) {
@@ -315,8 +318,14 @@ var VideoEditView = BrightcoveView.extend(
 				.done( function() {
 					if ( $mediaFrame.length > 0 ) {
 						// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-						var editTags     = $mediaFrame.find( '.brightcove-tags' ).val().split( ',' ),
+						var tagInput =  $mediaFrame.find( '.brightcove-tags' ).val(),
+							editTags,
+							newTags;
+
+						if ( tagInput ) {
+							editTags     = tagInput.split( ',' );
 							newTags      = _.difference( editTags, wpbc.preload.tags );
+						}
 
 						// Add any new tags to the tags object and the dropdown.
 						_.each( newTags, function( newTag ){
@@ -335,6 +344,9 @@ var VideoEditView = BrightcoveView.extend(
 					// Show the delete link.
 					$mediaFrame.find( '.delete-action' ).show();
 				} );
+
+			// Hide the video edit screen after save.
+			wpbc.broadcast.trigger( 'start:gridview' );
 		},
 
 		/**
@@ -343,6 +355,9 @@ var VideoEditView = BrightcoveView.extend(
 		 * @param {Object} options
 		 */
 		render : function ( options ) {
+			this.listenTo( wpbc.broadcast, 'save:media', this.saveSync );
+			this.listenTo( wpbc.broadcast, 'back:editvideo', this.back );
+
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
 
@@ -414,6 +429,5 @@ var VideoEditView = BrightcoveView.extend(
 				}
 			}
 		}
-
 	}
 );
