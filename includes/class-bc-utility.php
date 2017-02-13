@@ -604,7 +604,7 @@ class BC_Utility {
 	 */
 	public static function list_cache_items() {
 
-		$transient_keys = get_option( 'bc_transient_keys' );
+		$transient_keys = get_transient( 'bc_transient_keys' );
 
 		if ( ! is_array( $transient_keys ) ) {
 			$transient_keys = array();
@@ -655,7 +655,7 @@ class BC_Utility {
 
 		}
 
-		if ( update_option( 'bc_transient_keys', $transient_keys ) ) {
+		if ( set_transient( 'bc_transient_keys', $transient_keys ) ) {
 			return 1; // Key saved to Brightcove registry.
 		}
 
@@ -691,7 +691,7 @@ class BC_Utility {
 				delete_transient( $transient_key );
 			}
 
-			delete_option( 'bc_transient_keys' );
+			delete_transient( 'bc_transient_keys' );
 
 		} else { // Only clear specified items.
 
@@ -732,7 +732,7 @@ class BC_Utility {
 
 		}
 
-		return update_option( 'bc_transient_keys', $transient_keys );
+		return set_transient( 'bc_transient_keys', $transient_keys );
 
 	}
 
@@ -764,7 +764,7 @@ class BC_Utility {
 
 			unset( $transient_keys[ $key ] );
 
-			update_option( 'bc_transient_keys', $transient_keys );
+			set_transient( 'bc_transient_keys', $transient_keys );
 
 		}
 
