@@ -350,7 +350,7 @@ class BC_CMS_API extends BC_API {
 
 		$video_id = sanitize_title_with_dashes( $video_id );
 
-		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/counts/videos/' . $video_id . '/sources' ) );
+		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/sources' ) );
 
 	}
 
