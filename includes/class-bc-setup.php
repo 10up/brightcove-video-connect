@@ -302,7 +302,9 @@ class BC_Setup {
 
 		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 ) {
 
-			delete_option( '_brightcove_plugin_activated' );
+			if ( false !== get_option( '_brightcove_plugin_activated' ) ) {
+				delete_option( '_brightcove_plugin_activated' );
+			}
 
 			return;
 
