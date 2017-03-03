@@ -483,7 +483,7 @@ class BC_Admin_Templates {
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
 						<# } else { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
-							<div class="processing"><span><?php esc_html_e( 'Processing...', 'brightcove' ); ?></span></div>
+							<div class="processing"><span></span></div>
 						<# } #>
 					<# } #>
 					<# if ( data.duration ) { #>
