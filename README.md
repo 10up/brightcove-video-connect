@@ -60,6 +60,11 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.3.1
+* Enhancement: Show Brightcove button only in the main content editor
+* Enhancement: Increased the timeout used to call Brightcove API
+* Enhancement: Removed the 'Processing...' text from image thumbnails
+
 ##### 1.3.0
 * Various bug fixes
 
