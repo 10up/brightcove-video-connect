@@ -174,7 +174,7 @@ class BC_Setup {
 			'confirmDelete'  => esc_html__( 'Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?', 'brightcove' ),
 			'ongoingSync'    => esc_html__( 'We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete.', 'brightcove' ),
 			'successUpload'  => esc_html__( 'Successfully uploaded file with name %%s%%.', 'brightcove' ),
-			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%% Please try reuploading it again.', 'brightcove' ),
+			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%%. Please try reuploading it again.', 'brightcove' ),
 		);
 
 		// Fetch all account hash/name combos.
@@ -250,7 +250,11 @@ class BC_Setup {
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
 		wp_enqueue_script( 'brightcove-admin' );
 
-		wp_enqueue_media();
+		if ( isset( $GLOBALS['post_ID'] ) ) {
+			wp_enqueue_media( array( 'post' => $GLOBALS['post_ID'] ) );
+		} else {
+			wp_enqueue_media();
+		}
 
 		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array() );
 		wp_enqueue_style( 'brightcove-video-connect' );
