@@ -559,9 +559,14 @@ class BC_Admin_Templates {
 						if ( 'edit' === $parent_base ) { ?>
 							<div class="video-player">
 								<span class="title"><?php esc_html_e( 'Video Player: ', 'brightcove' ); ?></span>
-                                <# _.each( wpbc.players[data.account_id].items, function ( player ) { #>
+                                <# 
+                                var default_player_id = "default"; 
+                                if ( typeof(window.rdm_video_cloud) !== 'undefined' && typeof(window.rdm_video_cloud.default_player_id) !== "undefined" ) {
+                                    default_player_id = window.rdm_video_cloud.default_player_id; 
+                                }                                                                                                
+                                _.each( wpbc.players[data.account_id].items, function ( player ) { #>
 									<label class="brightcove-player" for="player-{{ player.id }}">
-										<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}" <# if ( 'default' === player.id ) { #>checked <# } #>>
+										<input id="player-{{ player.id }}" type="radio" name="video-player-field" value="{{ player.id }}" <# if ( default_player_id === player.id ) { #>checked <# } #>>
 										{{ player.name }}
 									</label>
 								<# }); #>
@@ -584,8 +589,8 @@ class BC_Admin_Templates {
 					<# } #>
 				</div>
 			</div>
-		</script>
-
+		</script>                
+                
 		<?php /* Used by views/media-details.js */?>
 		<script type="text/html" id="tmpl-brightcove-media-item-details-playlists">
 			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
