@@ -1,11 +1,11 @@
 === Brightcove Video Connect ===
 
-Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah
+Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to:      4.5.2
-Stable tag:        1.2.3
+Tested up to:      4.6.1
+Stable tag:        1.3.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,6 +188,21 @@ http://sample-videos.com/
 
 == Changelog ==
 
+= 1.3.0 =
+
+* Various bug fixes
+
+= 1.2.5 =
+
+* Enhancement: Removed call to Brightcove status API
+
+= 1.2.4 =
+
+* Fix: Fixed issues with "Insert into Post" button
+* Enhancement: Make all text translatable.
+* Enhancement: Enhancements to Add source screen
+* Enhancement: Fixed all PHP warnings
+
 = 1.2.3 =
 * Fix: Issue where API calls could fail silently
 
@@ -301,6 +316,9 @@ http://sample-videos.com/
 * First release
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+Fixed issues with "Insert into Post" button
 
 = 1.1.3 =
 1.1.3 solves many JavaScript errors that users have been experiencing and is recommended for all users

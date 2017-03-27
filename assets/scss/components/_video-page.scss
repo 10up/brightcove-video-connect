@@ -2,6 +2,15 @@
 	padding-right : 10px;
 }
 
+.notice {
+	margin: 5px 20px 2px 0;
+}
+
+.brightcove-media-videos .error {
+	margin: 5px 20px 10px 0;
+	text-align: left;
+}
+
 .brightcove.media-frame-content, .brightcove-media.playlist {
 	border-bottom : none;
 	border-right: 1px solid #ddd;
@@ -54,6 +63,10 @@
 	left : 0;
 	top: auto;
 	height: auto;
+
+	a.brightcove-toolbar {
+		margin-left: 1em;
+	}
 }
 
 .brightcove.media-frame-menu {

@@ -1,7 +1,12 @@
-div.brightcove-message {
-  text-align: left; }
-  .brightcove-uploader div.brightcove-message.updated {
-    margin-top: 20px; }
+div.brightcove-messages {
+  text-align: left;
+  width: calc(100% - 4px); }
+  div.brightcove-messages .updated {
+    margin-left: 0px;
+    margin-bottom: 15px; }
+
+div.brightcove-uploader div.brightcove-messages .updated {
+  margin: 20px 15px 2px; }
 
 .brightcove-file-uploader {
   text-align: center; }
@@ -108,8 +113,7 @@ div.brightcove-message {
   padding: 20px;
   box-sizing: border-box;
   border-right: 1px solid #ddd;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+  transform: translate3d(0, 0, 0); }
 
 .brightcove-modal .video-preview-frame .brightcove.brightcove.media-frame-menu {
   padding-top: 20px; }
@@ -120,6 +124,13 @@ div.brightcove-message {
 
 .bc-page-icon {
   padding-right: 10px; }
+
+.notice {
+  margin: 5px 20px 2px 0; }
+
+.brightcove-media-videos .error {
+  margin: 5px 20px 10px 0;
+  text-align: left; }
 
 .brightcove.media-frame-content, .brightcove-media.playlist {
   border-bottom: none;
@@ -161,6 +172,8 @@ div.brightcove-message {
   left: 0;
   top: auto;
   height: auto; }
+  .brightcove.media-frame-router a.brightcove-toolbar {
+    margin-left: 1em; }
 
 .brightcove.media-frame-menu {
   left: inherit;
@@ -214,6 +227,7 @@ div.brightcove-message {
 .wp-core-ui .brightcove.attachment:focus,
 .wp-core-ui .selected.brightcove.attachment:focus,
 .wp-core-ui .brightcove.attachment.details:focus {
+  -webkit-box-shadow: none;
   box-shadow: none; }
 
 .brightcove.media-frame-content, .playlist-edit-container {
@@ -225,6 +239,7 @@ div.brightcove-message {
     .brightcove.media-frame-content .spinner.hidden, .playlist-edit-container .spinner.hidden {
       visibility: hidden; }
   .brightcove.media-frame-content .menu-visible .highlighted .thumbnail, .playlist-edit-container .menu-visible .highlighted .thumbnail {
+    -webkit-box-shadow: 0 0 2px 5px #5b9dd9;
     box-shadow: 0 0 2px 5px #5b9dd9;
     outline: none; }
   .brightcove.media-frame-content ul, .playlist-edit-container ul {
@@ -261,6 +276,24 @@ div.brightcove-message {
         position: relative;
         width: 100%;
         height: auto; }
+      .brightcove.media-frame-content .attachment .thumbnail .processing, .playlist-edit-container .attachment .thumbnail .processing {
+        position: absolute;
+        z-index: 9999;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        text-align: center;
+        background: rgba(50, 50, 50, 0.7);
+        color: #fff;
+        font-size: 12px;
+        height: 100%; }
+        .brightcove.media-frame-content .attachment .thumbnail .processing span, .playlist-edit-container .attachment .thumbnail .processing span {
+          position: absolute;
+          top: 50%;
+          margin-top: -9px;
+          width: 100%;
+          left: 0;
+          text-align: center; }
       .brightcove.media-frame-content .attachment .thumbnail .duration,
       .brightcove.media-frame-content .attachment .thumbnail .video-count, .playlist-edit-container .attachment .thumbnail .duration,
       .playlist-edit-container .attachment .thumbnail .video-count {
@@ -315,6 +348,24 @@ div.brightcove-message {
       display: block;
       max-width: 100%;
       height: auto; }
+    .brightcove.media-frame-menu .attachment-detail .thumbnail .processing {
+      position: absolute;
+      z-index: 9999;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      text-align: center;
+      background: rgba(50, 50, 50, 0.7);
+      color: #fff;
+      font-size: 12px;
+      height: 100%; }
+      .brightcove.media-frame-menu .attachment-detail .thumbnail .processing span {
+        position: absolute;
+        top: 50%;
+        margin-top: -6px;
+        width: 100%;
+        left: 0;
+        text-align: center; }
     .brightcove.media-frame-menu .attachment-detail .thumbnail .detail-duration,
     .brightcove.media-frame-menu .attachment-detail .thumbnail .detail-video-count {
       bottom: 0;
@@ -420,6 +471,13 @@ div.brightcove-message {
 .brightcove.video-edit .image-preview,
 .brightcove.video-edit .setting {
   margin-bottom: 8px; }
+  .brightcove.video-edit .image-preview .description,
+  .brightcove.video-edit .setting .description {
+    margin-left: 0px; }
+    @media screen and (min-width: 900px) {
+      .brightcove.video-edit .image-preview .description,
+      .brightcove.video-edit .setting .description {
+        margin-left: 252px; } }
 
 .brightcove.video-edit .setting-content,
 .brightcove.video-edit select {
@@ -437,7 +495,8 @@ div.brightcove-message {
   padding: 8px 0 0;
   width: auto; }
   .brightcove.video-edit .attachment.active {
-    display: block; }
+    display: block;
+    max-width: 100%; }
     .brightcove.video-edit .attachment.active .check {
       display: block;
       top: 9px; }

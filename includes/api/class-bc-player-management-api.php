@@ -129,7 +129,7 @@ class BC_Player_Management_API extends BC_API {
 
 		$url = esc_url_raw( self::BASE_URL . $bc_accounts->get_account_id() . '/players/' . $player_id );
 
-		return $this->send_request( $url );
+		return apply_filters( 'brightcove_player_list', $this->send_request( $url ) );
 
 	}
 
@@ -155,7 +155,7 @@ class BC_Player_Management_API extends BC_API {
             $players[$account_id] = $this->send_request($url);
         }
 
-        return $players;
+        return apply_filters( 'brightcove_all_player_by_account', $players );
     }
 
 	/**

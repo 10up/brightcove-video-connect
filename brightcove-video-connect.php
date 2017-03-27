@@ -3,7 +3,7 @@
  * Plugin Name: Brightcove Video Connect
  * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
  * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version: 1.2.3
+ * Version: 1.3.0
  * Author: 10up
  * Author URI: http://10up.com
  * License: GPLv2+
@@ -29,7 +29,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  021.0.2301  USA
  */
 
-define( 'BRIGHTCOVE_VERSION', '1.2.3' );
+define( 'BRIGHTCOVE_VERSION', '1.3.0' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
@@ -103,14 +103,6 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 // Add WP-CLI Support (should be before init).
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
 require_once( BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php' );
-
-// Check Brightcove status if is_admin().
-if ( is_admin() ) {
-
-	require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-status-warning.php' );
-	new BC_Status_Warning();
-
-}
 
 // Upgrade routine
 $installed = get_option( 'brightcove_version' );

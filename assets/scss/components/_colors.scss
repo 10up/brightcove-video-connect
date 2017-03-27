@@ -1,9 +1,19 @@
 $grey : #999;
 $white : #fff;
 
-div.brightcove-message {
+div.brightcove-messages {
   text-align: left;
-  .brightcove-uploader &.updated {
-  	margin-top: 20px;
+	width: calc(100% - 4px);
+  .updated {
+		margin-left: 0px;
+		margin-bottom: 15px;
   }
+}
+
+div.brightcove-uploader{
+	div.brightcove-messages {
+		.updated {
+			margin: 20px 15px 2px;
+		}
+	}
 }

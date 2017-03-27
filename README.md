@@ -60,6 +60,20 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.3.0
+* Various bug fixes
+
+##### 1.2.5
+
+* Enhancement: Removed call to Brightcove status API
+
+##### 1.2.4
+
+* Fix: Fixed issues with "Insert into Post" button
+* Enhancement: Make all text translatable.
+* Enhancement: Enhancements to Add source screen
+* Enhancement: Fixed all PHP warnings
+
 ##### 1.2.3
 * Fix: Issue where API calls could fail silently
 
@@ -165,14 +179,17 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 ##### 1.0.2
 * Increasing HTTP timeout to fix sporadic issues when adding sources
 
-##### 1.0.1 
+##### 1.0.1
 * Cleanup of references from /brightcove_video_cloud to /brightcove_video_connect.
 * Fix: Plugin deactivation wasn't working.
 
 ##### 1.0.0
 * First release
 
-## Upgrade Notice 
+## Upgrade Notice
+
+##### 1.2.4
+Fixed issues with "Insert into Post" button
 
 ##### 1.1.3
 * 1.1.3 solves many JavaScript errors that users have been experiencing and is recommended for all users

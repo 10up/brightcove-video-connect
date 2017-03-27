@@ -68,6 +68,7 @@ class BC_Setup {
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
+
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
 	}
@@ -102,6 +103,7 @@ class BC_Setup {
 		add_rewrite_rule( 'bc-api$', 'index.php?bc-api=1', 'top' );
 
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
+		add_action( 'init',  array( 'BC_Setup', 'register_post_types' ) );
 	}
 
 	public static function add_brightcove_media_button() {
@@ -172,7 +174,7 @@ class BC_Setup {
 			'confirmDelete'  => esc_html__( 'Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?', 'brightcove' ),
 			'ongoingSync'    => esc_html__( 'We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete.', 'brightcove' ),
 			'successUpload'  => esc_html__( 'Successfully uploaded file with name %%s%%.', 'brightcove' ),
-			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%% Please try reuploading it again.', 'brightcove' ),
+			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%%. Please try reuploading it again.', 'brightcove' ),
 		);
 
 		// Fetch all account hash/name combos.
@@ -213,6 +215,7 @@ class BC_Setup {
 			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
 			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
 			'str_apifailure'  => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
+			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ),
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
@@ -305,6 +308,7 @@ class BC_Setup {
 		     && current_user_can( 'manage_options' )
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-sources'
 		     && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
+			 && get_current_screen()->base !== 'admin_page_page-brightcove-edit-source'
 		) {
 
 			$notices[] = array(
@@ -320,6 +324,22 @@ class BC_Setup {
 			BC_Utility::admin_notice_messages( $notices );
 
 		}
+	}
+
+	/**
+	 * Register `in-process` hidden video post type.
+	 */
+	public static function register_post_types() {
+		$labels = array(
+			'name' => __( 'BC In Process Videos', 'brightcove' )
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'public' => false,
+		);
+
+		register_post_type( 'bc-in-process-video', $args );
 	}
 
 	public static function bc_check_minimum_wp_version() {

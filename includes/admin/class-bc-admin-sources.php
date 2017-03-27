@@ -135,10 +135,7 @@ class BC_Admin_Sources {
 
 				BC_Logging::log( sprintf( 'BC OAUTH ERROR: %s', $error_message ) );
 
-				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
-
 				return new WP_Error( 'bc-oauth-error', $error_message );
-
 			}
 
 			BC_Utility::delete_cache_item( '*' );
@@ -159,10 +156,13 @@ class BC_Admin_Sources {
 
 		$this->notices[] = array(
 			'message' => sprintf(
-				'%s <a href="%s">%s</a>.',
-				esc_html__( 'Congratulations! Your credentials have been authenticated. Return to', 'brightcove' ),
-				admin_url( 'admin.php?page=brightcove-sources ' ),
-				esc_html__( 'Settings', 'brightcove' )
+				'%s <a href="%s">%s</a> %s <a href="%s">%s</a>.',
+				esc_html__( 'Congratulations! Your credentials have been authenticated. You can now ', 'brightcove' ),
+				admin_url( 'admin.php?page=page-brightcove-videos' ),
+				esc_html__( 'add videos', 'brightcove' ),
+				esc_html__('or', 'brightcove'),
+		        admin_url( 'admin.php?page=brightcove-sources' ),
+				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
 			'type'    => 'updated',
 		);
@@ -191,12 +191,36 @@ class BC_Admin_Sources {
 	}
 
 	public function render_add_html() {
+		$source_name     = '';
+		$account_id      = '';
+		$client_id       = '';
+		$client_secret   = '';
+		$default_account = '';
 
-		?>
+		if ( isset( $_POST['source-name'] ) ) {
+			$source_name = sanitize_text_field( $_POST['source-name'] );
+		}
+
+		if ( isset( $_POST['source-account-id'] ) ) {
+			$account_id = sanitize_text_field( $_POST['source-account-id'] );
+		}
+
+		if ( isset( $_POST['source-client-id'] ) ) {
+			$client_id = sanitize_text_field( $_POST['source-client-id'] );
+		}
+
+		if ( isset( $_POST['source-client-secret'] ) ) {
+			$client_secret = sanitize_text_field( $_POST['source-client-secret'] );
+		}
+
+		if ( isset( $_POST['source-default-account'] ) ) {
+			$default_account = sanitize_text_field( $_POST['source-default-account'] );
+		} ?>
+
 		<div class="wrap">
 			<h2><?php
 				printf( '<img src="%s" class="bc-page-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
-				?><?php esc_html_e( 'Add Source', 'brightcove' ) ?></h2>
+				?><?php esc_html_e( 'Add Brightcove Account', 'brightcove' ) ?></h2>
 
 			<form action="" method="post">
 				<table class="form-table brightcove-add-source-name">
@@ -206,7 +230,7 @@ class BC_Admin_Sources {
 						<td>
 							<input type="text" name="source-name" id="source-name"
 							       placeholder="<?php esc_html_e( 'My Brightcove Account Name', 'brightcove' ) ?>"
-							       class="regular-text" required="required"/>
+							       class="regular-text" required="required" value="<?php echo esc_attr( $source_name ); ?>">
 
 							<p class="description"><?php esc_html_e( 'This is how the source will be identified in WordPress', 'brightcove' ) ?></p>
 						</td>
@@ -217,11 +241,16 @@ class BC_Admin_Sources {
 				<h3><?php esc_html_e( 'Credentials', 'brightcove' ) ?></h3>
 
 				<p class="description">
-					<?php esc_html_e( 'Each token has a set of API permissions defined when registering a new client.', 'brightcove' ) ?>
+					 <?php echo sprintf( '%s <a target="_blank" href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a> %s.',
+	                    esc_html__( 'The following information can be found by logging into your', 'brightcove' ),
+	                    esc_html__( 'Video Cloud Studio', 'brightcove' ),
+					    esc_html__( 'account', 'brightcove' )
+					);
+					?>
 					<br>
-					<?php echo sprintf( '%s <a href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a>.',
-					                    esc_html__( 'You can check the permissions and find out more about the settings below in', 'brightcove' ),
-					                    esc_html__( 'Video Cloud Studio', 'brightcove' )
+					<?php echo sprintf( '%s <a target="_blank" href="https://support.brightcove.com/en/video-cloud/docs/managing-api-authentication-credentials">%s</a>.',
+						esc_html__( 'For more details on the different API permissions or settings below, please check out our documentation at', 'brightcove' ),
+						esc_html__( 'Managing API Authentication Credentials', 'brightcove' )
 					);
 					?>
 				</p>
@@ -231,14 +260,14 @@ class BC_Admin_Sources {
 						<th scope="row"><?php esc_html_e( 'Account ID', 'brightcove' ) ?></th>
 						<td>
 							<input type="text" name="source-account-id" id="source-account-id" class="regular-text"
-							       required="required"/>
+							       required="required" value="<?php echo esc_attr( $account_id ); ?>">
 						</td>
 					</tr>
 					<tr class="brightcove-account-row">
 						<th scope="row"><?php esc_html_e( 'Client ID', 'brightcove' ) ?></th>
 						<td>
 							<input type="password" name="source-client-id" id="source-client-id" class="regular-text"
-							       required="required">
+							       required="required" value="<?php echo esc_attr( $client_id ); ?>">
 							<p class="description"><?php esc_html_e( 'A unique identifier for a client generated by Brightcove', 'brightcove' ) ?></p>
 						</td>
 					</tr>
@@ -246,7 +275,7 @@ class BC_Admin_Sources {
 						<th scope="row"><?php esc_html_e( 'Client Secret', 'brightcove' ) ?></th>
 						<td>
 							<input type="password" name="source-client-secret" id="source-client-secret"
-							       class="regular-text" required="required">
+							       class="regular-text" required="required" value="<?php echo esc_attr( $client_secret ); ?>">
 							<p class="description"><?php esc_html_e( 'A unique identifier generated by Brightcove, used with a client id. Serves as a password to authenticate a client', 'brightcove' ) ?></p>
 						</td>
 					</tr>
@@ -254,8 +283,8 @@ class BC_Admin_Sources {
 					<tr class="brightcove-account-row">
 						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ) ?></th>
 						<td>
-							<input type="checkbox"
-							       name="source-default-account">&nbsp;
+							<input type="checkbox" <?php checked( 'on', $default_account ); ?>
+							       name="source-default-account" value="on">&nbsp;
 							<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
 						</td>
 					</tr>

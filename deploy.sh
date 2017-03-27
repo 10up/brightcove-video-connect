@@ -10,7 +10,7 @@
 PLUGINSLUG='brightcove-video-connect' # returns basename of current directory
 CURRENTDIR=`pwd`
 MAINFILE="brightcove-video-connect.php" # this should be the name of your main php file in the wordpress plugin
-SVNUSER="jonbellah" # your svn username (case sensitive)
+SVNUSER="sudar" # your svn username (case sensitive)
 
 # git config
 GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
@@ -42,12 +42,12 @@ echo "Versions match in readme.txt and PHP file. Let's proceed..."
 #read COMMITMSG
 # git commit -am "$COMMITMSG"
 
-#echo "Tagging new version in git"
-#git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+echo "Tagging new version in git"
+git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
 
-#echo "Pushing latest commit to origin, with tags"
-#git push origin master
-#git push origin master --tags
+echo "Pushing latest commit to origin, with tags"
+git push origin master
+git push origin master --tags
 
 echo
 echo "Creating local copy of SVN repo ..."
