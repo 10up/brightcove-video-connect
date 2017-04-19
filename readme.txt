@@ -5,7 +5,7 @@ Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to:      4.6.1
-Stable tag:        1.3.0
+Stable tag:        1.3.1
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,12 @@ Sample Video
 http://sample-videos.com/
 
 == Changelog ==
+
+= 1.3.1 =
+
+* Enhancement: Show Brightcove button only in the main content editor
+* Enhancement: Increased the timeout used to call Brightcove API
+* Enhancement: Remove the 'Processing...' text from image thumbnails
 
 = 1.3.0 =
 

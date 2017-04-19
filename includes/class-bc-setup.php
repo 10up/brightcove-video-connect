@@ -106,9 +106,9 @@ class BC_Setup {
 		add_action( 'init',  array( 'BC_Setup', 'register_post_types' ) );
 	}
 
-	public static function add_brightcove_media_button() {
+	public static function add_brightcove_media_button( $editor_id ) {
 
-		if ( BC_Utility::current_user_can_brightcove() ) {
+		if ( BC_Utility::current_user_can_brightcove() && 'content' === $editor_id ) {
 			echo '<a href="#" id="brightcove-add-media" class="button brightcove-add-media"><img class="bc-button-icon" src="' . esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ) . '"> ' . esc_html__( 'Brightcove Media', 'brightcove' ) . '</a>';
 		}
 	}
