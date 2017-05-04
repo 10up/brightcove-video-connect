@@ -38,7 +38,21 @@
 					videoWidth = 500;
 				}
 
-				self.content = '<iframe style="width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/' + playerId + '_default/index.html?videoId=' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.video_id ) + '" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
+				var iframe = jQuery( '<iframe />' );
+				iframe.attr( 'style', 'width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;' );
+				iframe.attr( 'src', '//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/' + playerId + '_default/index.html?videoId=' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.video_id ) );
+				iframe.attr( 'mozallowfullscreen' , '' );
+				iframe.attr( 'webkitallowfullscreen' , '' );
+				iframe.attr( 'allowfullscreen' , '' );
+
+				// There is no way to easily convert an element into string. So we are using a wrapper.
+				// This is needed since VIP doesn't allow direct string concatenation.
+				// Details at https://wordpressvip.zendesk.com/hc/en-us/requests/63849
+				var wrapper = document.createElement("p");
+				wrapper.appendChild( iframe.get(0) );
+
+				self.content = wrapper.innerHTML;
+
 				// add allowfullscreen attribute to main iframe to allow video preview in full screen
 				if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
 					document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
