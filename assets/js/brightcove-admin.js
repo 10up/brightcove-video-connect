@@ -702,7 +702,12 @@ var BrightcoveView = wp.Backbone.View.extend(
 				} );
 			}
 
-			window.send_to_editor( shortcode );
+			if( wpbc.modal.target === 'content' ) {
+				window.send_to_editor( shortcode );
+			} else {
+				$( wpbc.modal.target ).val( shortcode );
+				$( wpbc.modal.target ).change();
+			}
 			wpbc.broadcast.trigger( 'close:modal' );
 
 		}
@@ -2971,6 +2976,7 @@ var MediaCollectionView = BrightcoveView.extend(
 			$(document).on('click', '.brightcove-add-media', function( e ) {
 				e.preventDefault();
 				wpbc.triggerModal();
+				wpbc.modal.target = e.currentTarget.dataset.target;
 			});
 
 			$(document).keyup(function(e) {
