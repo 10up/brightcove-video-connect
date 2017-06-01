@@ -174,7 +174,7 @@ class BC_Setup {
 			'confirmDelete'  => esc_html__( 'Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?', 'brightcove' ),
 			'ongoingSync'    => esc_html__( 'We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete.', 'brightcove' ),
 			'successUpload'  => esc_html__( 'Successfully uploaded file with name %%s%%.', 'brightcove' ),
-			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%% Please try reuploading it again.', 'brightcove' ),
+			'unableToUpload' => esc_html__( 'We were unable to upload the file with name %%s%%. Please try reuploading it again.', 'brightcove' ),
 		);
 
 		// Fetch all account hash/name combos.
