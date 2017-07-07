@@ -95,7 +95,7 @@
 	jQuery( document ).ready( function() {
 		App.load();
 		var router = new BrightcoveRouter;
-		if ( ! Backbone.history.started ) {
+		if ( ! Backbone.History.started ) {
 			Backbone.history.start();
 		}
 	} );
