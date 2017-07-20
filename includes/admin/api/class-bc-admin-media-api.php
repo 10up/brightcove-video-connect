@@ -646,8 +646,9 @@ class BC_Admin_Media_API {
 			wp_send_json_error();
 		}
 
+		$processed_results = array();
 		// Loop through results to remap items
-		foreach ( $results as &$result ) {
+		foreach ( $results as $result ) {
 			// Map the custom_fields array to a collection of objects with description, display name, id, etc
 			$result['custom'] = $fields['custom_fields'];
 
@@ -680,6 +681,8 @@ class BC_Admin_Media_API {
 					);
 				}
 			}
+
+			$processed_results[] = $result;
 		}
 
 		$bc_accounts->restore_default_account();
