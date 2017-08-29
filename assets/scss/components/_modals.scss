@@ -13,20 +13,21 @@
 	.brightcove {
 		.wp-filter {
 			border: 0;
-		  box-shadow: none;
-		  right: 0;
-		  width: 100%;
-		  margin: 0;
+			box-sizing: border-box;
+			box-shadow: none;
+			right: 0;
+			width: 100%;
+			margin: 0;
 		}
 		.media-toolbar-secondary {
 			padding: 0;
-            min-width: 280px;
+			min-width: 280px;
 		}
-        .media-toolbar-primary.search-form{
-            input[type=search]{
-                float: left;
-            }
-        }
+		.media-toolbar-primary.search-form{
+			input[type=search] {
+				float: left;
+			}
+		}
 	}
 
 	.pending-uploads {
@@ -42,10 +43,14 @@
 
 	.brightcove.media-frame-content {
 		padding: 0 20px;
-        width: 100%;
-        @media screen and (min-width: 700px){
-            width: calc(100% - 390px);
-        }
+		width: 100%;
+		@media screen and (min-width: 700px){
+			width: calc(100% - 390px);
+		}
+
+		.notice {
+			margin: 5px 0 20px;
+		}
 	}
 
 	.brightcove.video-preview {

@@ -149,6 +149,12 @@ class BC_Admin_Sources {
 				update_option( '_brightcove_default_account', sanitize_text_field( $_POST['hash'] ) );
 			}
 
+			if ( isset( $_POST['default_player'] ) ) {
+				$default_player = sanitize_text_field( wp_unslash( $_POST['default_player'] ) );
+				$account = $bc_accounts->get_account_by_hash( sanitize_text_field( wp_unslash( $_POST['hash'] ) ) );
+				update_option( '_brightcove_default_player_' . $account['account_id'], $default_player );
+			}
+
 		}
 
 		// Deleting transient to allow syncing from the new account, otherwise we won't be able to sync it until this transient expires.
@@ -342,6 +348,50 @@ class BC_Admin_Sources {
 							<input type="checkbox"
 							       name="source-default-account" <?php checked( get_option( '_brightcove_default_account' ), $account['hash'] ) ?> >&nbsp;
 							<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
+						</td>
+					</tr>
+				</table>
+
+				<table class="form-table">
+					<tr class="brightcove-account-row">
+						<th scope="row"><?php esc_html_e( 'Default Player', 'brightcove' ) ?></th>
+						<td>
+							<?php
+								$player_api = new BC_Player_Management_API();
+								$all_players = $player_api->all_player_by_account();
+
+								if ( is_wp_error( $all_players ) || empty( $all_players[ $account['account_id'] ] ) || empty ( $all_players[ $account['account_id'] ]['items'] ) ) :
+									esc_html_e( 'Unable to fetch players.', 'brightcove' );
+								else :
+									$players = $all_players[ $account['account_id'] ]['items'];
+									$selected_player = $all_players[ $account['account_id'] ]['default'];
+									?>
+									<select name='default_player'>
+									<?php
+									foreach ( $players as $player ) :
+										?>
+										<option
+											value='<?php echo esc_attr( $player['id'] ) ?>'
+											<?php selected( $selected_player , $player['id'] ) ?>
+										>
+											<?php echo esc_html( $player['name'] ) ?>
+										</option>
+										<?php
+									endforeach;
+									?>
+									</select>
+									<?php
+								endif;
+
+
+
+		// Fetch all players
+		// $players = $player_api->player_list();
+		// if ( is_wp_error( $players ) || ! is_array( $players['items'] ) ) {
+		// 	$permission_issues[] = esc_html__( 'fetch players', 'brightcove' );
+		// }
+
+							?>
 						</td>
 					</tr>
 				</table>

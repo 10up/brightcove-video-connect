@@ -108,10 +108,8 @@ module.exports = function ( grunt ) {
 					options : {
 						beautify         : false,
 						preserveComments : 'all',
-						mangle           : {
-							except : ['jQuery']
-						},
-						separator: ';\n',
+						mangle           : { reserved: [ 'jQuery' ] },
+						separator        : ';\n',
 
 						// Wrap our scripts to limit their scope.
 						banner: '( function( $ ){\n',
