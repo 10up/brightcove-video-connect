@@ -302,7 +302,7 @@ class BC_Admin_Templates {
 		<?php /* Used by views/modal.js */?>
 		<script type="text/html" id="tmpl-brightcove-media-modal">
             <div class="media-modal wp-core-ui">
-	            <button type="button" class="button-link media-modal-close"><span class="brightcove media-modal-icon"><span class="screen-reader-text"><?php esc_html_e( 'Close media panel', 'brightcove' ); ?></span></span></button>
+	            <button type="button" class="media-modal-close"><span class="brightcove media-modal-icon"><span class="screen-reader-text"><?php esc_html_e( 'Close media panel', 'brightcove' ); ?></span></span></button>
               <div class="media-modal-content">
                 <div class="media-frame mode-select wp-core-ui" id="__wp-uploader-id-0">
                   <div class="media-frame-title">
@@ -672,7 +672,9 @@ class BC_Admin_Templates {
 						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>
 						<input type="search" placeholder="<?php esc_attr_e( 'Search', 'brightcove' ); ?>" id="media-search-input" class="search">
-						<a class="brightcove-toolbar" href="#"><?php esc_html_e( 'help', 'brightcove' ); ?></a>
+						<a class="brightcove-tooltip dashicons dashicons-editor-help" title="<?php esc_attr_e( 'Help', 'brightcove' ); ?>" href="#">
+							<span class="screen-reader-text"><?php esc_html_e( 'Help', 'brightcove' ); ?></span>
+						</a>
 					</div>
 				<# }#>
 		</script>
