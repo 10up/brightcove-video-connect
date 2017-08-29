@@ -78,6 +78,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
 
 .brightcove-modal .brightcove .wp-filter {
   border: 0;
+  box-sizing: border-box;
   box-shadow: none;
   right: 0;
   width: 100%;
@@ -105,6 +106,8 @@ div.brightcove-uploader div.brightcove-messages .updated {
   @media screen and (min-width: 700px) {
     .brightcove-modal .brightcove.media-frame-content {
       width: calc(100% - 390px); } }
+  .brightcove-modal .brightcove.media-frame-content .notice {
+    margin: 5px 0 20px; }
 
 .brightcove-modal .brightcove.video-preview {
   margin-top: 20px; }
@@ -113,8 +116,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   padding: 20px;
   box-sizing: border-box;
   border-right: 1px solid #ddd;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+  transform: translate3d(0, 0, 0); }
 
 .brightcove-modal .video-preview-frame .brightcove.brightcove.media-frame-menu {
   padding-top: 20px; }
@@ -228,6 +230,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
 .wp-core-ui .brightcove.attachment:focus,
 .wp-core-ui .selected.brightcove.attachment:focus,
 .wp-core-ui .brightcove.attachment.details:focus {
+  -webkit-box-shadow: none;
   box-shadow: none; }
 
 .brightcove.media-frame-content, .playlist-edit-container {
@@ -239,6 +242,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
     .brightcove.media-frame-content .spinner.hidden, .playlist-edit-container .spinner.hidden {
       visibility: hidden; }
   .brightcove.media-frame-content .menu-visible .highlighted .thumbnail, .playlist-edit-container .menu-visible .highlighted .thumbnail {
+    -webkit-box-shadow: 0 0 2px 5px #5b9dd9;
     box-shadow: 0 0 2px 5px #5b9dd9;
     outline: none; }
   .brightcove.media-frame-content ul, .playlist-edit-container ul {

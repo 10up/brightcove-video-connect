@@ -723,13 +723,13 @@ var ToolbarView = BrightcoveView.extend(
 		events : {
 			'click .view-list' :                   'toggleList',
 			'click .view-grid' :                   'toggleGrid',
-			'click .brightcove-toolbar':           'toggleToolbar',
+			'click .brightcove-tooltip':           'toggleTooltip',
 			'change .brightcove-media-source' :    'sourceChanged',
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
 			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
-			'search .search' :                      'searchHandler',
-			'keyup  .search' :                      'searchHandler'
+			'search .search' :                     'searchHandler',
+			'keyup  .search' :                     'searchHandler'
 		},
 
 		render : function () {
@@ -773,12 +773,13 @@ var ToolbarView = BrightcoveView.extend(
 			this.$el.find( '.view-list' ).removeClass( 'current' );
 		},
 
-		// Toggle toolbar help
-		toggleToolbar : function () {
+		// Toggle tooltip help
+		toggleTooltip : function () {
 			var template = wp.template( 'brightcove-tooltip-notice' );
 
-			// Throw a notice to the user that the file is not the correct format
-			$( '.brightcove-media-videos' ).before( template );
+			// Add a dismissable help tooltip notice with search tips
+			$( '.brightcove.media-frame-content' ).children().first().before( template );
+
 			// Allow the user to dismiss the notice
 			$( '#js-tooltip-dismiss' ).on( 'click', function() {
 				$( '#js-tooltip-notice' ).first().fadeOut( 500, function() {
