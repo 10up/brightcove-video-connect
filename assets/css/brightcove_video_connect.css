@@ -88,7 +88,14 @@ div.brightcove-uploader div.brightcove-messages .updated {
   min-width: 280px; }
 
 .brightcove-modal .brightcove .media-toolbar-primary.search-form input[type=search] {
-  float: left; }
+  float: left;
+  padding-bottom: 0px;
+  width: 200px; }
+
+.brightcove-modal .brightcove #media-search {
+  float: left;
+  margin-left: 10px;
+  margin-right: 5px; }
 
 .brightcove-modal .pending-uploads {
   width: calc(100% - 40px);

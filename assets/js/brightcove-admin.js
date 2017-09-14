@@ -702,7 +702,12 @@ var BrightcoveView = wp.Backbone.View.extend(
 				} );
 			}
 
-			window.send_to_editor( shortcode );
+			if( wpbc.modal.target === 'content' ) {
+				window.send_to_editor( shortcode );
+			} else {
+				$( wpbc.modal.target ).val( shortcode );
+				$( wpbc.modal.target ).change();
+			}
 			wpbc.broadcast.trigger( 'close:modal' );
 
 		}
@@ -728,8 +733,7 @@ var ToolbarView = BrightcoveView.extend(
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
 			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
-			'search .search' :                      'searchHandler',
-			'keyup  .search' :                      'searchHandler'
+			'click #media-search' : 'searchHandler'
 		},
 
 		render : function () {
@@ -809,36 +813,13 @@ var ToolbarView = BrightcoveView.extend(
 		},
 
 		searchHandler : function ( event ) {
+			var searchTerm = $( '#media-search-input' ).val();
 
-			// Searches of fewer than three characters return no results.
-			if ( event.target.value.length > 2 ) {
-
-				// Enter / Carriage Return triggers immediate search.
-				// But we only search if the search term has changed.
-				if ( event.keyCode === 13 && event.target.value !== this.model.get( 'search' ) ) {
-					this.model.set('search', event.target.value);
-					wpbc.broadcast.trigger('change:searchTerm', event.target.value);
-				} else {
-					// Trigger a search when the user pauses typing for one second.
-					this.throttledAutoSearch( event );
-
-				}
-			} else if ( 0 === event.target.value.length ) {
-				this.model.set( 'search', '' );
-				wpbc.broadcast.trigger( 'change:searchTerm', '' );
-
+			if ( searchTerm.length > 2 && searchTerm !== this.model.get( 'search' ) ) {
+				this.model.set( 'search', searchTerm );
+				wpbc.broadcast.trigger( 'change:searchTerm', searchTerm );
 			}
-		},
-
-		/**
-		 * Throttled search handler, called when the search handler receives a non Carriage Return KeyUp
-		 */
-		throttledAutoSearch : _.debounce( function( event ){
-			if ( event.target.value !== this.model.get( 'search' ) ) {
-				this.model.set( 'search', event.target.value );
-				wpbc.broadcast.trigger( 'change:searchTerm', event.target.value );
-			}
-		}, 1000 )
+		}
 	}
 );
 
@@ -2971,6 +2952,7 @@ var MediaCollectionView = BrightcoveView.extend(
 			$(document).on('click', '.brightcove-add-media', function( e ) {
 				e.preventDefault();
 				wpbc.triggerModal();
+				wpbc.modal.target = e.currentTarget.dataset.target;
 			});
 
 			$(document).keyup(function(e) {

@@ -23,10 +23,18 @@
             min-width: 280px;
 		}
         .media-toolbar-primary.search-form{
-            input[type=search]{
+            input[type=search] {
                 float: left;
+				padding-bottom: 0px;
+				width: 200px;
             }
         }
+
+		#media-search {
+			float: left;
+			margin-left: 10px;
+			margin-right: 5px;
+		}
 	}
 
 	.pending-uploads {

@@ -488,7 +488,7 @@ class BC_Utility {
 	 */
 	public static function get_user_meta( $user_id, $meta_key, $single = true ) {
 
-		if ( function_exists( 'get_user_attribute' ) ) {
+		if ( defined( 'WPCOM' ) && IS_WPCOM ) {
 			$meta_value = get_user_attribute( $user_id, $meta_key );
 		} else {
 			$meta_value = get_user_meta( $user_id, $meta_key, $single );
