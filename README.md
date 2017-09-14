@@ -60,6 +60,11 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.3.2
+* Enhancement: Add a target attribute to change shortcode placement
+* Enhancement: Improved performance of search
+* Fix: Fixed a bug that was causing an empty thumbnail to be displayed in search results
+
 ##### 1.3.1
 * Enhancement: Show Brightcove button only in the main content editor
 * Enhancement: Increased the timeout used to call Brightcove API
