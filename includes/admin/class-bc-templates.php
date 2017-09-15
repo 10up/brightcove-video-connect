@@ -672,6 +672,7 @@ class BC_Admin_Templates {
 						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>
 						<input type="search" placeholder="<?php esc_attr_e( 'Search', 'brightcove' ); ?>" id="media-search-input" class="search">
+						<button class="button-secondary" id="media-search"><?php esc_html_e( 'Search', 'brightcove' ); ?></button>
 						<a class="brightcove-toolbar" href="#"><?php esc_html_e( 'help', 'brightcove' ); ?></a>
 					</div>
 				<# }#>
