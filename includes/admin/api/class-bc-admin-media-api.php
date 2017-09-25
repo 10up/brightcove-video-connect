@@ -569,10 +569,18 @@ class BC_Admin_Media_API {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 
+			/**
+			 * Filter to modify the default sort order.
+			 * Ref: https://support.brightcove.com/overview-cms-api#parameters
+			 *
+			 * @param string Valid sort field name.
+			 */
+			$bc_video_sort_field = apply_filters( 'bc_video_sort_field', 'updated_at' );
+
 			// Get a list of videos.
 
 			for ( $i = 0; $i < $tries; $i ++ ) {
-				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, 'updated_at' );
+				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, $bc_video_sort_field );
 
 				if ( ! is_wp_error( $results ) ) {
 					break;
