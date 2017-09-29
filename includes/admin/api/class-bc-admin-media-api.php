@@ -557,7 +557,7 @@ class BC_Admin_Media_API {
 
 			}
 
-			$query_string = implode( "+", $query_terms );
+			$query_string = implode( "+", apply_filters( 'bc_video_query_terms', $query_terms ) );
 
 			/**
 			 * For playlists, we specify the order in the query string as follows:
