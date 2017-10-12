@@ -1,31 +1,31 @@
 {
-	"name":            "brightcove-video-connect",
-	"private":         true,
-	"title":           "brightcove-video-connect",
-	"description":     "A Brightclove plugin for WordPress.",
-	"version":         "1.3.1",
-	"homepage":        "https://wordpress.org/plugins/brightcove-video-connect/",
-	"author":          {
-		"name":  "10up",
+	"name": "brightcove-video-connect",
+	"private": true,
+	"title": "brightcove-video-connect",
+	"description": "A Brightclove plugin for WordPress.",
+	"version": "1.3.1",
+	"homepage": "https://wordpress.org/plugins/brightcove-video-connect/",
+	"author": {
+		"name": "10up",
 		"email": "sales@10up.com"
 	},
-	"dependencies":    {},
+	"dependencies": {},
 	"devDependencies": {
-		"matchdep":               "*",
+		"matchdep": "*",
 		"grunt-contrib-nodeunit": "*",
-		"grunt-contrib-concat":   "*",
-		"grunt-contrib-clean":    "*",
-		"grunt-contrib-jshint":   "*",
-		"grunt-contrib-sass":     "*",
-		"grunt-sassdoc":          "*",
-		"grunt":                  "*",
-		"grunt-contrib-uglify":   "*",
-		"grunt-contrib-watch":    "*",
-		"grunt-sass":             "*",
-		"grunt-contrib-cssmin":   "*",
-		"load-grunt-tasks":       "*",
-		"grunt-autoprefixer":     "*",
-		"grunt-wp-i18n":          "*"
+		"grunt-contrib-concat": "*",
+		"grunt-contrib-clean": "*",
+		"grunt-contrib-jshint": "*",
+		"grunt-contrib-sass": "*",
+		"grunt-sassdoc": "*",
+		"grunt": "*",
+		"grunt-contrib-uglify": "*",
+		"grunt-contrib-watch": "*",
+		"grunt-sass": "*",
+		"grunt-contrib-cssmin": "*",
+		"load-grunt-tasks": "*",
+		"grunt-autoprefixer": "*",
+		"grunt-wp-i18n": "*"
 	},
-	"keywords":        []
+	"keywords": []
 }
