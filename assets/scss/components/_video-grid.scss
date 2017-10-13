@@ -180,7 +180,7 @@
 			}
 
 			@media screen and (min-width : 700px) {
-				display: none;			
+				display: none;
 			}
 		}
 
@@ -283,11 +283,7 @@
             .video-created,
 			.video-long-description,
             .video-description,
-            .video-id,
-            .video-source,
-            .video-updated,
-            .video-player {
-
+            .video-updated {
 				clear   : both;
 				display : block;
 				color   : $grey;
@@ -296,13 +292,39 @@
 				.title {
 					margin-right : 5px;
 				}
-
 			}
-
 		}
 
-	}
+		.video-details {
+			.left-col, label {
+				display: inline-block;
+				float: left;
+				clear: left;
+				width: 100px;
+                padding-top: 5px;
+			}
 
+			.right-col {
+				display: inline-block;
+				float: left;
+				padding-top: 5px;
+			}
+
+			input[type=number] {
+				width: 20%;
+			}
+
+			textarea {
+				clear: both;
+				margin-top: 10px;
+				width: 100%;
+			}
+
+			#custom {
+              display: none;
+			}
+		}
+	}
 }
 
 @media screen and (max-width : 700px) {

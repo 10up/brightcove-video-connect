@@ -16,7 +16,10 @@ var MediaDetailsView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
-			'click .brightcove.back.button' :    'triggerCancelPreviewMedia'
+			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
+            'change #aspect-ratio' : 'toggleUnits',
+            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' : 'generateShortcode',
+			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
 		triggerEditMedia : function ( event ) {
@@ -32,6 +35,67 @@ var MediaDetailsView = BrightcoveView.extend(
 		triggerCancelPreviewMedia : function ( event ) {
 			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
 		},
+
+		toggleUnits: function( event ) {
+			var value = $( '#aspect-ratio' ).val();
+
+			if ( 'custom' === value ) {
+				$( '#custom' ).show();
+			} else {
+                $( '#custom' ).hide();
+			}
+		},
+
+		generateShortcode: function () {
+		    var videoId = this.model.get( 'id' ).replace( /\D/g, '' ),
+                accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+				playerId = $( '#video-player' ).val(),
+				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				embedstyle = $( 'input[name="embed-style"]:checked' ).val(),
+                sizing = $( 'input[name="sizing"]:checked' ).val(),
+				aspectRatio = $( '#aspect-ratio' ).val(),
+				minWidth = '0px',
+				maxWidth = $( '#width' ).val(),
+				paddingTop = '',
+				width = $( '#width' ).val(),
+				height = $( '#height' ).val(),
+				units = $( '#units' ).val(),
+				shortcode;
+
+		    if ( '16:9' === aspectRatio ) {
+		    	paddingTop = '56';
+			} else if ( '4:3' === aspectRatio ) {
+		    	paddingTop = '75';
+			} else {
+		        paddingTop = ( height / width * 100 );
+			}
+
+			if ( 'responsive' === sizing ) {
+		    	width = '100';
+		    	height = '100';
+			}
+
+            shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				'embed="' + embedstyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
+				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
+                'width="' + width + units + '" height="' + height + units + '"' +
+				']';
+
+		    $( '#shortcode' ).val( shortcode );
+        },
+
+		toggleShortcodeGeneration: function () {
+		    var method = $( '#generate-shortcode' ).val(),
+                $fields = $( '#video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' );
+
+		    if ( 'manual' === method ) {
+		    	$( '#shortcode' ).removeAttr( 'readonly' );
+                $fields.attr( 'disabled', true );
+			} else {
+                $( '#shortcode' ).attr( 'readonly', true );
+                $fields.removeAttr( 'disabled' );
+			}
+        },
 
 		initialize : function ( options ) {
 			options        = options || {};
@@ -56,6 +120,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			this.$el.html( this.template( options ) );
 
 			this.delegateEvents();
+            this.generateShortcode();
+
 			return this;
 		},
 
@@ -66,7 +132,6 @@ var MediaDetailsView = BrightcoveView.extend(
 			this.stopListening();
 			return this;
 		}
-
 	}
 );
 

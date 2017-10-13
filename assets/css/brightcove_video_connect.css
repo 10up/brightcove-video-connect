@@ -120,8 +120,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   padding: 20px;
   box-sizing: border-box;
   border-right: 1px solid #ddd;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+  transform: translate3d(0, 0, 0); }
 
 .brightcove-modal .video-preview-frame .brightcove.brightcove.media-frame-menu {
   padding-top: 20px; }
@@ -417,10 +416,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
     .brightcove.media-frame-menu .attachment-detail .video-info .video-created,
     .brightcove.media-frame-menu .attachment-detail .video-info .video-long-description,
     .brightcove.media-frame-menu .attachment-detail .video-info .video-description,
-    .brightcove.media-frame-menu .attachment-detail .video-info .video-id,
-    .brightcove.media-frame-menu .attachment-detail .video-info .video-source,
     .brightcove.media-frame-menu .attachment-detail .video-info .video-updated,
-    .brightcove.media-frame-menu .attachment-detail .video-info .video-player,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .account-name,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .created-date,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-id,
@@ -429,10 +425,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
     .brightcove.media-frame-menu .attachment-detail .playlist-info .video-created,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .video-long-description,
     .brightcove.media-frame-menu .attachment-detail .playlist-info .video-description,
-    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-id,
-    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-source,
-    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated,
-    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-player {
+    .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated {
       clear: both;
       display: block;
       color: #999;
@@ -445,10 +438,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
       .brightcove.media-frame-menu .attachment-detail .video-info .video-created .title,
       .brightcove.media-frame-menu .attachment-detail .video-info .video-long-description .title,
       .brightcove.media-frame-menu .attachment-detail .video-info .video-description .title,
-      .brightcove.media-frame-menu .attachment-detail .video-info .video-id .title,
-      .brightcove.media-frame-menu .attachment-detail .video-info .video-source .title,
       .brightcove.media-frame-menu .attachment-detail .video-info .video-updated .title,
-      .brightcove.media-frame-menu .attachment-detail .video-info .video-player .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .account-name .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .created-date .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .playlist-id .title,
@@ -457,11 +447,26 @@ div.brightcove-uploader div.brightcove-messages .updated {
       .brightcove.media-frame-menu .attachment-detail .playlist-info .video-created .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .video-long-description .title,
       .brightcove.media-frame-menu .attachment-detail .playlist-info .video-description .title,
-      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-id .title,
-      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-source .title,
-      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated .title,
-      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-player .title {
+      .brightcove.media-frame-menu .attachment-detail .playlist-info .video-updated .title {
         margin-right: 5px; }
+  .brightcove.media-frame-menu .attachment-detail .video-details .left-col, .brightcove.media-frame-menu .attachment-detail .video-details label {
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 100px;
+    padding-top: 5px; }
+  .brightcove.media-frame-menu .attachment-detail .video-details .right-col {
+    display: inline-block;
+    float: left;
+    padding-top: 5px; }
+  .brightcove.media-frame-menu .attachment-detail .video-details input[type=number] {
+    width: 20%; }
+  .brightcove.media-frame-menu .attachment-detail .video-details textarea {
+    clear: both;
+    margin-top: 10px;
+    width: 100%; }
+  .brightcove.media-frame-menu .attachment-detail .video-details #custom {
+    display: none; }
 
 @media screen and (max-width: 700px) {
   .brightcove.media-frame-content {
