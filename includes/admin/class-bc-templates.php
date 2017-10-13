@@ -640,7 +640,7 @@ class BC_Admin_Templates {
                             <option value="manual"><?php esc_html_e( 'Manual', 'brightcove' ); ?></option>
                         </select>
 
-                        <textarea name="shortcode" id="shortcode" cols="40" rows="8" readonly></textarea>
+                        <textarea class="clear" name="shortcode" id="shortcode" cols="40" rows="8" readonly></textarea>
 
                     <?php endif; ?>
                 </div>
@@ -686,14 +686,109 @@ class BC_Admin_Templates {
 				</div>
 				<div class="playlist-info">
 					<span class="playlist-name">{{ data.name }}</span>
-					<div class="playlist-id"><span class="title"><?php esc_html_e( 'Playlist ID: ', 'brightcove' ); ?></span><span class="data">{{ data.id }}</span></div>
-					<div class="account-name"><span class="title"><?php esc_html_e( 'Account Name: ', 'brightcove' ); ?></span><span class="data">{{ data.account_name }}</span></div>
-					<div class="created-date"><span class="title"><?php esc_html_e( 'Created At: ', 'brightcove' ); ?></span><span class="data">{{ data.created_at_readable }}</span></div>
-					<div class="updated-date"><span class="title"><?php esc_html_e( 'Updated At: ', 'brightcove' ); ?></span><span class="data">{{ data.updated_at_readable }}</span></div>
-					<div class="playlist-type"><span class="title"><?php esc_html_e( 'Playlist Type: ', 'brightcove' ); ?></span><span class="data">{{ data.type }}</span></div>
 				</div>
+
+				<div class="playlist-details">
+					<span class="left-col">
+						<?php esc_html_e( 'Playlist ID: ', 'brightcove' ); ?>
+					</span>
+					<span class="data">{{ data.id }}</span>
+
+					<span class="left-col"><?php esc_html_e( 'Account Name: ', 'brightcove' ); ?></span><span class="right-col">{{ data.account_name }}</span>
+					<span class="left-col"><?php esc_html_e( 'Created At: ', 'brightcove' ); ?></span><span class="right-col">{{ data.created_at_readable }}</span>
+					<span class="left-col"><?php esc_html_e( 'Updated At: ', 'brightcove' ); ?></span><span class="right-col">{{ data.updated_at_readable }}</span>
+					<span class="left-col"><?php esc_html_e( 'Playlist Type: ', 'brightcove' ); ?></span><span class="right-col">{{ data.type }}</span>
+
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'edit' === $parent_base ) : ?>
+
+						<label for="video-player">
+							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
+						</label>
+						<select name="video-player" id="video-player" class="right-col">
+							<# _.each( wpbc.players[data.account_id].items, function ( player ) { #>
+								<option value="{{ player.id }}">{{ player.name }}</option>
+								<# }); #>
+						</select>
+
+						<label for="autoplay">
+							<?php esc_html_e( 'Autoplay: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="checkbox" id="autoplay" name="autoplay">
+						</div>
+
+						<label>
+							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="radio" value="in-page-vertical" checked name="embed-style"><?php esc_html_e( 'In-Page Vertical', 'brightcove' ); ?>
+						</div>
+
+						<label>
+							&nbsp;
+						</label>
+						<div class="right-col">
+							<input type="radio" value="in-page-horizontal" name="embed-style"><?php esc_html_e( 'In-Page Horizontal', 'brightcove' ); ?>
+							<input type="radio" value="iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
+						</div>
+
+						<label for="sizing-responsive">
+							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="radio" value="responsive" id="sizing-responsive" name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
+							<input type="radio" value="fixed" id="sizing-fixed" checked name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
+						</div>
+
+						<label for="aspect-ratio">
+							<?php esc_html_e( 'Aspect Ratio: ', 'brightcove' ); ?>
+						</label>
+						<select class="right-col" name="aspect-ratio" id="aspect-ratio">
+							<option value="16:9">16:9</option>
+							<option value="4:3">4:3</option>
+							<option value="custom"><?php esc_html_e( 'Custom', 'brightcove' ); ?></option>
+						</select>
+
+						<div id="custom">
+							<label for="width">
+								<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
+							</label>
+							<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+
+							<label for="height">
+								<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
+							</label>
+							<input type="number" name="height" id="height" class="right-col" value="360" size="5">
+
+							<label for="units">
+								<?php esc_html_e( 'Units: ', 'brightcove' ); ?>
+							</label>
+							<select name="units" id="units" class="right-col">
+								<option value="px">px</option>
+								<option value="em">em</option>
+								<option value="%">%</option>
+							</select>
+						</div>
+
+						<label for="generate-shortcode">
+							<?php esc_html_e( 'Shortcode', 'brightcove' ); ?>
+						</label>
+						<select name="generate-shortcode" id="generate-shortcode" class="right-col">
+							<option value="autogenerate"><?php esc_html_e( 'Auto generate', 'brightcove' ); ?></option>
+							<option value="manual"><?php esc_html_e( 'Manual', 'brightcove' ); ?></option>
+						</select>
+
+						<textarea class="clear" name="shortcode" id="shortcode" cols="40" rows="8" readonly></textarea>
+
+					<?php endif; ?>
+				</div>
+
 				<# if ('EXPLICIT' === data.type) { #>
-					<div class="media-actions">
+					<div class="media-actions clear">
 						<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
 					</div>
 				<# } #>

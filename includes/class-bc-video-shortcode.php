@@ -38,6 +38,6 @@ class BC_Video_Shortcode {
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );
 
-		return BC_Utility::player( 'video', $atts );
+		return BC_Utility::get_video_player( $atts );
 	}
 }

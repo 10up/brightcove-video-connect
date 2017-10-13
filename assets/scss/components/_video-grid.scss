@@ -295,7 +295,7 @@
 			}
 		}
 
-		.video-details {
+		.video-details, .playlist-details {
 			.left-col, label {
 				display: inline-block;
 				float: left;
@@ -310,12 +310,15 @@
 				padding-top: 5px;
 			}
 
+			.clear {
+				clear: both;
+			}
+
 			input[type=number] {
 				width: 20%;
 			}
 
 			textarea {
-				clear: both;
 				margin-top: 10px;
 				width: 100%;
 			}

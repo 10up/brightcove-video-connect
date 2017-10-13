@@ -1573,12 +1573,20 @@ var MediaDetailsView = BrightcoveView.extend(
 		},
 
 		generateShortcode: function () {
-		    var videoId = this.model.get( 'id' ).replace( /\D/g, '' ),
-                accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+			if ( 'videos' === this.mediaType ) {
+				this.generateVideoShortcode();
+			} else {
+				this.generatePlaylistShortcode();
+			}
+		},
+
+		generateVideoShortcode: function () {
+			var videoId = this.model.get( 'id' ).replace( /\D/g, '' ),
+				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
 				embedstyle = $( 'input[name="embed-style"]:checked' ).val(),
-                sizing = $( 'input[name="sizing"]:checked' ).val(),
+				sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
 				minWidth = '0px',
 				maxWidth = $( '#width' ).val(),
@@ -1588,24 +1596,82 @@ var MediaDetailsView = BrightcoveView.extend(
 				units = $( '#units' ).val(),
 				shortcode;
 
-		    if ( '16:9' === aspectRatio ) {
-		    	paddingTop = '56';
+			if ( '16:9' === aspectRatio ) {
+				paddingTop = '56';
 			} else if ( '4:3' === aspectRatio ) {
-		    	paddingTop = '75';
+				paddingTop = '75';
 			} else {
-		        paddingTop = ( height / width * 100 );
+				paddingTop = ( height / width * 100 );
 			}
 
 			if ( 'responsive' === sizing ) {
-		    	width = '100';
-		    	height = '100';
+				width = '100';
+				height = '100';
 			}
 
-            shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				'embed="' + embedstyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
 				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
-                'width="' + width + units + '" height="' + height + units + '"' +
+				'width="' + width + units + '" height="' + height + units + '"' +
 				']';
+
+			$( '#shortcode' ).val( shortcode );
+		},
+
+		generatePlaylistShortcode: function () {
+		    var playlistId = this.model.get( 'id' ).replace( /\D/g, '' ),
+                accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+				playerId = $( '#video-player' ).val(),
+				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
+                sizing = $( 'input[name="sizing"]:checked' ).val(),
+				aspectRatio = $( '#aspect-ratio' ).val(),
+				minWidth = '',
+				maxWidth = '',
+				paddingTop = '',
+				width = $( '#width' ).val(),
+				height = $( '#height' ).val(),
+				units = $( '#units' ).val(),
+				shortcode;
+
+		    if ( 'in-page-vertical' === embedStyle ) {
+			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				    'embed="in-page-vertical" autoplay="' + autoplay + '" ' +
+				    'min_width="" max_width="" padding_top="" ' +
+				    'width="' + width + units + '" height="' + height + units + '"' +
+				    ']';
+		    } else if ( 'in-page-horizontal' === embedStyle ) {
+			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				    'embed="in-page-horizontal" autoplay="' + autoplay + '" ' +
+				    'min_width="" max_width="" padding_top="" ' +
+				    'width="' + width + units + '" height="' + height + units + '"' +
+				    ']';
+		    } else if ( 'iframe' === embedStyle ) {
+			    if ( '16:9' === aspectRatio ) {
+				    paddingTop = '40';
+			    } else if ( '4:3' === aspectRatio ) {
+				    paddingTop = '54';
+			    } else {
+				    paddingTop = ( height / ( width * 1.4 ) * 100 );
+			    }
+
+			    max_width = width + units;
+			    min_width = '0px;'
+
+			    if ( 'responsive' === sizing ) {
+				    width = '100%';
+				    height = '100%';
+			    } else {
+			    	width = width + units;
+			    	height = height + units;
+			    }
+
+			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				    'embed="iframe" autoplay="' + autoplay + '" ' +
+				    'min_width="' + min_width + '" max_width="' + max_width + '" padding_top="' + paddingTop + '%" ' +
+				    'width="' + width + units + '" height="' + height + units + '"' +
+				    ']';
+		    }
 
 		    $( '#shortcode' ).val( shortcode );
         },

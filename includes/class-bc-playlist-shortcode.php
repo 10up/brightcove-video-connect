@@ -24,12 +24,17 @@ class BC_Playlist_Shortcode {
 			'player_id'   => 'default',
 			'account_id'  => '',
 			'playlist_id' => '',
+			'autoplay'    => '',
+			'embed'       => '',
+			'padding_top' => '56.25%',
+			'min_width'   => '0px',
+			'max_width'   => '100%',
 			'height'      => 0,
 			'width'       => 0,
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_playlist' );
 
-		return BC_Utility::player( 'playlist', $atts['playlist_id'], $atts['account_id'], $atts['player_id'], $atts['width'], $atts['height'] );
+		return BC_Utility::get_playlist_player( $atts );
 	}
 }
