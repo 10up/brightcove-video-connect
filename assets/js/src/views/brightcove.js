@@ -22,26 +22,9 @@ var BrightcoveView = wp.Backbone.View.extend(
 				return;
 			}
 
-			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
-			var accountId    = this.model.get( 'account_id' ).replace( /\D/g, '' );
-			var playerId     = wpbc.selectedPlayer;
-			var shortcode    = '';
+			var shortcode = wpbc.shortcode;
 
-			if ( ! playerId ) {
-				var playerId = 'default';
-			}
-
-			if ( undefined !== this.mediaType ) {
-				if ( this.mediaType === 'videos' ) {
-
-					shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
-
-				} else {
-
-					shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
-
-				}
-			} else {
+            if ( undefined === this.mediaType ) {
 				var template = wp.template( 'brightcove-mediatype-notice' );
 
 				// Throw a notice to the user that the file is not the correct format
@@ -61,9 +44,8 @@ var BrightcoveView = wp.Backbone.View.extend(
 				$( wpbc.modal.target ).val( shortcode );
 				$( wpbc.modal.target ).change();
 			}
-			wpbc.broadcast.trigger( 'close:modal' );
 
+			wpbc.broadcast.trigger( 'close:modal' );
 		}
 	}
 );
-

@@ -24,16 +24,20 @@ class BC_Video_Shortcode {
 	public static function bc_video( $atts ) {
 
 		$defaults = array(
-			'player_id'  => 'default',
-			'account_id' => '',
-			'video_id'   => '',
-			'height'     => 0,
-			'width'      => 0,
+			'player_id'   => 'default',
+			'account_id'  => '',
+			'video_id'    => '',
+			'autoplay'    => '',
+			'embed'       => '',
+			'padding_top' => '56.25%',
+			'min_width'   => '0px',
+			'max_width'   => '100%',
+			'height'      => 0,
+			'width'       => 0,
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );
 
-		return BC_Utility::player( 'video', $atts['video_id'], $atts['account_id'], $atts['player_id'], $atts['width'], $atts['height'] );
-
+		return BC_Utility::get_video_player( $atts );
 	}
 }

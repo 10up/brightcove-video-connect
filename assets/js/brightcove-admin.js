@@ -669,26 +669,9 @@ var BrightcoveView = wp.Backbone.View.extend(
 				return;
 			}
 
-			var brightcoveId = this.model.get( 'id' ).replace( /\D/g, '' ); // video or playlist id
-			var accountId    = this.model.get( 'account_id' ).replace( /\D/g, '' );
-			var playerId     = wpbc.selectedPlayer;
-			var shortcode    = '';
+			var shortcode = wpbc.shortcode;
 
-			if ( ! playerId ) {
-				var playerId = 'default';
-			}
-
-			if ( undefined !== this.mediaType ) {
-				if ( this.mediaType === 'videos' ) {
-
-					shortcode = '[bc_video video_id="' + brightcoveId + '" account_id="' + accountId + '" player_id="' + playerId +  '"]';
-
-				} else {
-
-					shortcode = '[bc_playlist playlist_id="' + brightcoveId + '" account_id="' + accountId + '"]';
-
-				}
-			} else {
+            if ( undefined === this.mediaType ) {
 				var template = wp.template( 'brightcove-mediatype-notice' );
 
 				// Throw a notice to the user that the file is not the correct format
@@ -708,12 +691,11 @@ var BrightcoveView = wp.Backbone.View.extend(
 				$( wpbc.modal.target ).val( shortcode );
 				$( wpbc.modal.target ).change();
 			}
-			wpbc.broadcast.trigger( 'close:modal' );
 
+			wpbc.broadcast.trigger( 'close:modal' );
 		}
 	}
 );
-
 
 /**
  * This is the toolbar to handle sorting, filtering, searching and grid/list view toggles.
@@ -1443,13 +1425,11 @@ var BrightcoveModalView = BrightcoveView.extend(
 				return;
 			}
 
-			// Make the selected player available to the shortcode
-			wpbc.selectedPlayer = $( 'input[name="video-player-field"]:checked' ).val();
+			wpbc.shortcode = $( '#shortcode' ).val();
 
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
 			wpbc.broadcast.trigger( 'insert:shortcode' );
-
 		},
 
 		toggleInsertButton : function ( state ) {
@@ -1562,7 +1542,10 @@ var MediaDetailsView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
-			'click .brightcove.back.button' :    'triggerCancelPreviewMedia'
+			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
+            'change #aspect-ratio' : 'toggleUnits',
+            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' : 'generateShortcode',
+			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
 		triggerEditMedia : function ( event ) {
@@ -1578,6 +1561,133 @@ var MediaDetailsView = BrightcoveView.extend(
 		triggerCancelPreviewMedia : function ( event ) {
 			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
 		},
+
+		toggleUnits: function( event ) {
+			var value = $( '#aspect-ratio' ).val();
+
+			if ( 'custom' === value ) {
+				$( '#custom' ).show();
+			} else {
+                $( '#custom' ).hide();
+			}
+		},
+
+		generateShortcode: function () {
+			if ( 'videos' === this.mediaType ) {
+				this.generateVideoShortcode();
+			} else {
+				this.generatePlaylistShortcode();
+			}
+		},
+
+		generateVideoShortcode: function () {
+			var videoId = this.model.get( 'id' ).replace( /\D/g, '' ),
+				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+				playerId = $( '#video-player' ).val(),
+				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				embedstyle = $( 'input[name="embed-style"]:checked' ).val(),
+				sizing = $( 'input[name="sizing"]:checked' ).val(),
+				aspectRatio = $( '#aspect-ratio' ).val(),
+				minWidth = '0px',
+				maxWidth = $( '#width' ).val(),
+				paddingTop = '',
+				width = $( '#width' ).val(),
+				height = $( '#height' ).val(),
+				units = $( '#units' ).val(),
+				shortcode;
+
+			if ( '16:9' === aspectRatio ) {
+				paddingTop = '56';
+			} else if ( '4:3' === aspectRatio ) {
+				paddingTop = '75';
+			} else {
+				paddingTop = ( height / width * 100 );
+			}
+
+			if ( 'responsive' === sizing ) {
+				width = '100';
+				height = '100';
+			}
+
+			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				'embed="' + embedstyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
+				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
+				'width="' + width + units + '" height="' + height + units + '"' +
+				']';
+
+			$( '#shortcode' ).val( shortcode );
+		},
+
+		generatePlaylistShortcode: function () {
+		    var playlistId = this.model.get( 'id' ).replace( /\D/g, '' ),
+                accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+				playerId = $( '#video-player' ).val(),
+				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
+                sizing = $( 'input[name="sizing"]:checked' ).val(),
+				aspectRatio = $( '#aspect-ratio' ).val(),
+				minWidth = '',
+				maxWidth = '',
+				paddingTop = '',
+				width = $( '#width' ).val(),
+				height = $( '#height' ).val(),
+				units = $( '#units' ).val(),
+				shortcode;
+
+		    if ( 'in-page-vertical' === embedStyle ) {
+			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				    'embed="in-page-vertical" autoplay="' + autoplay + '" ' +
+				    'min_width="" max_width="" padding_top="" ' +
+				    'width="' + width + units + '" height="' + height + units + '"' +
+				    ']';
+		    } else if ( 'in-page-horizontal' === embedStyle ) {
+			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				    'embed="in-page-horizontal" autoplay="' + autoplay + '" ' +
+				    'min_width="" max_width="" padding_top="" ' +
+				    'width="' + width + units + '" height="' + height + units + '"' +
+				    ']';
+		    } else if ( 'iframe' === embedStyle ) {
+			    if ( '16:9' === aspectRatio ) {
+				    paddingTop = '40';
+			    } else if ( '4:3' === aspectRatio ) {
+				    paddingTop = '54';
+			    } else {
+				    paddingTop = ( height / ( width * 1.4 ) * 100 );
+			    }
+
+			    max_width = width + units;
+			    min_width = '0px;'
+
+			    if ( 'responsive' === sizing ) {
+				    width = '100%';
+				    height = '100%';
+			    } else {
+			    	width = width + units;
+			    	height = height + units;
+			    }
+
+			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
+				    'embed="iframe" autoplay="' + autoplay + '" ' +
+				    'min_width="' + min_width + '" max_width="' + max_width + '" padding_top="' + paddingTop + '%" ' +
+				    'width="' + width + units + '" height="' + height + units + '"' +
+				    ']';
+		    }
+
+		    $( '#shortcode' ).val( shortcode );
+        },
+
+		toggleShortcodeGeneration: function () {
+		    var method = $( '#generate-shortcode' ).val(),
+                $fields = $( '#video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' );
+
+		    if ( 'manual' === method ) {
+		    	$( '#shortcode' ).removeAttr( 'readonly' );
+                $fields.attr( 'disabled', true );
+			} else {
+                $( '#shortcode' ).attr( 'readonly', true );
+                $fields.removeAttr( 'disabled' );
+			}
+        },
 
 		initialize : function ( options ) {
 			options        = options || {};
@@ -1602,6 +1712,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			this.$el.html( this.template( options ) );
 
 			this.delegateEvents();
+            this.generateShortcode();
+
 			return this;
 		},
 
@@ -1612,7 +1724,6 @@ var MediaDetailsView = BrightcoveView.extend(
 			this.stopListening();
 			return this;
 		}
-
 	}
 );
 
