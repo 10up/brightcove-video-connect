@@ -152,15 +152,12 @@ class BC_Setup {
 		$params['tags']  = $tags->get_tags();
 
 		$params['plupload'] = array(
-			'runtimes'            => 'html5,silverlight,flash,html4',
 			'browse_button'       => 'brightcove-select-files-button',
 			'container'           => 'drop-target',
 			'drop_element'        => 'drop-target',
 			'multiple_queues'     => true,
 			'max_file_size'       => wp_max_upload_size() . 'b',
 			'url'                 => admin_url( 'admin-ajax.php?action=bc_media_upload' ),
-			'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
-			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
 			'filters'             => array( array( 'title' => esc_html__( 'Allowed Files' ), 'extensions' => '*' ) ),
 			'multipart'           => true,
 			'urlstream_upload'    => true,
