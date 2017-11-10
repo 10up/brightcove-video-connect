@@ -28,7 +28,6 @@ var VideoPreviewView = BrightcoveView.extend( {
 			}
 		});
 
-		// this.$el.html( this.template( options ) );
 		this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 	}
 } );
