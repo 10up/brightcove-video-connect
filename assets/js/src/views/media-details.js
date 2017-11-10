@@ -29,7 +29,8 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		triggerPreviewMedia : function ( event ) {
 			event.preventDefault();
-			wpbc.broadcast.trigger( 'preview:media', this.model );
+			var shortcode = $( '#shortcode' ).val();
+			wpbc.broadcast.trigger( 'preview:media', this.model, shortcode );
 		},
 
 		triggerCancelPreviewMedia : function ( event ) {

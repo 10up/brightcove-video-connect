@@ -590,7 +590,7 @@ class BC_Admin_Templates {
                             <?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
                         </label>
                         <div class="right-col">
-                            <input type="radio" value="in-page" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'In-Page', 'brightcove' ); ?>
+                            <input type="radio" value="in-page" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
                             <input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
                         </div>
 
@@ -725,15 +725,21 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="in-page-vertical" checked name="embed-style"><?php esc_html_e( 'In-Page Vertical', 'brightcove' ); ?>
+							<input type="radio" value="iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
 						<label>
 							&nbsp;
 						</label>
 						<div class="right-col">
-							<input type="radio" value="in-page-horizontal" name="embed-style"><?php esc_html_e( 'In-Page Horizontal', 'brightcove' ); ?>
-							<input type="radio" value="iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
+							<input type="radio" value="in-page-horizontal" name="embed-style"><?php esc_html_e( 'JavaScript Horizontal', 'brightcove' ); ?>
+						</div>
+
+						<label>
+							&nbsp;
+						</label>
+						<div class="right-col">
+							<input type="radio" value="in-page-vertical" checked name="embed-style"><?php esc_html_e( 'JavaScript Vertical', 'brightcove' ); ?>
 						</div>
 
 						<label for="sizing-responsive">

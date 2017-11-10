@@ -52,6 +52,14 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
 		add_filter( 'brightcove_media_query_results', array( $this, 'add_in_process_videos' ), 10, 2 );
+
+		add_action( 'wp_ajax_bc_resolve_shortcode', array( $this, 'resolve_shortcode' ) );
+	}
+
+	public function resolve_shortcode() {
+		$shortcode = stripslashes( sanitize_text_field( $_POST['shortcode'] ) );
+
+		wp_send_json_success( do_shortcode( $shortcode ) );
 	}
 
 	protected function bc_helper_check_ajax() {

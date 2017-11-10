@@ -206,7 +206,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				}
 			} );
 
-			this.listenTo( wpbc.broadcast, 'preview:media', function ( model ) {
+			this.listenTo( wpbc.broadcast, 'preview:media', function ( model, shortcode ) {
 
 				var mediaType = this.model.get( 'mediaType' );
 
@@ -217,7 +217,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 						return true;
 					}
 
-					this.previewView = new VideoPreviewView( {model : model} );
+					this.previewView = new VideoPreviewView( {model : model, shortcode: shortcode} );
 
 					this.registerSubview( this.previewView );
 					this.model.set( 'mode', 'previewVideo' );
