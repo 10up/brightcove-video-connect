@@ -21,6 +21,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api2.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
@@ -199,8 +200,8 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-		$player_api = new BC_Player_Management_API();
-        $players    = $player_api->all_player_by_account();
+		$player_api = new BC_Player_Management_API2();
+		$players = $player_api->get_all_players();
 
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),

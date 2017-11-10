@@ -574,8 +574,10 @@ class BC_Admin_Templates {
                             <?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
                         </label>
                         <select name="video-player" id="video-player" class="right-col">
-                            <# _.each( wpbc.players[data.account_id].items, function ( player ) { #>
-                                <option value="{{ player.id }}">{{ player.name }}</option>
+                            <# _.each( wpbc.players[data.account_id], function ( player ) { #>
+	                            <# if ( ! player.is_playlist ) { #>
+									<option value="{{ player.id }}">{{ player.name }}</option>
+								<# } #>
                             <# }); #>
                         </select>
 
@@ -709,9 +711,11 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
 						</label>
 						<select name="video-player" id="video-player" class="right-col">
-							<# _.each( wpbc.players[data.account_id].items, function ( player ) { #>
-								<option value="{{ player.id }}">{{ player.name }}</option>
-								<# }); #>
+							<# _.each( wpbc.players[data.account_id], function ( player ) { #>
+								<# if ( player.is_playlist ) { #>
+									<option value="{{ player.id }}">{{ player.name }}</option>
+								<# } #>
+							<# }); #>
 						</select>
 
 						<label for="autoplay">
