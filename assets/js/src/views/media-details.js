@@ -80,14 +80,17 @@ var MediaDetailsView = BrightcoveView.extend(
 			}
 
 			if ( 'responsive' === sizing ) {
-				width = '100';
-				height = '100';
+				width = '100%';
+				height = '100%';
+			} else {
+				width = width + units;
+				height = height + units;
 			}
 
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				'embed="' + embedstyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
 				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
-				'width="' + width + units + '" height="' + height + units + '"' +
+				'width="' + width + '" height="' + height + '"' +
 				']';
 
 			$( '#shortcode' ).val( shortcode );
@@ -144,7 +147,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				    'embed="iframe" autoplay="' + autoplay + '" ' +
 				    'min_width="' + min_width + '" max_width="' + max_width + '" padding_top="' + paddingTop + '%" ' +
-				    'width="' + width + units + '" height="' + height + units + '"' +
+				    'width="' + width + '" height="' + height + '"' +
 				    ']';
 		    }
 
