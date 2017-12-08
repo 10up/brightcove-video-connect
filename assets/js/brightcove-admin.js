@@ -1567,9 +1567,20 @@ var MediaDetailsView = BrightcoveView.extend(
 			var value = $( '#aspect-ratio' ).val();
 
 			if ( 'custom' === value ) {
-				$( '#custom' ).show();
+				$( '#height' ).removeAttr( 'readonly' );
 			} else {
-                $( '#custom' ).hide();
+				var $height = $( '#height' ),
+					width = $( '#width' ).val();
+
+				$height.attr( 'readonly', true );
+
+				if ( width > 0 ) {
+					if ( '16:9' === value ) {
+						$height.val( width/( 16/9 ) );
+					} else {
+						$height.val( width/( 4/3 ) );
+					}
+				}
 			}
 		},
 
