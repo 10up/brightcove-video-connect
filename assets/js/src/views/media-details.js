@@ -74,12 +74,12 @@ var MediaDetailsView = BrightcoveView.extend(
 				embedstyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
-				minWidth = '0px',
-				maxWidth = $( '#width' ).val(),
 				paddingTop = '',
 				width = $( '#width' ).val(),
 				height = $( '#height' ).val(),
 				units = $( '#units' ).val(),
+				minWidth = '0px',
+				maxWidth = width + units,
 				shortcode;
 
 			if ( '16:9' === aspectRatio ) {
@@ -115,12 +115,12 @@ var MediaDetailsView = BrightcoveView.extend(
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
                 sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
-				minWidth = '',
-				maxWidth = '',
 				paddingTop = '',
 				width = $( '#width' ).val(),
 				height = $( '#height' ).val(),
 				units = $( '#units' ).val(),
+			    minWidth = '0px;',
+			    maxWidth = width + units,
 				shortcode;
 
 		    if ( 'in-page-vertical' === embedStyle ) {
@@ -144,9 +144,6 @@ var MediaDetailsView = BrightcoveView.extend(
 				    paddingTop = ( height / ( width * 1.4 ) * 100 );
 			    }
 
-			    max_width = width + units;
-			    min_width = '0px;'
-
 			    if ( 'responsive' === sizing ) {
 				    width = '100%';
 				    height = '100%';
@@ -157,7 +154,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				    'embed="iframe" autoplay="' + autoplay + '" ' +
-				    'min_width="' + min_width + '" max_width="' + max_width + '" padding_top="' + paddingTop + '%" ' +
+				    'min_width="' + minWidth + '" max_width="' + maxWidth + '" padding_top="' + paddingTop + '%" ' +
 				    'width="' + width + '" height="' + height + '"' +
 				    ']';
 		    }
