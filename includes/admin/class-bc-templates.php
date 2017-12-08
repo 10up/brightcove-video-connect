@@ -613,26 +613,24 @@ class BC_Admin_Templates {
                             <option value="custom"><?php esc_html_e( 'Custom', 'brightcove' ); ?></option>
                         </select>
 
-                        <div id="custom">
-                            <label for="width">
-                                <?php esc_html_e( 'Width: ', 'brightcove' ); ?>
-                            </label>
-                            <input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<label for="width">
+							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
+						</label>
+						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
 
-                            <label for="height">
-                                <?php esc_html_e( 'Height: ', 'brightcove' ); ?>
-                            </label>
-                            <input type="number" name="height" id="height" class="right-col" value="360" size="5">
+						<label for="height">
+							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
+						</label>
+						<input type="number" name="height" id="height" class="right-col" value="360" size="5" readonly>
 
-                            <label for="units">
-                                <?php esc_html_e( 'Units: ', 'brightcove' ); ?>
-                            </label>
-                            <select name="units" id="units" class="right-col">
-                                <option value="px">px</option>
-                                <option value="em">em</option>
-                                <option value="%">%</option>
-                            </select>
-                        </div>
+						<label for="units">
+							<?php esc_html_e( 'Units: ', 'brightcove' ); ?>
+						</label>
+						<select name="units" id="units" class="right-col">
+							<option value="px">px</option>
+							<option value="em">em</option>
+							<option value="%">%</option>
+						</select>
 
                         <label for="generate-shortcode">
                             <?php esc_html_e( 'Shortcode', 'brightcove' ); ?>
@@ -763,26 +761,24 @@ class BC_Admin_Templates {
 							<option value="custom"><?php esc_html_e( 'Custom', 'brightcove' ); ?></option>
 						</select>
 
-						<div id="custom">
-							<label for="width">
-								<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
-							</label>
-							<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<label for="width">
+							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
+						</label>
+						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
 
-							<label for="height">
-								<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
-							</label>
-							<input type="number" name="height" id="height" class="right-col" value="360" size="5">
+						<label for="height">
+							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
+						</label>
+						<input type="number" name="height" id="height" class="right-col" value="360" size="5" readonly>
 
-							<label for="units">
-								<?php esc_html_e( 'Units: ', 'brightcove' ); ?>
-							</label>
-							<select name="units" id="units" class="right-col">
-								<option value="px">px</option>
-								<option value="em">em</option>
-								<option value="%">%</option>
-							</select>
-						</div>
+						<label for="units">
+							<?php esc_html_e( 'Units: ', 'brightcove' ); ?>
+						</label>
+						<select name="units" id="units" class="right-col">
+							<option value="px">px</option>
+							<option value="em">em</option>
+							<option value="%">%</option>
+						</select>
 
 						<label for="generate-shortcode">
 							<?php esc_html_e( 'Shortcode', 'brightcove' ); ?>
