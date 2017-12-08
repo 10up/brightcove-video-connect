@@ -549,6 +549,20 @@ class BC_Admin_Templates {
 					<# } #>
 				</div>
 
+				<div class="media-actions">
+					<# if ('preview' === data.detailsMode) { #>
+					<a href="#" class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+					<# } else { #>
+					<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
+					<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+					<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<# } else { #>
+					<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+					<a href="#" class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<# } #>
+					<# } #>
+				</div>
+
 				<div class="video-info">
 					<span class="video-name">{{ data.name }}</span>
                 </div>
@@ -644,20 +658,6 @@ class BC_Admin_Templates {
 
                     <?php endif; ?>
                 </div>
-
-				<div class="media-actions">
-					<# if ('preview' === data.detailsMode) { #>
-						<a href="#" class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
-					<# } else { #>
-						<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
-							<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-							<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
-						<# } else { #>
-							<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-							<a href="#" class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
-						<# } #>
-					<# } #>
-				</div>
 			</div>
 		</script>
 
@@ -684,6 +684,13 @@ class BC_Admin_Templates {
                         </div>
                     <# } #>
 				</div>
+
+				<# if ('EXPLICIT' === data.type) { #>
+				<div class="media-actions clear">
+					<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
+				</div>
+				<# } #>
+
 				<div class="playlist-info">
 					<span class="playlist-name">{{ data.name }}</span>
 				</div>
@@ -792,12 +799,6 @@ class BC_Admin_Templates {
 
 					<?php endif; ?>
 				</div>
-
-				<# if ('EXPLICIT' === data.type) { #>
-					<div class="media-actions clear">
-						<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					</div>
-				<# } #>
 			</div>
 		</script>
 
