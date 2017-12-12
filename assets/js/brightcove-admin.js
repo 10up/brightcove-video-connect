@@ -1392,7 +1392,8 @@ var BrightcoveModalView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.media-menu-item'     : 'changeTab',
 			'click .brightcove.media-button-insert' : 'insertIntoPost',
-			'click .brightcove.media-modal-icon'    : 'closeModal',
+			// 'click .brightcove.media-modal-icon'    : 'closeModal',
+			'click .media-modal-close'              : 'closeModal',
 			'click .brightcove.save-sync'           : 'saveSync',
 			'click .brightcove.button.back'         : 'back'
 		},
@@ -1473,6 +1474,7 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		closeModal : function ( evnt ) {
+			console.log( 'Clossed' ); // eslint-disable-line no-console
 
 			// If we are in the editVideo mode, switch back to the video view.
 			if ( 'editVideo' === wpbc.modal.brightcoveMediaManager.model.get('mode') ) {

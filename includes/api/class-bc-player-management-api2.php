@@ -71,12 +71,16 @@ class BC_Player_Management_API2 extends BC_API {
 			foreach ( $account_players['items'] as $player ) {
 				$player['is_playlist'] = false;
 
-				if ( isset( $player['branches']['master']['configuration']['plugins'] ) ) {
-					$plugins = $player['branches']['master']['configuration']['plugins'];
+				if ( isset( $player['branches']['master']['configuration']['playlist'] ) && $player['branches']['master']['configuration']['playlist'] ) {
+					$player['is_playlist'] = true;
+				} else {
+					if ( isset( $player['branches']['master']['configuration']['plugins'] ) ) {
+						$plugins = $player['branches']['master']['configuration']['plugins'];
 
-					foreach ( $plugins as $plugin ) {
-						if ( isset( $plugin['register_id'] ) && 'videojs-bc-playlist-ui' == $plugin['registry_id'] ) {
-							$player['is_playlist'] = true;
+						foreach ( $plugins as $plugin ) {
+							if ( isset( $plugin['register_id'] ) && strpos( $plugin['register_id'], 'videojs-bc-playlist-ui' ) !== false ) {
+								$player['is_playlist'] = true;
+							}
 						}
 					}
 				}
