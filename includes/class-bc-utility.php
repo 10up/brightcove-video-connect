@@ -852,7 +852,7 @@ class BC_Utility {
 			</div>
 		<?php else : ?>
 
-			<?php if ( 0 === $width && 0 === $height ) : ?>
+			<?php if ( '0' === $width && '0' === $height ) : ?>
 				<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">
 			<?php endif; ?>
 
@@ -864,13 +864,13 @@ class BC_Utility {
 				'video',
 				$id,
 				esc_attr( self::get_usage_data() ) . 'iframe',
-				( 0 === $width ) ? '100%' : $width . 'px',
-				( 0 === $height ) ? '100%' : $height . 'px',
-				( 0 === $width && 0 === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
+				( '0' === $width ) ? '100%' : $width . 'px',
+				( '0' === $height ) ? '100%' : $height . 'px',
+				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
 			);
 			?>
 
-			<?php if ( 0 === $width && 0 === $height ) : ?>
+			<?php if ( '0' === $width && '0' === $height ) : ?>
 				</div></div>
 			<?php endif; ?>
 
@@ -1056,7 +1056,7 @@ class BC_Utility {
 			</div>
 		<?php else : ?>
 
-			<?php if ( 0 === $width && 0 === $height ) : ?>
+			<?php if ( '0' === $width && '0' === $height ) : ?>
 				<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">
 			<?php endif; ?>
 
@@ -1068,13 +1068,13 @@ class BC_Utility {
 				'playlist',
 				$id,
 				esc_attr( self::get_usage_data() ) . 'iframe',
-				( 0 === $width ) ? '100%' : $width . 'px',
-				( 0 === $height ) ? '100%' : $height . 'px',
-				( 0 === $width && 0 === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
+				( '0' === $width ) ? '100%' : $width . 'px',
+				( '0' === $height ) ? '100%' : $height . 'px',
+				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
 			);
 			?>
 
-			<?php if ( 0 === $width && 0 === $height ) : ?>
+			<?php if ( '0' === $width && '0' === $height ) : ?>
 				</div></div>
 			<?php endif; ?>
 
