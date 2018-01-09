@@ -18,7 +18,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
             'change #aspect-ratio' : 'toggleUnits',
-            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' : 'generateShortcode',
+            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
@@ -71,13 +71,13 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
-				embedstyle = $( 'input[name="embed-style"]:checked' ).val(),
+				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
 				paddingTop = '',
 				width = $( '#width' ).val(),
 				height = $( '#height' ).val(),
-				units = $( '#units' ).val(),
+				units = 'px',
 				minWidth = '0px',
 				maxWidth = width + units,
 				shortcode;
@@ -96,10 +96,14 @@ var MediaDetailsView = BrightcoveView.extend(
 			} else {
 				width = width + units;
 				height = height + units;
+
+				if ( 'iframe' === embedStyle ) {
+					minWidth = width;
+				}
 			}
 
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				'embed="' + embedstyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
+				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
 				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
 				'width="' + width + '" height="' + height + '"' +
 				']';
@@ -118,7 +122,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				paddingTop = '',
 				width = $( '#width' ).val(),
 				height = $( '#height' ).val(),
-				units = $( '#units' ).val(),
+			    units = 'px',
 			    minWidth = '0px;',
 			    maxWidth = width + units,
 				shortcode;
@@ -150,6 +154,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			    } else {
 			    	width = width + units;
 			    	height = height + units;
+
+					minWidth = width;
 			    }
 
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +

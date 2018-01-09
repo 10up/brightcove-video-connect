@@ -911,7 +911,7 @@ class BC_Utility {
 	public static function get_playlist_player( $atts ) {
 		$account_id  = BC_Utility::sanitize_id( $atts['account_id'] );
 		$player_id   = BC_Utility::sanitize_player_id( $atts['player_id'] );
-		$id          = BC_Utility::sanitize_id( $atts['video_id'] );
+		$id          = BC_Utility::sanitize_id( $atts['playlist_id'] );
 		$height      = sanitize_text_field( $atts['height'] );
 		$width       = sanitize_text_field( $atts['width'] );
 		$min_width   = sanitize_text_field( $atts['min_width'] );
