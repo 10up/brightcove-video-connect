@@ -637,15 +637,6 @@ class BC_Admin_Templates {
 						</label>
 						<input type="number" name="height" id="height" class="right-col" value="360" size="5" readonly>
 
-						<label for="units">
-							<?php esc_html_e( 'Units: ', 'brightcove' ); ?>
-						</label>
-						<select name="units" id="units" class="right-col">
-							<option value="px">px</option>
-							<option value="em">em</option>
-							<option value="%">%</option>
-						</select>
-
                         <label for="generate-shortcode">
                             <?php esc_html_e( 'Shortcode', 'brightcove' ); ?>
                         </label>
@@ -777,15 +768,6 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
 						</label>
 						<input type="number" name="height" id="height" class="right-col" value="360" size="5" readonly>
-
-						<label for="units">
-							<?php esc_html_e( 'Units: ', 'brightcove' ); ?>
-						</label>
-						<select name="units" id="units" class="right-col">
-							<option value="px">px</option>
-							<option value="em">em</option>
-							<option value="%">%</option>
-						</select>
 
 						<label for="generate-shortcode">
 							<?php esc_html_e( 'Shortcode', 'brightcove' ); ?>

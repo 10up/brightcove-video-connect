@@ -18,7 +18,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
             'change #aspect-ratio' : 'toggleUnits',
-            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' : 'generateShortcode',
+            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
@@ -77,7 +77,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				paddingTop = '',
 				width = $( '#width' ).val(),
 				height = $( '#height' ).val(),
-				units = $( '#units' ).val(),
+				units = 'px',
 				minWidth = '0px',
 				maxWidth = width + units,
 				shortcode;
@@ -122,7 +122,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				paddingTop = '',
 				width = $( '#width' ).val(),
 				height = $( '#height' ).val(),
-				units = $( '#units' ).val(),
+			    units = 'px',
 			    minWidth = '0px;',
 			    maxWidth = width + units,
 				shortcode;
