@@ -1392,7 +1392,6 @@ var BrightcoveModalView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.media-menu-item'     : 'changeTab',
 			'click .brightcove.media-button-insert' : 'insertIntoPost',
-			// 'click .brightcove.media-modal-icon'    : 'closeModal',
 			'click .media-modal-close'              : 'closeModal',
 			'click .brightcove.save-sync'           : 'saveSync',
 			'click .brightcove.button.back'         : 'back'
@@ -1474,7 +1473,6 @@ var BrightcoveModalView = BrightcoveView.extend(
 		},
 
 		closeModal : function ( evnt ) {
-			console.log( 'Clossed' ); // eslint-disable-line no-console
 
 			// If we are in the editVideo mode, switch back to the video view.
 			if ( 'editVideo' === wpbc.modal.brightcoveMediaManager.model.get('mode') ) {
@@ -1599,7 +1597,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
-				embedstyle = $( 'input[name="embed-style"]:checked' ).val(),
+				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
 				paddingTop = '',
@@ -1624,10 +1622,14 @@ var MediaDetailsView = BrightcoveView.extend(
 			} else {
 				width = width + units;
 				height = height + units;
+
+				if ( 'iframe' === embedStyle ) {
+					minWidth = width;
+				}
 			}
 
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				'embed="' + embedstyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
+				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
 				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
 				'width="' + width + '" height="' + height + '"' +
 				']';
@@ -1678,6 +1680,8 @@ var MediaDetailsView = BrightcoveView.extend(
 			    } else {
 			    	width = width + units;
 			    	height = height + units;
+
+					minWidth = width;
 			    }
 
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
