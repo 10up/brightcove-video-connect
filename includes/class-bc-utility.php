@@ -655,7 +655,7 @@ class BC_Utility {
 
 		}
 
-		if ( update_option( 'bc_transient_keys', $transient_keys ) ) {
+		if ( update_option( 'bc_transient_keys', $transient_keys, false ) ) {
 			return 1; // Key saved to Brightcove registry.
 		}
 
@@ -732,7 +732,7 @@ class BC_Utility {
 
 		}
 
-		return update_option( 'bc_transient_keys', $transient_keys );
+		return update_option( 'bc_transient_keys', $transient_keys, false );
 
 	}
 
@@ -764,7 +764,7 @@ class BC_Utility {
 
 			unset( $transient_keys[ $key ] );
 
-			update_option( 'bc_transient_keys', $transient_keys );
+			update_option( 'bc_transient_keys', $transient_keys, false );
 
 		}
 
