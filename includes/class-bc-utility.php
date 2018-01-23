@@ -946,19 +946,33 @@ class BC_Utility {
 				}
 				.bcplayer {
 					width: <?php echo esc_attr( $width ); ?>;
-					height: calc (<?php echo esc_attr( $height ); ?> + 275px);
 					position: relative;
+				}
+				.playlist-wrapper {
+					width: <?php echo esc_attr( $width ); ?>;
+					overflow-y: hidden;
 				}
 				vjs-playlist vjs-csspointerevents vjs-mouse {
 					width: <?php echo esc_attr( $width ); ?>;
 				}
-				.vjs-playlist {
-					max-height: 250px;
+				.vjs-playlist-item-list {
+					/* 3 is the number of thumbnails to show, height is thumbnail heights plus padding */
+					height: calc(<?php echo esc_attr( $height ); ?> * 0.2 * 3 + 4px * 3);
 					position: relative;
-					top: 15px;
 				}
-				.vjs-playlist .vjs-playlist-item {
-					min-height: 65px;
+				.vjs-playlist-item-list .vjs-playlist-item {
+					height: calc(<?php echo esc_attr( $height ); ?> * 0.2);
+				}
+				.vjs-playlist-item-list .vjs-playlist-item .vjs-playlist-thumbnail {
+					width: calc(<?php echo esc_attr( $width ); ?> * 0.2);
+				}
+				.vjs-playlist-item-list .vjs-playlist-item .vjs-playlist-thumbnail vjs-playlist-title-container {
+					margin-left: calc(<?php echo esc_attr( $width ); ?> * 0.2);
+					width: calc(<?php echo esc_attr( $width ); ?> * 0.8 - 30px);
+				}
+				.vjs-playlist-item-list .vjs-playlist-item .vjs-playlist-thumbnail .vjs-playlist-now-playing-text {
+					margin-left: calc(<?php echo esc_attr( $width ); ?> * 0.2 + 6px);
+					width: calc(<?php echo esc_attr( $width ); ?> * 0.8 - 30px);
 				}
 				.vjs-playlist-item.vjs-selected {
 					background: rgb(45, 45, 45);
