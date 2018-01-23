@@ -1543,6 +1543,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.edit.button' :    'triggerEditMedia',
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
+			'click .playlist-details input[name="embed-style"]' :  'togglePlaylistSizing',
             'change #aspect-ratio' : 'toggleUnits',
             'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
@@ -1561,6 +1562,17 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		triggerCancelPreviewMedia : function ( event ) {
 			wpbc.broadcast.trigger( 'cancelPreview:media', this.mediaType );
+		},
+
+		togglePlaylistSizing: function( event ) {
+			var embedStyle = $( '.playlist-details input[name="embed-style"]:checked' ).val(),
+				$sizing = $( '#sizing-fixed, #sizing-responsive' );
+
+			if ( 'iframe' === embedStyle ) {
+				$sizing.removeAttr( 'readonly' );
+			} else {
+				$sizing.attr( 'readonly', true );
+			}
 		},
 
 		toggleUnits: function( event ) {
