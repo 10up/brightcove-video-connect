@@ -1667,11 +1667,11 @@ var MediaDetailsView = BrightcoveView.extend(
 				    ']';
 		    } else if ( 'iframe' === embedStyle ) {
 			    if ( '16:9' === aspectRatio ) {
-				    paddingTop = '40';
+				    paddingTop = '56';
 			    } else if ( '4:3' === aspectRatio ) {
-				    paddingTop = '54';
+				    paddingTop = '75';
 			    } else {
-				    paddingTop = ( height / ( width * 1.4 ) * 100 );
+				    paddingTop = ( height / ( width * 100 ) );
 			    }
 
 			    if ( 'responsive' === sizing ) {
