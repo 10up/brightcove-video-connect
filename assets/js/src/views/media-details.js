@@ -99,7 +99,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			} else if ( '4:3' === aspectRatio ) {
 				paddingTop = '75';
 			} else {
-				paddingTop = ( height / width * 100 );
+				paddingTop = ( ( height / width ) * 100 );
 			}
 
 			if ( 'responsive' === sizing ) {
@@ -157,7 +157,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			    } else if ( '4:3' === aspectRatio ) {
 				    paddingTop = '75';
 			    } else {
-				    paddingTop = ( height / ( width * 100 ) );
+				    paddingTop = ( ( height / width ) * 100 );
 			    }
 
 			    if ( 'responsive' === sizing ) {

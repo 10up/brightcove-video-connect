@@ -46,13 +46,29 @@ var MediaCollectionView = BrightcoveView.extend(
 
 			// Occurs on playlist edit, existing videos.
 			if ( ! this.collection && options.videoIds ) {
-				this.collection = new MediaCollection( null, {videoIds : options.videoIds, activeAccount : options.activeAccount, mediaCollectionViewType : options.mediaCollectionViewType} );
+				this.collection = new MediaCollection(
+					null,
+					{
+						videoIds : options.videoIds,
+						activeAccount : options.activeAccount,
+						mediaCollectionViewType : options.mediaCollectionViewType
+					}
+				);
+
 				this.listenTo( wpbc.broadcast, 'playlist:moveUp', this.videoMoveUp );
 				this.listenTo( wpbc.broadcast, 'playlist:moveDown', this.videoMoveDown );
 				this.listenTo( wpbc.broadcast, 'playlist:remove', this.videoRemove );
 				this.listenTo( wpbc.broadcast, 'playlist:add', this.videoAdd );
 			} else if ( ! this.collection && 'libraryPlaylists' === options.mediaCollectionViewType ) {
-				this.collection = new MediaCollection( null, {excludeVideoIds : options.excludeVideoIds, activeAccount : options.activeAccount, mediaCollectionViewType : options.mediaCollectionViewType} );
+				this.collection = new MediaCollection(
+					null,
+					{
+						excludeVideoIds : options.excludeVideoIds,
+						activeAccount : options.activeAccount,
+						mediaCollectionViewType : options.mediaCollectionViewType
+					}
+				);
+
 				this.listenTo( wpbc.broadcast, 'playlist:remove', this.videoRemove );
 				this.listenTo( wpbc.broadcast, 'playlist:add', this.videoAdd );
 			}

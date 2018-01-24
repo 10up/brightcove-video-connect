@@ -1625,7 +1625,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			} else if ( '4:3' === aspectRatio ) {
 				paddingTop = '75';
 			} else {
-				paddingTop = ( height / width * 100 );
+				paddingTop = ( ( height / width ) * 100 );
 			}
 
 			if ( 'responsive' === sizing ) {
@@ -1683,7 +1683,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			    } else if ( '4:3' === aspectRatio ) {
 				    paddingTop = '75';
 			    } else {
-				    paddingTop = ( height / ( width * 100 ) );
+				    paddingTop = ( ( height / width ) * 100 );
 			    }
 
 			    if ( 'responsive' === sizing ) {
@@ -1907,24 +1907,38 @@ var PlaylistEditView = BrightcoveView.extend(
 		render : function ( options ) {
 			options = this.model.toJSON();
 			this.$el.html( this.template( options ) );
-			this.spinner                = this.$el.find( '.spinner' );
-			var playlistVideosContainer = this.$el.find( '.existing-videos' );
-			/*
-			 1. Create a media collection here to fetch each of the videos in options.video_ids.
-			 */
+			this.spinner = this.$el.find( '.spinner' );
 
 			if ( options.video_ids ) {
 				this.killPendingRequests();
-				this.playlistVideosView = new MediaCollectionView( {el : this.$el.find( '.existing-videos' ), videoIds : options.video_ids, activeAccount : this.model.get( 'account_id' ), mediaCollectionViewType : 'existingPlaylists', mediaType : 'playlists'} );
-				this.libraryVideosView  = new MediaCollectionView( {el : this.$el.find( '.library-videos' ), excludeVideoIds : options.video_ids, activeAccount : this.model.get( 'account_id' ), mediaCollectionViewType : 'libraryPlaylists', mediaType : 'playlists'} );
+
+				this.playlistVideosView = new MediaCollectionView( {
+					el : this.$el.find( '.existing-videos' ),
+					videoIds : options.video_ids,
+					activeAccount : this.model.get( 'account_id' ),
+					mediaCollectionViewType : 'existingPlaylists',
+					mediaType : 'playlists'
+				} );
+
+				this.libraryVideosView  = new MediaCollectionView( {
+					el : this.$el.find( '.library-videos' ),
+					excludeVideoIds : options.video_ids,
+					activeAccount : this.model.get( 'account_id' ),
+					mediaCollectionViewType : 'libraryPlaylists',
+					mediaType : 'playlists'
+				} );
+
 				this.registerSubview( this.playlistVideosView );
 				this.registerSubview( this.libraryVideosView );
+
 				this.listenTo( wpbc.broadcast, 'playlist:changed', _.throttle( this.playlistChanged, 300 ) );
 				this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			}
+
 			this.listenTo( wpbc.broadcast, 'spinner:on', function () {
 				this.spinner.addClass( 'is-active' ).removeClass( 'hidden' );
 			} );
+
 			this.listenTo( wpbc.broadcast, 'spinner:off', function () {
 				this.spinner.removeClass( 'is-active' ).addClass( 'hidden' );
 			} );
@@ -1943,8 +1957,7 @@ var PlaylistEditView = BrightcoveView.extend(
 			} );
 
 			wpbc.requests = [];
-		},
-
+		}
 	}
 );
 
@@ -2792,13 +2805,29 @@ var MediaCollectionView = BrightcoveView.extend(
 
 			// Occurs on playlist edit, existing videos.
 			if ( ! this.collection && options.videoIds ) {
-				this.collection = new MediaCollection( null, {videoIds : options.videoIds, activeAccount : options.activeAccount, mediaCollectionViewType : options.mediaCollectionViewType} );
+				this.collection = new MediaCollection(
+					null,
+					{
+						videoIds : options.videoIds,
+						activeAccount : options.activeAccount,
+						mediaCollectionViewType : options.mediaCollectionViewType
+					}
+				);
+
 				this.listenTo( wpbc.broadcast, 'playlist:moveUp', this.videoMoveUp );
 				this.listenTo( wpbc.broadcast, 'playlist:moveDown', this.videoMoveDown );
 				this.listenTo( wpbc.broadcast, 'playlist:remove', this.videoRemove );
 				this.listenTo( wpbc.broadcast, 'playlist:add', this.videoAdd );
 			} else if ( ! this.collection && 'libraryPlaylists' === options.mediaCollectionViewType ) {
-				this.collection = new MediaCollection( null, {excludeVideoIds : options.excludeVideoIds, activeAccount : options.activeAccount, mediaCollectionViewType : options.mediaCollectionViewType} );
+				this.collection = new MediaCollection(
+					null,
+					{
+						excludeVideoIds : options.excludeVideoIds,
+						activeAccount : options.activeAccount,
+						mediaCollectionViewType : options.mediaCollectionViewType
+					}
+				);
+
 				this.listenTo( wpbc.broadcast, 'playlist:remove', this.videoRemove );
 				this.listenTo( wpbc.broadcast, 'playlist:add', this.videoAdd );
 			}
