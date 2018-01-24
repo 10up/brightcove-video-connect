@@ -746,8 +746,8 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="responsive" id="sizing-responsive" readonly name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
-							<input type="radio" value="fixed" id="sizing-fixed" checked readonly name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
+							<input type="radio" value="responsive" id="sizing-responsive" disabled="true" name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
+							<input type="radio" value="fixed" id="sizing-fixed" checked disabled="true" name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
 						</div>
 
 						<label for="aspect-ratio">
