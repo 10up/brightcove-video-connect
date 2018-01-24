@@ -63,6 +63,8 @@ class BC_Player_Management_API2 extends BC_API {
 		$players         = array();
 
 		foreach ( $all_accounts_id as $account_id ) {
+			$bc_accounts->set_current_account_by_id( $account_id );
+
 			$url             = esc_url_raw( self::BASE_URL . $account_id . '/players/' );
 			$account_players = $this->send_request( $url );
 
