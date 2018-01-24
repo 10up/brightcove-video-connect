@@ -43,9 +43,9 @@ var MediaDetailsView = BrightcoveView.extend(
 				$sizing = $( '#sizing-fixed, #sizing-responsive' );
 
 			if ( 'iframe' === embedStyle ) {
-				$sizing.removeAttr( 'readonly' );
+				$sizing.removeAttr( 'disabled' );
 			} else {
-				$sizing.attr( 'readonly', true );
+				$sizing.attr( 'disabled', true );
 			}
 		},
 
