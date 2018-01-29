@@ -427,14 +427,12 @@ class BC_CMS_API extends BC_API {
 
 		}
 
-		// rawurlencode will convert spaces to %20, which is required according to BC API Docs.
-		$args = array_map( 'rawurlencode', $args );
 		$url  = add_query_arg(
 			$args,
 			self::CMS_BASE_URL . $this->get_account_id() . '/videos'
 		);
 
-		$results = $this->send_request( esc_url_raw( $url ) );
+		$results = $this->send_request( $url );
 
 		if ( is_array( $results ) ) {
 
