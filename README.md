@@ -60,6 +60,12 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.4.0
+
+* Enhancement: Added player support for videos and playlists
+* Enhancement: Updated playlist api to v2
+* Fix: Fixed a bug that was causing issues when a playlist was edited
+
 ##### 1.3.2
 * Enhancement: Add a target attribute to change shortcode placement
 * Enhancement: Improved performance of search

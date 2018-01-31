@@ -655,7 +655,7 @@ class BC_Utility {
 
 		}
 
-		if ( update_option( 'bc_transient_keys', $transient_keys ) ) {
+		if ( update_option( 'bc_transient_keys', $transient_keys, false ) ) {
 			return 1; // Key saved to Brightcove registry.
 		}
 
@@ -732,7 +732,7 @@ class BC_Utility {
 
 		}
 
-		return update_option( 'bc_transient_keys', $transient_keys );
+		return update_option( 'bc_transient_keys', $transient_keys, false );
 
 	}
 
@@ -764,7 +764,7 @@ class BC_Utility {
 
 			unset( $transient_keys[ $key ] );
 
-			update_option( 'bc_transient_keys', $transient_keys );
+			update_option( 'bc_transient_keys', $transient_keys, false );
 
 		}
 
@@ -790,66 +790,96 @@ class BC_Utility {
 	}
 
 	/**
-	 * Render Player
+	 * Render Video Player.
 	 *
 	 * Renders the  player from Brightcove based on passed parameters
 	 *
-	 * @since 1.0
+	 * @since 1.4
 	 *
-	 * @param string  $type       "playlist" or "video".
-	 * @param  string $id         The brightcove player or video ID.
-	 * @param string  $account_id The Brightcove account ID.
-	 * @param string  $player_id  The brightcove player ID.
-	 * @param int     $width      The Width to display.
-	 * @param int     $height     The height to display.
+	 * @param array $atts The shortcode attributes.
 	 *
 	 * @return string The HTML code for the player
 	 */
-	public static function player( $type, $id, $account_id, $player_id = 'default', $width = 0, $height = 0 ) {
+	public static function get_video_player( $atts ) {
+		$account_id  = BC_Utility::sanitize_id( $atts['account_id'] );
+		$player_id   = BC_Utility::sanitize_player_id( $atts['player_id'] );
+		$id          = BC_Utility::sanitize_id( $atts['video_id'] );
+		$height      = sanitize_text_field( $atts['height'] );
+		$width       = sanitize_text_field( $atts['width'] );
+		$min_width   = sanitize_text_field( $atts['min_width'] );
+		$max_width   = sanitize_text_field( $atts['max_width'] );
+		$padding_top = sanitize_text_field( $atts['padding_top'] );
+		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
+		$embed       = sanitize_text_field( $atts['embed'] );
 
-		// Sanitize and Verify.
-		$account_id = BC_Utility::sanitize_id( $account_id );
-		$player_id  = BC_Utility::sanitize_player_id( $player_id );
-		$id         = BC_Utility::sanitize_id( $id );
-		$height     = (int) $height;
-		$width      = (int) $width;
-		$type       = ( 'playlist' === $type ) ? 'playlist' : 'video';
+		ob_start();
+		?>
+		<!-- Start of Brightcove Player -->
 
-		if ( 'playlist' === $type && 'default' === $player_id ) {
+		<?php if ( 'in-page' === $embed ) : ?>
+			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
+				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
+					<video
+							data-video-id="<?php echo esc_attr( $id ); ?>" data-account="<?php echo esc_attr( $account_id ); ?>"
+							data-player="<?php echo esc_attr( $player_id ); ?>"
+							data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
+							data-embed="default" class="video-js"
+							controls <?php echo esc_attr( $autoplay ); ?>
+							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+					</video>
 
-			$player_api = new BC_Player_Management_API();
-			$players    = $player_api->player_list_playlist_enabled();
+					<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
+				</div>
+			</div>
 
-			if ( is_wp_error( $players ) || ! is_array( $players ) || $players['item_count'] < 1 ) {
-				return '<div class="brightcove-player-warning">' . __( 'A specified Source does not have a playlist capable player <a href="https://studio.brightcove.com/products/videocloud/players/">configured</a>. Make sure there is at least one player with "Display Playlist" enabled.', 'brightcove' ) . '</div>';
+		<?php elseif ( 'iframe' === $embed ) : ?>
+			<?php
+			if ( ! empty( $autoplay ) ) {
+				$autoplay = '&' . $autoplay;
 			}
+			?>
 
-			$player_id = esc_attr( $players['items'][0]['id'] );
+			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
+				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
+					<iframe
+							src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?videoId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?>"
+							allowfullscreen
+							webkitallowfullscreen
+							mozallowfullscreen
+							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+					</iframe>
+				</div>
+			</div>
+		<?php else : ?>
 
-		}
+			<?php if ( '0' === $width && '0' === $height ) : ?>
+				<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">
+			<?php endif; ?>
 
-		$html = '<!-- Start of Brightcove Player -->';
+			<?php
+			printf(
+				'<iframe src="//players.brightcove.net/%s/%s_default/index.html?%sId=%s&%s" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" style="width: %s; height: %s;%s"></iframe>',
+				$account_id,
+				$player_id,
+				'video',
+				$id,
+				esc_attr( self::get_usage_data() ) . 'iframe',
+				( '0' === $width ) ? '100%' : $width . 'px',
+				( '0' === $height ) ? '100%' : $height . 'px',
+				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
+			);
+			?>
 
-		if ( 0 === $width && 0 === $height ) {
-			$html .= '<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">';
-		}
+			<?php if ( '0' === $width && '0' === $height ) : ?>
+				</div></div>
+			<?php endif; ?>
 
-		$html .= sprintf(
-			'<iframe src="//players.brightcove.net/%s/%s_default/index.html?%sId=%s" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" style="width: %s; height: %s;%s"></iframe>',
-			$account_id,
-			$player_id,
-			$type,
-			$id,
-			( 0 === $width ) ? '100%' : $width . 'px',
-			( 0 === $height ) ? '100%' : $height . 'px',
-			( 0 === $width && 0 === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
-		);
+		<?php endif; ?>
 
-		if ( 0 === $width && 0 === $height ) {
-			$html .= '</div></div>';
-		}
+		<!-- End of Brightcove Player -->
 
-		$html .= '<!-- End of Brightcove Player -->';
+		<?php
+		$html = ob_get_clean();
 
 		/**
 		 * Filter the Brightcove Player HTML.
@@ -862,10 +892,238 @@ class BC_Utility {
 		 * @param int     $width      The Width to display.
 		 * @param int     $height     The height to display.
 		 */
-		$html = apply_filters( 'brightcove_video_html', $html, $type, $id, $account_id, $player_id, $width, $height );
+		$html = apply_filters( 'brightcove_video_html', $html, 'video', $id, $account_id, $player_id, $width, $height );
 
 		return $html;
+	}
 
+	/**
+	 * Render Playlist Player.
+	 *
+	 * Renders the playlist player from Brightcove based on passed parameters.
+	 *
+	 * @since 1.4
+	 *
+	 * @param array  $atts The shortcode attributes.
+	 *
+	 * @return string The HTML code for the player
+	 */
+	public static function get_playlist_player( $atts ) {
+		$account_id  = BC_Utility::sanitize_id( $atts['account_id'] );
+		$player_id   = BC_Utility::sanitize_player_id( $atts['player_id'] );
+		$id          = BC_Utility::sanitize_id( $atts['playlist_id'] );
+		$height      = sanitize_text_field( $atts['height'] );
+		$width       = sanitize_text_field( $atts['width'] );
+		$min_width   = sanitize_text_field( $atts['min_width'] );
+		$max_width   = sanitize_text_field( $atts['max_width'] );
+		$padding_top = sanitize_text_field( $atts['padding_top'] );
+		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
+		$embed       = sanitize_text_field( $atts['embed'] );
+
+		if ( 'default' === $player_id ) {
+
+			$player_api = new BC_Player_Management_API();
+			$players    = $player_api->player_list_playlist_enabled();
+
+			if ( is_wp_error( $players ) || ! is_array( $players ) || $players['item_count'] < 1 ) {
+				return '<div class="brightcove-player-warning">' . __( 'A specified Source does not have a playlist capable player <a href="https://studio.brightcove.com/products/videocloud/players/">configured</a>. Make sure there is at least one player with "Display Playlist" enabled.', 'brightcove' ) . '</div>';
+			}
+
+			$player_id = esc_attr( $players['items'][0]['id'] );
+
+		}
+
+		ob_start();
+		?>
+		<!-- Start of Brightcove Player -->
+
+		<?php if ( 'in-page-vertical' === $embed ) : ?>
+			<style type="text/css">
+				.video-js {
+					width: <?php echo esc_attr( $width ); ?>;
+					height: <?php echo esc_attr( $height ); ?>;
+					float: left;
+				}
+				.bcplayer {
+					width: <?php echo esc_attr( $width ); ?>;
+					position: relative;
+				}
+				.playlist-wrapper {
+					width: <?php echo esc_attr( $width ); ?>;
+					overflow-y: hidden;
+				}
+				vjs-playlist vjs-csspointerevents vjs-mouse {
+					width: <?php echo esc_attr( $width ); ?>;
+				}
+				.vjs-playlist-item-list {
+					/* 3 is the number of thumbnails to show, height is thumbnail heights plus padding */
+					height: calc(<?php echo esc_attr( $height ); ?> * 0.2 * 3 + 4px * 3);
+					position: relative;
+				}
+				.vjs-playlist-item-list .vjs-playlist-item {
+					height: calc(<?php echo esc_attr( $height ); ?> * 0.2);
+				}
+				.vjs-playlist-item-list .vjs-playlist-item .vjs-playlist-thumbnail {
+					width: calc(<?php echo esc_attr( $width ); ?> * 0.2);
+				}
+				.vjs-playlist-item-list .vjs-playlist-item .vjs-playlist-thumbnail vjs-playlist-title-container {
+					margin-left: calc(<?php echo esc_attr( $width ); ?> * 0.2);
+					width: calc(<?php echo esc_attr( $width ); ?> * 0.8 - 30px);
+				}
+				.vjs-playlist-item-list .vjs-playlist-item .vjs-playlist-thumbnail .vjs-playlist-now-playing-text {
+					margin-left: calc(<?php echo esc_attr( $width ); ?> * 0.2 + 6px);
+					width: calc(<?php echo esc_attr( $width ); ?> * 0.8 - 30px);
+				}
+				.vjs-playlist-item.vjs-selected {
+					background: rgb(45, 45, 45);
+				}
+			</style>
+
+			<div class="bcplayer">
+				<video
+						data-playlist-id="<?php echo esc_attr( $id ); ?>"
+						data-account="<?php echo esc_attr( $account_id ); ?>"
+						data-player="<?php echo esc_attr( $player_id ); ?>"
+						data-embed="default"
+						data-application-id
+						data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
+						class="video-js"
+						controls <?php echo esc_attr( $autoplay ); ?>>
+				</video>
+				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
+				<div class="playlist-wrapper">
+					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
+				</div>
+			</div>
+
+		<?php elseif ( 'in-page-horizontal' === $embed ) : ?>
+			<style type="text/css">
+				.video-js {
+					width: <?php echo esc_attr( $width ); ?>;
+					height: <?php echo esc_attr( $height ); ?>;
+					float: left;
+				}
+				.bcplayer {
+					width: <?php echo esc_attr( $width ); ?>;
+					height: calc (<?php echo esc_attr( $height ); ?> + 110px);
+					position: relative;
+				}
+				.playlist-wrapper {
+					width: <?php echo esc_attr( $width ); ?>;
+					height: 110px;
+					overflow-x: hidden;
+					overflow-y: hidden;
+				}
+				.vjs-playlist.vjs-playlist {
+					width: auto;
+					white-space: nowrap;
+					overflow-y: hidden;
+				}
+				.vjs-playlist-item-list {
+					height: 75px;
+				}
+				.vjs-playlist-item {
+					display: inline-block;
+					height: 75px;
+				}
+				cite.vjs-playlist-name {
+					display: none;
+				}
+				.vjs-playlist-description {
+					display: none;
+				}
+			</style>
+
+			<div class="bcplayer">
+				<video
+						data-playlist-id="<?php echo esc_attr( $id ); ?>"
+						data-account="<?php echo esc_attr( $account_id ); ?>"
+						data-player="<?php echo esc_attr( $player_id ); ?>"
+						data-embed="default"
+						data-application-id
+						data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
+						class="video-js"
+						controls <?php echo esc_attr( $autoplay ); ?>>
+				</video>
+				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
+				<div class="playlist-wrapper">
+					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
+				</div>
+			</div>
+		<?php elseif ( 'iframe' === $embed ) : ?>
+			<?php
+			if ( ! empty( $autoplay ) ) {
+				$autoplay = '&' . $autoplay;
+			}
+			?>
+
+			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
+				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
+					<iframe
+						src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?playlistId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?>"
+						allowfullscreen
+						webkitallowfullscreen
+						mozallowfullscreen
+						style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+					</iframe>
+				</div>
+			</div>
+		<?php else : ?>
+
+			<?php if ( '0' === $width && '0' === $height ) : ?>
+				<div style="display: block; position: relative; max-width: 100%;"><div style="padding-top: 56.25%;">
+			<?php endif; ?>
+
+			<?php
+			printf(
+				'<iframe src="//players.brightcove.net/%s/%s_default/index.html?%sId=%s&%s" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" style="width: %s; height: %s;%s"></iframe>',
+				$account_id,
+				$player_id,
+				'playlist',
+				$id,
+				esc_attr( self::get_usage_data() ) . 'iframe',
+				( '0' === $width ) ? '100%' : $width . 'px',
+				( '0' === $height ) ? '100%' : $height . 'px',
+				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
+			);
+			?>
+
+			<?php if ( '0' === $width && '0' === $height ) : ?>
+				</div></div>
+			<?php endif; ?>
+
+		<?php endif; ?>
+
+		<!-- End of Brightcove Player -->
+
+		<?php
+		$html = ob_get_clean();
+
+		/**
+		 * Filter the Brightcove Player HTML.
+		 *
+		 * @param string  $html       HTML markup of the Brightcove Player.
+		 * @param string  $type       "playlist" or "video".
+		 * @param string  $id         The brightcove player or video ID.
+		 * @param string  $account_id The Brightcove account ID.
+		 * @param string  $player_id  The brightcove player ID.
+		 * @param int     $width      The Width to display.
+		 * @param int     $height     The height to display.
+		 */
+		return apply_filters( 'brightcove_video_html', $html, 'playlist', $id, $account_id, $player_id, $width, $height );
+	}
+
+	/**
+	 * Return usage screen.
+	 *
+	 * @since 1.4
+	 *
+	 * @return string Usage screen.
+	 */
+	public static function get_usage_data() {
+		global $wp_version;
+
+		return 'cms:wordpress:' . $wp_version . ':' . BRIGHTCOVE_VERSION . ':';
 	}
 
 	/**
