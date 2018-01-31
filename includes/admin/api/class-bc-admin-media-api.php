@@ -52,6 +52,14 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
 		add_filter( 'brightcove_media_query_results', array( $this, 'add_in_process_videos' ), 10, 2 );
+
+		add_action( 'wp_ajax_bc_resolve_shortcode', array( $this, 'resolve_shortcode' ) );
+	}
+
+	public function resolve_shortcode() {
+		$shortcode = stripslashes( sanitize_text_field( $_POST['shortcode'] ) );
+
+		wp_send_json_success( do_shortcode( $shortcode ) );
 	}
 
 	protected function bc_helper_check_ajax() {
@@ -557,7 +565,7 @@ class BC_Admin_Media_API {
 
 			}
 
-			$query_string = implode( "+", $query_terms );
+			$query_string = implode( "+", apply_filters( 'bc_video_query_terms', $query_terms ) );
 
 			/**
 			 * For playlists, we specify the order in the query string as follows:
@@ -569,10 +577,18 @@ class BC_Admin_Media_API {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 
+			/**
+			 * Filter to modify the default sort order.
+			 * Ref: https://support.brightcove.com/overview-cms-api#parameters
+			 *
+			 * @param string Valid sort field name.
+			 */
+			$bc_video_sort_field = apply_filters( 'bc_video_sort_field', 'updated_at' );
+
 			// Get a list of videos.
 
 			for ( $i = 0; $i < $tries; $i ++ ) {
-				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, 'updated_at' );
+				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, $bc_video_sort_field );
 
 				if ( ! is_wp_error( $results ) ) {
 					break;

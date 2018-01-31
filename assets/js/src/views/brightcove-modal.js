@@ -7,7 +7,7 @@ var BrightcoveModalView = BrightcoveView.extend(
 		events : {
 			'click .brightcove.media-menu-item'     : 'changeTab',
 			'click .brightcove.media-button-insert' : 'insertIntoPost',
-			'click .brightcove.media-modal-icon'    : 'closeModal',
+			'click .media-modal-close'              : 'closeModal',
 			'click .brightcove.save-sync'           : 'saveSync',
 			'click .brightcove.button.back'         : 'back'
 		},
@@ -40,13 +40,11 @@ var BrightcoveModalView = BrightcoveView.extend(
 				return;
 			}
 
-			// Make the selected player available to the shortcode
-			wpbc.selectedPlayer = $( 'input[name="video-player-field"]:checked' ).val();
+			wpbc.shortcode = $( '#shortcode' ).val();
 
 			// Media Details will trigger the insertion since it's always active and contains
 			// the model we're inserting
 			wpbc.broadcast.trigger( 'insert:shortcode' );
-
 		},
 
 		toggleInsertButton : function ( state ) {

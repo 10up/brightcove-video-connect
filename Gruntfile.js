@@ -109,7 +109,7 @@ module.exports = function ( grunt ) {
 						beautify         : false,
 						preserveComments : 'all',
 						mangle           : {
-							except : ['jQuery']
+							reserved : ['jQuery']
 						},
 						separator: ';\n',
 
