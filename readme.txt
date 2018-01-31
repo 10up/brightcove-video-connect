@@ -4,8 +4,8 @@ Contributors:      10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghaky
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to:      4.8.1
-Stable tag:        1.3.2
+Tested up to:      4.9
+Stable tag:        1.4.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,12 @@ Sample Video
 http://sample-videos.com/
 
 == Changelog ==
+
+= 1.4.0 =
+
+* Enhancement: Added player support for videos and playlists
+* Enhancement: Updated playlist api to v2
+* Fix: Fixed a bug that was causing issues when a playlist was edited
 
 = 1.3.2 =
 
