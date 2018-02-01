@@ -3162,7 +3162,9 @@ var MediaCollectionView = BrightcoveView.extend(
 	jQuery( document ).ready( function() {
 		App.load();
 		var router = new BrightcoveRouter;
-		Backbone.history.start();
+		if ( ! Backbone.History.started ) {
+			Backbone.history.start();
+		}
 	} );
 
 } )( jQuery );
