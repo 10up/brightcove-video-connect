@@ -432,7 +432,7 @@ class BC_CMS_API extends BC_API {
 			self::CMS_BASE_URL . $this->get_account_id() . '/videos'
 		);
 
-		$results = $this->send_request( $url );
+		$results = $this->send_request( esc_url_raw($url) );
 
 		if ( is_array( $results ) ) {
 
