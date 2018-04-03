@@ -60,6 +60,11 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.4.1
+
+* Fix: Fixed a minor issue with the API request.
+
+
 ##### 1.4.0
 
 * Enhancement: Added player support for videos and playlists
