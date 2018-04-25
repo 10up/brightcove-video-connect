@@ -315,6 +315,7 @@ class BC_Admin_Templates {
 	                    <a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' )?></a>
 	                    <a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' )?></a>
 	                    <a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' )?></a>
+						<a href="#" class="brightcove video-experience media-menu-item"><?php esc_html_e( 'Video Experience', 'brightcove' )?></a>
                     </div>
                   </div>
                   <div class="media-frame-content">
@@ -794,7 +795,7 @@ class BC_Admin_Templates {
 						<# }); #>
 					</select>
 
-					<# if (data.mediaType === 'videos') { #>
+					<# if (data.mediaType === 'videos' || data.mediaType === 'videoexperience') { #>
 						<!-- <label for="media-attachment-date-filters" class="screen-reader-text">Filter by date</label>
 						<select id="brightcove-media-dates" class="brightcove-media-dates attachment-filters">
 							<option value="all">All dates</option>
@@ -811,6 +812,19 @@ class BC_Admin_Templates {
 							<# }); #>
 						</select>
 					<# }#>
+
+					<# if( data.mediaType === 'videoexperience' ) { #>
+					<div class="notice notice-warning">
+						<p>
+							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
+						</p>
+					</div>
+					<div class="notice notice-warning">
+						<p>
+							<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
+						</p>
+					</div>
+					<# } #>
 
 					<# if( data.mediaType === 'playlists' ) { #>
 						<div class="notice notice-warning">

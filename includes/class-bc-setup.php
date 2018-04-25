@@ -22,6 +22,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api2.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-experiences-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );

@@ -393,14 +393,20 @@ class BC_Admin_Media_API {
 	 * @since 1.0
 	 *
 	 * @param string $type The type of object to fetch.
-	 * @param int $posts_per_page The number of posts to fetch.
-	 * @param int $page The current page (for paged queries).
+	 * @param int    $posts_per_page The number of posts to fetch.
+	 * @param int    $page The current page (for paged queries).
 	 * @param string $query_string Extra query parameters to use for listing.
 	 * @param string $sort_order The field to sort by.
 	 *
 	 * @return array An array of media items.
 	 */
-	public function fetch_all( $type, $posts_per_page = 100, $page = 1, $query_string = '', $sort_order = 'updated_at' ) {
+	public function fetch_all(
+		$type,
+		$posts_per_page = 100,
+		$page = 1,
+		$query_string = '',
+		$sort_order = 'updated_at'
+	) {
 
 		global $bc_accounts;
 
@@ -524,11 +530,16 @@ class BC_Admin_Media_API {
 
 		$type = isset( $_POST['type'] ) ? sanitize_key( $_POST['type'] ) : false;
 
-		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists' ) ) ) {
+		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience' ) ) ) {
 
 			wp_send_json_error( esc_html__( 'Invalid Search Type', 'brightcove' ) );
 			exit; // Type can only be videos or playlists.
 
+		}
+
+		// Switch the type just to pull in videos.
+		if ( 'videoexperience' === $type ) {
+			$type = 'videos';
 		}
 
 		global $bc_accounts;
@@ -542,7 +553,7 @@ class BC_Admin_Media_API {
 			if ( $tag_name ) {
 				// Tag Dropdown Search should use quotes to signify an exact match.
 				// Handles single and multi-word tags
-				$query_terms[] = 'tags:"'.$tag_name.'"';
+				$query_terms[] = 'tags:"' . $tag_name . '"';
 			}
 
 			if ( $dates ) {
@@ -775,11 +786,11 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int $video_id
-	 * @param string $url
-	 * @param int $width
-	 * @param int $height
+	 * @param string       $account_hash
+	 * @param int          $video_id
+	 * @param string       $url
+	 * @param int          $width
+	 * @param int          $height
 	 */
 	public function ajax_poster_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -816,11 +827,11 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int $video_id
-	 * @param string $url
-	 * @param int $width
-	 * @param int $height
+	 * @param string       $account_hash
+	 * @param int          $video_id
+	 * @param string       $url
+	 * @param int          $width
+	 * @param int          $height
 	 */
 	public function ajax_thumb_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -857,9 +868,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int $video_id
-	 * @param array $raw_captions
+	 * @param string       $account_hash
+	 * @param int          $video_id
+	 * @param array        $raw_captions
 	 */
 	public function ajax_caption_upload( $account_hash, $video_id, $raw_captions ) {
 		global $bc_accounts;
@@ -912,8 +923,8 @@ class BC_Admin_Media_API {
 	/**
 	 * Return a set of the most recent videos for the specified account.
 	 *
-	 * @param string $account_id
-	 * @param int $count
+	 * @param string       $account_id
+	 * @param int          $count
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
