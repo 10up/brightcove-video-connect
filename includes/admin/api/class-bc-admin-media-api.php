@@ -13,6 +13,11 @@ class BC_Admin_Media_API {
 	protected $player_api;
 
 	/**
+	 * @var BC_Experiences_API
+	 */
+	protected $experiences_api;
+
+	/**
 	 * @var BC_Playlists
 	 */
 	protected $playlists;
@@ -35,11 +40,12 @@ class BC_Admin_Media_API {
 			return new WP_Error( 'bc-account-no-perms-invalid', esc_html__( 'You do not have permission to use this Brightcove Account', 'brightcove' ) );
 		}
 
-		$this->cms_api      = new BC_CMS_API();
-		$this->player_api   = new BC_Player_Management_API();
-		$this->playlists    = new BC_Playlists( $this->cms_api );
-		$this->videos       = new BC_Videos( $this->cms_api );
-		$this->video_upload = new BC_Video_Upload( $this->cms_api );
+		$this->cms_api         = new BC_CMS_API();
+		$this->player_api      = new BC_Player_Management_API();
+		$this->experiences_api = new BC_Experiences_API();
+		$this->playlists       = new BC_Playlists( $this->cms_api );
+		$this->videos          = new BC_Videos( $this->cms_api );
+		$this->video_upload    = new BC_Video_Upload( $this->cms_api );
 
 		/* All of these actions are for authenticated users only for a reason */
 		add_action( 'wp_ajax_bc_media_query', array( $this, 'brightcove_media_query' ) );
