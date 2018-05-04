@@ -72,18 +72,6 @@ class BC_Setup {
 
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
-
-		if ( BC_Utility::current_user_can_brightcove() && function_exists( 'register_block_type' ) ) {
-			wp_register_script(
-				'brightcove-block',
-				BRIGHTCOVE_URL . 'assets/js/src/block.js',
-				array( 'wp-blocks', 'wp-element' )
-			);
-
-			register_block_type( 'bc/brightcove', array(
-				'editor_script' => 'brightcove-block',
-			) );
-		}
 	}
 
 	/**
@@ -117,6 +105,19 @@ class BC_Setup {
 
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
 		add_action( 'init',  array( 'BC_Setup', 'register_post_types' ) );
+
+		if ( ( BC_Utility::current_user_can_brightcove() || ! is_admin() ) && function_exists( 'register_block_type' ) ) {
+			wp_register_script(
+				'brightcove-block',
+				BRIGHTCOVE_URL . 'assets/js/src/block.js',
+				array( 'wp-blocks', 'wp-element' )
+			);
+
+			register_block_type( 'bc/brightcove', array(
+				'editor_script'   => 'brightcove-block',
+				'render_callback' => array( 'BC_Video_Shortcode', 'bc_video' ),
+			) );
+		}
 	}
 
 	public static function add_brightcove_media_button( $editor_id ) {
