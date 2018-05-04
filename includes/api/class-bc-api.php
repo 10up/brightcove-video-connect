@@ -149,8 +149,6 @@ abstract class BC_API {
 			return false;
 		}
 
-		$url = esc_url_raw( $url );
-
 		$transient_key = false;
 		if ( $method === "GET" ) {
 			$hash           = substr( BC_Utility::get_hash_for_object( array(

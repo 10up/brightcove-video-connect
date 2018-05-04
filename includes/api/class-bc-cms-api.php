@@ -426,6 +426,9 @@ class BC_CMS_API extends BC_API {
 			$args['q'] = sanitize_text_field( $query );
 
 		}
+		// rawurlencode will convert spaces to %20, and plus signs to %2b, which is required according to BC API Docs.
+
+		$args = array_map( 'rawurlencode', $args );
 
 		$url  = add_query_arg(
 			$args,
