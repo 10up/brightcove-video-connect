@@ -715,7 +715,8 @@ var ToolbarView = BrightcoveView.extend(
 			'change .brightcove-media-dates' :     'datesChanged',
 			'change .brightcove-media-tags' :      'tagsChanged',
 			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
-			'click #media-search' : 'searchHandler'
+			'click #media-search' : 							 'searchHandler',
+			'keyup .search' :                     'enterHandler'
 		},
 
 		render : function () {
@@ -793,6 +794,13 @@ var ToolbarView = BrightcoveView.extend(
 			var emptyPlaylists = $( event.target ).prop( 'checked' );
 			wpbc.broadcast.trigger( 'change:emptyPlaylists', emptyPlaylists );
 		},
+
+		enterHandler : function ( event ) {
+			if ( event.keyCode === 13 ) {
+				this.searchHandler( event );
+			}
+		},
+
 
 		searchHandler : function ( event ) {
 			var searchTerm = $( '#media-search-input' ).val();
