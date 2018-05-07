@@ -801,7 +801,6 @@ var ToolbarView = BrightcoveView.extend(
 			}
 		},
 
-
 		searchHandler : function ( event ) {
 			var searchTerm = $( '#media-search-input' ).val();
 
