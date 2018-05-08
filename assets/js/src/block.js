@@ -1,4 +1,4 @@
-/* global wp */
+/* global wp, bctiny */
 
 ( function( blocks, element, components ) {
 	var el = element.createElement,
@@ -21,6 +21,9 @@
 			},
 			video_id: {
 				type: 'int'
+			},
+			playlist_id: {
+				type: 'int'
 			}
 		},
 
@@ -32,6 +35,7 @@
 			var accountId = props.attributes.account_id || '';
 			var playerId = props.attributes.player_id || '';
 			var videoId = props.attributes.video_id || '';
+			var playlistId = props.attributes.playlist_id || '';
 
 			// Sanitize the IDs we need
 			var sanitizeIds = function( id ) {
@@ -50,11 +54,21 @@
 				var btn = document.getElementById( target );
 				var attrs = wp.shortcode.attrs( btn.value );
 
-				props.setAttributes({
-					account_id: sanitizeIds( attrs.named.account_id ),
-					player_id: attrs.named.player_id,
-					video_id: sanitizeIds( attrs.named.video_id )
-				} );
+				if ( '[bc_video' === attrs.numeric[0] ) {
+					props.setAttributes( {
+						account_id: sanitizeIds( attrs.named.account_id ),
+						player_id: attrs.named.player_id,
+						video_id: sanitizeIds( attrs.named.video_id ),
+						playlist_id: ''
+					} );
+				} else if ( '[bc_playlist' === attrs.numeric[0] ) {
+					props.setAttributes( {
+						account_id: sanitizeIds( attrs.named.account_id ),
+						player_id: attrs.named.player_id,
+						video_id: '',
+						playlist_id: sanitizeIds( attrs.named.playlist_id )
+					} );
+				}
 			};
 
 			// Listen for a change event on our hidden input
@@ -69,7 +83,7 @@
 						IconButton,
 						{
 							className: 'brightcove-add-media components-icon-button components-toolbar__control',
-							label: 'Change Video',
+							label: videoId.length ? 'Change Video' : 'Change Playlist',
 							icon: 'edit',
 							'data-target': '#' + target
 						}
@@ -78,11 +92,11 @@
 			);
 
 			// If no video has been selected yet, show the selection view
-			if ( ! accountId.length && ! playerId.length && ! videoId.length ) {
+			if ( ! accountId.length && ! playerId.length && ( ! videoId.length || ! playlistId.length ) ) {
 				return el( Placeholder, {
 					icon: 'media-video',
 					label: 'Brightcove',
-					instructions: 'Select a video file from your Brightcove library',
+					instructions: 'Select a video file or playlist from your Brightcove library',
 					children: [
 						el( 'button', { className: 'brightcove-add-media button button-large', 'data-target': '#' + target, key: 'button' }, 'Brightcove Media' ),
 						el( 'input', { id: target, hidden: true, key: 'input' } )
@@ -91,10 +105,18 @@
 
 			// Otherwise render the iframe
 			} else {
-				var src = '//players.brightcove.net/' + accountId + '/' + playerId + '_default/index.html?videoId=' + videoId;
+				var src = '';
+
+				if ( videoId.length ) {
+					src = '//players.brightcove.net/' + accountId + '/' + playerId + '_default/index.html?videoId=' + videoId;
+				} else {
+					playerId = bctiny.playlistEnabledPlayers[ accountId ][0] || 'default';
+					src = '//players.brightcove.net/' + accountId + '/' + playerId + '_default/index.html?playlistId=' + playlistId;
+				}
+
 				return [
 					controls,
-					el( 'iframe', { src: src, style: { height: 250, width: 500 }, key: 'iframe' } ),
+					el( 'iframe', { src: src, style: { height: 250, width: 500, display: 'block', margin: '0 auto' }, key: 'iframe' } ),
 					el( 'input', { id: target, hidden: true, key: 'input' } )
 				];
 			}
@@ -104,7 +126,15 @@
 			var accountId = props.attributes.account_id || '';
 			var playerId = props.attributes.player_id || '';
 			var videoId = props.attributes.video_id || '';
-			var src = '//players.brightcove.net/' + accountId + '/' + playerId + '_default/index.html?videoId=' + videoId;
+			var playlistId = props.attributes.playlist_id || '';
+			var src = '';
+
+			if ( videoId.length ) {
+				src = '//players.brightcove.net/' + accountId + '/' + playerId + '_default/index.html?videoId=' + videoId;
+			} else {
+				playerId = bctiny.playlistEnabledPlayers[ accountId ][0] || 'default';
+				src = '//players.brightcove.net/' + accountId + '/' + playerId + '_default/index.html?playlistId=' + playlistId;
+			}
 
 			return el( 'iframe', { src: src, style: { height: 250, width: 500 } } );
 		}

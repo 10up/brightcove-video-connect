@@ -115,9 +115,30 @@ class BC_Setup {
 
 			register_block_type( 'bc/brightcove', array(
 				'editor_script'   => 'brightcove-block',
-				'render_callback' => array( 'BC_Video_Shortcode', 'bc_video' ),
+				'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
 			) );
 		}
+	}
+
+	/**
+	 * Render our shortcodes for our custom block.
+	 *
+	 * Determine if this is a video or playlist shortcode
+	 * and use the proper rendering method for each.
+	 *
+	 * @param array $atts Shortcode attributes
+	 * @return string
+	 */
+	public static function render_shortcode( $atts ) {
+		$output = '';
+
+		if ( ! empty( $atts['video_id'] ) ) {
+			$output = call_user_func( array( 'BC_Video_Shortcode', 'bc_video' ), $atts );
+		} else if ( ! empty( $atts['playlist_id'] ) ) {
+			$output = call_user_func( array( 'BC_Playlist_Shortcode', 'bc_playlist' ), $atts );
+		}
+
+		return $output;
 	}
 
 	public static function add_brightcove_media_button( $editor_id ) {
