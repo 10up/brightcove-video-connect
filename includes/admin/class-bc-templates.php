@@ -654,6 +654,81 @@ class BC_Admin_Templates {
 		</script>
 
 		<?php /* Used by views/media-details.js */?>
+		<script type="text/html" id="tmpl-brightcove-media-item-details-videoexperience">
+
+			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
+
+
+				<div class="video-details">
+                    <span class="left-col">
+                        <?php esc_html_e( 'Source: ', 'brightcove' ); ?>
+                    </span>
+					<span class="right-col">{{ data.account_name }}</span>
+
+					<span class="left-col">
+                        <?php esc_html_e( 'Video IDs: ', 'brightcove' ); ?>
+                    </span>
+					<textarea class="clear" cols="40" rows="3" readonly>{{ data.id }}</textarea>
+
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'edit' === $parent_base ) : ?>
+
+						<label for="video-player">
+							<?php esc_html_e( 'Experience Player: ', 'brightcove' ); ?>
+						</label>
+					<div class="clear">
+						<select name="video-player" id="video-player">
+							<# _.each( wpbc.experiences.items, function ( experience ) { #>
+							<option value="{{ experience.id }}">{{ experience.name }}</option>
+							<# }); #>
+						</select>
+					</div>
+
+						<label for="embed-style-in-page">
+							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="radio" value="in-page" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
+						</div>
+
+						<label for="sizing-responsive">
+							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="radio" value="responsive" id="sizing-responsive" checked name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
+							<input type="radio" value="fixed" id="sizing-fixed" name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
+						</div>
+
+						<label for="width">
+							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
+						</label>
+						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+
+						<label for="height">
+							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
+						</label>
+						<input type="number" name="height" id="height" class="right-col" value="360" size="5" readonly>
+
+						<label for="generate-shortcode">
+							<?php esc_html_e( 'Shortcode', 'brightcove' ); ?>
+						</label>
+						<select name="generate-shortcode" id="generate-shortcode" class="right-col">
+							<option value="autogenerate"><?php esc_html_e( 'Auto generate', 'brightcove' ); ?></option>
+							<option value="manual"><?php esc_html_e( 'Manual', 'brightcove' ); ?></option>
+						</select>
+
+						<textarea class="clear" name="shortcode" id="shortcode" cols="40" rows="8" readonly></textarea>
+
+					<?php endif; ?>
+				</div>
+			</div>
+		</script>
+
+		<?php /* Used by views/media-details.js */?>
 		<script type="text/html" id="tmpl-brightcove-media-item-details-playlists">
 			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
 				<div class="thumbnail">

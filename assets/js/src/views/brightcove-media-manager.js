@@ -190,7 +190,24 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					this.model.set( 'mode', 'editVideo' );
 					this.render();
 
-				} else {
+				} else if ( mediaType === 'videoexperience' ) {
+
+          // We just hit the edit button with the edit window already open.
+          if ( 'editVideo' === this.model.get( 'mode' ) ) {
+            return true;
+          }
+
+          // hide the previous notification
+          var messages = this.$el.find( '.brightcove-message' );
+          messages.addClass( 'hidden' );
+
+          this.editView = new VideoEditView( {model : model} );
+
+          this.registerSubview( this.editView );
+          this.model.set( 'mode', 'editVideo' );
+          this.render();
+
+        } else {
 
 					// We just hit the edit button with the edit window already open.
 					if ( 'editPlaylist' === this.model.get( 'mode' ) ) {

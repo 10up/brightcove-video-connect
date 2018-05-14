@@ -543,16 +543,13 @@ class BC_Admin_Media_API {
 
 		}
 
-		// Switch the type just to pull in videos.
-		if ( 'videoexperience' === $type ) {
-			$type = 'videos';
-		}
+
 
 		global $bc_accounts;
 
 		$tries = apply_filters( 'wpbc_api_tries', 3 );
 
-		if ( 'videos' === $type ) {
+		if ( 'videos' === $type || 'videoexperience' === $type ) {
 
 			$query_terms = array();
 
