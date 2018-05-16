@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.4.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2018-05-14 17:22:57+00:00\n"
+"POT-Creation-Date: 2018-05-16 19:32:33+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -85,7 +85,7 @@ msgstr ""
 #: includes/admin/class-bc-admin-menu.php:19
 #: includes/admin/class-bc-templates.php:316
 #: includes/admin/class-bc-templates.php:501
-#: includes/admin/class-bc-templates.php:778
+#: includes/admin/class-bc-templates.php:746
 msgid "Videos"
 msgstr ""
 
@@ -113,7 +113,7 @@ msgid "Add Source"
 msgstr ""
 
 #: includes/admin/class-bc-admin-playlists-page.php:48
-#: includes/class-bc-utility.php:929
+#: includes/class-bc-utility.php:995
 msgid ""
 "A specified Source does not have a playlist capable player <a "
 "href=\"https://studio.brightcove.com/products/videocloud/players/\""
@@ -317,7 +317,6 @@ msgstr ""
 #: includes/admin/class-bc-templates.php:268
 #: includes/admin/class-bc-templates.php:326
 #: includes/admin/class-bc-templates.php:555
-#: includes/admin/class-bc-templates.php:662
 msgid "Back"
 msgstr ""
 
@@ -365,7 +364,7 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:142
 #: includes/admin/class-bc-templates.php:165
-#: includes/admin/class-bc-templates.php:180 includes/class-bc-setup.php:217
+#: includes/admin/class-bc-templates.php:180 includes/class-bc-setup.php:221
 msgid "Select File"
 msgstr ""
 
@@ -377,7 +376,7 @@ msgstr ""
 msgid "Closed Captions"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:178 includes/class-bc-setup.php:215
+#: includes/admin/class-bc-templates.php:178 includes/class-bc-setup.php:219
 msgid "Add Another Caption"
 msgstr ""
 
@@ -506,230 +505,229 @@ msgid ""
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:499
-#: includes/admin/class-bc-templates.php:776
+#: includes/admin/class-bc-templates.php:744
 msgid "Video"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:504
-#: includes/admin/class-bc-templates.php:781
+#: includes/admin/class-bc-templates.php:749
 msgid "Smart"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:516
 #: includes/admin/class-bc-templates.php:558
 #: includes/admin/class-bc-templates.php:561
-#: includes/admin/class-bc-templates.php:665
-#: includes/admin/class-bc-templates.php:668
-#: includes/admin/class-bc-templates.php:789
+#: includes/admin/class-bc-templates.php:757
 msgid "Edit"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:517
 #: includes/admin/class-bc-templates.php:559
 #: includes/admin/class-bc-templates.php:562
-#: includes/admin/class-bc-templates.php:666
-#: includes/admin/class-bc-templates.php:669
 msgid "Preview"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:573
-#: includes/admin/class-bc-templates.php:680
+#: includes/admin/class-bc-templates.php:664
 msgid "Source: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:578
-#: includes/admin/class-bc-templates.php:685
 msgid "Video ID: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:589
-#: includes/admin/class-bc-templates.php:696
-#: includes/admin/class-bc-templates.php:815
+#: includes/admin/class-bc-templates.php:783
 msgid "Video Player: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:600
-#: includes/admin/class-bc-templates.php:707
-#: includes/admin/class-bc-templates.php:826
+#: includes/admin/class-bc-templates.php:794
 msgid "Autoplay: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:607
-#: includes/admin/class-bc-templates.php:714
-#: includes/admin/class-bc-templates.php:833
+#: includes/admin/class-bc-templates.php:691
+#: includes/admin/class-bc-templates.php:801
 msgid "Embed Style: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:610
-#: includes/admin/class-bc-templates.php:717
+#: includes/admin/class-bc-templates.php:694
 msgid "JavaScript"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:611
-#: includes/admin/class-bc-templates.php:718
-#: includes/admin/class-bc-templates.php:836
+#: includes/admin/class-bc-templates.php:695
+#: includes/admin/class-bc-templates.php:804
 msgid "iFrame"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:615
-#: includes/admin/class-bc-templates.php:722
-#: includes/admin/class-bc-templates.php:854
+#: includes/admin/class-bc-templates.php:699
+#: includes/admin/class-bc-templates.php:822
 msgid "Sizing: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:618
-#: includes/admin/class-bc-templates.php:725
-#: includes/admin/class-bc-templates.php:857
+#: includes/admin/class-bc-templates.php:702
+#: includes/admin/class-bc-templates.php:825
 msgid "Responsive"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:619
-#: includes/admin/class-bc-templates.php:726
-#: includes/admin/class-bc-templates.php:858
+#: includes/admin/class-bc-templates.php:703
+#: includes/admin/class-bc-templates.php:826
 msgid "Fixed"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:623
-#: includes/admin/class-bc-templates.php:730
-#: includes/admin/class-bc-templates.php:862
+#: includes/admin/class-bc-templates.php:830
 msgid "Aspect Ratio: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:628
-#: includes/admin/class-bc-templates.php:735
-#: includes/admin/class-bc-templates.php:867
+#: includes/admin/class-bc-templates.php:835
 msgid "Custom"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:632
-#: includes/admin/class-bc-templates.php:739
-#: includes/admin/class-bc-templates.php:871
+#: includes/admin/class-bc-templates.php:707
+#: includes/admin/class-bc-templates.php:839
 msgid "Width: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:637
-#: includes/admin/class-bc-templates.php:744
-#: includes/admin/class-bc-templates.php:876
+#: includes/admin/class-bc-templates.php:712
+#: includes/admin/class-bc-templates.php:844
 msgid "Height: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:642
-#: includes/admin/class-bc-templates.php:749
-#: includes/admin/class-bc-templates.php:881
+#: includes/admin/class-bc-templates.php:717
+#: includes/admin/class-bc-templates.php:849
 msgid "Shortcode"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:645
-#: includes/admin/class-bc-templates.php:752
-#: includes/admin/class-bc-templates.php:884
+#: includes/admin/class-bc-templates.php:720
+#: includes/admin/class-bc-templates.php:852
 msgid "Auto generate"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:646
-#: includes/admin/class-bc-templates.php:753
-#: includes/admin/class-bc-templates.php:885
+#: includes/admin/class-bc-templates.php:721
+#: includes/admin/class-bc-templates.php:853
 msgid "Manual"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:799
+#: includes/admin/class-bc-templates.php:669
+msgid "Video IDs: "
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:680
+msgid "Experience Player: "
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:767
 msgid "Playlist ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:803
+#: includes/admin/class-bc-templates.php:771
 msgid "Account Name: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:804
+#: includes/admin/class-bc-templates.php:772
 msgid "Created At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:805
+#: includes/admin/class-bc-templates.php:773
 msgid "Updated At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:806
+#: includes/admin/class-bc-templates.php:774
 msgid "Playlist Type: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:843
+#: includes/admin/class-bc-templates.php:811
 msgid "JavaScript Horizontal"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:850
+#: includes/admin/class-bc-templates.php:818
 msgid "JavaScript Vertical"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:898
+#: includes/admin/class-bc-templates.php:866
 msgid "Filter by source"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:914
+#: includes/admin/class-bc-templates.php:882
 msgid "Filter by tag"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:916
+#: includes/admin/class-bc-templates.php:884
 msgid "All tags"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:926
+#: includes/admin/class-bc-templates.php:894
 msgid "Please note that you can create new Experiences only from Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:931
+#: includes/admin/class-bc-templates.php:899
 msgid "Leave videos unselected for default Experience behavior."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:939
+#: includes/admin/class-bc-templates.php:907
 msgid "Please note that you can create new playlists only from Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:944
+#: includes/admin/class-bc-templates.php:912
 msgid "Hide Empty Playlists"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:948
+#: includes/admin/class-bc-templates.php:916
 msgid "Delete Selected"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:953
+#: includes/admin/class-bc-templates.php:921
 msgid "Search Media"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:954
-#: includes/admin/class-bc-templates.php:955
+#: includes/admin/class-bc-templates.php:922
+#: includes/admin/class-bc-templates.php:923
 msgid "Search"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:956
+#: includes/admin/class-bc-templates.php:924
 msgid "help"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:964
+#: includes/admin/class-bc-templates.php:932
 msgid "the Brightcove Documentation page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:965
-#: includes/admin/class-bc-templates.php:973
-#: includes/admin/class-bc-templates.php:981
+#: includes/admin/class-bc-templates.php:933
+#: includes/admin/class-bc-templates.php:941
+#: includes/admin/class-bc-templates.php:949
 msgid "Dismiss this notice."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:972
+#: includes/admin/class-bc-templates.php:940
 msgid ""
 "This video was not able to be inserted into the page. Please try again "
 "later. This may be because the video is still processing. For more "
 "information, please visit "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:972
+#: includes/admin/class-bc-templates.php:940
 msgid "the Brightcove Status page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:980
+#: includes/admin/class-bc-templates.php:948
 msgid "Search exact word or phrases by wrapping search in quotes."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:980
+#: includes/admin/class-bc-templates.php:948
 msgid "Example:\"My Favorite Video\""
 msgstr ""
 
@@ -871,39 +869,39 @@ msgid ""
 "it again."
 msgstr ""
 
-#: includes/class-bc-setup.php:213
+#: includes/class-bc-setup.php:217
 msgid ""
 "This file is not the proper format. Please use .vtt files, for more "
 "information visit"
 msgstr ""
 
-#: includes/class-bc-setup.php:216
+#: includes/class-bc-setup.php:220
 msgid "Add another remote file"
 msgstr ""
 
-#: includes/class-bc-setup.php:218
+#: includes/class-bc-setup.php:222
 msgid "Use a remote file instead"
 msgstr ""
 
-#: includes/class-bc-setup.php:219
+#: includes/class-bc-setup.php:223
 msgid ""
 "Sorry! We weren't able to reach the Brightcove API even after trying a few "
 "times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:323
+#: includes/class-bc-setup.php:327
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:325
+#: includes/class-bc-setup.php:329
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:340
+#: includes/class-bc-setup.php:344
 msgid "BC In Process Videos"
 msgstr ""
 
-#: includes/class-bc-setup.php:368
+#: includes/class-bc-setup.php:372
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "
@@ -911,723 +909,723 @@ msgid ""
 "<strong>4.2</strong></p></div>"
 msgstr ""
 
-#: includes/class-bc-utility.php:1136
+#: includes/class-bc-utility.php:1202
 msgid "English"
 msgstr ""
 
-#: includes/class-bc-utility.php:1137
+#: includes/class-bc-utility.php:1203
 msgid "Abkhaz"
 msgstr ""
 
-#: includes/class-bc-utility.php:1138
+#: includes/class-bc-utility.php:1204
 msgid "Afar"
 msgstr ""
 
-#: includes/class-bc-utility.php:1139
+#: includes/class-bc-utility.php:1205
 msgid "Afrikaans"
 msgstr ""
 
-#: includes/class-bc-utility.php:1140
+#: includes/class-bc-utility.php:1206
 msgid "Akan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1141
+#: includes/class-bc-utility.php:1207
 msgid "Albanian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1142
+#: includes/class-bc-utility.php:1208
 msgid "Amharic"
 msgstr ""
 
-#: includes/class-bc-utility.php:1143
+#: includes/class-bc-utility.php:1209
 msgid "Arabic"
 msgstr ""
 
-#: includes/class-bc-utility.php:1144
+#: includes/class-bc-utility.php:1210
 msgid "Aragonese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1145
+#: includes/class-bc-utility.php:1211
 msgid "Armenian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1146
+#: includes/class-bc-utility.php:1212
 msgid "Assamese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1147
+#: includes/class-bc-utility.php:1213
 msgid "Avaric"
 msgstr ""
 
-#: includes/class-bc-utility.php:1148
+#: includes/class-bc-utility.php:1214
 msgid "Avestan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1149
+#: includes/class-bc-utility.php:1215
 msgid "Aymara"
 msgstr ""
 
-#: includes/class-bc-utility.php:1150
+#: includes/class-bc-utility.php:1216
 msgid "Azerbaijani"
 msgstr ""
 
-#: includes/class-bc-utility.php:1151
+#: includes/class-bc-utility.php:1217
 msgid "Bambara"
 msgstr ""
 
-#: includes/class-bc-utility.php:1152
+#: includes/class-bc-utility.php:1218
 msgid "Bashkir"
 msgstr ""
 
-#: includes/class-bc-utility.php:1153
+#: includes/class-bc-utility.php:1219
 msgid "Basque"
 msgstr ""
 
-#: includes/class-bc-utility.php:1154
+#: includes/class-bc-utility.php:1220
 msgid "Belarusian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1155
+#: includes/class-bc-utility.php:1221
 msgid "Bengali"
 msgstr ""
 
-#: includes/class-bc-utility.php:1156
+#: includes/class-bc-utility.php:1222
 msgid "Bihari"
 msgstr ""
 
-#: includes/class-bc-utility.php:1157
+#: includes/class-bc-utility.php:1223
 msgid "Bislama"
 msgstr ""
 
-#: includes/class-bc-utility.php:1158
+#: includes/class-bc-utility.php:1224
 msgid "Bosnian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1159
+#: includes/class-bc-utility.php:1225
 msgid "Breton"
 msgstr ""
 
-#: includes/class-bc-utility.php:1160
+#: includes/class-bc-utility.php:1226
 msgid "Bulgarian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1161
+#: includes/class-bc-utility.php:1227
 msgid "Burmese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1162
+#: includes/class-bc-utility.php:1228
 msgid "Catalan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1163
+#: includes/class-bc-utility.php:1229
 msgid "Chomorro"
 msgstr ""
 
-#: includes/class-bc-utility.php:1164
+#: includes/class-bc-utility.php:1230
 msgid "Chechen"
 msgstr ""
 
-#: includes/class-bc-utility.php:1165
+#: includes/class-bc-utility.php:1231
 msgid "Chichewa"
 msgstr ""
 
-#: includes/class-bc-utility.php:1166
+#: includes/class-bc-utility.php:1232
 msgid "Chinese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1167
+#: includes/class-bc-utility.php:1233
 msgid "Chuvash"
 msgstr ""
 
-#: includes/class-bc-utility.php:1168
+#: includes/class-bc-utility.php:1234
 msgid "Cornish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1169
+#: includes/class-bc-utility.php:1235
 msgid "Corsican"
 msgstr ""
 
-#: includes/class-bc-utility.php:1170
+#: includes/class-bc-utility.php:1236
 msgid "Cree"
 msgstr ""
 
-#: includes/class-bc-utility.php:1171
+#: includes/class-bc-utility.php:1237
 msgid "Croatian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1172
+#: includes/class-bc-utility.php:1238
 msgid "Czech"
 msgstr ""
 
-#: includes/class-bc-utility.php:1173
+#: includes/class-bc-utility.php:1239
 msgid "Danish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1174
+#: includes/class-bc-utility.php:1240
 msgid "Divehi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1175
+#: includes/class-bc-utility.php:1241
 msgid "Dutch"
 msgstr ""
 
-#: includes/class-bc-utility.php:1176
+#: includes/class-bc-utility.php:1242
 msgid "Dzongkha"
 msgstr ""
 
-#: includes/class-bc-utility.php:1177
+#: includes/class-bc-utility.php:1243
 msgid "Esperanto"
 msgstr ""
 
-#: includes/class-bc-utility.php:1178
+#: includes/class-bc-utility.php:1244
 msgid "Estonian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1179
+#: includes/class-bc-utility.php:1245
 msgid "Ewe"
 msgstr ""
 
-#: includes/class-bc-utility.php:1180
+#: includes/class-bc-utility.php:1246
 msgid "Faroese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1181
+#: includes/class-bc-utility.php:1247
 msgid "Fijian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1182
+#: includes/class-bc-utility.php:1248
 msgid "Finnish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1183
+#: includes/class-bc-utility.php:1249
 msgid "French"
 msgstr ""
 
-#: includes/class-bc-utility.php:1184
+#: includes/class-bc-utility.php:1250
 msgid "Fula"
 msgstr ""
 
-#: includes/class-bc-utility.php:1185
+#: includes/class-bc-utility.php:1251
 msgid "Galician"
 msgstr ""
 
-#: includes/class-bc-utility.php:1186
+#: includes/class-bc-utility.php:1252
 msgid "Georgian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1187
+#: includes/class-bc-utility.php:1253
 msgid "German"
 msgstr ""
 
-#: includes/class-bc-utility.php:1188
+#: includes/class-bc-utility.php:1254
 msgid "Greek"
 msgstr ""
 
-#: includes/class-bc-utility.php:1189
+#: includes/class-bc-utility.php:1255
 msgid "Guarani"
 msgstr ""
 
-#: includes/class-bc-utility.php:1190
+#: includes/class-bc-utility.php:1256
 msgid "Gujarati"
 msgstr ""
 
-#: includes/class-bc-utility.php:1191
+#: includes/class-bc-utility.php:1257
 msgid "Haitian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1192
+#: includes/class-bc-utility.php:1258
 msgid "Hausa"
 msgstr ""
 
-#: includes/class-bc-utility.php:1193
+#: includes/class-bc-utility.php:1259
 msgid "Hebrew"
 msgstr ""
 
-#: includes/class-bc-utility.php:1194
+#: includes/class-bc-utility.php:1260
 msgid "Herero"
 msgstr ""
 
-#: includes/class-bc-utility.php:1195
+#: includes/class-bc-utility.php:1261
 msgid "Hindi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1196
+#: includes/class-bc-utility.php:1262
 msgid "Hiri Motu"
 msgstr ""
 
-#: includes/class-bc-utility.php:1197
+#: includes/class-bc-utility.php:1263
 msgid "Hungarian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1198
+#: includes/class-bc-utility.php:1264
 msgid "Interlingua"
 msgstr ""
 
-#: includes/class-bc-utility.php:1199
+#: includes/class-bc-utility.php:1265
 msgid "Indonesian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1200
+#: includes/class-bc-utility.php:1266
 msgid "Irish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1201
+#: includes/class-bc-utility.php:1267
 msgid "Igbo"
 msgstr ""
 
-#: includes/class-bc-utility.php:1202
+#: includes/class-bc-utility.php:1268
 msgid "Inupiaq"
 msgstr ""
 
-#: includes/class-bc-utility.php:1203
+#: includes/class-bc-utility.php:1269
 msgid "Icelandic"
 msgstr ""
 
-#: includes/class-bc-utility.php:1204
+#: includes/class-bc-utility.php:1270
 msgid "Italian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1205
+#: includes/class-bc-utility.php:1271
 msgid "Inuktitut"
 msgstr ""
 
-#: includes/class-bc-utility.php:1206
+#: includes/class-bc-utility.php:1272
 msgid "Japanese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1207
+#: includes/class-bc-utility.php:1273
 msgid "Javanese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1208
+#: includes/class-bc-utility.php:1274
 msgid "Kalaallisut"
 msgstr ""
 
-#: includes/class-bc-utility.php:1209
+#: includes/class-bc-utility.php:1275
 msgid "Kannada"
 msgstr ""
 
-#: includes/class-bc-utility.php:1210
+#: includes/class-bc-utility.php:1276
 msgid "Kanuri"
 msgstr ""
 
-#: includes/class-bc-utility.php:1211
+#: includes/class-bc-utility.php:1277
 msgid "Kashmiri"
 msgstr ""
 
-#: includes/class-bc-utility.php:1212
+#: includes/class-bc-utility.php:1278
 msgid "Kazakh"
 msgstr ""
 
-#: includes/class-bc-utility.php:1213
+#: includes/class-bc-utility.php:1279
 msgid "Khmer"
 msgstr ""
 
-#: includes/class-bc-utility.php:1214
+#: includes/class-bc-utility.php:1280
 msgid "Kikuyu"
 msgstr ""
 
-#: includes/class-bc-utility.php:1215
+#: includes/class-bc-utility.php:1281
 msgid "Kinyarwanda"
 msgstr ""
 
-#: includes/class-bc-utility.php:1216
+#: includes/class-bc-utility.php:1282
 msgid "Kyrgyz"
 msgstr ""
 
-#: includes/class-bc-utility.php:1217
+#: includes/class-bc-utility.php:1283
 msgid "Komi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1218
+#: includes/class-bc-utility.php:1284
 msgid "Kongo"
 msgstr ""
 
-#: includes/class-bc-utility.php:1219
+#: includes/class-bc-utility.php:1285
 msgid "Korean"
 msgstr ""
 
-#: includes/class-bc-utility.php:1220
+#: includes/class-bc-utility.php:1286
 msgid "Kurdish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1221
+#: includes/class-bc-utility.php:1287
 msgid "Kwanyama"
 msgstr ""
 
-#: includes/class-bc-utility.php:1222
+#: includes/class-bc-utility.php:1288
 msgid "Latin"
 msgstr ""
 
-#: includes/class-bc-utility.php:1223
+#: includes/class-bc-utility.php:1289
 msgid "Luxembourgish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1224
+#: includes/class-bc-utility.php:1290
 msgid "Ganda"
 msgstr ""
 
-#: includes/class-bc-utility.php:1225
+#: includes/class-bc-utility.php:1291
 msgid "Limburgish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1226
+#: includes/class-bc-utility.php:1292
 msgid "Lingala"
 msgstr ""
 
-#: includes/class-bc-utility.php:1227
+#: includes/class-bc-utility.php:1293
 msgid "Lao"
 msgstr ""
 
-#: includes/class-bc-utility.php:1228
+#: includes/class-bc-utility.php:1294
 msgid "Lithuanian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1229
+#: includes/class-bc-utility.php:1295
 msgid "Luba-Katanga"
 msgstr ""
 
-#: includes/class-bc-utility.php:1230
+#: includes/class-bc-utility.php:1296
 msgid "Latvian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1231
+#: includes/class-bc-utility.php:1297
 msgid "Manx"
 msgstr ""
 
-#: includes/class-bc-utility.php:1232
+#: includes/class-bc-utility.php:1298
 msgid "Macedonian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1233
+#: includes/class-bc-utility.php:1299
 msgid "Malagasy"
 msgstr ""
 
-#: includes/class-bc-utility.php:1234
+#: includes/class-bc-utility.php:1300
 msgid "Malay"
 msgstr ""
 
-#: includes/class-bc-utility.php:1235
+#: includes/class-bc-utility.php:1301
 msgid "Malayalam"
 msgstr ""
 
-#: includes/class-bc-utility.php:1236
+#: includes/class-bc-utility.php:1302
 msgid "Maltese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1237
+#: includes/class-bc-utility.php:1303
 msgid "Maori"
 msgstr ""
 
-#: includes/class-bc-utility.php:1238
+#: includes/class-bc-utility.php:1304
 msgid "Marathi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1239
+#: includes/class-bc-utility.php:1305
 msgid "Marshallese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1240
+#: includes/class-bc-utility.php:1306
 msgid "Mongolian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1241
+#: includes/class-bc-utility.php:1307
 msgid "Nauruan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1242
+#: includes/class-bc-utility.php:1308
 msgid "Navajo"
 msgstr ""
 
-#: includes/class-bc-utility.php:1243
+#: includes/class-bc-utility.php:1309
 msgid "Northern Ndebele"
 msgstr ""
 
-#: includes/class-bc-utility.php:1244
+#: includes/class-bc-utility.php:1310
 msgid "Nepali"
 msgstr ""
 
-#: includes/class-bc-utility.php:1245
+#: includes/class-bc-utility.php:1311
 msgid "Ndonga"
 msgstr ""
 
-#: includes/class-bc-utility.php:1246
+#: includes/class-bc-utility.php:1312
 msgid "Norwegian Bokmal"
 msgstr ""
 
-#: includes/class-bc-utility.php:1247
+#: includes/class-bc-utility.php:1313
 msgid "Norwegian Nyorsk"
 msgstr ""
 
-#: includes/class-bc-utility.php:1248
+#: includes/class-bc-utility.php:1314
 msgid "Norwegian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1249
+#: includes/class-bc-utility.php:1315
 msgid "Nuosu"
 msgstr ""
 
-#: includes/class-bc-utility.php:1250
+#: includes/class-bc-utility.php:1316
 msgid "Southern Ndebele"
 msgstr ""
 
-#: includes/class-bc-utility.php:1251
+#: includes/class-bc-utility.php:1317
 msgid "Occitan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1252
+#: includes/class-bc-utility.php:1318
 msgid "Ojibwe"
 msgstr ""
 
-#: includes/class-bc-utility.php:1253
+#: includes/class-bc-utility.php:1319
 msgid "Oromo"
 msgstr ""
 
-#: includes/class-bc-utility.php:1254
+#: includes/class-bc-utility.php:1320
 msgid "Oriya"
 msgstr ""
 
-#: includes/class-bc-utility.php:1255
+#: includes/class-bc-utility.php:1321
 msgid "Ossetian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1256
+#: includes/class-bc-utility.php:1322
 msgid "Panjabi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1257
+#: includes/class-bc-utility.php:1323
 msgid "Pali"
 msgstr ""
 
-#: includes/class-bc-utility.php:1258
+#: includes/class-bc-utility.php:1324
 msgid "Persian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1259
+#: includes/class-bc-utility.php:1325
 msgid "Polish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1260
+#: includes/class-bc-utility.php:1326
 msgid "Pashto"
 msgstr ""
 
-#: includes/class-bc-utility.php:1261
+#: includes/class-bc-utility.php:1327
 msgid "Portuguese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1262
+#: includes/class-bc-utility.php:1328
 msgid "Quechua"
 msgstr ""
 
-#: includes/class-bc-utility.php:1263
+#: includes/class-bc-utility.php:1329
 msgid "Romanian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1264
+#: includes/class-bc-utility.php:1330
 msgid "Romanish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1265
+#: includes/class-bc-utility.php:1331
 msgid "Russian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1266
+#: includes/class-bc-utility.php:1332
 msgid "Sanskrit"
 msgstr ""
 
-#: includes/class-bc-utility.php:1267
+#: includes/class-bc-utility.php:1333
 msgid "Sardinian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1268
+#: includes/class-bc-utility.php:1334
 msgid "Sindhi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1269
+#: includes/class-bc-utility.php:1335
 msgid "Northern Sami"
 msgstr ""
 
-#: includes/class-bc-utility.php:1270
+#: includes/class-bc-utility.php:1336
 msgid "Samoan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1271
+#: includes/class-bc-utility.php:1337
 msgid "Sango"
 msgstr ""
 
-#: includes/class-bc-utility.php:1272
+#: includes/class-bc-utility.php:1338
 msgid "Serbian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1273
+#: includes/class-bc-utility.php:1339
 msgid "Scottish Gaelic"
 msgstr ""
 
-#: includes/class-bc-utility.php:1274
+#: includes/class-bc-utility.php:1340
 msgid "Shona"
 msgstr ""
 
-#: includes/class-bc-utility.php:1275
+#: includes/class-bc-utility.php:1341
 msgid "Sinhala"
 msgstr ""
 
-#: includes/class-bc-utility.php:1276
+#: includes/class-bc-utility.php:1342
 msgid "Slovak"
 msgstr ""
 
-#: includes/class-bc-utility.php:1277
+#: includes/class-bc-utility.php:1343
 msgid "Slovene"
 msgstr ""
 
-#: includes/class-bc-utility.php:1278
+#: includes/class-bc-utility.php:1344
 msgid "Somali"
 msgstr ""
 
-#: includes/class-bc-utility.php:1279
+#: includes/class-bc-utility.php:1345
 msgid "Southern Sotho"
 msgstr ""
 
-#: includes/class-bc-utility.php:1280
+#: includes/class-bc-utility.php:1346
 msgid "Spanish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1281
+#: includes/class-bc-utility.php:1347
 msgid "Sudanese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1282
+#: includes/class-bc-utility.php:1348
 msgid "Swahili"
 msgstr ""
 
-#: includes/class-bc-utility.php:1283
+#: includes/class-bc-utility.php:1349
 msgid "Swati"
 msgstr ""
 
-#: includes/class-bc-utility.php:1284
+#: includes/class-bc-utility.php:1350
 msgid "Swedish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1285
+#: includes/class-bc-utility.php:1351
 msgid "Tamil"
 msgstr ""
 
-#: includes/class-bc-utility.php:1286
+#: includes/class-bc-utility.php:1352
 msgid "Telugu"
 msgstr ""
 
-#: includes/class-bc-utility.php:1287
+#: includes/class-bc-utility.php:1353
 msgid "Tajik"
 msgstr ""
 
-#: includes/class-bc-utility.php:1288
+#: includes/class-bc-utility.php:1354
 msgid "Thai"
 msgstr ""
 
-#: includes/class-bc-utility.php:1289
+#: includes/class-bc-utility.php:1355
 msgid "Tigrinya"
 msgstr ""
 
-#: includes/class-bc-utility.php:1290
+#: includes/class-bc-utility.php:1356
 msgid "Tibetan"
 msgstr ""
 
-#: includes/class-bc-utility.php:1291
+#: includes/class-bc-utility.php:1357
 msgid "Turkmen"
 msgstr ""
 
-#: includes/class-bc-utility.php:1292
+#: includes/class-bc-utility.php:1358
 msgid "Tagalog"
 msgstr ""
 
-#: includes/class-bc-utility.php:1293
+#: includes/class-bc-utility.php:1359
 msgid "Tswana"
 msgstr ""
 
-#: includes/class-bc-utility.php:1294
+#: includes/class-bc-utility.php:1360
 msgid "Tonga"
 msgstr ""
 
-#: includes/class-bc-utility.php:1295
+#: includes/class-bc-utility.php:1361
 msgid "Turkish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1296
+#: includes/class-bc-utility.php:1362
 msgid "Tsonga"
 msgstr ""
 
-#: includes/class-bc-utility.php:1297
+#: includes/class-bc-utility.php:1363
 msgid "Tatar"
 msgstr ""
 
-#: includes/class-bc-utility.php:1298
+#: includes/class-bc-utility.php:1364
 msgid "Twi"
 msgstr ""
 
-#: includes/class-bc-utility.php:1299
+#: includes/class-bc-utility.php:1365
 msgid "Tahitian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1300
+#: includes/class-bc-utility.php:1366
 msgid "Uyghur"
 msgstr ""
 
-#: includes/class-bc-utility.php:1301
+#: includes/class-bc-utility.php:1367
 msgid "Ukrainian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1302
+#: includes/class-bc-utility.php:1368
 msgid "Urdu"
 msgstr ""
 
-#: includes/class-bc-utility.php:1303
+#: includes/class-bc-utility.php:1369
 msgid "Uzbek"
 msgstr ""
 
-#: includes/class-bc-utility.php:1304
+#: includes/class-bc-utility.php:1370
 msgid "Venda"
 msgstr ""
 
-#: includes/class-bc-utility.php:1305
+#: includes/class-bc-utility.php:1371
 msgid "Vietnamese"
 msgstr ""
 
-#: includes/class-bc-utility.php:1306
+#: includes/class-bc-utility.php:1372
 msgid "Volapuk"
 msgstr ""
 
-#: includes/class-bc-utility.php:1307
+#: includes/class-bc-utility.php:1373
 msgid "Walloon"
 msgstr ""
 
-#: includes/class-bc-utility.php:1308
+#: includes/class-bc-utility.php:1374
 msgid "Welsh"
 msgstr ""
 
-#: includes/class-bc-utility.php:1309
+#: includes/class-bc-utility.php:1375
 msgid "Wolof"
 msgstr ""
 
-#: includes/class-bc-utility.php:1310
+#: includes/class-bc-utility.php:1376
 msgid "Western Frisian"
 msgstr ""
 
-#: includes/class-bc-utility.php:1311
+#: includes/class-bc-utility.php:1377
 msgid "Xhosa"
 msgstr ""
 
-#: includes/class-bc-utility.php:1312
+#: includes/class-bc-utility.php:1378
 msgid "Yiddish"
 msgstr ""
 
-#: includes/class-bc-utility.php:1313
+#: includes/class-bc-utility.php:1379
 msgid "Yoruba"
 msgstr ""
 
-#: includes/class-bc-utility.php:1314
+#: includes/class-bc-utility.php:1380
 msgid "Zhuang"
 msgstr ""
 
-#: includes/class-bc-utility.php:1315
+#: includes/class-bc-utility.php:1381
 msgid "Zulu"
 msgstr ""
 

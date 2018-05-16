@@ -790,6 +790,72 @@ class BC_Utility {
 	}
 
 	/**
+	 * Render Experience Player.
+	 *
+	 * Renders the player from Brightcove based on passed parameters
+	 *
+	 * @since 1.4.2
+	 *
+	 * @param array $atts The shortcode attributes.
+	 *
+	 * @return string The HTML code for the player
+	 */
+	public static function get_experience_player( $atts ) {
+		global $wp_version;
+
+		$account_id    = BC_Utility::sanitize_id( $atts['account_id'] );
+		$experience_id = BC_Utility::sanitize_player_id( $atts['experience_id'] );
+		$video_ids     = sanitize_text_field( $atts['video_ids'] );
+		$height        = sanitize_text_field( $atts['height'] );
+		$width         = sanitize_text_field( $atts['width'] );
+		$min_width     = sanitize_text_field( $atts['min_width'] );
+		$max_width     = sanitize_text_field( $atts['max_width'] );
+		$embed         = sanitize_text_field( $atts['embed'] );
+
+		ob_start();
+		?>
+		<!-- Start of Brightcove Experience Player -->
+
+		<?php if ( 'javascript_experience' === $embed ) : ?>
+			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
+				 data-video-ids="<?php echo esc_attr( $video_ids ); ?>" data-usage="cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
+			</div>
+			<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/live.js "></script>
+		<?php else : ?>
+
+			<div style="display: block; position: relative; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
+				<iframe
+						src=" https://players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/index.html?cms: wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experienceiframe&videoIds=<?php echo esc_attr( $video_ids ); ?>"
+						allowfullscreen
+						webkitallowfullscreen
+						mozallowfullscreen
+						style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; top: 0px; bottom: 0px; right: 0px; left: 0px; border:none; margin-left:auto;margin-right:auto;"></iframe>
+			</div>
+
+		<?php endif; ?>
+
+		<!-- End of Brightcove Experience Player -->
+
+		<?php
+		$html = ob_get_clean();
+
+		/**
+		 * Filter the Brightcove Player HTML.
+		 *
+		 * @param string  $html       HTML markup of the Brightcove Player.
+		 * @param string  $type       "playlist" or "video".
+		 * @param string  $id         The brightcove player or video ID.
+		 * @param string  $account_id The Brightcove account ID.
+		 * @param string  $player_id  The brightcove player ID.
+		 * @param int     $width      The Width to display.
+		 * @param int     $height     The height to display.
+		 */
+		$html = apply_filters( 'brightcove_video_html', $html, 'video', $id, $account_id, $player_id, $width, $height );
+
+		return $html;
+	}
+
+	/**
 	 * Render Video Player.
 	 *
 	 * Renders the  player from Brightcove based on passed parameters
