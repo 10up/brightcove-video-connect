@@ -24,15 +24,15 @@ class BC_Experiences_Shortcode {
 	public static function bc_experience( $atts ) {
 
 		$defaults = array(
-			'experience_id'   => '',
-			'account_id'  => '',
-			'video_ids'    => '',
-			'autoplay'    => '',
-			'embed'       => '',
-			'min_width'   => '0px',
-			'max_width'   => '100%',
-			'height'      => 0,
-			'width'       => 0,
+			'experience_id' => '',
+			'account_id'    => '',
+			'embed'         => '',
+			'min_width'     => '0px',
+			'max_width'     => '100%',
+			'height'        => 0,
+			'width'         => 0,
+			'video_ids'     => '',
+			'playlist_id'   => '',
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_experience' );

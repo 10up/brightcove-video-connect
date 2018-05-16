@@ -805,12 +805,21 @@ class BC_Utility {
 
 		$account_id    = BC_Utility::sanitize_id( $atts['account_id'] );
 		$experience_id = BC_Utility::sanitize_player_id( $atts['experience_id'] );
-		$video_ids     = sanitize_text_field( $atts['video_ids'] );
 		$height        = sanitize_text_field( $atts['height'] );
 		$width         = sanitize_text_field( $atts['width'] );
 		$min_width     = sanitize_text_field( $atts['min_width'] );
 		$max_width     = sanitize_text_field( $atts['max_width'] );
 		$embed         = sanitize_text_field( $atts['embed'] );
+
+		if ( ! empty( $atts['video_ids'] ) ) {
+			$video_ids = sanitize_text_field( $atts['video_ids'] );
+			$js_attr   = 'data-video-ids="' . esc_attr( $video_ids ) . '"';
+			$url_attr  = 'videoIds=' . esc_attr( $video_ids );
+		} else {
+			$playlist_id = sanitize_text_field( $atts['playlist_id'] );
+			$js_attr     = 'data-playlist-id="' . esc_attr( $playlist_id ) . '"';
+			$url_attr    = 'playlistId=' . esc_attr( $playlist_id );
+		}
 
 		ob_start();
 		?>
@@ -818,14 +827,14 @@ class BC_Utility {
 
 		<?php if ( 'javascript_experience' === $embed ) : ?>
 			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
-				 data-video-ids="<?php echo esc_attr( $video_ids ); ?>" data-usage="cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
+				 <?php echo $js_attr; // XSS ok. ?> data-usage="cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 			</div>
 			<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/live.js "></script>
 		<?php else : ?>
 
 			<div style="display: block; position: relative; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 				<iframe
-						src=" https://players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/index.html?cms: wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experienceiframe&videoIds=<?php echo esc_attr( $video_ids ); ?>"
+						src=" https://players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/index.html?cms: wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experienceiframe&<?php echo $url_attr; // XSS ok. ?>"
 						allowfullscreen
 						webkitallowfullscreen
 						mozallowfullscreen

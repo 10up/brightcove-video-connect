@@ -598,6 +598,18 @@ var BrightcoveModalModel = Backbone.Model.extend(
           tags :      'all',
           viewType :  'grid'
         }
+        ,
+        'playlist-experience' : {
+          accounts :  'all',
+          date :      'all',
+          embedType : 'modal',
+          mediaType : 'playlistexperience',
+          mode :      'manager',
+          preload :   true,
+          search :    '',
+          tags :      'all',
+          viewType :  'grid'
+        }
 			};
 
 			if ( undefined !== settings[tab] ) {
@@ -1487,7 +1499,7 @@ var BrightcoveModalView = BrightcoveView.extend(
 			}
 			$( event.target ).addClass( 'active' );
 			var tab  = _.without( event.target.classList, 'media-menu-item', 'brightcove' )[0];
-			var tabs = ['videos', 'upload', 'playlists', 'video-experience'];
+			var tabs = ['videos', 'upload', 'playlists', 'video-experience', 'playlist-experience'];
 			_.each( _.without( tabs, tab ), function ( otherTab ) {
 				$( '.brightcove.media-menu-item.' + otherTab ).removeClass( 'active' );
 			} );
@@ -1625,12 +1637,19 @@ var MediaDetailsView = BrightcoveView.extend(
 		},
 
 		generateShortcode: function () {
-			if ( 'videos' === this.mediaType ) {
-				this.generateVideoShortcode();
-			} else if ( 'videoexperience' === this.mediaType ) {
-        this.generateExperienceShortcode();
-      } else {
-				this.generatePlaylistShortcode();
+			switch (this.mediaType){
+				case 'videos':
+          this.generateVideoShortcode();
+          break;
+				case 'videoexperience':
+          this.generateExperienceShortcode();
+          break;
+				case 'playlistexperience':
+          this.generatePlaylistExperienceShortcode();
+          break;
+				default:
+          this.generatePlaylistShortcode();
+
 			}
 		},
 
@@ -1770,6 +1789,40 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		    $( '#shortcode' ).val( shortcode );
         },
+		generatePlaylistExperienceShortcode:function () {
+      var playlistId = this.model.get( 'id' ).replace( /\D/g, '' ),
+          accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+          experienceId = $( '#video-player' ).val(),
+          embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
+          sizing = $( 'input[name="sizing"]:checked' ).val(),
+          width = $( '#width' ).val(),
+          height = $( '#height' ).val(),
+          units = 'px',
+          minWidth = '0px',
+          maxWidth = width + units,
+          shortcode;
+
+
+      if ( 'responsive' === sizing ) {
+        width = '100%';
+        height = '100%';
+      } else {
+        width = width + units;
+        height = height + units;
+
+        if ( 'iframe' === embedStyle ) {
+          minWidth = width;
+        }
+      }
+
+      shortcode = '[bc_experience experience_id="' + experienceId + '" account_id="' + accountId + '" ' +
+          'embed="' + embedStyle + '" min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
+          'width="' + width + '" height="' + height + '" ' +
+          'playlist_id="' + playlistId + '" ' +
+          ']';
+
+      $( '#shortcode' ).val( shortcode );
+    },
 
 		toggleShortcodeGeneration: function () {
 		    var method = $( '#generate-shortcode' ).val(),

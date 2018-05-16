@@ -54,6 +54,18 @@ var BrightcoveModalModel = Backbone.Model.extend(
           tags :      'all',
           viewType :  'grid'
         }
+        ,
+        'playlist-experience' : {
+          accounts :  'all',
+          date :      'all',
+          embedType : 'modal',
+          mediaType : 'playlistexperience',
+          mode :      'manager',
+          preload :   true,
+          search :    '',
+          tags :      'all',
+          viewType :  'grid'
+        }
 			};
 
 			if ( undefined !== settings[tab] ) {

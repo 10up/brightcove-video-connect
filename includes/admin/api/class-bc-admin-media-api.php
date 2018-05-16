@@ -536,7 +536,7 @@ class BC_Admin_Media_API {
 
 		$type = isset( $_POST['type'] ) ? sanitize_key( $_POST['type'] ) : false;
 
-		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience' ) ) ) {
+		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience', 'playlistexperience' ) ) ) {
 
 			wp_send_json_error( esc_html__( 'Invalid Search Type', 'brightcove' ) );
 			exit; // Type can only be videos or playlists.
