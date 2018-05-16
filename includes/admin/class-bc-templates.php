@@ -977,7 +977,15 @@ class BC_Admin_Templates {
 					</div>
 					<# } #>
 
-					<# if( data.mediaType === 'playlists' ) { #>
+					<# if ( data.mediaType === 'playlistexperience' ) { #>
+					<div class="notice notice-warning">
+						<p>
+							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
+						</p>
+					</div>
+					<# } #>
+
+					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
 						<div class="notice notice-warning">
 							<p>
 								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
@@ -988,7 +996,6 @@ class BC_Admin_Templates {
 							<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
 						</p>
 					<# } #>
-
 					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled"><?php esc_html_e( 'Delete Selected', 'brightcove' ); ?></a>
 				</div>
 				<# if (data.mediaType === 'videos') { #>
