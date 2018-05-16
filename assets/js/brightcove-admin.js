@@ -803,10 +803,11 @@ var ToolbarView = BrightcoveView.extend(
 
 		searchHandler : function ( event ) {
 			var searchTerm = $( '#media-search-input' ).val();
-
 			if ( searchTerm.length > 2 && searchTerm !== this.model.get( 'search' ) ) {
 				this.model.set( 'search', searchTerm );
 				wpbc.broadcast.trigger( 'change:searchTerm', searchTerm );
+			} else if (searchTerm.length === 0) {
+				wpbc.broadcast.trigger( 'change:searchTerm', "" );
 			}
 		}
 	}
