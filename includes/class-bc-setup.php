@@ -12,6 +12,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-logging.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-upload.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php' );
