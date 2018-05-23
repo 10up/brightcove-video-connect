@@ -129,6 +129,9 @@ div.brightcove-uploader div.brightcove-messages .updated {
   .media-frame:not(.hide-menu) .media-frame-menu {
     width: 300px; } }
 
+.brightcove.media-frame-menu .attachment-detail .playlist-details label.experiencelabel, .brightcove.media-frame-menu .attachment-detail .video-details label.experiencelabel {
+  width: 100%; }
+
 .bc-page-icon {
   padding-right: 10px; }
 

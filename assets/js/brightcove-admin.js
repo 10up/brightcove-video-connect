@@ -1649,7 +1649,6 @@ var MediaDetailsView = BrightcoveView.extend(
           break;
 				default:
           this.generatePlaylistShortcode();
-
 			}
 		},
 

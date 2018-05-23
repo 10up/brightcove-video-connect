@@ -677,7 +677,7 @@ class BC_Admin_Templates {
 
 					if ( 'edit' === $parent_base ) : ?>
 
-						<label for="video-player">
+						<label for="video-player" class="experiencelabel">
 							<?php esc_html_e( 'Experience Player: ', 'brightcove' ); ?>
 						</label>
 					<div class="clear">
@@ -752,7 +752,7 @@ class BC_Admin_Templates {
 
 					if ( 'edit' === $parent_base ) : ?>
 
-						<label for="video-player">
+						<label for="video-player" class="experiencelabel">
 							<?php esc_html_e( 'Experience Player: ', 'brightcove' ); ?>
 						</label>
 						<div class="clear">
