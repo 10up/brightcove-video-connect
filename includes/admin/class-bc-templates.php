@@ -681,7 +681,7 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Experience Player: ', 'brightcove' ); ?>
 						</label>
 					<div class="clear">
-						<select name="video-player" id="video-player">
+						<select name="video-player" id="video-player" class="experienceplayer">
 							<# _.each( wpbc.experiences.items, function ( experience ) { #>
 							<option value="{{ experience.id }}">{{ experience.name }}</option>
 							<# }); #>
@@ -756,7 +756,7 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Experience Player: ', 'brightcove' ); ?>
 						</label>
 						<div class="clear">
-							<select name="video-player" id="video-player">
+							<select name="video-player" id="video-player" class="experienceplayer">
 								<# _.each( wpbc.experiences.items, function ( experience ) { #>
 								<option value="{{ experience.id }}">{{ experience.name }}</option>
 								<# }); #>
