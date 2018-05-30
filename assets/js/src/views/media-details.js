@@ -131,6 +131,9 @@ var MediaDetailsView = BrightcoveView.extend(
 			$( '#shortcode' ).val( shortcode );
 		},
     generateExperienceShortcode:function () {
+         if ( 'string' !== typeof this.model.get( 'id' ) ) {
+          return '';
+         }
       var videoIds = this.model.get( 'id' ).replace( /\D/g, '' ),
           accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
           experienceId = $( '#video-player' ).val(),
