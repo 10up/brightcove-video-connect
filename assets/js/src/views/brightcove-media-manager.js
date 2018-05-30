@@ -424,6 +424,18 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					wpbc.broadcast.trigger( 'permanent:message', wpbc.preload.messages.ongoingSync );
 
 				}
+				if ( 'videoexperience' === this.model.get( 'mediaType' ) ) {
+					this.detailsView = new MediaDetailsView( {
+						model : new MediaModel( this.model.attributes ),
+						el : $( '.brightcove.media-frame-menu' ),
+						mediaType : this.model.get( 'mediaType' )
+					} );
+					this.registerSubview( this.detailsView );
+
+					this.detailsView.render();
+					this.detailsView.$el.toggle( true ); // Always show new view
+					this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
+				}
 			} else if ( 'editVideo' === mode ) {
 
 				this.toolbar.$el.hide();
