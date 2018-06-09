@@ -70,6 +70,10 @@ class BC_Player_Management_API2 extends BC_API {
 
 			$players[ $account_id ] = array();
 
+			if ( is_wp_error( $account_players ) ) {
+				return [];
+			}
+
 			foreach ( $account_players['items'] as $player ) {
 				$player['is_playlist'] = false;
 
