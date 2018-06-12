@@ -301,7 +301,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			this.$el.html( this.template( options ) );
 
 			this.delegateEvents();
-            this.generateShortcode();
+			this.generateShortcode();
 
 			return this;
 		},

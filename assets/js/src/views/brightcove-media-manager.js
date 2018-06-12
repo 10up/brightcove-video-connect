@@ -274,7 +274,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					this.detailsView.model.set( 'id', selectedIds );
 
 					// Clear the shortcode and disable insertion if no items are selected.
-					if ( _.isEmpty( selectedIds ) ) {
+					if ( _.isEmpty( selectedIds ) && 'videoexperience' !== this.model.get( 'mediaType' )) {
 						wpbc.broadcast.trigger( 'toggle:insertButton' );
 						$( '#shortcode' ).val( '' );
 					} else {
@@ -464,6 +464,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 					this.detailsView.render();
 					this.detailsView.$el.toggle( true ); // Always show new view
+          wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
 					this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
 				}
 			} else if ( 'editVideo' === mode ) {
