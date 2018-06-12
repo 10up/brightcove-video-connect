@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.4.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2018-06-12 20:23:54+00:00\n"
+"POT-Creation-Date: 2018-06-12 21:21:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -750,11 +750,11 @@ msgstr ""
 msgid "Example:\"My Favorite Video\""
 msgstr ""
 
-#: includes/api/class-bc-api.php:228
+#: includes/api/class-bc-api.php:226
 msgid "API says permission denied, check your client ID and client secret"
 msgstr ""
 
-#: includes/api/class-bc-api.php:253
+#: includes/api/class-bc-api.php:251
 msgid "An unspecified error has occurred."
 msgstr ""
 
@@ -908,19 +908,19 @@ msgid ""
 "times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:328
+#: includes/class-bc-setup.php:330
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:330
+#: includes/class-bc-setup.php:332
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:345
+#: includes/class-bc-setup.php:347
 msgid "BC In Process Videos"
 msgstr ""
 
-#: includes/class-bc-setup.php:373
+#: includes/class-bc-setup.php:375
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "
