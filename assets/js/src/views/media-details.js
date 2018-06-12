@@ -130,43 +130,43 @@ var MediaDetailsView = BrightcoveView.extend(
 
 			$( '#shortcode' ).val( shortcode );
 		},
-    generateExperienceShortcode:function () {
-         if ( 'undefined' === typeof this.model.get( 'id' ) ) {
-          return '';
-         }
-      var videoIds = this.model.get( 'id' ).join( ', ' ),
-          accountId = this.model.get( 'account' ).replace( /\D/g, '' ),
-          experienceId = $( '#video-player' ).val(),
-          embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
-          sizing = $( 'input[name="sizing"]:checked' ).val(),
-          width = $( '#width' ).val(),
-          height = $( '#height' ).val(),
-          units = 'px',
-          minWidth = '0px',
-          maxWidth = width + units,
-          shortcode;
+	    generateExperienceShortcode: function () {
+			if ( 'undefined' === typeof this.model.get( 'id' ) ) {
+				return '';
+			}
+			var videoIds = this.model.get( 'id' ).join( ', ' ),
+			accountId = this.model.get( 'account' ).replace( /\D/g, '' ),
+			experienceId = $( '#video-player' ).val(),
+			embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
+			sizing = $( 'input[name="sizing"]:checked' ).val(),
+			width = $( '#width' ).val(),
+			height = $( '#height' ).val(),
+			units = 'px',
+			minWidth = '0px',
+			maxWidth = width + units,
+			shortcode;
 
 
-      if ( 'responsive' === sizing ) {
-        width = '100%';
-        height = '100%';
-      } else {
-        width = width + units;
-        height = height + units;
+			if ( 'responsive' === sizing ) {
+				width = '100%';
+				height = '100%';
+			} else {
+				width = width + units;
+				height = height + units;
 
-        if ( 'iframe' === embedStyle ) {
-          minWidth = width;
-        }
-      }
+			if ( 'iframe' === embedStyle ) {
+				minWidth = width;
+			}
+		}
 
-      shortcode = '[bc_experience experience_id="' + experienceId + '" account_id="' + accountId + '" ' +
-          'embed="' + embedStyle + '" min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
-          'width="' + width + '" height="' + height + '" ' +
-					'video_ids="' + videoIds + '" ' +
-          ']';
+		shortcode = '[bc_experience experience_id="' + experienceId + '" account_id="' + accountId + '" ' +
+		'embed="' + embedStyle + '" min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
+		'width="' + width + '" height="' + height + '" ' +
+		'video_ids="' + videoIds + '" ' +
+		']';
 
-      $( '#shortcode' ).val( shortcode );
-    },
+		$( '#shortcode' ).val( shortcode );
+		},
 
 
 		generatePlaylistShortcode: function () {
