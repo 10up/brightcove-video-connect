@@ -12,6 +12,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-logging.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-upload.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php' );
@@ -22,6 +23,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api2.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-experiences-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-tags.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
@@ -203,12 +205,16 @@ class BC_Setup {
 		$player_api = new BC_Player_Management_API2();
 		$players = $player_api->get_all_players();
 
+		$experiences_api = new BC_Experiences_API();
+		$experiences     = $experiences_api->get_experiences();
+
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => BC_Setup::preload_params(),
 			'wp_version'     => $wp_version,
 			'languages'  => BC_Utility::languages(),
 			'players'    => $players,
+			'experiences' => $experiences,
 			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
 			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),

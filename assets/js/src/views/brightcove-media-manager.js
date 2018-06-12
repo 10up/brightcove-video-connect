@@ -190,6 +190,23 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					this.model.set( 'mode', 'editVideo' );
 					this.render();
 
+				} else if ( mediaType === 'videoexperience' ) {
+
+					// We just hit the edit button with the edit window already open.
+					if ( 'editVideo' === this.model.get( 'mode' ) ) {
+						return true;
+					}
+
+					// hide the previous notification
+					var messages = this.$el.find( '.brightcove-message' );
+					messages.addClass( 'hidden' );
+
+					this.editView = new VideoEditView( {model : model} );
+
+					this.registerSubview( this.editView );
+					this.model.set( 'mode', 'editVideo' );
+					this.render();
+
 				} else {
 
 					// We just hit the edit button with the edit window already open.
@@ -239,26 +256,56 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			this.listenTo( wpbc.broadcast, 'select:media', function ( mediaView ) {
 
-				/* If user selects same thumbnail they want to hide the details view */
-				if ( this.detailsView && this.detailsView.model === mediaView.model ) {
+				// Handle selection in the video experience tab.
+				if ( mediaView.model.collection && 'videoexperience' === mediaView.model.collection.mediaType ) {
 
-					this.detailsView.$el.toggle();
+					// Toggle the selected state.
 					mediaView.$el.toggleClass( 'highlighted' );
-					this.model.get( 'media-collection-view' ).$el.toggleClass( 'menu-visible' );
-					wpbc.broadcast.trigger( 'toggle:insertButton' );
+					mediaView.model.set( 'isSelected', mediaView.$el.hasClass( 'highlighted' ) );
+
+					// Collect the selected models and extract their IDs.
+					var selected = _.filter( mediaView.model.collection.models, function( model ) {
+						return model.get( 'isSelected' );
+					} ),
+					selectedIds = _.map( selected, function( model ) {
+						return model.get( 'id' );
+					} );
+
+					this.detailsView.model.set( 'id', selectedIds );
+
+					// Clear the shortcode and disable insertion if no items are selected.
+					if ( _.isEmpty( selectedIds ) ) {
+						wpbc.broadcast.trigger( 'toggle:insertButton' );
+						$( '#shortcode' ).val( '' );
+					} else {
+
+						// Otherwise, enable insertion.
+						wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
+					}
 
 				} else {
 
-					this.clearPreview();
-					this.detailsView = new MediaDetailsView( {model : mediaView.model, el : $( '.brightcove.media-frame-menu' ), mediaType : this.model.get( 'mediaType' )} );
-					this.registerSubview( this.detailsView );
+					/* If user selects same thumbnail they want to hide the details view */
+					if ( this.detailsView && this.detailsView.model === mediaView.model ) {
 
-					this.detailsView.render();
-					this.detailsView.$el.toggle( true ); // Always show new view
-					this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
-					mediaView.$el.addClass( 'highlighted' );
-					wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
+						this.detailsView.$el.toggle();
+						mediaView.$el.toggleClass( 'highlighted' );
+						this.model.get( 'media-collection-view' ).$el.toggleClass( 'menu-visible' );
+						wpbc.broadcast.trigger( 'toggle:insertButton' );
 
+					} else {
+
+						this.clearPreview();
+						this.detailsView = new MediaDetailsView( {model : mediaView.model, el : $( '.brightcove.media-frame-menu' ), mediaType : this.model.get( 'mediaType' )} );
+						this.registerSubview( this.detailsView );
+
+						this.detailsView.render();
+						this.detailsView.$el.toggle( true ); // Always show new view
+						this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
+						mediaView.$el.addClass( 'highlighted' );
+						wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
+
+					}
 				}
 			} );
 
@@ -406,6 +453,18 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 					wpbc.broadcast.trigger( 'remove:permanentMessage' );
 					wpbc.broadcast.trigger( 'permanent:message', wpbc.preload.messages.ongoingSync );
 
+				}
+				if ( 'videoexperience' === this.model.get( 'mediaType' ) ) {
+					this.detailsView = new MediaDetailsView( {
+						model : new MediaModel( this.model.attributes ),
+						el : $( '.brightcove.media-frame-menu' ),
+						mediaType : this.model.get( 'mediaType' )
+					} );
+					this.registerSubview( this.detailsView );
+
+					this.detailsView.render();
+					this.detailsView.$el.toggle( true ); // Always show new view
+					this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
 				}
 			} else if ( 'editVideo' === mode ) {
 
