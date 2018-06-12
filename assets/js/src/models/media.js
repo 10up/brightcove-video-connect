@@ -141,7 +141,17 @@ var MediaModel = Backbone.Model.extend(
 
 			var account_id      = this.get( 'account_id' );
 			var matchingAccount = _.findWhere( wpbc.preload.accounts, {account_id : this.get( 'account_id' )} );
-			return undefined === matchingAccount ? 'unavailable' : matchingAccount.account_name;
+			return undefined === matchingAccount ? this.getSelectedAccountName() : matchingAccount.account_name;
+		},
+
+		getSelectedAccountName : function () {
+      var elt = document.getElementById( 'brightcove-media-source' );
+
+      if ( elt.selectedIndex === -1 ) {
+        return 'unavailable';
+      }
+
+      return elt.options[elt.selectedIndex].text;
 		},
 
 		getReadableDuration : function () {

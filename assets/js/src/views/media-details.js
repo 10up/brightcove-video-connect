@@ -131,13 +131,17 @@ var MediaDetailsView = BrightcoveView.extend(
 			$( '#shortcode' ).val( shortcode );
 		},
 		generateExperienceShortcode: function () {
-			if ( 'undefined' === typeof this.model.get( 'id' ) ) {
-				return '';
+			var videoIds, accountId;
+			if ( 'undefined' !== typeof this.model.get( 'id' ) ) {
+        this.model.set( 'account_id', this.model.get( 'account' ) );
+        videoIds = this.model.get( 'id' ).join( ', ' );
+        accountId = this.model.get( 'account_id' ).replace( /\D/g, '' );
+			} else {
+        videoIds = '';
+        accountId = document.getElementById( 'brightcove-media-source' ).value;
 			}
-			this.model.set( 'account_id', this.model.get( 'account' ) );
-			var videoIds = this.model.get( 'id' ).join( ', ' ),
-			accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
-			experienceId = $( '#video-player' ).val(),
+
+			var experienceId = $( '#video-player' ).val(),
 			embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 			sizing = $( 'input[name="sizing"]:checked' ).val(),
 			width = $( '#width' ).val(),

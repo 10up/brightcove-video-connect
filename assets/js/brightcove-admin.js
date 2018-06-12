@@ -142,7 +142,17 @@ var MediaModel = Backbone.Model.extend(
 
 			var account_id      = this.get( 'account_id' );
 			var matchingAccount = _.findWhere( wpbc.preload.accounts, {account_id : this.get( 'account_id' )} );
-			return undefined === matchingAccount ? 'unavailable' : matchingAccount.account_name;
+			return undefined === matchingAccount ? this.getSelectedAccountName() : matchingAccount.account_name;
+		},
+
+		getSelectedAccountName : function () {
+      var elt = document.getElementById( 'brightcove-media-source' );
+
+      if ( elt.selectedIndex === -1 ) {
+        return 'unavailable';
+      }
+
+      return elt.options[elt.selectedIndex].text;
 		},
 
 		getReadableDuration : function () {
@@ -1739,13 +1749,17 @@ var MediaDetailsView = BrightcoveView.extend(
 			$( '#shortcode' ).val( shortcode );
 		},
 		generateExperienceShortcode: function () {
-			if ( 'undefined' === typeof this.model.get( 'id' ) ) {
-				return '';
+			var videoIds, accountId;
+			if ( 'undefined' !== typeof this.model.get( 'id' ) ) {
+        this.model.set( 'account_id', this.model.get( 'account' ) );
+        videoIds = this.model.get( 'id' ).join( ', ' );
+        accountId = this.model.get( 'account_id' ).replace( /\D/g, '' );
+			} else {
+        videoIds = '';
+        accountId = document.getElementById( 'brightcove-media-source' ).value;
 			}
-			this.model.set( 'account_id', this.model.get( 'account' ) );
-			var videoIds = this.model.get( 'id' ).join( ', ' ),
-			accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
-			experienceId = $( '#video-player' ).val(),
+
+			var experienceId = $( '#video-player' ).val(),
 			embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 			sizing = $( 'input[name="sizing"]:checked' ).val(),
 			width = $( '#width' ).val(),
