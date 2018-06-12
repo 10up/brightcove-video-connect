@@ -73,16 +73,16 @@ var MediaDetailsView = BrightcoveView.extend(
 		generateShortcode: function () {
 			switch (this.mediaType){
 				case 'videos':
-          this.generateVideoShortcode();
-          break;
+					this.generateVideoShortcode();
+					break;
 				case 'videoexperience':
-          this.generateExperienceShortcode();
-          break;
+					this.generateExperienceShortcode();
+					break;
 				case 'playlistexperience':
-          this.generatePlaylistExperienceShortcode();
-          break;
+					this.generatePlaylistExperienceShortcode();
+					break;
 				default:
-          this.generatePlaylistShortcode();
+					this.generatePlaylistShortcode();
 			}
 		},
 
