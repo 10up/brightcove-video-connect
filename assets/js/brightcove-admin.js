@@ -1752,7 +1752,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			var videoIds, accountId;
 			if ( 'undefined' !== typeof this.model.get( 'id' ) ) {
         this.model.set( 'account_id', this.model.get( 'account' ) );
-        videoIds = this.model.get( 'id' ).join( ', ' );
+        videoIds = this.model.get( 'id' ).join( ',' );
         accountId = this.model.get( 'account_id' ).replace( /\D/g, '' );
 			} else {
         videoIds = '';
