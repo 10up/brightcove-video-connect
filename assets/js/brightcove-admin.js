@@ -731,8 +731,8 @@ var BrightcoveView = wp.Backbone.View.extend(
 );
 
 /**
- * This is the toolbar to handle sorting, filtering, searching and grid/list view toggles.
- * State is captured in the brightcove-media-manager model.
+ * This is the toolbar to handle sorting, filtering, searching and grid/list
+ * view toggles. State is captured in the brightcove-media-manager model.
  */
 var ToolbarView = BrightcoveView.extend(
 	{
@@ -741,14 +741,15 @@ var ToolbarView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-media-toolbar' ),
 
 		events : {
-			'click .view-list' :                   'toggleList',
-			'click .view-grid' :                   'toggleGrid',
-			'click .brightcove-toolbar':           'toggleToolbar',
-			'change .brightcove-media-source' :    'sourceChanged',
-			'change .brightcove-media-dates' :     'datesChanged',
-			'change .brightcove-media-tags' :      'tagsChanged',
-			'change .brightcove-empty-playlists' : 'emptyPlaylistsChanged',
-			'click #media-search' : 'searchHandler'
+      'click .view-list': 'toggleList',
+      'click .view-grid': 'toggleGrid',
+      'click .brightcove-toolbar': 'toggleToolbar',
+      'change .brightcove-media-source': 'sourceChanged',
+      'change .brightcove-media-dates': 'datesChanged',
+      'change .brightcove-media-tags': 'tagsChanged',
+      'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
+      'click #media-search': 'searchHandler',
+      'keyup .search': 'enterHandler'
 		},
 
 		render : function () {
@@ -827,12 +828,20 @@ var ToolbarView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'change:emptyPlaylists', emptyPlaylists );
 		},
 
+    enterHandler : function ( event ) {
+      if ( event.keyCode === 13 ) {
+        this.searchHandler( event );
+      }
+    },
+
 		searchHandler : function ( event ) {
 			var searchTerm = $( '#media-search-input' ).val();
 
 			if ( searchTerm.length > 2 && searchTerm !== this.model.get( 'search' ) ) {
 				this.model.set( 'search', searchTerm );
 				wpbc.broadcast.trigger( 'change:searchTerm', searchTerm );
+			} else if (searchTerm.length === 0) {
+  			wpbc.broadcast.trigger( 'change:searchTerm', "" );
 			}
 		}
 	}
