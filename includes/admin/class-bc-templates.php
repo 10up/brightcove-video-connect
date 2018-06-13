@@ -481,7 +481,7 @@ class BC_Admin_Templates {
 					<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
 						<img src="{{ data.images.thumbnail.src }}" class="icon" draggable="false" width="162" height="94" />
 					<# } else { #>
-						<# if ( data.video_ids ) { #>
+						<# if ( data.video_ids || 'EXPLICIT' !== data.type ) { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
 						<# } else { #>
 							<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-processing-large.png' ); ?>" class="icon" draggable="false" width="162" height="94"  />
