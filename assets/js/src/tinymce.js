@@ -95,6 +95,12 @@
         var videoHeight = self.shortcode.attrs.named.height;
         var videoWidth = self.shortcode.attrs.named.width;
         var experienceId = self.shortcode.attrs.named.experience_id;
+				var urlAttrs;
+				if ( 'undefined' !== typeof self.shortcode.attrs.named.video_ids ) {
+          urlAttrs = 'videoIds=' + utilities.bc_sanitize_ids(self.shortcode.attrs.named.video_ids);
+        } else {
+					urlAttrs = 'playlistId=' + utilities.bc_sanitize_ids(self.shortcode.attrs.named.playlist_id);
+				}
 
         if ( 'undefined' === typeof videoHeight ) {
           videoHeight = 250;
@@ -106,7 +112,7 @@
 
         var iframe = jQuery( '<iframe />' );
         iframe.attr( 'style', 'width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;' );
-        iframe.attr( 'src', '//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/experience_' + experienceId + '/index.html?videoIds=' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.video_ids ) );
+        iframe.attr( 'src', '//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/experience_' + experienceId + '/index.html?' + urlAttrs );
         iframe.attr( 'mozallowfullscreen' , '' );
         iframe.attr( 'webkitallowfullscreen' , '' );
         iframe.attr( 'allowfullscreen' , '' );
@@ -196,6 +202,11 @@
           var videoHeight = self.shortcode.attrs.named.height;
           var videoWidth = self.shortcode.attrs.named.width;
           var experienceId = self.shortcode.attrs.named.experience_id;
+          if ( 'undefined' !== typeof self.shortcode.attrs.named.video_ids ) {
+            urlAttrs = 'videoIds=' + utilities.bc_sanitize_ids(self.shortcode.attrs.named.video_ids);
+          } else {
+            urlAttrs = 'playlistId=' + utilities.bc_sanitize_ids(self.shortcode.attrs.named.playlist_id);
+          }
 
           if ( 'undefined' === typeof videoHeight ) {
             videoHeight = 250;
@@ -205,7 +216,7 @@
             videoWidth = 500;
           }
 
-          this.content = '<iframe style="width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.account_id ) + '/experience_' + experienceId + '/index.html?videoIds=' + bc_sanitize_ids( options.shortcode.attrs.named.video_ids ) + '" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
+          this.content = '<iframe style="width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.account_id ) + '/experience_' + experienceId + '/index.html?' + urlAttrs + '" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
           // add allowfullscreen attribute to main iframe to allow video preview in full screen
           if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
             document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
