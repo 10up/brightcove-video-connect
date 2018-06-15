@@ -811,7 +811,7 @@ class BC_Utility {
 		$max_width     = sanitize_text_field( $atts['max_width'] );
 		$embed         = sanitize_text_field( $atts['embed'] );
 
-		if ( ! empty( $atts['video_ids'] ) ) {
+		if ( ! isset( $atts['video_ids'] ) ) {
 			$video_ids = sanitize_text_field( $atts['video_ids'] );
 			$js_attr   = 'data-video-ids="' . esc_attr( $video_ids ) . '"';
 			$url_attr  = 'videoIds=' . esc_attr( $video_ids );
@@ -834,7 +834,7 @@ class BC_Utility {
 
 			<div style="display: block; position: relative; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 				<iframe
-						src=" https://players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/index.html?cms: wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experienceiframe&<?php echo $url_attr; // XSS ok. ?>"
+						src="https://players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/index.html?cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experienceiframe&<?php echo $url_attr; // XSS ok. ?>"
 						allowfullscreen
 						webkitallowfullscreen
 						mozallowfullscreen
