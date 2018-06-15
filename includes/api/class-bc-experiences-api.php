@@ -38,6 +38,26 @@ class BC_Experiences_API extends BC_API {
 	 * @return mixed
 	 */
 	public function get_experiences() {
-		return $this->send_request( esc_url_raw( self::BASE_URL . $this->get_account_id() . '/experiences' ) );
+
+		global $bc_accounts;
+
+		$all_accounts_id = $bc_accounts->get_all_accounts_id();
+		$experiences     = array();
+
+		foreach ( $all_accounts_id as $account_id ) {
+			$bc_accounts->set_current_account_by_id( $account_id );
+
+			$url                 = esc_url_raw( self::BASE_URL . $account_id . '/experiences/' );
+			$account_experiences = $this->send_request( $url );
+
+			$experiences[ $account_id ] = $account_experiences;
+
+			if ( is_wp_error( $account_experiences ) ) {
+				return [];
+			}
+
+		}
+
+		return apply_filters( 'brightcove_get_experiences', $experiences );
 	}
 }

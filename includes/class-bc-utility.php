@@ -811,6 +811,8 @@ class BC_Utility {
 		$max_width     = sanitize_text_field( $atts['max_width'] );
 		$embed         = sanitize_text_field( $atts['embed'] );
 
+		$video_ids = '';
+		$playlist_id = '';
 		if ( isset( $atts['video_ids'] ) ) {
 			$video_ids = sanitize_text_field( $atts['video_ids'] );
 			$js_attr   = 'data-video-ids="' . esc_attr( $video_ids ) . '"';
@@ -850,17 +852,17 @@ class BC_Utility {
 		$html = ob_get_clean();
 
 		/**
-		 * Filter the Brightcove Player HTML.
+		 * Filter the Brightcove Experiences HTML.
 		 *
-		 * @param string  $html       HTML markup of the Brightcove Player.
-		 * @param string  $type       "playlist" or "video".
-		 * @param string  $id         The brightcove player or video ID.
-		 * @param string  $account_id The Brightcove account ID.
-		 * @param string  $player_id  The brightcove player ID.
-		 * @param int     $width      The Width to display.
-		 * @param int     $height     The height to display.
+		 * @param string $html HTML markup of the Brightcove Player.
+		 * @param string $type "playlist" or "video".
+		 * @param string $video_ids The brightcove video IDs.
+		 * @param string $account_id The Brightcove account ID.
+		 * @param string $experience_id The brightcove experience ID.
+		 * @param int    $width The Width to display.
+		 * @param int    $height The height to display.
 		 */
-		$html = apply_filters( 'brightcove_video_html', $html, 'video', $id, $account_id, $player_id, $width, $height );
+		$html = apply_filters( 'brightcove_experience_html', $html, 'video', $video_ids, $account_id, $experience_id, $width, $height );
 
 		return $html;
 	}

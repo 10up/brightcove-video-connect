@@ -682,9 +682,11 @@ class BC_Admin_Templates {
 						</label>
 					<div class="clear">
 						<select name="video-player" id="video-player" class="experienceplayer">
-							<# _.each( wpbc.experiences.items, function ( experience ) { #>
-							<option value="{{ experience.id }}">{{ experience.name }}</option>
-							<# }); #>
+							<# if ( 'undefined' !== typeof wpbc.experiences[data.activeAccount] ){ #>
+								<# _.each( wpbc.experiences[data.activeAccount].items, function ( experience ) { #>
+								<option value="{{ experience.id }}">{{ experience.name }}</option>
+								<# }); #>
+							<# } #>
 						</select>
 					</div>
 
@@ -757,9 +759,11 @@ class BC_Admin_Templates {
 						</label>
 						<div class="clear">
 							<select name="video-player" id="video-player" class="experienceplayer">
-								<# _.each( wpbc.experiences.items, function ( experience ) { #>
-								<option value="{{ experience.id }}">{{ experience.name }}</option>
-								<# }); #>
+								<# if ( 'undefined' !== typeof wpbc.experiences[data.activeAccount] ){ #>
+									<# _.each( wpbc.experiences[data.activeAccount].items, function ( experience ) { #>
+									<option value="{{ experience.id }}">{{ experience.name }}</option>
+									<# }); #>
+								<# } #>
 							</select>
 						</div>
 
