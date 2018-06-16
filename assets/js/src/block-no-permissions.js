@@ -11,7 +11,7 @@
 		title: 'Brightcove',
 		description: 'The Brightcove block allows you to embed videos from Brightcove.',
 		icon: 'video-alt3',
-		category: 'common', // embed?
+		category: 'common',
 		attributes: {
 			account_id: {
 				type: 'int'
@@ -27,6 +27,7 @@
 			}
 		},
 		supports: {
+			inserter: false,
 			html: false
 		},
 
@@ -40,68 +41,13 @@
 			var videoId = props.attributes.video_id || '';
 			var playlistId = props.attributes.playlist_id || '';
 
-			// Sanitize the IDs we need
-			var sanitizeIds = function( id ) {
-				return id.replace( /\D/g, '' );
-			};
-
-			/**
-			 * Set attributes when a video is selected.
-			 *
-			 * Listens to the change event on our hidden
-			 * input and will grab the shortcode from the
-			 * inputs value, parsing out the attributes
-			 * we need and setting those as props.
-			 */
-			var onSelectVideo = function() {
-				var btn = document.getElementById( target );
-				var attrs = wp.shortcode.attrs( btn.value );
-
-				if ( '[bc_video' === attrs.numeric[0] ) {
-					props.setAttributes( {
-						account_id: sanitizeIds( attrs.named.account_id ),
-						player_id: attrs.named.player_id,
-						video_id: sanitizeIds( attrs.named.video_id ),
-						playlist_id: ''
-					} );
-				} else if ( '[bc_playlist' === attrs.numeric[0] ) {
-					props.setAttributes( {
-						account_id: sanitizeIds( attrs.named.account_id ),
-						player_id: attrs.named.player_id,
-						video_id: '',
-						playlist_id: sanitizeIds( attrs.named.playlist_id )
-					} );
-				}
-			};
-
-			// Listen for a change event on our hidden input
-			jQuery( document ).on( 'change', '#' + target, onSelectVideo );
-
-			// Set up our controls
-			var controls = el(
-				BlockControls,
-				{ key: 'controls' },
-				el( 'div', { className: 'components-toolbar' },
-					el(
-						IconButton,
-						{
-							className: 'brightcove-add-media components-icon-button components-toolbar__control',
-							label: videoId.length ? 'Change Video' : 'Change Playlist',
-							icon: 'edit',
-							'data-target': '#' + target
-						}
-					)
-				)
-			);
-
-			// If no video has been selected yet, show the selection view
+			// If no video has been selected yet, show a warning message
 			if ( ! accountId.length && ! playerId.length && ( ! videoId.length || ! playlistId.length ) ) {
 				return el( Placeholder, {
 					icon: 'media-video',
 					label: 'Brightcove',
-					instructions: 'Select a video file or playlist from your Brightcove library',
+					instructions: 'You don\'t have permissions to add Brightcove videos.',
 					children: [
-						el( 'button', { className: 'brightcove-add-media button button-large', 'data-target': '#' + target, key: 'button' }, 'Brightcove Media' ),
 						el( 'input', { id: target, hidden: true, key: 'input' } )
 					]
 				} );
@@ -118,7 +64,6 @@
 				}
 
 				return [
-					controls,
 					el( 'iframe', { src: src, style: { height: 250, width: 500, display: 'block', margin: '0 auto' }, key: 'iframe' } ),
 					el( 'input', { id: target, hidden: true, key: 'input' } )
 				];
