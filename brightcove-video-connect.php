@@ -66,6 +66,7 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 
 	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
+	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
 	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
@@ -82,6 +83,7 @@ if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', '
 
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
+add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
 
