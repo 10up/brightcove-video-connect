@@ -660,7 +660,7 @@ class BC_Admin_Templates {
 			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
 
 
-				<div class="video-details">
+				<div class="video-details experience-details">
                     <span class="left-col">
                         <?php esc_html_e( 'Source: ', 'brightcove' ); ?>
                     </span>
@@ -737,7 +737,7 @@ class BC_Admin_Templates {
 			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
 
 
-				<div class="video-details">
+				<div class="video-details experience-details">
                     <span class="left-col">
                         <?php esc_html_e( 'Source: ', 'brightcove' ); ?>
                     </span>

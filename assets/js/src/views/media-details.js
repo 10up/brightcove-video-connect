@@ -19,6 +19,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
 			'click .playlist-details input[name="embed-style"]' :  'togglePlaylistSizing',
             'change #aspect-ratio' : 'toggleUnits',
+            'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
             'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
@@ -69,6 +70,34 @@ var MediaDetailsView = BrightcoveView.extend(
 				}
 			}
 		},
+
+    toggleExperienceUnits: function( event ) {
+      var $sizingField=$( 'input[name="sizing"]:checked' );
+      var $sizing = $sizingField.val();
+      var $embedStyle = $( 'input[name="embed-style"]:checked' ).val();
+      var $height = $( '#height' );
+      var $width = $( '#width' );
+
+      $height.removeAttr('readonly');
+      $width.removeAttr('readonly');
+      $sizingField.show();
+
+      if ( 'responsive' === $sizing && 'javascript_experience' === $embedStyle ) {
+        $height.attr('readonly', true);
+      }
+      else if ( 'fixed' === $sizing && 'javascript_experience' === $embedStyle ) {
+        $height.removeAttr('readonly');
+        $width.removeAttr('readonly');
+      }
+      else if ( 'responsive' === $sizing && 'iframe' === $embedStyle ) {
+        $height.attr('readonly', true);
+        $width.attr('readonly', true);
+      }
+      else {
+        $height.removeAttr('readonly');
+        $width.removeAttr('readonly');
+      }
+    },
 
 		generateShortcode: function () {
 			switch (this.mediaType){
