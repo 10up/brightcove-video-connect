@@ -274,6 +274,18 @@ abstract class BC_API {
 
 		}
 
+		if ( is_wp_error( $request ) ) {
+			//
+			$this->errors[] = array(
+				'url'   => $url,
+				'error' => $request,
+			);
+
+			BC_Logging::log( sprintf( 'BC API ERROR: %s', $request->get_error_message() ) );
+
+			return false;
+		}
+
 		if ( $transient_key && $body && ( ! defined( 'WP_DEBUG' ) || false === WP_DEBUG ) ) {
 			// Store body for 60s to prevent hammering the BC APIs.
 			BC_Utility::set_cache_item( $transient_key, 'api-request', $body, 60 );
