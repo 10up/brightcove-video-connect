@@ -828,7 +828,7 @@ class BC_Utility {
 		?>
 		<!-- Start of Brightcove Experience Player -->
 
-		<?php if ( 'javascript_experience' === $embed ) : ?>
+		<?php if ( 'javascript' === $embed ) : ?>
 			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
 				 <?php echo $js_attr; // XSS ok. ?> data-usage="cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 			</div>

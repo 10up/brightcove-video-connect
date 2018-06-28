@@ -694,7 +694,7 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="javascript_experience" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="javascript" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
@@ -771,7 +771,7 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="javascript_experience" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="javascript" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
