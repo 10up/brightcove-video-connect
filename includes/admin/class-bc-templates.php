@@ -698,10 +698,10 @@ class BC_Admin_Templates {
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
-						<label for="sizing-responsive">
+						<label for="sizing-responsive" class="embed-sizing-div">
 							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
 						</label>
-						<div class="right-col">
+						<div class="right-col embed-sizing-div">
 							<input type="radio" value="responsive" id="sizing-responsive" checked name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
 							<input type="radio" value="fixed" id="sizing-fixed" name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
 						</div>
@@ -775,10 +775,10 @@ class BC_Admin_Templates {
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
-						<label for="sizing-responsive">
+						<label for="sizing-responsive" class="embed-sizing-div">
 							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
 						</label>
-						<div class="right-col">
+						<div class="right-col embed-sizing-div">
 							<input type="radio" value="responsive" id="sizing-responsive" checked name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
 							<input type="radio" value="fixed" id="sizing-fixed" name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
 						</div>
