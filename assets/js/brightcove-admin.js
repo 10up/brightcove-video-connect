@@ -1706,7 +1706,7 @@ var MediaDetailsView = BrightcoveView.extend(
       var $height = $( '#height' );
       var $width = $( '#width' );
       var $inputSizing = $( 'input[name="sizing"]' );
-      var $sizingDiv =  $('.embed-sizing-div');
+      var $sizingDiv = $('.embed-sizing-div');
 
       $height.removeAttr('readonly');
       $width.removeAttr('readonly');
@@ -1720,15 +1720,12 @@ var MediaDetailsView = BrightcoveView.extend(
         $height.removeAttr('readonly');
         $width.removeAttr('readonly');
       }
-      else if ( 'responsive' === $sizing && 'iframe' === $embedStyle ) {
+      else {
       	$inputSizing.attr('checked',false);
-        $('#sizing-fixed').attr('checked',true);
+        $('#sizing-fixed').attr('checked', true);
         $sizingDiv.hide();
       }
-      else {
-        $height.removeAttr('readonly');
-        $width.removeAttr('readonly');
-      }
+
     },
 
 		generateShortcode: function () {

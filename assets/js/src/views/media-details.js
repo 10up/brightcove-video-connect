@@ -92,15 +92,12 @@ var MediaDetailsView = BrightcoveView.extend(
         $height.removeAttr('readonly');
         $width.removeAttr('readonly');
       }
-      else if ( 'responsive' === $sizing && 'iframe' === $embedStyle ) {
+      else {
       	$inputSizing.attr('checked',false);
         $('#sizing-fixed').attr('checked', true);
         $sizingDiv.hide();
       }
-      else {
-        $height.removeAttr('readonly');
-        $width.removeAttr('readonly');
-      }
+
     },
 
 		generateShortcode: function () {
