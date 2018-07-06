@@ -953,6 +953,14 @@ class BC_Admin_Media_API {
 			// Get a list of videos
 			$results = $this->cms_api->video_list( $count, 0, '', 'updated_at' );
 
+			if ( is_wp_error( $results ) ) {
+
+				BC_Logging::log( sprintf( 'BC API ERROR: %s', $results->get_error_message() ) );
+
+				return array();
+			}
+
+
 			// Get a list of available custom fields
 			$fields = $this->cms_api->video_fields();
 

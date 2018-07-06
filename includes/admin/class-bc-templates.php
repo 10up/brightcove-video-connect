@@ -660,7 +660,7 @@ class BC_Admin_Templates {
 			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
 
 
-				<div class="video-details">
+				<div class="video-details experience-details">
                     <span class="left-col">
                         <?php esc_html_e( 'Source: ', 'brightcove' ); ?>
                     </span>
@@ -694,14 +694,14 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="javascript_experience" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="javascript" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
-						<label for="sizing-responsive">
+						<label for="sizing-responsive" class="embed-sizing-div">
 							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
 						</label>
-						<div class="right-col">
+						<div class="right-col embed-sizing-div">
 							<input type="radio" value="responsive" id="sizing-responsive" checked name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
 							<input type="radio" value="fixed" id="sizing-fixed" name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
 						</div>
@@ -737,7 +737,7 @@ class BC_Admin_Templates {
 			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
 
 
-				<div class="video-details">
+				<div class="video-details experience-details">
                     <span class="left-col">
                         <?php esc_html_e( 'Source: ', 'brightcove' ); ?>
                     </span>
@@ -771,14 +771,14 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
 						<div class="right-col">
-							<input type="radio" value="javascript_experience" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="javascript" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
 							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
 						</div>
 
-						<label for="sizing-responsive">
+						<label for="sizing-responsive" class="embed-sizing-div">
 							<?php esc_html_e( 'Sizing: ', 'brightcove' ); ?>
 						</label>
-						<div class="right-col">
+						<div class="right-col embed-sizing-div">
 							<input type="radio" value="responsive" id="sizing-responsive" checked name="sizing"><?php esc_html_e( 'Responsive', 'brightcove' ); ?>
 							<input type="radio" value="fixed" id="sizing-fixed" name="sizing"><?php esc_html_e( 'Fixed', 'brightcove' ); ?>
 						</div>

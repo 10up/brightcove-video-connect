@@ -488,9 +488,18 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @return string|bool the id of the ingest request or false on failure
 	 */
-	public function video_upload( $video_id, $video_url, $profile = 'videocloud-default-v1' ) {
+	public function video_upload( $video_id, $video_url, $profile = '' ) {
 
-		$data              = array( 'profile' => sanitize_text_field( $profile ) );
+		/**
+		 * Filter the Brightcove Ingest Profile.
+		 *
+		 * Allow the user to specify a profile.
+		 *
+		 * @param string $profile The profile specified in method, otherwise empty.
+		 */
+		$profile = apply_filters( 'brightcove_ingest_profile', $profile );
+
+		$data = ( ! empty( $profile ) ) ? array( 'profile' => sanitize_text_field( $profile ) ) : array();
 		$data['master']    = array( 'url' => esc_url_raw( $video_url ) );
 		$data['callbacks'] = BC_Notification_API::callback_paths();
 
