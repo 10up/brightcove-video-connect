@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 4.9
-Stable tag: 1.4.1
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,15 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 1.5.0 =
+
+* Enhancement: Video Experience player.
+* Enhancement: Video Experience playlists.
+* Enhancement: Added filter to allow developer to specify an ingest profile.
+* Fix: Resolves issue with WP dashboard being taken down when API is unresponsive.
+* Fix: Adjustments to search behavior.
+
 
 = 1.4.1 =
 

@@ -60,6 +60,16 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.5.0
+
+* Enhancement: Video Experience player.
+* Enhancement: Video Experience playlists.
+* Enhancement: Added filter to allow developer to specify an ingest profile.
+* Fix: Resolves issue with WP dashboard being taken down when API is unresponsive.
+* Fix: Adjustments to search behavior.
+ 
+
+
 ##### 1.4.1
 
 * Fix: Fixed a minor issue with the API request.
