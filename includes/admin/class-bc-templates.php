@@ -759,8 +759,8 @@ class BC_Admin_Templates {
 						</label>
 						<div class="clear">
 							<select name="video-player" id="video-player" class="experienceplayer">
-								<# if ( 'undefined' !== typeof wpbc.experiences[data.activeAccount] ){ #>
-									<# _.each( wpbc.experiences[data.activeAccount].items, function ( experience ) { #>
+								<# if ( 'undefined' !== typeof wpbc.experiences[data.account_id] ){ #>
+									<# _.each( wpbc.experiences[data.account_id].items, function ( experience ) { #>
 									<option value="{{ experience.id }}">{{ experience.name }}</option>
 									<# }); #>
 								<# } #>
