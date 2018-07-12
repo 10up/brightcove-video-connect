@@ -25,6 +25,7 @@ class BC_Playlist_Shortcode {
 			'account_id'  => '',
 			'playlist_id' => '',
 			'autoplay'    => '',
+			'mute'        => '',
 			'embed'       => '',
 			'padding_top' => '56.25%',
 			'min_width'   => '0px',

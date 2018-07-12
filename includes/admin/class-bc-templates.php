@@ -604,6 +604,13 @@ class BC_Admin_Templates {
                             <input type="checkbox" id="autoplay" name="autoplay">
                         </div>
 
+						<label for="mute">
+		                    <?php esc_html_e( 'Mute: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="checkbox" id="mute" name="mute">
+						</div>
+
                         <label for="embed-style-in-page">
                             <?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
                         </label>
@@ -875,6 +882,13 @@ class BC_Admin_Templates {
 						</label>
 						<div class="right-col">
 							<input type="checkbox" id="autoplay" name="autoplay">
+						</div>
+
+						<label for="mute">
+							<?php esc_html_e( 'Mute: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="checkbox" id="mute" name="mute">
 						</div>
 
 						<label>

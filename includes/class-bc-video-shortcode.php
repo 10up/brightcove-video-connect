@@ -28,6 +28,7 @@ class BC_Video_Shortcode {
 			'account_id'  => '',
 			'video_id'    => '',
 			'autoplay'    => '',
+			'mute'    => '',
 			'embed'       => '',
 			'padding_top' => '56.25%',
 			'min_width'   => '0px',

@@ -1648,7 +1648,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .playlist-details input[name="embed-style"]' :  'togglePlaylistSizing',
             'change #aspect-ratio' : 'toggleUnits',
             'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
-            'change #video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
+            'change #video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
@@ -1749,6 +1749,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
@@ -1783,7 +1784,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
 				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
-				'width="' + width + '" height="' + height + '"' +
+				'mute="' + mute + '" width="' + width + '" height="' + height + '"' +
 				']';
 
 			$( '#shortcode' ).val( shortcode );
@@ -1834,11 +1835,12 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		generatePlaylistShortcode: function () {
 		    var playlistId = this.model.get( 'id' ).replace( /\D/g, '' ),
-                accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
+				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
-                sizing = $( 'input[name="sizing"]:checked' ).val(),
+				sizing = $( 'input[name="sizing"]:checked' ).val(),
 				aspectRatio = $( '#aspect-ratio' ).val(),
 				paddingTop = '',
 				width = $( '#width' ).val(),
@@ -1850,13 +1852,13 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		    if ( 'in-page-vertical' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="in-page-vertical" autoplay="' + autoplay + '" ' +
+				    'embed="in-page-vertical" autoplay="' + autoplay + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
 				    ']';
 		    } else if ( 'in-page-horizontal' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="in-page-horizontal" autoplay="' + autoplay + '" ' +
+				    'embed="in-page-horizontal" autoplay="' + autoplay + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
 				    ']';
@@ -1880,7 +1882,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			    }
 
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="iframe" autoplay="' + autoplay + '" ' +
+				    'embed="iframe" autoplay="' + autoplay + '" mute="' + mute + '" ' +
 				    'min_width="' + minWidth + '" max_width="' + maxWidth + '" padding_top="' + paddingTop + '%" ' +
 				    'width="' + width + '" height="' + height + '"' +
 				    ']';

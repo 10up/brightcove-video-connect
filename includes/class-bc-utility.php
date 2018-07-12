@@ -888,6 +888,7 @@ class BC_Utility {
 		$max_width   = sanitize_text_field( $atts['max_width'] );
 		$padding_top = sanitize_text_field( $atts['padding_top'] );
 		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
+		$mute    = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
 		$embed       = sanitize_text_field( $atts['embed'] );
 
 		ob_start();
@@ -902,7 +903,7 @@ class BC_Utility {
 							data-player="<?php echo esc_attr( $player_id ); ?>"
 							data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 							data-embed="default" class="video-js"
-							controls <?php echo esc_attr( $autoplay ); ?>
+							controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</video>
 
@@ -915,12 +916,15 @@ class BC_Utility {
 			if ( ! empty( $autoplay ) ) {
 				$autoplay = '&' . $autoplay;
 			}
+			if ( ! empty( $mute ) ) {
+				$mute = '&' . $mute;
+			}
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<iframe
-							src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?videoId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?>"
+							src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?videoId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?><?php echo esc_attr( $mute ); ?>"
 							allowfullscreen
 							webkitallowfullscreen
 							mozallowfullscreen
@@ -996,6 +1000,7 @@ class BC_Utility {
 		$max_width   = sanitize_text_field( $atts['max_width'] );
 		$padding_top = sanitize_text_field( $atts['padding_top'] );
 		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
+		$mute    = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
 		$embed       = sanitize_text_field( $atts['embed'] );
 
 		if ( 'default' === $player_id ) {
@@ -1066,7 +1071,7 @@ class BC_Utility {
 						data-application-id
 						data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 						class="video-js"
-						controls <?php echo esc_attr( $autoplay ); ?>>
+						controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
 				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
 				<div class="playlist-wrapper">
@@ -1121,7 +1126,7 @@ class BC_Utility {
 						data-application-id
 						data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 						class="video-js"
-						controls <?php echo esc_attr( $autoplay ); ?>>
+						controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
 				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
 				<div class="playlist-wrapper">
@@ -1133,12 +1138,15 @@ class BC_Utility {
 			if ( ! empty( $autoplay ) ) {
 				$autoplay = '&' . $autoplay;
 			}
+			if ( ! empty( $mute ) ) {
+				$mute = '&' . $mute;
+			}
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<iframe
-						src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?playlistId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?>"
+						src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?playlistId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?><?php echo esc_attr( $mute ); ?>"
 						allowfullscreen
 						webkitallowfullscreen
 						mozallowfullscreen
