@@ -828,16 +828,22 @@ class BC_Utility {
 		?>
 		<!-- Start of Brightcove Experience Player -->
 
-		<?php if ( 'javascript' === $embed ) : ?>
+		<?php
+		if ( 'javascript' === $embed ) :
+			$js_src = 'https://players.brightcove.net/' . $account_id . '/experience_' . $experience_id . '/live.js';
+			?>
 			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
-				 <?php echo $js_attr; // XSS ok. ?> data-usage="cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
+				<?php echo $js_attr; // XSS ok. ?> data-usage="cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 			</div>
-			<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/live.js "></script>
-		<?php else : ?>
+			<script src="<?php echo esc_url( $js_src ); ?>"></script>
+		<?php
+		else :
+			$iframe_src = 'https://players.brightcove.net/' . $account_id . '/experience_' . $experience_id . '/index.html?cms:wordpress:' . $wp_version . ':' . BRIGHTCOVE_VERSION . ':experienceiframe&' . $url_attr;
+			?>
 
 			<div style="display: block; position: relative; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 				<iframe
-						src="https://players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/experience_<?php echo esc_attr( $experience_id ); ?>/index.html?cms:wordpress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experienceiframe&<?php echo $url_attr; // XSS ok. ?>"
+						src="<?php echo esc_url( $iframe_src ); ?>"
 						allowfullscreen
 						webkitallowfullscreen
 						mozallowfullscreen
@@ -895,7 +901,10 @@ class BC_Utility {
 		?>
 		<!-- Start of Brightcove Player -->
 
-		<?php if ( 'in-page' === $embed ) : ?>
+		<?php
+		if ( 'in-page' === $embed ) :
+			$js_src = 'https://players.brightcove.net/' . $account_id . '/' . $player_id . '_default/index.min.js';
+			?>
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<video
@@ -907,7 +916,7 @@ class BC_Utility {
 							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</video>
 
-					<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
+					<script src="<?php echo esc_url( $js_src ); ?>"></script>
 				</div>
 			</div>
 
@@ -919,12 +928,13 @@ class BC_Utility {
 			if ( ! empty( $mute ) ) {
 				$mute = '&' . $mute;
 			}
+			$iframe_src = 'https://players.brightcove.net/' . $account_id . '/' . $player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $autoplay . $mute;
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<iframe
-							src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?videoId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?><?php echo esc_attr( $mute ); ?>"
+							src="<?php echo esc_url( $iframe_src ); ?>"
 							allowfullscreen
 							webkitallowfullscreen
 							mozallowfullscreen
@@ -1146,11 +1156,11 @@ class BC_Utility {
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<iframe
-						src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?playlistId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?><?php echo esc_attr( $mute ); ?>"
-						allowfullscreen
-						webkitallowfullscreen
-						mozallowfullscreen
-						style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+							src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?playlistId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?><?php echo esc_attr( $mute ); ?>"
+							allowfullscreen
+							webkitallowfullscreen
+							mozallowfullscreen
+							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</iframe>
 				</div>
 			</div>

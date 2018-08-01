@@ -18,6 +18,20 @@
 		}
 	};
 
+  /**
+	 * Generates an iframe element to be applied to a wrapper.
+   */
+	var generateIframe = function( src, width, height ){
+    var iframe = jQuery( '<iframe />' );
+    iframe.attr( 'style', 'width: ' + width + 'px; height: ' + height + 'px;' );
+    iframe.attr( 'src', src);
+    iframe.attr( 'mozallowfullscreen' , '' );
+    iframe.attr( 'webkitallowfullscreen' , '' );
+    iframe.attr( 'allowfullscreen' , '' );
+
+    return iframe.get(0);
+	};
+
 	// for WP version 4.2 and above use
 	// This approach https://make.wordpress.org/core/2015/04/23/tinymce-views-api-improvements/
 	if ( typeof bctiny.wp_version !== undefined && parseFloat( bctiny.wp_version ) >= 4.2 ) {
@@ -38,20 +52,19 @@
 					videoWidth = 500;
 				}
 
-				var iframe = jQuery( '<iframe />' );
-				iframe.attr( 'style', 'width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;' );
-				iframe.attr( 'src', '//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/' + playerId + '_default/index.html?videoId=' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.video_id ) );
-				iframe.attr( 'mozallowfullscreen' , '' );
-				iframe.attr( 'webkitallowfullscreen' , '' );
-				iframe.attr( 'allowfullscreen' , '' );
+        var src = '//players.brightcove.net/' +
+            utilities.bc_sanitize_ids(self.shortcode.attrs.named.account_id) +
+            '/' + playerId + '_default/index.html?videoId=' +
+            utilities.bc_sanitize_ids(self.shortcode.attrs.named.video_id);
 
-				// There is no way to easily convert an element into string. So we are using a wrapper.
-				// This is needed since VIP doesn't allow direct string concatenation.
-				// Details at https://wordpressvip.zendesk.com/hc/en-us/requests/63849
-				var wrapper = document.createElement("p");
-				wrapper.appendChild( iframe.get(0) );
+        // There is no way to easily convert an element into string. So we are
+        // using a wrapper. This is needed since VIP doesn't allow direct
+        // string concatenation. Details at
+        // https://wordpressvip.zendesk.com/hc/en-us/requests/63849
+        var wrapper = document.createElement('p');
+        wrapper.appendChild(generateIframe(src, videoWidth, videoHeight));
 
-				self.content = wrapper.innerHTML;
+        self.content = wrapper.innerHTML;
 
 				// add allowfullscreen attribute to main iframe to allow video preview in full screen
 				if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
@@ -79,7 +92,17 @@
 				}
 
 				var player_id = bctiny.playlistEnabledPlayers[self.shortcode.attrs.named.account_id][0] || 'default';
-				self.content  = '<iframe style="width: ' + playlistWidth + 'px; height: ' + playlistHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/' + player_id + '_default/index.html?playlistId=' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.playlist_id ) + '" width="645" height="352" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
+
+        var src = '//players.brightcove.net/' +
+            utilities.bc_sanitize_ids(self.shortcode.attrs.named.account_id) +
+            '/' + player_id + '_default/index.html?playlistId=' +
+            utilities.bc_sanitize_ids(self.shortcode.attrs.named.playlist_id);
+
+        var wrapper = document.createElement('p');
+        wrapper.appendChild(generateIframe(src, playlistWidth, playlistHeight));
+
+        self.content = wrapper.innerHTML;
+
 				// add allowfullscreen attribute to main iframe to allow video preview in full screen
 				if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
 					document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
@@ -110,18 +133,16 @@
           videoWidth = 500;
         }
 
-        var iframe = jQuery( '<iframe />' );
-        iframe.attr( 'style', 'width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;' );
-        iframe.attr( 'src', '//players.brightcove.net/' + utilities.bc_sanitize_ids( self.shortcode.attrs.named.account_id ) + '/experience_' + experienceId + '/index.html?' + urlAttrs );
-        iframe.attr( 'mozallowfullscreen' , '' );
-        iframe.attr( 'webkitallowfullscreen' , '' );
-        iframe.attr( 'allowfullscreen' , '' );
+        var src = '//players.brightcove.net/' +
+            utilities.bc_sanitize_ids(self.shortcode.attrs.named.account_id) +
+            '/experience_' + experienceId + '/index.html?' + urlAttrs;
 
-        // There is no way to easily convert an element into string. So we are using a wrapper.
-        // This is needed since VIP doesn't allow direct string concatenation.
-        // Details at https://wordpressvip.zendesk.com/hc/en-us/requests/63849
-        var wrapper = document.createElement("p");
-        wrapper.appendChild( iframe.get(0) );
+        // There is no way to easily convert an element into string. So we are
+        // using a wrapper. This is needed since VIP doesn't allow direct
+        // string concatenation. Details at
+        // https://wordpressvip.zendesk.com/hc/en-us/requests/63849
+        var wrapper = document.createElement('p');
+        wrapper.appendChild(generateIframe(src, videoWidth, videoHeight));
 
         self.content = wrapper.innerHTML;
 
@@ -150,7 +171,17 @@
 						videoWidth = 500;
 					}
 
-					this.content = '<iframe style="width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;" src="//players.brightcove.net/' + bc_sanitize_ids( options.shortcode.attrs.named.account_id ) + '/default_default/index.html?videoId=' + bc_sanitize_ids( options.shortcode.attrs.named.video_id ) + '" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
+          var src = '//players.brightcove.net/' + utilities.bc_sanitize_ids(
+              options.shortcode.attrs.named.account_id) +
+              '/default_default/index.html?videoId=' +
+              utilities.bc_sanitize_ids(options.shortcode.attrs.named.video_id);
+
+          var wrapper = document.createElement('p');
+          wrapper.appendChild(generateIframe(src, videoWidth, videoHeight));
+
+          self.content = wrapper.innerHTML;
+
+
 					// add allowfullscreen attribute to main iframe to allow video preview in full screen
 					if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
 						document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
@@ -180,9 +211,20 @@
 					}
 
 					var player_id = bctiny.playlistEnabledPlayers[options.shortcode.attrs.named.account_id][0] || 'default';
-					this.content  = '<iframe style="width: ' + playlistWidth + 'px; height: ' + playlistHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.account_id ) + '/' + player_id + '_default/index.html?playlistId=' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.playlist_id ) + '" width="645" height="352" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
-					this.content = 'no';
-					// add allowfullscreen attribute to main iframe to allow video preview in full screen
+
+          var src = '//players.brightcove.net/' + utilities.bc_sanitize_ids(
+              options.shortcode.attrs.named.account_id) + '/' + player_id +
+              '_default/index.html?playlistId=' + utilities.bc_sanitize_ids(
+                  options.shortcode.attrs.named.playlist_id);
+
+          var wrapper = document.createElement('p');
+          wrapper.appendChild(
+              generateIframe(src, playlistWidth, playlistHeight));
+
+          self.content = wrapper.innerHTML;
+
+
+          // add allowfullscreen attribute to main iframe to allow video preview in full screen
 					if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
 						document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
 					}
@@ -216,7 +258,15 @@
             videoWidth = 500;
           }
 
-          this.content = '<iframe style="width: ' + videoWidth + 'px; height: ' + videoHeight + 'px;" src="//players.brightcove.net/' + utilities.bc_sanitize_ids( options.shortcode.attrs.named.account_id ) + '/experience_' + experienceId + '/index.html?' + urlAttrs + '" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>';
+          var src = '//players.brightcove.net/' + utilities.bc_sanitize_ids(
+              options.shortcode.attrs.named.account_id) + '/experience_' +
+              experienceId + '/index.html?' + urlAttrs;
+
+          var wrapper = document.createElement('p');
+          wrapper.appendChild(generateIframe(src, videoWidth, videoHeight));
+
+          self.content = wrapper.innerHTML;
+
           // add allowfullscreen attribute to main iframe to allow video preview in full screen
           if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
             document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
