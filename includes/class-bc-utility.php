@@ -1151,12 +1151,13 @@ class BC_Utility {
 			if ( ! empty( $mute ) ) {
 				$mute = '&' . $mute;
 			}
+			$iframesrc = 'https://players.brightcove.net/' . $account_id . '/' . $player_id . '_default/index.html?playlistId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $autoplay . $mute;
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<iframe
-							src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.html?playlistId=<?php echo esc_attr( $id ); ?>&usage=<?php echo esc_attr( self::get_usage_data() ); ?>iframe<?php echo esc_attr( $autoplay ); ?><?php echo esc_attr( $mute ); ?>"
+							src="<?php echo esc_url( $iframesrc ); ?>"
 							allowfullscreen
 							webkitallowfullscreen
 							mozallowfullscreen
