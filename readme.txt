@@ -22,6 +22,10 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 1.6.0 =
+
+* Enhancement: Gutenberg support.
+
 = 1.5.0 =
 
 * Enhancement: Video Experience player.
