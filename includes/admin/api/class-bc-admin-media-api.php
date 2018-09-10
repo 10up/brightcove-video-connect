@@ -722,7 +722,7 @@ class BC_Admin_Media_API {
 		 *
 		 * @since 1.3
 		 */
-		$results = apply_filters( 'brightcove_media_query_results', $results, $type );
+		$results = apply_filters( 'brightcove_media_query_results', $processed_results, $type );
 
 		wp_send_json_success( $results );
 	}
