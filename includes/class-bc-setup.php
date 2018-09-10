@@ -107,6 +107,86 @@ class BC_Setup {
 
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
 		add_action( 'init',  array( 'BC_Setup', 'register_post_types' ) );
+
+		if ( function_exists( 'register_block_type' ) ) {
+			wp_register_script(
+				'brightcove-block',
+				BRIGHTCOVE_URL . 'assets/js/src/block.js',
+				array( 'wp-blocks', 'wp-element' )
+			);
+
+			wp_localize_script( 'brightcove-block', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
+
+			register_block_type( 'bc/brightcove', array(
+				'editor_script'   => 'brightcove-block',
+				'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
+				'attributes'      => array(
+					'account_id'  => array(
+						'type' => 'int',
+					),
+					'player_id'   => array(
+						'type' => 'string',
+					),
+					'video_id'    => array(
+						'type' => 'int',
+					),
+					'playlist_id' => array(
+						'type' => 'int',
+					),
+					'experience_id'    => array(
+						'type' => 'string',
+					),
+					'video_ids' => array(
+						'type' => 'int',
+					),
+					'embed'       => array(
+						'type' => 'string',
+					),
+					'autoplay'    => array(
+						'type' => 'string',
+					),
+					'height'      => array(
+						'type' => 'string',
+					),
+					'width'       => array(
+						'type' => 'string',
+					),
+					'min_width'    => array(
+						'type' => 'string',
+					),
+					'max_width'    => array(
+						'type' => 'string',
+					),
+					'padding_top'  => array(
+						'type' => 'string',
+					),
+				),
+			) );
+		}
+	}
+
+	/**
+	 * Render our shortcodes for our custom block.
+	 *
+	 * Determine if this is an experience video, a
+	 * normal video or playlist shortcode and use
+	 * the proper rendering method for each.
+	 *
+	 * @param array $atts Shortcode attributes
+	 * @return string
+	 */
+	public static function render_shortcode( $atts ) {
+		$output = '';
+
+		if ( ! empty( $atts['experience_id'] ) ) {
+			$output = call_user_func( array( 'BC_Experiences_Shortcode', 'bc_experience' ), $atts );
+		} else if ( ! empty( $atts['video_id'] ) ) {
+			$output = call_user_func( array( 'BC_Video_Shortcode', 'bc_video' ), $atts );
+		} else if ( ! empty( $atts['playlist_id'] ) ) {
+			$output = call_user_func( array( 'BC_Playlist_Shortcode', 'bc_playlist' ), $atts );
+		}
+
+		return $output;
 	}
 
 	public static function add_brightcove_media_button( $editor_id ) {
