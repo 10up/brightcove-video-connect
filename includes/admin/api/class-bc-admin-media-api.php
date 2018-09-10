@@ -52,9 +52,9 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_media_update', array( $this, 'bc_ajax_update_video_or_playlist' ) );
 		add_action( 'wp_ajax_bc_media_delete', array( $this, 'bc_ajax_delete_video_or_playlist' ) );
 		add_action( 'wp_ajax_bc_media_upload', array( $this, 'brightcove_media_upload' ) ); // For uploading a file.
-		add_action( 'wp_ajax_bc_poster_upload', array( $this, 'ajax_poster_upload' ) );
-		add_action( 'wp_ajax_bc_thumb_upload', array( $this, 'ajax_thumb_upload' ) );
-		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ) );
+		add_action( 'wp_ajax_bc_poster_upload', array( $this, 'ajax_poster_upload' ), 10, 5 );
+		add_action( 'wp_ajax_bc_thumb_upload', array( $this, 'ajax_thumb_upload' ), 10, 5 );
+		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ), 10, 3 );
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
 		add_filter( 'brightcove_media_query_results', array( $this, 'add_in_process_videos' ), 10, 2 );
