@@ -2949,7 +2949,6 @@ var VideoPreviewView = BrightcoveView.extend( {
 	shortcode: '',
 
 	initialize: function( options ) {
-		console.log(options);
 		this.shortcode = options.shortcode;
 	},
 
