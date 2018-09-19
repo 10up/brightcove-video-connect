@@ -60,6 +60,16 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.6.0
+
+* Enhancement: Gutenberg support.
+* Fix: Fixed a bug causing video previews not to show.
+* Fix: Fixed a bug causing playlist videos to not be listed.
+* Fix: Update to the 'brightcove_media_query_results' filter to allow $processed_results to be used.
+* Fix: Removal of deprecated options for Plupload.
+* Fix: Adding last two parameters to add_action to remove PHP 7.2 warnings.
+* Fix: Removal of hardcoded video page height.
+
 ##### 1.5.0
 
 * Enhancement: Video Experience player.

@@ -194,6 +194,21 @@ class BC_CMS_API extends BC_API {
 	}
 
 	/**
+	 * Retrieve a playlist videos
+	 *
+	 * Retrieves a specified playlist videos from the CMS API.
+	 *
+	 * @since 1.4.2
+	 *
+	 * @param string $playlist_id the id of the requested playlist.
+	 * @return array|bool array of the video information retrieved or false if error.
+	 */
+	public function playlist_get_videos( $playlist_id ) {
+		$playlist_id = sanitize_title_with_dashes( $playlist_id );
+		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists/' . $playlist_id . '/videos' ) );
+	}
+
+	/**
 	 * Update a playlist in the Brightcove Video Cloud
 	 *
 	 * Updates a playlist with the provided id and optional other data in the video cloud.
@@ -426,9 +441,11 @@ class BC_CMS_API extends BC_API {
 			$args['q'] = sanitize_text_field( $query );
 
 		}
-		// rawurlencode will convert spaces to %20, and plus signs to %2b, which is required according to BC API Docs.
 
-		$args = array_map( 'rawurlencode', $args );
+		if ( false === strpos( $args['q'], 'id:' ) ) {
+			$args = array_map( 'urlencode', $args );
+		}
+
 
 		$url  = add_query_arg(
 			$args,

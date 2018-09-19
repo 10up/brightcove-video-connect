@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 4.9
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,16 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 1.6.0 =
+
+* Enhancement: Gutenberg support.
+* Fix: Fixed a bug causing video previews not to show.
+* Fix: Fixed a bug causing playlist videos to not be listed.
+* Fix: Update to the 'brightcove_media_query_results' filter to allow $processed_results to be used.
+* Fix: Removal of deprecated options for Plupload.
+* Fix: Adding last two parameters to add_action to remove PHP 7.2 warnings.
+* Fix: Removal of hardcoded video page height.
 
 = 1.5.0 =
 

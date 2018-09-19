@@ -52,9 +52,9 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_media_update', array( $this, 'bc_ajax_update_video_or_playlist' ) );
 		add_action( 'wp_ajax_bc_media_delete', array( $this, 'bc_ajax_delete_video_or_playlist' ) );
 		add_action( 'wp_ajax_bc_media_upload', array( $this, 'brightcove_media_upload' ) ); // For uploading a file.
-		add_action( 'wp_ajax_bc_poster_upload', array( $this, 'ajax_poster_upload' ) );
-		add_action( 'wp_ajax_bc_thumb_upload', array( $this, 'ajax_thumb_upload' ) );
-		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ) );
+		add_action( 'wp_ajax_bc_poster_upload', array( $this, 'ajax_poster_upload' ), 10, 5 );
+		add_action( 'wp_ajax_bc_thumb_upload', array( $this, 'ajax_thumb_upload' ), 10, 5 );
+		add_action( 'wp_ajax_bc_caption_upload', array( $this, 'ajax_caption_upload' ), 10, 3 );
 		add_action( 'wp_ajax_bc_media_players', array( $this, 'ajax_players' ) );
 		add_filter( 'heartbeat_received', array( $this, 'heartbeat_received' ), 10, 2 );
 		add_filter( 'brightcove_media_query_results', array( $this, 'add_in_process_videos' ), 10, 2 );
@@ -63,7 +63,14 @@ class BC_Admin_Media_API {
 	}
 
 	public function resolve_shortcode() {
-		$shortcode = stripslashes( sanitize_text_field( $_POST['shortcode'] ) );
+
+		$video_id          = ( ! empty( $_POST['video_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['video_id'] ) ) : 0;
+		$account_id        = ( ! empty( $_POST['account_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['account_id'] ) ) : 0;
+
+		$default_shortcode = '[bc_video video_id="' . absint($video_id) . '" account_id="' . absint($account_id) . '" player_id="default" embed="iframe" padding_top="56%" autoplay="" min_width="0px" max_width="640px" mute="" width="100%" height="100%"]';
+
+		// If no shortcode was supplied, let's show a default one.
+		$shortcode         = ( ! empty( $_POST['shortcode'] ) ) ? sanitize_text_field( wp_unslash( $_POST['shortcode'] ) ) : $default_shortcode;
 
 		wp_send_json_success( do_shortcode( $shortcode ) );
 	}
@@ -722,7 +729,7 @@ class BC_Admin_Media_API {
 		 *
 		 * @since 1.3
 		 */
-		$results = apply_filters( 'brightcove_media_query_results', $results, $type );
+		$results = apply_filters( 'brightcove_media_query_results', $processed_results, $type );
 
 		wp_send_json_success( $results );
 	}

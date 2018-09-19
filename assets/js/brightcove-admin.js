@@ -2965,7 +2965,9 @@ var VideoPreviewView = BrightcoveView.extend( {
 			method: 'POST',
 			data: {
 				'action':'bc_resolve_shortcode',
-				'shortcode': this.shortcode
+				'shortcode': this.shortcode,
+				'video_id' : options.id,
+				'account_id': options.account_id,
 			},
 			success: function( results ) {
 				that.$el.html( results.data );

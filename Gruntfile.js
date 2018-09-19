@@ -1,5 +1,5 @@
 module.exports = function ( grunt ) {
-
+  const sass = require('node-sass');
 	// Start out by loading the grunt modules we'll need
 	require ( 'load-grunt-tasks' ) ( grunt );
 
@@ -46,6 +46,7 @@ module.exports = function ( grunt ) {
 				production : {
 
 					options : {
+            implementation: sass,
 						style     : 'expanded',
 						noCache   : true
 					},
