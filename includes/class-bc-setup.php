@@ -112,7 +112,7 @@ class BC_Setup {
 			wp_register_script(
 				'brightcove-block',
 				BRIGHTCOVE_URL . 'assets/js/src/block.js',
-				array( 'wp-blocks', 'wp-element' )
+				array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' )
 			);
 
 			wp_localize_script( 'brightcove-block', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
