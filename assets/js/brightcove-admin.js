@@ -1785,7 +1785,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
 				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
 				'mute="' + mute + '" width="' + width + '" height="' + height + '"' +
-				']';
+				' ]';
 
 			$( '#shortcode' ).val( shortcode );
 		},
@@ -1827,7 +1827,7 @@ var MediaDetailsView = BrightcoveView.extend(
 		'embed="' + embedStyle + '" min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
 		'width="' + width + '" height="' + height + '" ' +
 		'video_ids="' + videoIds + '" ' +
-		']';
+		' ]';
 
 		$( '#shortcode' ).val( shortcode );
 		},
@@ -1855,13 +1855,13 @@ var MediaDetailsView = BrightcoveView.extend(
 				    'embed="in-page-vertical" autoplay="' + autoplay + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
-				    ']';
+				    ' ]';
 		    } else if ( 'in-page-horizontal' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				    'embed="in-page-horizontal" autoplay="' + autoplay + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
-				    ']';
+				    ' ]';
 		    } else if ( 'iframe' === embedStyle ) {
 			    if ( '16:9' === aspectRatio ) {
 				    paddingTop = '56';
@@ -1885,7 +1885,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				    'embed="iframe" autoplay="' + autoplay + '" mute="' + mute + '" ' +
 				    'min_width="' + minWidth + '" max_width="' + maxWidth + '" padding_top="' + paddingTop + '%" ' +
 				    'width="' + width + '" height="' + height + '"' +
-				    ']';
+				    ' ]';
 		    }
 
 		    $( '#shortcode' ).val( shortcode );
@@ -1920,7 +1920,7 @@ var MediaDetailsView = BrightcoveView.extend(
           'embed="' + embedStyle + '" min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
           'width="' + width + '" height="' + height + '" ' +
           'playlist_id="' + playlistId + '" ' +
-          ']';
+          ' ]';
 
       $( '#shortcode' ).val( shortcode );
     },
