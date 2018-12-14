@@ -4,8 +4,8 @@ Contributors: 10up, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, m
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 4.9
-Stable tag: 1.6.0
+Tested up to: 5.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,11 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 1.6.1 =
+
+* Fix: Fixed a bug related to the Gutenberg block.
+* Fix: Updated support link on account settings page.
 
 = 1.6.0 =
 
