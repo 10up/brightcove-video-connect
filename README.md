@@ -60,6 +60,12 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.6.1
+
+* Fix: Fixed a bug related to the Gutenberg block.
+* Fix: Updated support link on account settings page.
+
+
 ##### 1.6.0
 
 * Enhancement: Gutenberg support.
