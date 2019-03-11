@@ -117,6 +117,17 @@ class BC_Admin_Templates {
 					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
 					<p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' )?></p>
 				</label>
+				<label class="setting folder">
+					<span class="name"><?php esc_html_e( 'Folder', 'brightcove' )?></span>
+					<select class="brightcove-folder">
+						<option value="">None</option>
+						<# _.each(data.folders, function (folderName, folderId) { #>
+						<option value="{{ folderId }}" <# if ( data.folder_id === folderId ) { #>selected<# } #>>
+							{{ folderName }}
+						</option>
+						<# }); #>
+					</select>
+				</label>
 				<label class="setting tags">
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
 					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
@@ -980,6 +991,16 @@ class BC_Admin_Templates {
 								<option value="{{ tagId }}">{{ tagName }}</option>
 							<# }); #>
 						</select>
+
+					<label for="media-attachment-folders-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by folder', 'brightcove' );?></label>
+					<select id="media-attachment-folders-filters" class="brightcove-media-folders attachment-filters">
+						<option value="all"><?php esc_html_e( 'All folders', 'brightcove' ); ?></option>
+						<# _.each(data.folders, function (folderName, folderId) { #>
+						<option value="{{ folderId }}" <# if ( data.folderId === folderId ) { #>selected<# } #>>
+							{{ folderName }}
+						</option>
+						<# }); #>
+					</select>
 					<# }#>
 
 					<# if( data.mediaType === 'videoexperience' ) { #>

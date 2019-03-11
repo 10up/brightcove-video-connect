@@ -128,6 +128,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
+			this.listenTo(wpbc.broadcast, 'change:folder', function (folder) {
+				this.clearPreview();
+				this.model.set('oldFolderId', this.model.get('folderId'));
+				this.model.set('folderId', folder);
+
+			})
+
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 
 				this.clearPreview();
@@ -312,7 +319,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 		},
 
 		/**
-		 * Clear the preview view and remove highlighted class from previous selected video.
+		 * Clear the preview view and remove highlighted class from previous
+		 * selected video.
 		 */
 		clearPreview : function () {
 

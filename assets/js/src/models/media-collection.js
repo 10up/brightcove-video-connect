@@ -47,6 +47,8 @@ var MediaCollection = Backbone.Collection.extend(
 			this.searchTerm    = options.searchTerm || '';
 			this.dates         = options.dates || 'all';
 			this.tag           = options.tag || '';
+			this.folderId      = options.folderId || '';
+			this.oldFolderId   = options.oldFolderId || '';
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
@@ -74,6 +76,18 @@ var MediaCollection = Backbone.Collection.extend(
 				this.tag = tag;
 				this.fetch();
 
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:folder', function ( folderId ) {
+
+				this.oldFolderId = this.folderId;
+
+				if ( 'all' === folderId ) {
+					folderId = '';
+				}
+
+				this.folderId = folderId;
+				this.fetch();
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
@@ -150,11 +164,13 @@ var MediaCollection = Backbone.Collection.extend(
 					nonce :          wpbc.preload.nonce,
 					search :         this.searchTerm,
 					tags :           this.tag,
+					oldFolderId:     this.oldFolderId,
+					folderId: 			 this.folderId,
 					tagName :        wpbc.preload.tags[this.tag],
 					type : this.mediaType || 'videos'
 				} );
 
-				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type' );
+				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folderId', 'tagName' );
 
 				// Determine if we're infinite scrolling or not.
 				this.additionalRequest = _.isEqual( previousRequest, wpbc.previousRequest );
