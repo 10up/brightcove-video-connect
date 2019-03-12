@@ -450,7 +450,7 @@ class BC_CMS_API extends BC_API {
 
 		}
 
-		if ( false === strpos( $args['q'], 'id:' ) ) {
+		if ( isset( $args['q'] ) && false === strpos( $args['q'], 'id:' ) ) {
 			$args = array_map( 'urlencode', $args );
 		}
 
