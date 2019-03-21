@@ -186,6 +186,7 @@ var MediaCollection = Backbone.Collection.extend(
 					options.data.videoIds = this.videoIds.length ? this.videoIds : 'none';
 				}
 
+
 				options.data.query = args;
 
 				if ( ! _.contains( ['libraryPlaylists', 'existingPlaylists'], this.mediaCollectionViewType ) ) {
@@ -242,7 +243,8 @@ var MediaCollection = Backbone.Collection.extend(
 		 *
 		 * @param {Object|Array} resp The raw response Object/Array.
 		 * @param {Object} xhr
-		 * @returns {Array} The array of model attributes to be added to the collection
+		 * @returns {Array} The array of model attributes to be added to the
+		 *   collection
 		 */
 		parse : function ( response, status, request, checksum ) {
 			wpbc.broadcast.trigger( 'fetch:finished' );
@@ -267,12 +269,18 @@ var MediaCollection = Backbone.Collection.extend(
 			}
 
 			/**
-			 * In playlist video search, we remove the videos that already exist in the playlist.
+			 * In playlist video search, we remove the videos that already exist in
+			 * the playlist.
 			 */
 			if ( _.isArray( this.excludeVideoIds ) ) {
 				_.each( this.excludeVideoIds, function ( videoId ) {
 					data = _.without( data, _.findWhere( data, {id : videoId} ) );
 				} );
+			}
+
+			if (data.length === 0) {
+				wpbc.broadcast.trigger('videoEdit:message', 'No videos found.', 'error',
+					true)
 			}
 
 			var allMedia = _.map( data, function ( attrs ) {
@@ -299,6 +307,7 @@ var MediaCollection = Backbone.Collection.extend(
 				media.set( 'viewType', this.mediaCollectionViewType );
 				return media;
 			}, this );
+
 
 			if ( this.additionalRequest ) {
 				this.add( allMedia );

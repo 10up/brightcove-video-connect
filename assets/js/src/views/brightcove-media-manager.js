@@ -324,6 +324,9 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 		 */
 		clearPreview : function () {
 
+			var messages = $('.brightcove-message');
+			messages.addClass('hidden');
+
 			if ( this.detailsView instanceof MediaDetailsView ) {
 				this.detailsView.remove();
 			}
@@ -374,6 +377,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				messages.addClass( 'notice is-dismissible' );
 				this.makeNoticesDismissible();
 			}
+			$('html, body').animate({scrollTop: 0}, 'fast')
+
 		},
 
 		// Make notices dismissible, mimics core function, fades them empties.
