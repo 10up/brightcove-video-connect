@@ -116,7 +116,7 @@ class BC_Admin_Media_API {
 		);
 
 		foreach ( $fields as $field ) {
-			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( $_POST[ $field ] ) : '';
+			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash($_POST[ $field ]) ) : '';
 		}
 
 		// Only Playlists have playlist_videos. We only do this if we're updating playlists.
