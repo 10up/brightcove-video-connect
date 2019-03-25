@@ -60,6 +60,13 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.7.0
+
+* Enhancement: Folder API support.
+* Fix: Removed extra slashes that appeared on titles and descriptions.
+* Fix: Behavior of status update messages.
+
+
 ##### 1.6.1
 
 * Fix: Fixed a bug related to the Gutenberg block.
