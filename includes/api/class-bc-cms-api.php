@@ -381,10 +381,18 @@ class BC_CMS_API extends BC_API {
 	 * @param string $query Query terms to search for.
 	 * @param string $sort A string that specifies the field to sort by. Start with - to sort descending.
 	 * @param bool $playable Available at the /videos endpoint.
+	 * @param bool|string $folder_id The folder_id if specified.
 	 *
 	 * @return array|bool array of available videos retrieved or false if error
 	 */
-	public function video_list( $limit = 20, $offset = 0, $query = '', $sort = '-created_at', $playable = true ) {
+	public function video_list(
+		$limit = 20,
+		$offset = 0,
+		$query = '',
+		$sort = '-created_at',
+		$playable = true,
+		$folder_id = false
+	) {
 
 		/*
 		 * Available fields for sort:
@@ -442,14 +450,19 @@ class BC_CMS_API extends BC_API {
 
 		}
 
-		if ( false === strpos( $args['q'], 'id:' ) ) {
+		if ( isset( $args['q'] ) && false === strpos( $args['q'], 'id:' ) ) {
 			$args = array_map( 'urlencode', $args );
 		}
 
+		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/videos';
+
+		if ( $folder_id ) {
+			$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folder_id . '/videos';
+		}
 
 		$url  = add_query_arg(
 			$args,
-			self::CMS_BASE_URL . $this->get_account_id() . '/videos'
+			$api_url
 		);
 
 		$results = $this->send_request( esc_url_raw( $url ) );
@@ -688,5 +701,56 @@ class BC_CMS_API extends BC_API {
 		$subscription_id = sanitize_text_field( $subscription_id );
 
 		$this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/subscriptions/' . $subscription_id ), 'DELETE' );
+	}
+
+	/**
+	 * Fetch the user's folders from the Folders API endpoint.
+	 *
+	 * @return array
+	 */
+	public function fetch_folders() {
+		$cache_key = 'BCFolders_' . $this->get_account_id();
+		$folders   = get_transient( $cache_key );
+		$folders = false;
+		if ( false === $folders ) {
+			$request = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/folders' ) );
+			$folders = array();
+
+			foreach ( $request as $folder ) {
+				$folders[ $folder['id'] ] = $folder['name'];
+			}
+
+			set_transient( $cache_key, $folders, 600 );
+		}
+
+		return $folders;
+	}
+
+	/**
+	 * Add/Remove a video from a folder.
+	 *
+	 * @param string $oldFolderId The previous folder ID assigned to video.
+	 * @param string $folderId The folder ID that the video should be in.
+	 * @param int    $videoId The video ID.
+	 */
+	public function add_folder_to_video( $oldFolderId, $folderId, $videoId ) {
+		if ( '' === $folderId && '' !== $oldFolderId ) {
+			$this->remove_folder_from_video( $oldFolderId, $videoId );
+
+			return;
+		}
+		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folderId . '/videos/' . $videoId;
+		$this->send_request( esc_url_raw( $api_url ), 'PUT' );
+	}
+
+	/**
+	 * Remove a video from a folder.
+	 *
+	 * @param string $folderId The folder that contains the video.
+	 * @param int    $videoId The video ID.
+	 */
+	protected function remove_folder_from_video( $folderId, $videoId ) {
+		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folderId . '/videos/' . $videoId;
+		$this->send_request( esc_url_raw( $api_url ), 'DELETE' );
 	}
 }

@@ -261,6 +261,7 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'mediaType', 'videos' );
 			this.model.set( 'poster', this.$el.find( '.brightcove-poster' ).val() );
 			this.model.set( 'thumbnail', this.$el.find( '.brightcove-thumbnail' ).val() );
+			this.model.set( 'folderId', this.$el.find( '.brightcove-folder' ).val() );
 
 			// Captions
 			var captions = [];
@@ -360,6 +361,8 @@ var VideoEditView = BrightcoveView.extend(
 
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
+			options.folders = wpbc.preload.folders;
+			this.model.set( 'oldFolderId', options.folder_id);
 
 			// Render the model into the template
 			this.$el.html( this.template( options ) );

@@ -116,7 +116,7 @@ class BC_Admin_Media_API {
 		);
 
 		foreach ( $fields as $field ) {
-			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( $_POST[ $field ] ) : '';
+			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash($_POST[ $field ]) ) : '';
 		}
 
 		// Only Playlists have playlist_videos. We only do this if we're updating playlists.
@@ -208,6 +208,13 @@ class BC_Admin_Media_API {
 
 			$status   = $this->videos->update_bc_video( $updated_data );
 			$type_msg = 'video';
+
+			if ( isset( $_POST['folderId'] ) && isset( $_POST['oldFolderId'] ) ) {
+				$folderId    = sanitize_text_field( $_POST['folderId'] );
+				$oldFolderId = sanitize_text_field( $_POST['oldFolderId'] );
+
+				$this->cms_api->add_folder_to_video( $oldFolderId, $folderId, $updated_data['video_id'] );
+			}
 
 			// Maybe update poster
 			if ( isset( $_POST['poster'] ) ) {
@@ -526,9 +533,10 @@ class BC_Admin_Media_API {
 		}
 
 
-		$query    = ( isset( $_POST['search'] ) && '' !== $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : false;
-		$tag_name = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
-		$dates    = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
+		$query     = ( isset( $_POST['search'] ) && '' !== $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : false;
+		$tag_name  = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
+		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
+		$folder_id = ( isset( $_POST['folderId'] ) && '' !== $_POST['folderId'] ) ? sanitize_text_field( $_POST['folderId'] ) : false;
 
 		/**
 		 * Filter the maximum number of items the brightcove media call will query for.
@@ -609,7 +617,7 @@ class BC_Admin_Media_API {
 			// Get a list of videos.
 
 			for ( $i = 0; $i < $tries; $i ++ ) {
-				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, $bc_video_sort_field );
+				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, $bc_video_sort_field, true, $folder_id );
 
 				if ( ! is_wp_error( $results ) ) {
 					break;

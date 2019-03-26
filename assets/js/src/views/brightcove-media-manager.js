@@ -128,6 +128,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
+			this.listenTo(wpbc.broadcast, 'change:folder', function (folder) {
+				this.clearPreview();
+				this.model.set('oldFolderId', this.model.get('folderId'));
+				this.model.set('folderId', folder);
+
+			})
+
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 
 				this.clearPreview();
@@ -312,9 +319,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 		},
 
 		/**
-		 * Clear the preview view and remove highlighted class from previous selected video.
+		 * Clear the preview view and remove highlighted class from previous
+		 * selected video.
 		 */
 		clearPreview : function () {
+
+			var messages = $('.brightcove-message');
+			messages.addClass('hidden');
 
 			if ( this.detailsView instanceof MediaDetailsView ) {
 				this.detailsView.remove();
@@ -350,7 +361,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 			var newMessage = $( '<p></p>' );
 			newMessage.text( message );
 
-			messages.append( newMessage );
+			messages.html( newMessage );
 			messages.removeClass( 'hidden' );
 
 			if ( permanent ) {
@@ -366,6 +377,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				messages.addClass( 'notice is-dismissible' );
 				this.makeNoticesDismissible();
 			}
+			$('html, body').animate({scrollTop: 0}, 'fast')
+
 		},
 
 		// Make notices dismissible, mimics core function, fades them empties.

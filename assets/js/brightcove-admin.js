@@ -60,6 +60,8 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
+					oldFolderId:			 this.get( 'oldFolderId' ),
+					folderId :         this.get( 'folderId' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
 					history:           this.get( '_change_history' ),
@@ -270,6 +272,8 @@ var MediaCollection = Backbone.Collection.extend(
 			this.searchTerm    = options.searchTerm || '';
 			this.dates         = options.dates || 'all';
 			this.tag           = options.tag || '';
+			this.folderId      = options.folderId || '';
+			this.oldFolderId   = options.oldFolderId || '';
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
@@ -297,6 +301,18 @@ var MediaCollection = Backbone.Collection.extend(
 				this.tag = tag;
 				this.fetch();
 
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:folder', function ( folderId ) {
+
+				this.oldFolderId = this.folderId;
+
+				if ( 'all' === folderId ) {
+					folderId = '';
+				}
+
+				this.folderId = folderId;
+				this.fetch();
 			} );
 
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
@@ -373,11 +389,13 @@ var MediaCollection = Backbone.Collection.extend(
 					nonce :          wpbc.preload.nonce,
 					search :         this.searchTerm,
 					tags :           this.tag,
+					oldFolderId:     this.oldFolderId,
+					folderId: 			 this.folderId,
 					tagName :        wpbc.preload.tags[this.tag],
 					type : this.mediaType || 'videos'
 				} );
 
-				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type' );
+				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folderId', 'tagName' );
 
 				// Determine if we're infinite scrolling or not.
 				this.additionalRequest = _.isEqual( previousRequest, wpbc.previousRequest );
@@ -392,6 +410,7 @@ var MediaCollection = Backbone.Collection.extend(
 				if ( this.videoIds ) {
 					options.data.videoIds = this.videoIds.length ? this.videoIds : 'none';
 				}
+
 
 				options.data.query = args;
 
@@ -449,7 +468,8 @@ var MediaCollection = Backbone.Collection.extend(
 		 *
 		 * @param {Object|Array} resp The raw response Object/Array.
 		 * @param {Object} xhr
-		 * @returns {Array} The array of model attributes to be added to the collection
+		 * @returns {Array} The array of model attributes to be added to the
+		 *   collection
 		 */
 		parse : function ( response, status, request, checksum ) {
 			wpbc.broadcast.trigger( 'fetch:finished' );
@@ -474,12 +494,18 @@ var MediaCollection = Backbone.Collection.extend(
 			}
 
 			/**
-			 * In playlist video search, we remove the videos that already exist in the playlist.
+			 * In playlist video search, we remove the videos that already exist in
+			 * the playlist.
 			 */
 			if ( _.isArray( this.excludeVideoIds ) ) {
 				_.each( this.excludeVideoIds, function ( videoId ) {
 					data = _.without( data, _.findWhere( data, {id : videoId} ) );
 				} );
+			}
+
+			if (data.length === 0) {
+				wpbc.broadcast.trigger('videoEdit:message', 'No videos found.', 'error',
+					true)
 			}
 
 			var allMedia = _.map( data, function ( attrs ) {
@@ -506,6 +532,7 @@ var MediaCollection = Backbone.Collection.extend(
 				media.set( 'viewType', this.mediaCollectionViewType );
 				return media;
 			}, this );
+
 
 			if ( this.additionalRequest ) {
 				this.add( allMedia );
@@ -747,6 +774,7 @@ var ToolbarView = BrightcoveView.extend(
       'change .brightcove-media-source': 'sourceChanged',
       'change .brightcove-media-dates': 'datesChanged',
       'change .brightcove-media-tags': 'tagsChanged',
+			'change .brightcove-media-folders': 'foldersChanged',
       'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
       'click #media-search': 'searchHandler',
       'keyup .search': 'enterHandler'
@@ -759,6 +787,8 @@ var ToolbarView = BrightcoveView.extend(
 				dates :     {},
 				mediaType : mediaType,
 				tags :      wpbc.preload.tags,
+				folders:    wpbc.preload.folders,
+				folderId:   this.model.get( 'folderId' ),
 				account :   this.model.get( 'account' )
 			};
 
@@ -822,6 +852,12 @@ var ToolbarView = BrightcoveView.extend(
 		tagsChanged : function ( event ) {
 			wpbc.broadcast.trigger( 'change:tag', event.target.value );
 		},
+
+    foldersChanged: function (event) {
+      this.model.set('oldFolderId', this.model.get('folderId'));
+      this.model.set('folderId', event.target.value);
+      wpbc.broadcast.trigger('change:folder', event.target.value);
+    },
 
 		emptyPlaylistsChanged : function ( event ) {
 			var emptyPlaylists = $( event.target ).prop( 'checked' );
@@ -1091,6 +1127,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			} );
 
+			this.listenTo(wpbc.broadcast, 'change:folder', function (folder) {
+				this.clearPreview();
+				this.model.set('oldFolderId', this.model.get('folderId'));
+				this.model.set('folderId', folder);
+
+			})
+
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 
 				this.clearPreview();
@@ -1275,9 +1318,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 		},
 
 		/**
-		 * Clear the preview view and remove highlighted class from previous selected video.
+		 * Clear the preview view and remove highlighted class from previous
+		 * selected video.
 		 */
 		clearPreview : function () {
+
+			var messages = $('.brightcove-message');
+			messages.addClass('hidden');
 
 			if ( this.detailsView instanceof MediaDetailsView ) {
 				this.detailsView.remove();
@@ -1313,7 +1360,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 			var newMessage = $( '<p></p>' );
 			newMessage.text( message );
 
-			messages.append( newMessage );
+			messages.html( newMessage );
 			messages.removeClass( 'hidden' );
 
 			if ( permanent ) {
@@ -1329,6 +1376,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				messages.addClass( 'notice is-dismissible' );
 				this.makeNoticesDismissible();
 			}
+			$('html, body').animate({scrollTop: 0}, 'fast')
+
 		},
 
 		// Make notices dismissible, mimics core function, fades them empties.
@@ -2772,6 +2821,7 @@ var VideoEditView = BrightcoveView.extend(
 			this.model.set( 'mediaType', 'videos' );
 			this.model.set( 'poster', this.$el.find( '.brightcove-poster' ).val() );
 			this.model.set( 'thumbnail', this.$el.find( '.brightcove-thumbnail' ).val() );
+			this.model.set( 'folderId', this.$el.find( '.brightcove-folder' ).val() );
 
 			// Captions
 			var captions = [];
@@ -2871,6 +2921,8 @@ var VideoEditView = BrightcoveView.extend(
 
 			this.listenTo( wpbc.broadcast, 'insert:shortcode', this.insertShortcode );
 			options = this.model.toJSON();
+			options.folders = wpbc.preload.folders;
+			this.model.set( 'oldFolderId', options.folder_id);
 
 			// Render the model into the template
 			this.$el.html( this.template( options ) );

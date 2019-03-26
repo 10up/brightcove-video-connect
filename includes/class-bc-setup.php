@@ -233,6 +233,10 @@ class BC_Setup {
 		$params['dates'] = array( $type => BC_Utility::get_video_playlist_dates_for_display( $type ) );
 		$params['nonce'] = wp_create_nonce( '_bc_ajax_search_nonce' );
 		$params['tags']  = $tags->get_tags();
+		$params['folders'] = array();
+		if ( BC_Utility::current_user_can_brightcove() ) {
+			$params['folders'] = $cms_api->fetch_folders();
+		}
 
 		$params['plupload'] = array(
 			'browse_button'       => 'brightcove-select-files-button',
