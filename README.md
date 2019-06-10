@@ -1,6 +1,7 @@
 # Brightcove Video Connect
 
-Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs
+> Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs.
+![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg)
 
 ## Description
 
