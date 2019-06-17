@@ -2,7 +2,7 @@
 
 > Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/blob/develop/LICENSE.md)
 
 ## Description
 
@@ -253,6 +253,3 @@ Fixed issues with "Insert into Post" button
 
 ##### 1.1.3
 * 1.1.3 solves many JavaScript errors that users have been experiencing and is recommended for all users
-
-## License
-Brightcove Video Connect is free software; you can redistribute it and/or modify it under the terms of the [GNU General Public License](http://www.gnu.org/licenses/gpl-2.0.html) as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
