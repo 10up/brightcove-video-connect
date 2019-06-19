@@ -1,11 +1,12 @@
 # Brightcove Video Connect
 
 > Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs.
-![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg)
+
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/blob/develop/LICENSE.md)
 
 ## Description
 
-Are you looking to handle your Brightcove Video and Playlist library natively from within WordPress?
+Are you looking to handle your [Brightcove](https://www.brightcove.com/en/online-video-platform) Video and Playlist library natively from within WordPress?
 
 With this plugin, developed by [10up](http://10up.com), you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
 
@@ -58,6 +59,10 @@ For nginx:
 http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size (client_max_body_size)
 For apache:
 http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitRequestBody)
+
+## Support Level
+
+**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Changelog
 
@@ -248,6 +253,3 @@ Fixed issues with "Insert into Post" button
 
 ##### 1.1.3
 * 1.1.3 solves many JavaScript errors that users have been experiencing and is recommended for all users
-
-## License
-Brightcove Video Connect is free software; you can redistribute it and/or modify it under the terms of the [GNU General Public License](http://www.gnu.org/licenses/gpl-2.0.html) as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
