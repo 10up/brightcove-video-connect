@@ -55,9 +55,7 @@ function brightcove_deactivate() {
 }
 
 // Wireup actions.
-global $pagenow;
-
-if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin.php', 'post-new.php', 'edit.php', 'post.php' ) ) ) {
+if ( is_admin() ) {
 
 	add_action( 'init', array( 'BC_Setup', 'action_init' ) );
 	add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
