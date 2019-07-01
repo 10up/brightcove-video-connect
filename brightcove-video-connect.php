@@ -54,22 +54,20 @@ function brightcove_deactivate() {
 	BC_Utility::deactivate();
 }
 
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
+require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
+
 // Wireup actions.
 if ( is_admin() ) {
-
 	add_action( 'init', array( 'BC_Setup', 'action_init' ) );
 	add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
-
 } else {
-
-	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
-	require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
 
 	global $bc_accounts;
 
