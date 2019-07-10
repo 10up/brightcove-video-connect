@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 5.2
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,12 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 1.7.1 =
+
+* Fix: Settings page not loading when plugin is network activated.
+* Fix: Adding multiple Gutenberg blocks to a post causes videos to sync video content.
+* Fix: PHP notice when information from Brightcove account not available.
 
 = 1.7.0 =
 

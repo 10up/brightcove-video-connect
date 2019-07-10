@@ -66,6 +66,12 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.7.1
+
+* Fix: Settings page not loading when plugin is network activated.
+* Fix: Adding multiple Gutenberg blocks to a post causes videos to sync video content.
+* Fix: PHP notice when information from Brightcove account not available.
+
 ##### 1.7.0
 
 * Enhancement: Folder API support.
