@@ -716,11 +716,13 @@ class BC_CMS_API extends BC_API {
 			$request = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/folders' ) );
 			$folders = array();
 
-			foreach ( $request as $folder ) {
-				$folders[ $folder['id'] ] = $folder['name'];
-			}
+			if ( $request && ! is_wp_error( $request ) ) {
+				foreach ( $request as $folder ) {
+					$folders[ $folder['id'] ] = $folder['name'];
+				}
 
-			set_transient( $cache_key, $folders, 600 );
+				set_transient( $cache_key, $folders, 600 );
+			}
 		}
 
 		return $folders;

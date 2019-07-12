@@ -20,7 +20,7 @@
 
 		edit: function( props ) {
 			// Set the field we want to target
-			var target = 'brightcove-' + props.id;
+			var target = 'brightcove-' + props.clientId;
 
 			// Attributes needed to render
 			var accountId = props.attributes.account_id || '';
