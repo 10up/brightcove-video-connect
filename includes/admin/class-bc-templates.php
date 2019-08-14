@@ -970,8 +970,8 @@ class BC_Admin_Templates {
 				<div class="media-toolbar-secondary">
 					<label for="brightcove-media-source" class="screen-reader-text"><?php esc_html_e( 'Filter by source', 'brightcove' );?></label>
 					<select id="brightcove-media-source" class="brightcove-media-source attachment-filters">
-						<# _.each(data.accounts, function (account) { #>
-							<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #>>{{ account.account_name }}</option>
+						<# _.each(data.accounts, function (account, hash) { #>
+						<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #> data-hash={{ hash }}>{{ account.account_name }}</option>
 						<# }); #>
 					</select>
 
