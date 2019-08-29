@@ -172,11 +172,16 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int $query Keyword Search Query.
 	 * @return array|bool|mixed array of all playlists of false if failure
 	 */
-	public function playlist_list() {
+	public function playlist_list( $query = '' ) {
 
-		$results = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists' ) );
+		$url = self::CMS_BASE_URL . $this->get_account_id() . '/playlists';
+		if ( $query ) {
+			$url = add_query_arg( 'q', $query, $url );
+		}
+		$results = $this->send_request( esc_url_raw( $url ) );
 
 		if ( is_array( $results ) ) {
 

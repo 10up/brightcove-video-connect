@@ -662,7 +662,7 @@ class BC_Admin_Media_API {
 			$bc_accounts->set_current_account_by_id( $account_id );
 
 			for ( $i = 0; $i < $tries; $i ++ ) {
-				$results = $this->cms_api->playlist_list();
+				$results = $this->cms_api->playlist_list( $query );
 
 				if ( ! is_wp_error( $results ) ) {
 					break;
