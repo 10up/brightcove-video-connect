@@ -179,7 +179,7 @@ class BC_CMS_API extends BC_API {
 
 		$url = self::CMS_BASE_URL . $this->get_account_id() . '/playlists';
 		if ( $query ) {
-			$url = add_query_arg( 'q', $query, $url );
+			$url = add_query_arg( 'q', urlencode( $query ), $url );
 		}
 		$results = $this->send_request( esc_url_raw( $url ) );
 
