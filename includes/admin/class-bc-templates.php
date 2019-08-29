@@ -1037,7 +1037,7 @@ class BC_Admin_Templates {
 					<# } #>
 					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled"><?php esc_html_e( 'Delete Selected', 'brightcove' ); ?></a>
 				</div>
-				<# if (data.mediaType === 'videos') { #>
+				<# if (data.mediaType === 'videos' || data.mediaType === 'playlists') { #>
 					<div class="media-toolbar-primary search-form">
 						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>
