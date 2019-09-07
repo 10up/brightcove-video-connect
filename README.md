@@ -66,6 +66,12 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.7.2
+
+* Fix: Increase padding on iframe. 
+* Fix: Source account bug on upload page.
+* Fix: Stop showing inactive players in the plugin.
+
 ##### 1.7.1
 
 * Fix: Settings page not loading when plugin is network activated.
