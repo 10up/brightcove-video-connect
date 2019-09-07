@@ -74,24 +74,34 @@ class BC_Player_Management_API2 extends BC_API {
 				return [];
 			}
 
-			foreach ( $account_players['items'] as $player ) {
-				$player['is_playlist'] = false;
-
-				if ( isset( $player['branches']['master']['configuration']['playlist'] ) && $player['branches']['master']['configuration']['playlist'] ) {
-					$player['is_playlist'] = true;
+			foreach ( $account_players['items'] as $key => $player ) {
+				// If a player is set to inactive, we should not send any data about it to the plugin
+				if ( isset( $player['branches']["preview"]["configuration"]["player"]["inactive"] )
+					&&
+					$player['branches']["preview"]["configuration"]["player"]["inactive"]
+					&&
+					isset( $player['branches']["master"]["configuration"]["player"]["inactive"] )
+					&&
+					$player['branches']["master"]["configuration"]["player"]["inactive"] ) {
+					unset( $account_players['items'][$key] );
 				} else {
-					if ( isset( $player['branches']['master']['configuration']['plugins'] ) ) {
-						$plugins = $player['branches']['master']['configuration']['plugins'];
+					$player['is_playlist'] = false;
 
-						foreach ( $plugins as $plugin ) {
-							if ( isset( $plugin['register_id'] ) && strpos( $plugin['register_id'], 'videojs-bc-playlist-ui' ) !== false ) {
-								$player['is_playlist'] = true;
+					if ( isset( $player['branches']['master']['configuration']['playlist'] ) && $player['branches']['master']['configuration']['playlist'] ) {
+						$player['is_playlist'] = true;
+					} else {
+						if ( isset( $player['branches']['master']['configuration']['plugins'] ) ) {
+							$plugins = $player['branches']['master']['configuration']['plugins'];
+
+							foreach ( $plugins as $plugin ) {
+								if ( isset( $plugin['register_id'] ) && strpos( $plugin['register_id'], 'videojs-bc-playlist-ui' ) !== false ) {
+									$player['is_playlist'] = true;
+								}
 							}
 						}
 					}
+					$players[ $account_id ][] = $player;
 				}
-
-				$players[ $account_id ][] = $player;
 			}
 		}
 
