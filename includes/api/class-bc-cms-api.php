@@ -172,7 +172,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $query Keyword Search Query.
+	 * @param string $query Keyword Search Query.
 	 * @return array|bool|mixed array of all playlists of false if failure
 	 */
 	public function playlist_list( $query = '' ) {
