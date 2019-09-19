@@ -843,6 +843,9 @@ var ToolbarView = BrightcoveView.extend(
 			// Store the currently selected account on the model.
 			this.model.set( 'account', event.target.value );
 			wpbc.broadcast.trigger( 'change:activeAccount', event.target.value );
+			// Update wpbc object for later use on upload-details.js
+			wpbc.preload.defaultAccountId = event.target.value;
+			wpbc.preload.defaultAccount   = event.target.options[ event.target.selectedIndex ].getAttribute( 'data-hash' );
 		},
 
 		datesChanged : function ( event ) {
