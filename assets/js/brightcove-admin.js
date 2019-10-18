@@ -828,7 +828,7 @@ var ToolbarView = BrightcoveView.extend(
 			var template = wp.template( 'brightcove-tooltip-notice' );
 
 			// Throw a notice to the user that the file is not the correct format
-			$( '.brightcove-media-videos' ).before( template );
+			$( '.brightcove.media-frame-router' ).before( template );
 			// Allow the user to dismiss the notice
 			$( '#js-tooltip-dismiss' ).on( 'click', function() {
 				$( '#js-tooltip-notice' ).first().fadeOut( 500, function() {
