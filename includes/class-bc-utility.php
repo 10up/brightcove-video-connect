@@ -1414,4 +1414,16 @@ class BC_Utility {
 
 		return $languages;
 	}
+
+	/**
+	 * Compares player update date. Used for sorting purposes.
+	 *
+	 * @param $player1 @var wpbc object player data
+	 * @param $player2 @var wpbc object player data
+	 *
+	 * @return int
+	 */
+	public static function compare_player_update_date( $player1, $player2 ) {
+		return strtotime( $player1['branches']['master']['updated_at'] ) < strtotime( $player2['branches']['master']['updated_at'] ) ? 1:-1;
+	}
 }
