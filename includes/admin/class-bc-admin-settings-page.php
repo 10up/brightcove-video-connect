@@ -3,10 +3,16 @@
 class BC_Admin_Settings_Page {
 
 	public function __construct() {
-
+        add_action( 'admin_init', array( $this, 'admin_init_settings' ) );
 		add_action( 'brightcove/admin/settings_page', array( $this, 'render' ) );
 		add_action( 'admin_init', array( $this, 'delete_source' ) );
+	}
 
+	/**
+	 * Registers settings for Brightcove
+	 */
+	public function admin_init_settings() {
+		register_setting( 'bc_default_player_settings', 'bc_default_player_width', 'intval' );
 	}
 
 	public function delete_source() {
@@ -65,6 +71,38 @@ class BC_Admin_Settings_Page {
 			<p>
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-source' ) ); ?>" class="button action"><?php esc_html_e( 'Add Brightcove Account', 'brightcove' ); ?></a>
 			</p>
+
+		</div>
+
+		<div class="wrap">
+
+			<h2>
+				<?php esc_html_e( 'Players Default Settings', 'brightcove' ); ?>
+			</h2>
+
+			<h3 class="title"><?php esc_html__( 'Sources', 'brightcove' ); ?></h3>
+
+			<form action="options.php" method="post">
+				<?php settings_fields( 'bc_default_player_settings' ); ?>
+				<?php settings_errors(); ?>
+				<table class="form-table">
+					<tbody>
+					<tr class="">
+						<th scope="row">
+							<label for="bc_default_player_width">
+									<?php esc_html_e( 'Player Width', 'brightcove' ); ?>
+							</label>
+						</th>
+						<td>
+							<input type="number" name="bc_default_player_width" id="bc_default_player_width" size="5" value="<?php echo esc_html( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<p>
+					<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_html_e( 'Save settings', 'brightcove' ); ?>">
+				</p>
+			</form>
 
 		</div>
 
