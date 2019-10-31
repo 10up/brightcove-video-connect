@@ -121,6 +121,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				playsinline = ( $( '#playsinline' ).is( ':checked' ) ) ? 'playsinline': '',
 				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
@@ -155,7 +156,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
-				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
+				'min_width="' + minWidth + '" playsinline="' + playsinline + '" max_width="' + maxWidth + '" ' +
 				'mute="' + mute + '" width="' + width + '" height="' + height + '"' +
 				' ]';
 
@@ -210,6 +211,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				playsinline = ( $( '#playsinline' ).is( ':checked' ) ) ? 'playsinline': '',
 				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
@@ -224,13 +226,13 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		    if ( 'in-page-vertical' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="in-page-vertical" autoplay="' + autoplay + '" mute="' + mute + '" ' +
+				    'embed="in-page-vertical" autoplay="' + autoplay + '" playsinline="' + playsinline + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
 				    ' ]';
 		    } else if ( 'in-page-horizontal' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="in-page-horizontal" autoplay="' + autoplay + '" mute="' + mute + '" ' +
+				    'embed="in-page-horizontal" autoplay="' + autoplay + '" playsinline="' + playsinline + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
 				    ' ]';
@@ -254,7 +256,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			    }
 
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="iframe" autoplay="' + autoplay + '" mute="' + mute + '" ' +
+				    'embed="iframe" autoplay="' + autoplay + '" playsinline="' + playsinline + '" mute="' + mute + '" ' +
 				    'min_width="' + minWidth + '" max_width="' + maxWidth + '" padding_top="' + paddingTop + '%" ' +
 				    'width="' + width + '" height="' + height + '"' +
 				    ' ]';
