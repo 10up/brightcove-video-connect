@@ -1698,9 +1698,9 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
 			'click .playlist-details input[name="embed-style"]' :  'togglePlaylistSizing',
-            'change #aspect-ratio' : 'toggleUnits',
-            'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
-            'change #video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
+			'change #aspect-ratio' : 'toggleUnits',
+			'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
+			'change #video-player, #autoplay, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
