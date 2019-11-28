@@ -118,7 +118,6 @@
 
 			// If no video has been selected yet, show the selection view
 			if ( ! accountId.length && ( ! playerId.length || ! experienceId.length ) && ( ! videoId.length || ! playlistId.length || videoIds.length ) ) {
-				console.log('treat');
 				return el( Placeholder, {
 					icon: 'media-video',
 					label: 'Brightcove',
@@ -131,7 +130,6 @@
 
 			// Otherwise render the shortcode
 			} else {
-				console.log( 'trick');
 				var src = '';
 
 				if ( experienceId.length ) {
