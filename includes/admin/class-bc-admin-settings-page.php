@@ -94,7 +94,7 @@ class BC_Admin_Settings_Page {
 							</label>
 						</th>
 						<td>
-							<input type="number" name="bc_default_player_width" id="bc_default_player_width" size="5" value="<?php echo esc_html( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
+							<input type="number" name="bc_default_player_width" id="bc_default_player_width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 						</td>
 					</tr>
 					</tbody>
