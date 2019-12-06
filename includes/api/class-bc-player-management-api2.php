@@ -67,6 +67,7 @@ class BC_Player_Management_API2 extends BC_API {
 
 			$url             = esc_url_raw( self::BASE_URL . $account_id . '/players/' );
 			$account_players = $this->send_request( $url );
+			usort( $account_players['items'], 'BC_Utility::compare_player_update_date' );
 
 			$players[ $account_id ] = array();
 
@@ -103,6 +104,7 @@ class BC_Player_Management_API2 extends BC_API {
 					$players[ $account_id ][] = $player;
 				}
 			}
+
 		}
 
 		return apply_filters( 'brightcove_get_all_player', $players );
