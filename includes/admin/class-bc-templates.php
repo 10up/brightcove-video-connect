@@ -650,7 +650,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -727,7 +727,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -804,7 +804,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -943,7 +943,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
