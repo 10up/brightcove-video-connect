@@ -66,6 +66,14 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.8.0
+
+* Enhancement: Enable search on playlists. Props [turtlepod](https://github.com/turtlepod)
+* Enhancement: Adds a playsinline option for embeds.
+* Enhancement: Adds a new settings field to have a default player size width. 
+* Fix: URL encoding uploads for files with foreign characters.
+* Fix: Player ordering to better resemble the order in Brightcove Studio.
+
 ##### 1.7.2
 
 * Fix: Increase padding on iframe. 
