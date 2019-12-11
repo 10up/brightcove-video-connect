@@ -100,7 +100,7 @@ class BC_Admin_Settings_Page {
 					</tbody>
 				</table>
 				<p>
-					<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_html_e( 'Save settings', 'brightcove' ); ?>">
+					<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e( 'Save settings', 'brightcove' ); ?>">
 				</p>
 			</form>
 
