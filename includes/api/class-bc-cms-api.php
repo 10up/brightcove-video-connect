@@ -172,11 +172,16 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param string $query Keyword Search Query.
 	 * @return array|bool|mixed array of all playlists of false if failure
 	 */
-	public function playlist_list() {
+	public function playlist_list( $query = '' ) {
 
-		$results = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists' ) );
+		$url = self::CMS_BASE_URL . $this->get_account_id() . '/playlists';
+		if ( $query ) {
+			$url = add_query_arg( 'q', urlencode( $query ), $url );
+		}
+		$results = $this->send_request( esc_url_raw( $url ) );
 
 		if ( is_array( $results ) ) {
 
@@ -530,7 +535,7 @@ class BC_CMS_API extends BC_API {
 		$profile = apply_filters( 'brightcove_ingest_profile', $profile );
 
 		$data = ( ! empty( $profile ) ) ? array( 'profile' => sanitize_text_field( $profile ) ) : array();
-		$data['master']    = array( 'url' => esc_url_raw( $video_url ) );
+		$data['master']    = array( 'url' => esc_url_raw( rawurlencode( $video_url ) ) );
 		$data['callbacks'] = BC_Notification_API::callback_paths();
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );

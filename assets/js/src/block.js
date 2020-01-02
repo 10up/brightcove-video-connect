@@ -23,19 +23,20 @@
 			var target = 'brightcove-' + props.clientId;
 
 			// Attributes needed to render
-			var accountId = props.attributes.account_id || '';
-			var playerId = props.attributes.player_id || '';
-			var videoId = props.attributes.video_id || '';
-			var playlistId = props.attributes.playlist_id || '';
+			var accountId    = props.attributes.account_id || '';
+			var playerId     = props.attributes.player_id || '';
+			var videoId      = props.attributes.video_id || '';
+			var playlistId   = props.attributes.playlist_id || '';
 			var experienceId = props.attributes.experience_id || '';
-			var videoIds = props.attributes.video_ids || '';
-			var height = props.attributes.height || '';
-			var width = props.attributes.width || '';
-			var minWidth = props.attributes.min_width || '';
-			var maxWidth = props.attributes.max_width || '';
-			var paddingTop = props.attributes.padding_top || '';
-			var autoplay = props.attributes.autoplay || '';
-			var embed = props.attributes.embed || '';
+			var videoIds 	 = props.attributes.video_ids || '';
+			var height 		 = props.attributes.height || '';
+			var width 		 = props.attributes.width || '';
+			var minWidth 	 = props.attributes.min_width || '';
+			var maxWidth 	 = props.attributes.max_width || '';
+			var paddingTop 	 = props.attributes.padding_top || '';
+			var autoplay     = props.attributes.autoplay || '';
+			var playsinline  = props.attributes.playsinline || '';
+			var embed        = props.attributes.embed || '';
 
 			// Sanitize the IDs we need
 			var sanitizeIds = function( id ) {
@@ -66,6 +67,7 @@
 					max_width: attrs.named.max_width,
 					padding_top: '',
 					autoplay: '',
+					playsinline: '',
 					embed: attrs.named.embed
 				};
 
@@ -73,11 +75,13 @@
 					setAttrs.player_id = attrs.named.player_id;
 					setAttrs.video_id = sanitizeIds( attrs.named.video_id );
 					setAttrs.autoplay = attrs.named.autoplay;
+					setAttrs.playsinline = attrs.named.playsinline;
 					setAttrs.padding_top = attrs.named.padding_top;
 				} else if ( '[bc_playlist' === attrs.numeric[0] ) {
 					setAttrs.player_id = attrs.named.player_id;
 					setAttrs.playlist_id = sanitizeIds( attrs.named.playlist_id );
 					setAttrs.autoplay = attrs.named.autoplay;
+					setAttrs.playsinline = attrs.named.playsinline;
 					setAttrs.padding_top = attrs.named.padding_top;
 				} else if ( '[bc_experience' === attrs.numeric[0] ) {
 					setAttrs.experience_id = attrs.named.experience_id;

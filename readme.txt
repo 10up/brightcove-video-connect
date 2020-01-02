@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 5.2
-Stable tag: 1.7.2
+Tested up to: 5.3
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,14 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 1.8.0 =
+
+* Enhancement: Enable search on playlists. Props [turtlepod](https://github.com/turtlepod)
+* Enhancement: Adds a playsinline option for embeds.
+* Enhancement: Adds a new settings field to have a default player size width.
+* Fix: URL encoding uploads for files with foreign characters.
+* Fix: Player ordering to better resemble the order in Brightcove Studio.
 
 = 1.7.2 =
 
