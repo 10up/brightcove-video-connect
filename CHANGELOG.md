@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.7.1] - TBD
+## [1.8.0] - 2020-01-02
+### Added
+- Enable search on playlists
+- a playsinline option for embeds
+- a new settings field to have a default player size width
+
+### Fixed
+- URL encoding uploads for files with foreign characters
+- Player ordering to better resemble the order in Brightcove Studio.
+
+## [1.7.2] - 2019-09-10
+### Fixed
+- Iframe Padding issue
+- Stop showing inactive players from Brightcove studio in the plugin
+- Source select account bug
+
+## [1.7.1] - 2019-07-12
 ### Fixed
 - Settings page not loading when plugin is network activated.
 - Adding multiple Gutenberg blocks to a post causes videos to sync video content.
@@ -226,7 +242,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/1.7.1...develop
-[1.7.1]: https://github.com/10up/brightcove-video-connect/compare/1.7.0...1.7.1
+[1.8.0]: https://github.com/10up/brightcove-video-connect/compare/1.7.2...1.8.0
+[1.7.2]: https://github.com/10up/brightcove-video-connect/compare/c7f3fd7...1.7.2
+[1.7.1]: https://github.com/10up/brightcove-video-connect/compare/1.7.0...c7f3fd7
 [1.7.0]: https://github.com/10up/brightcove-video-connect/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/10up/brightcove-video-connect/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/10up/brightcove-video-connect/compare/1.5.0...1.6.0
