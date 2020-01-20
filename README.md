@@ -66,6 +66,10 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.8.1
+
+* Fix: Adding a new brightcove account bug
+
 ##### 1.8.0
 
 * Enhancement: Enable search on playlists. Props [turtlepod](https://github.com/turtlepod)
