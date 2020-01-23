@@ -66,6 +66,10 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 
 ## Changelog
 
+##### 1.8.2
+
+* Fix: Upload new videos bug.
+
 ##### 1.8.1
 
 * Fix: Adding a new brightcove account bug
