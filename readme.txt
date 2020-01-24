@@ -1,11 +1,11 @@
 === Brightcove Video Connect ===
 
-Contributors: 10up, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar, bctbaldwin
+Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar, bctbaldwin
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 5.2
-Stable tag: 1.7.1
+Tested up to: 5.3
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,28 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 1.8.2 =
+
+* Fix: Upload new videos bug.
+
+= 1.8.1 =
+
+* Fix: Adding a new brightcove account bug
+
+= 1.8.0 =
+
+* Enhancement: Enable search on playlists. Props [turtlepod](https://github.com/turtlepod)
+* Enhancement: Adds a playsinline option for embeds.
+* Enhancement: Adds a new settings field to have a default player size width.
+* Fix: URL encoding uploads for files with foreign characters.
+* Fix: Player ordering to better resemble the order in Brightcove Studio.
+
+= 1.7.2 =
+
+* Fix: Increase padding on iframe.
+* Fix: Source account bug on upload page.
+* Fix: Stop showing inactive players in the plugin.
 
 = 1.7.1 =
 

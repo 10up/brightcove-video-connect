@@ -828,7 +828,7 @@ var ToolbarView = BrightcoveView.extend(
 			var template = wp.template( 'brightcove-tooltip-notice' );
 
 			// Throw a notice to the user that the file is not the correct format
-			$( '.brightcove-media-videos' ).before( template );
+			$( '.brightcove.media-frame-router' ).before( template );
 			// Allow the user to dismiss the notice
 			$( '#js-tooltip-dismiss' ).on( 'click', function() {
 				$( '#js-tooltip-notice' ).first().fadeOut( 500, function() {
@@ -843,6 +843,9 @@ var ToolbarView = BrightcoveView.extend(
 			// Store the currently selected account on the model.
 			this.model.set( 'account', event.target.value );
 			wpbc.broadcast.trigger( 'change:activeAccount', event.target.value );
+			// Update wpbc object for later use on upload-details.js
+			wpbc.preload.defaultAccountId = event.target.value;
+			wpbc.preload.defaultAccount   = event.target.options[ event.target.selectedIndex ].getAttribute( 'data-hash' );
 		},
 
 		datesChanged : function ( event ) {
@@ -1695,9 +1698,9 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.preview.button' : 'triggerPreviewMedia',
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
 			'click .playlist-details input[name="embed-style"]' :  'togglePlaylistSizing',
-            'change #aspect-ratio' : 'toggleUnits',
-            'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
-            'change #video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
+			'change #aspect-ratio' : 'toggleUnits',
+			'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
+			'change #video-player, #autoplay, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
@@ -1798,6 +1801,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				playsinline = ( $( '#playsinline' ).is( ':checked' ) ) ? 'playsinline': '',
 				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
@@ -1832,7 +1836,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
-				'min_width="' + minWidth + '" max_width="' + maxWidth + '" ' +
+				'min_width="' + minWidth + '" playsinline="' + playsinline + '" max_width="' + maxWidth + '" ' +
 				'mute="' + mute + '" width="' + width + '" height="' + height + '"' +
 				' ]';
 
@@ -1887,6 +1891,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
+				playsinline = ( $( '#playsinline' ).is( ':checked' ) ) ? 'playsinline': '',
 				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
@@ -1901,13 +1906,13 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		    if ( 'in-page-vertical' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="in-page-vertical" autoplay="' + autoplay + '" mute="' + mute + '" ' +
+				    'embed="in-page-vertical" autoplay="' + autoplay + '" playsinline="' + playsinline + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
 				    ' ]';
 		    } else if ( 'in-page-horizontal' === embedStyle ) {
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="in-page-horizontal" autoplay="' + autoplay + '" mute="' + mute + '" ' +
+				    'embed="in-page-horizontal" autoplay="' + autoplay + '" playsinline="' + playsinline + '" mute="' + mute + '" ' +
 				    'min_width="" max_width="" padding_top="" ' +
 				    'width="' + width + units + '" height="' + height + units + '"' +
 				    ' ]';
@@ -1931,7 +1936,7 @@ var MediaDetailsView = BrightcoveView.extend(
 			    }
 
 			    shortcode = '[bc_playlist playlist_id="' + playlistId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
-				    'embed="iframe" autoplay="' + autoplay + '" mute="' + mute + '" ' +
+				    'embed="iframe" autoplay="' + autoplay + '" playsinline="' + playsinline + '" mute="' + mute + '" ' +
 				    'min_width="' + minWidth + '" max_width="' + maxWidth + '" padding_top="' + paddingTop + '%" ' +
 				    'width="' + width + '" height="' + height + '"' +
 				    ' ]';

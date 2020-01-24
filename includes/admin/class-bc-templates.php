@@ -622,6 +622,13 @@ class BC_Admin_Templates {
 							<input type="checkbox" id="mute" name="mute">
 						</div>
 
+						<label for="playsinline">
+							<?php esc_html_e( 'Plays in line: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="checkbox" id="playsinline" name="playsinline">
+						</div>
+
                         <label for="embed-style-in-page">
                             <?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
                         </label>
@@ -650,7 +657,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -727,7 +734,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -804,7 +811,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -902,6 +909,13 @@ class BC_Admin_Templates {
 							<input type="checkbox" id="mute" name="mute">
 						</div>
 
+						<label for="playsinline">
+							<?php esc_html_e( 'Plays in line: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="checkbox" id="playsinline" name="playsinline">
+						</div>
+
 						<label>
 							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
 						</label>
@@ -943,7 +957,7 @@ class BC_Admin_Templates {
 						<label for="width">
 							<?php esc_html_e( 'Width: ', 'brightcove' ); ?>
 						</label>
-						<input type="number" name="width" id="width" size="5" value="640" class="right-col">
+						<input type="number" name="width" id="width" size="5" value="<?php echo intval( get_option( 'bc_default_player_width', 640 ) ); ?>" class="right-col">
 
 						<label for="height">
 							<?php esc_html_e( 'Height: ', 'brightcove' ); ?>
@@ -970,8 +984,8 @@ class BC_Admin_Templates {
 				<div class="media-toolbar-secondary">
 					<label for="brightcove-media-source" class="screen-reader-text"><?php esc_html_e( 'Filter by source', 'brightcove' );?></label>
 					<select id="brightcove-media-source" class="brightcove-media-source attachment-filters">
-						<# _.each(data.accounts, function (account) { #>
-							<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #>>{{ account.account_name }}</option>
+						<# _.each(data.accounts, function (account, hash) { #>
+						<option value="{{ account.account_id }}"<# if ( data.account === account.account_id ) { #> selected="selected"<# } #> data-hash={{ hash }}>{{ account.account_name }}</option>
 						<# }); #>
 					</select>
 
@@ -1037,7 +1051,7 @@ class BC_Admin_Templates {
 					<# } #>
 					<a href="#" class="button media-button button-primary button-large  delete-selected-button hidden" disabled="disabled"><?php esc_html_e( 'Delete Selected', 'brightcove' ); ?></a>
 				</div>
-				<# if (data.mediaType === 'videos') { #>
+				<# if (data.mediaType === 'videos' || data.mediaType === 'playlists') { #>
 					<div class="media-toolbar-primary search-form">
 						<span class="spinner"></span>
 						<label for="media-search-input" class="screen-reader-text"><?php esc_html_e( 'Search Media', 'brightcove' ); ?></label>

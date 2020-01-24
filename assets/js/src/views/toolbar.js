@@ -69,7 +69,7 @@ var ToolbarView = BrightcoveView.extend(
 			var template = wp.template( 'brightcove-tooltip-notice' );
 
 			// Throw a notice to the user that the file is not the correct format
-			$( '.brightcove-media-videos' ).before( template );
+			$( '.brightcove.media-frame-router' ).before( template );
 			// Allow the user to dismiss the notice
 			$( '#js-tooltip-dismiss' ).on( 'click', function() {
 				$( '#js-tooltip-notice' ).first().fadeOut( 500, function() {
@@ -84,6 +84,9 @@ var ToolbarView = BrightcoveView.extend(
 			// Store the currently selected account on the model.
 			this.model.set( 'account', event.target.value );
 			wpbc.broadcast.trigger( 'change:activeAccount', event.target.value );
+			// Update wpbc object for later use on upload-details.js
+			wpbc.preload.defaultAccountId = event.target.value;
+			wpbc.preload.defaultAccount   = event.target.options[ event.target.selectedIndex ].getAttribute( 'data-hash' );
 		},
 
 		datesChanged : function ( event ) {

@@ -146,6 +146,9 @@ class BC_Setup {
 					'autoplay'    => array(
 						'type' => 'string',
 					),
+					'playsinline'    => array(
+						'type' => 'string',
+					),
 					'height'      => array(
 						'type' => 'string',
 					),

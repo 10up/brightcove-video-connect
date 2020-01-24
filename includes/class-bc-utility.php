@@ -894,8 +894,9 @@ class BC_Utility {
 		$max_width   = sanitize_text_field( $atts['max_width'] );
 		$padding_top = sanitize_text_field( $atts['padding_top'] );
 		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
-		$mute    = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
+		$mute        = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
 		$embed       = sanitize_text_field( $atts['embed'] );
+		$playsinline = ( 'playsinline' === $atts['playsinline'] ) ? 'playsinline' : '';
 
 		ob_start();
 		?>
@@ -912,7 +913,7 @@ class BC_Utility {
 							data-player="<?php echo esc_attr( $player_id ); ?>"
 							data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 							data-embed="default" class="video-js"
-							controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
+							controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</video>
 
@@ -1012,6 +1013,7 @@ class BC_Utility {
 		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
 		$mute    = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
 		$embed       = sanitize_text_field( $atts['embed'] );
+		$playsinline = ( 'playsinline' === $atts['playsinline'] ) ? 'playsinline' : '';
 
 		if ( 'default' === $player_id ) {
 
@@ -1081,7 +1083,7 @@ class BC_Utility {
 						data-application-id
 						data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 						class="video-js"
-						controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
+						controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
 				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
 				<div class="playlist-wrapper">
@@ -1413,5 +1415,17 @@ class BC_Utility {
 		);
 
 		return $languages;
+	}
+
+	/**
+	 * Compares player update date. Used for sorting purposes.
+	 *
+	 * @param $player1 @var wpbc object player data
+	 * @param $player2 @var wpbc object player data
+	 *
+	 * @return int
+	 */
+	public static function compare_player_update_date( $player1, $player2 ) {
+		return strtotime( $player1['branches']['master']['updated_at'] ) < strtotime( $player2['branches']['master']['updated_at'] ) ? 1:-1;
 	}
 }

@@ -67,7 +67,7 @@ class BC_Admin_Media_API {
 		$video_id          = ( ! empty( $_POST['video_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['video_id'] ) ) : 0;
 		$account_id        = ( ! empty( $_POST['account_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['account_id'] ) ) : 0;
 
-		$default_shortcode = '[bc_video video_id="' . absint($video_id) . '" account_id="' . absint($account_id) . '" player_id="default" embed="iframe" padding_top="56%" autoplay="" min_width="0px" max_width="640px" mute="" width="100%" height="100%"]';
+		$default_shortcode = '[bc_video video_id="' . absint($video_id) . '" account_id="' . absint($account_id) . '" player_id="default" embed="iframe" padding_top="56.25%" autoplay="" min_width="0px" max_width="640px" mute="" width="100%" height="100%"]';
 
 		// If no shortcode was supplied, let's show a default one.
 		$shortcode         = ( ! empty( $_POST['shortcode'] ) ) ? sanitize_text_field( wp_unslash( $_POST['shortcode'] ) ) : $default_shortcode;
@@ -662,7 +662,7 @@ class BC_Admin_Media_API {
 			$bc_accounts->set_current_account_by_id( $account_id );
 
 			for ( $i = 0; $i < $tries; $i ++ ) {
-				$results = $this->cms_api->playlist_list();
+				$results = $this->cms_api->playlist_list( $query );
 
 				if ( ! is_wp_error( $results ) ) {
 					break;
