@@ -4,11 +4,19 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [1.8.2] - TBD
+### Fixed
+- Upload new videos bug.
+
+## [1.8.1] - 2020-01-20
+### Fixed
+- Adding a new brightcove account bug
+
 ## [1.8.0] - 2020-01-02
 ### Added
 - Enable search on playlists
-- a playsinline option for embeds
-- a new settings field to have a default player size width
+- playsinline option for embeds
+- Settings field to have a default player size width
 
 ### Fixed
 - URL encoding uploads for files with foreign characters
@@ -242,6 +250,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/1.7.1...develop
+[1.8.1]: https://github.com/10up/brightcove-video-connect/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/10up/brightcove-video-connect/compare/1.7.2...1.8.0
 [1.7.2]: https://github.com/10up/brightcove-video-connect/compare/c7f3fd7...1.7.2
 [1.7.1]: https://github.com/10up/brightcove-video-connect/compare/1.7.0...c7f3fd7
