@@ -2,7 +2,7 @@
 
 > Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.2%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/releases/latest) ![WordPress tested up to version](https://img.shields.io/badge/WordPress-v5.3%20tested-success.svg) [![GPLv2 License](https://img.shields.io/github/license/10up/brightcove-video-connect.svg)](https://github.com/10up/brightcove-video-connect/blob/develop/LICENSE.md)
 
 ## Description
 
@@ -65,6 +65,14 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 **Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Changelog
+
+##### 1.8.2
+
+* Fix: Upload new videos bug.
+
+##### 1.8.1
+
+* Fix: Adding a new brightcove account bug
 
 ##### 1.8.0
 
