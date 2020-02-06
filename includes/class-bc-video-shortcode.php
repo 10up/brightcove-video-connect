@@ -36,6 +36,7 @@ class BC_Video_Shortcode {
 			'height'      => 0,
 			'width'       => 0,
 			'playsinline' => '',
+            'picture_in_picture' => '',
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );

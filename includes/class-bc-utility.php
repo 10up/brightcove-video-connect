@@ -905,6 +905,23 @@ class BC_Utility {
 		<?php
 		if ( 'in-page' === $embed ) :
 			$js_src = 'https://players.brightcove.net/' . $account_id . '/' . $player_id . '_default/index.min.js';
+			if( 'pictureinpicture' === $atts['picture_in_picture'] ) :
+				?>
+				<div style="max-width: <?php echo esc_attr( $width ); ?>;">
+					<div class="vjs-pip-container">
+						<video-js
+								data-video-id="<?php echo esc_attr( $id ); ?>" data-account="<?php echo esc_attr( $account_id ); ?>"
+								data-player="<?php echo esc_attr( $player_id ); ?>"
+								data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
+								data-embed="default"
+								class="vjs-fluid"
+								controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
+						</video-js>
+					</div>
+				</div>
+				<script src="<?php echo esc_url( $js_src ); ?>"></script>
+			<?php
+			else :
 			?>
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
@@ -921,7 +938,9 @@ class BC_Utility {
 				</div>
 			</div>
 
-		<?php elseif ( 'iframe' === $embed ) : ?>
+		<?php endif;
+
+            elseif ( 'iframe' === $embed ) : ?>
 			<?php
 			if ( ! empty( $autoplay ) ) {
 				$autoplay = '&' . $autoplay;

@@ -149,6 +149,9 @@ class BC_Setup {
 					'playsinline'    => array(
 						'type' => 'string',
 					),
+					'picture_in_picture'    => array(
+						'type' => 'string',
+					),
 					'height'      => array(
 						'type' => 'string',
 					),

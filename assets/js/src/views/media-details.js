@@ -19,8 +19,9 @@ var MediaDetailsView = BrightcoveView.extend(
 			'click .brightcove.back.button' :    'triggerCancelPreviewMedia',
 			'click .playlist-details input[name="embed-style"]' :  'togglePlaylistSizing',
 			'change #aspect-ratio' : 'toggleUnits',
+			'change #pictureinpicture' : 'togglePictureinpicture',
 			'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]' : 'toggleExperienceUnits',
-			'change #video-player, #autoplay, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
+			'change #video-player, #autoplay, #pictureinpicture, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height' : 'generateShortcode',
 			'change #generate-shortcode' : 'toggleShortcodeGeneration',
 		},
 
@@ -69,6 +70,18 @@ var MediaDetailsView = BrightcoveView.extend(
 					}
 				}
 			}
+		},
+
+		togglePictureinpicture: function( event ) {
+			var $iframeRadioButton = $( '#embed-style-iframe' ),
+				$pictureinpicture_checked = $( '#pictureinpicture' ).is( ':checked' );
+
+				if( $pictureinpicture_checked ) {
+					$iframeRadioButton.prop('checked', false);
+					$iframeRadioButton.attr('disabled',true);
+				} else {
+					$iframeRadioButton.attr('disabled',false);
+				}
 		},
 
     toggleExperienceUnits: function( event ) {
@@ -122,6 +135,7 @@ var MediaDetailsView = BrightcoveView.extend(
 				playerId = $( '#video-player' ).val(),
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
 				playsinline = ( $( '#playsinline' ).is( ':checked' ) ) ? 'playsinline': '',
+				pictureinpicture = ( $( '#pictureinpicture' ).is( ':checked' ) ) ? 'pictureinpicture': '',
 				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
 				embedStyle = $( 'input[name="embed-style"]:checked' ).val(),
 				sizing = $( 'input[name="sizing"]:checked' ).val(),
@@ -156,7 +170,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 			shortcode = '[bc_video video_id="' + videoId + '" account_id="' + accountId + '" player_id="' + playerId + '" ' +
 				'embed="' + embedStyle + '" padding_top="' + paddingTop + '%" autoplay="' + autoplay + '" ' +
-				'min_width="' + minWidth + '" playsinline="' + playsinline + '" max_width="' + maxWidth + '" ' +
+				'min_width="' + minWidth + '" playsinline="' + playsinline + '" picture_in_picture="' + pictureinpicture + '" max_width="' + maxWidth + '" ' +
 				'mute="' + mute + '" width="' + width + '" height="' + height + '"' +
 				' ]';
 
