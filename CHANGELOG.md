@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.8.2] - TBD
+## [1.9.0] - TBD
+### Fixed
+- Picture in picture support.
+- Support to use reference id in videos.
+
+## [1.8.2] - 2020-01-24
 ### Fixed
 - Upload new videos bug.
 
