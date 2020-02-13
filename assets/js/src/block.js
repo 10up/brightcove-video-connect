@@ -41,7 +41,11 @@
 
 			// Sanitize the IDs we need
 			var sanitizeIds = function( id ) {
-				return id.replace( /\D/g, '' );
+				if( 0 === id.indexOf( 'ref:' ) ) {
+					return id;
+				} else {
+					return id.replace( /\D/g, '' );
+				}
 			};
 
 			/**
