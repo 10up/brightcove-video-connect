@@ -41,13 +41,20 @@ class BC_Utility {
 	}
 
 	/**
+	 * Sanitize the ID.
+	 *
+	 * Allow for id's in the format ref: and if not in this format, make sure we don't allow any other than numeric.
+	 *
 	 * @param $numeric_string
 	 *
 	 * @return string containing integers only
 	 */
-	public static function sanitize_id( $numeric_string ) {
-
-		return is_string( $numeric_string ) ? sanitize_text_field( preg_replace( '/\D/', '', $numeric_string ) ) : "";
+	public static function sanitize_id( $id ) {
+		if ( 0 === strpos( $id, 'ref:' ) ) {
+			return $id;
+		} else {
+			return is_string( $id ) ? sanitize_text_field( preg_replace( '/\D/', '', $id ) ) : "";
+		}
 	}
 
 	/**
