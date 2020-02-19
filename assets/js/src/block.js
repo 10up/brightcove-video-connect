@@ -36,11 +36,16 @@
 			var paddingTop 	 = props.attributes.padding_top || '';
 			var autoplay     = props.attributes.autoplay || '';
 			var playsinline  = props.attributes.playsinline || '';
+			var pictureinpicture  = props.attributes.picture_in_picture || '';
 			var embed        = props.attributes.embed || '';
 
 			// Sanitize the IDs we need
 			var sanitizeIds = function( id ) {
-				return id.replace( /\D/g, '' );
+				if( 0 === id.indexOf( 'ref:' ) ) {
+					return id;
+				} else {
+					return id.replace( /\D/g, '' );
+				}
 			};
 
 			/**
@@ -68,6 +73,7 @@
 					padding_top: '',
 					autoplay: '',
 					playsinline: '',
+                    picture_in_picture: '',
 					embed: attrs.named.embed
 				};
 
@@ -76,6 +82,7 @@
 					setAttrs.video_id = sanitizeIds( attrs.named.video_id );
 					setAttrs.autoplay = attrs.named.autoplay;
 					setAttrs.playsinline = attrs.named.playsinline;
+                    setAttrs.picture_in_picture = attrs.named.picture_in_picture;
 					setAttrs.padding_top = attrs.named.padding_top;
 				} else if ( '[bc_playlist' === attrs.numeric[0] ) {
 					setAttrs.player_id = attrs.named.player_id;

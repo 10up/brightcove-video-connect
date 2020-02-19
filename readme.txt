@@ -22,6 +22,11 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 1.9.0 =
+
+* Picture in picture support.
+* Support to use reference id in videos.
+
 = 1.8.2 =
 
 * Fix: Upload new videos bug.

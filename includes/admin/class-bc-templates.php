@@ -628,7 +628,12 @@ class BC_Admin_Templates {
 						<div class="right-col">
 							<input type="checkbox" id="playsinline" name="playsinline">
 						</div>
-
+                        <label for="pictureinpicture">
+                            <?php esc_html_e( 'Enable Picture in Picture: ', 'brightcove' ); ?>
+                        </label>
+                        <div class="right-col">
+                            <input type="checkbox" id="pictureinpicture" name="pictureinpicture">
+                        </div>
                         <label for="embed-style-in-page">
                             <?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
                         </label>
