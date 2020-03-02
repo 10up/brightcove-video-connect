@@ -24,11 +24,15 @@ class BC_Permissions {
 	public function __construct() {
 		global $wp_roles;
 		if ( ! isset( $wp_roles->roles[ 'administrator' ][ 'capabilities' ][ 'brightcove_manipulate_accounts' ] ) ){
-			$this->add_capabilities();
+			$this->add_admin_capabilities();
+		}
+
+		if ( ! isset( $wp_roles->roles[ 'editor' ][ 'capabilities' ][ 'brightcove_manipulate_videos' ] ) ){
+			$this->add_editor_capabilities();
 		}
 	}
 
-	protected function add_capabilities() {
+	protected function add_admin_capabilities() {
 
 		$admin_roles = array(
 			'brightcove_manipulate_accounts',
@@ -39,22 +43,30 @@ class BC_Permissions {
 			'brightcove_manipulate_videos',
 		);
 
+		if( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) {
+			wpcom_vip_add_role_caps( 'administrator', $admin_roles );
+		} else {
+
+			$administrator = get_role( 'administrator' );
+
+			foreach( $admin_roles as $admin_role ) {
+				$administrator->add_cap( $admin_role );
+			}
+		}
+	}
+
+	protected function add_editor_capabilities() {
+
 		$editor_roles = array(
 			'brightcove_manipulate_playlists',
 			'brightcove_manipulate_videos',
 		);
 
 		if( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) {
-			wpcom_vip_add_role_caps( 'administrator', $admin_roles );
 			wpcom_vip_add_role_caps( 'editor', $editor_roles );
 		} else {
 
-			$administrator = get_role( 'administrator' );
 			$editor = get_role( 'editor' );
-
-			foreach( $admin_roles as $admin_role ) {
-				$administrator->add_cap( $admin_role );
-			}
 
 			foreach( $editor_roles as $editor_role ) {
 				$editor->add_cap( $editor_role );
