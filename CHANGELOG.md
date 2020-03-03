@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.9.0] - TBD
+## [1.9.1] - TBD
 ### Fixed
+* Bug in preview when switching from classic editor to Gutenberg.
+* Bug with editor capabilities.
+
+## [1.9.0] - TBD
+### Added
 - Picture in picture support.
 - Support to use reference id in videos.
 
