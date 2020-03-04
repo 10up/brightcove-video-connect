@@ -22,6 +22,11 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 1.9.1 =
+
+* Fix: Bug in preview when switching from classic editor to Gutenberg.
+* Fix: Bug with editor capabilities.
+
 = 1.9.0 =
 
 * Picture in picture support.
