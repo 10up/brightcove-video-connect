@@ -38,12 +38,7 @@ var BrightcoveView = wp.Backbone.View.extend(
 				} );
 			}
 
-			if( wpbc.modal.target === 'content' ) {
-				window.send_to_editor( shortcode );
-			} else {
-				$( wpbc.modal.target ).val( shortcode );
-				$( wpbc.modal.target ).change();
-			}
+			window.send_to_editor( shortcode );
 
 			wpbc.broadcast.trigger( 'close:modal' );
 		}
