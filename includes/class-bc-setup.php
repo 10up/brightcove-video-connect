@@ -198,8 +198,12 @@ class BC_Setup {
 
 	public static function add_brightcove_media_button( $editor_id ) {
 
-		if ( BC_Utility::current_user_can_brightcove() && 'content' === $editor_id ) {
-			echo '<a href="#" data-target="content" id="brightcove-add-media" class="button brightcove-add-media"><img class="bc-button-icon" src="' . esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ) . '"> ' . esc_html__( 'Brightcove Media', 'brightcove' ) . '</a>';
+		if ( BC_Utility::current_user_can_brightcove() ) {
+			printf( '<button type="button" data-target="%s" class="button brightcove-add-media"><img class="bc-button-icon" src="%s">%s</button>',
+				esc_attr( $editor_id ),
+				esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ),
+				esc_html__( 'Brightcove Media', 'brightcove' )
+			);
 		}
 	}
 
