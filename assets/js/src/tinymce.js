@@ -67,7 +67,7 @@
         self.content = wrapper.innerHTML;
 
 				// add allowfullscreen attribute to main iframe to allow video preview in full screen
-				if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' ) {
+				if ( typeof document.getElementById( 'content_ifr' ) !== 'undefined' && document.getElementById( 'content_ifr' ) !== null ) {
 					document.getElementById( 'content_ifr' ).setAttribute( 'allowFullScreen', '' );
 				}
 			},
