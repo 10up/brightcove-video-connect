@@ -442,8 +442,10 @@ class BC_CMS_API extends BC_API {
 			$args['sort'] = sanitize_text_field( $sort );
 		}
 
+		$args['playable'] = 'true';
+
 		if ( false === $playable ) {
-			$args['playable'] = false;
+			$args['playable'] = 'false';
 		}
 
 		if ( '' != sanitize_text_field( $query ) ) {
