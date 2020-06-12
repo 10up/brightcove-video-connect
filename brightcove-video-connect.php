@@ -73,7 +73,7 @@ if ( is_admin() ) {
 
 	$bc_accounts = new BC_Accounts();
 
-	add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
+	add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 
 }
 
