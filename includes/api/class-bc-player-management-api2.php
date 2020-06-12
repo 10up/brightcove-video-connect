@@ -67,13 +67,14 @@ class BC_Player_Management_API2 extends BC_API {
 
 			$url             = esc_url_raw( self::BASE_URL . $account_id . '/players/' );
 			$account_players = $this->send_request( $url );
+
+			if ( ! $account_players || is_wp_error( $account_players ) ) {
+				return [];
+			}
+
 			usort( $account_players['items'], 'BC_Utility::compare_player_update_date' );
 
 			$players[ $account_id ] = array();
-
-			if ( is_wp_error( $account_players ) ) {
-				return [];
-			}
 
 			foreach ( $account_players['items'] as $key => $player ) {
 				// If a player is set to inactive, we should not send any data about it to the plugin
