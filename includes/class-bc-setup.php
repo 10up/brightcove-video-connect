@@ -413,9 +413,10 @@ class BC_Setup {
 		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 && empty( $players ) && is_array( $players ) ) {
 			$notices[] = array(
 				'message' => sprintf(
-				/* translators: %s: Settings Screen URL. */
-					__( 'It looks like one or more of your accounts API authentication changed recently. Please update your settings <a href="%s"><strong>here</strong></a>', 'brightcove' ),
-					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) )
+					'%s <a href="%s"><strong>%s</strong></a>',
+					esc_html__( 'It looks like one or more of your accounts API authentication changed recently. Please update your settings ', 'brightcove' ),
+					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
+					esc_html__( 'here', 'brightcove' )
 				),
 				'type'    => 'error',
 			);
