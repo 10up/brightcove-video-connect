@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [1.9.1] - TBD
+## [1.9.2] - TBD
+### Fixed
+* Fix: Fatal error when credentials are revoked.
+### Added
+* Add a notice when credentials are revoked, prompting user to update them.
+
+## [1.9.1] - 2020-03-18
 ### Fixed
 * Bug in preview when switching from classic editor to Gutenberg.
 * Bug with editor capabilities.

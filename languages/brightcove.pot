@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brightcove Video Connect 1.9.1\n"
+"Project-Id-Version: Brightcove Video Connect 1.9.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2020-03-03 01:59:02+00:00\n"
+"POT-Creation-Date: 2020-06-29 18:43:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -947,19 +947,25 @@ msgid ""
 "times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:418
-msgid "Please configure Brightcove settings from"
+#: includes/class-bc-setup.php:417
+msgid ""
+"It looks like one or more of your accounts API authentication changed "
+"recently. Please update your settings "
 msgstr ""
 
-#: includes/class-bc-setup.php:420
+#: includes/class-bc-setup.php:419 includes/class-bc-setup.php:437
 msgid "here"
 msgstr ""
 
 #: includes/class-bc-setup.php:435
+msgid "Please configure Brightcove settings from"
+msgstr ""
+
+#: includes/class-bc-setup.php:454
 msgid "BC In Process Videos"
 msgstr ""
 
-#: includes/class-bc-setup.php:463
+#: includes/class-bc-setup.php:482
 msgid ""
 "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
 "has been <strong>deactivated</strong> because it's incompatibale with "

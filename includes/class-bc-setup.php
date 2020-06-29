@@ -73,7 +73,7 @@ class BC_Setup {
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
 
 		// Show admin notice only if there are not sources.
-		add_action( 'admin_notices', array( 'BC_Setup', 'bc_activation_admin_notices' ) );
+		add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 	}
 
 	/**
@@ -391,11 +391,16 @@ class BC_Setup {
 
 	}
 
-	public static function bc_activation_admin_notices() {
+	/**
+	 * Displays various notices while on plugin setup process.
+	 */
+	public static function bc_admin_notices() {
 
 		global $bc_accounts;
+		$player_api = new BC_Player_Management_API2();
+		$players = $player_api->get_all_players();
 
-		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 ) {
+		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 && ! empty( $players ) && is_array( $players ) ) {
 
 			if ( false !== get_option( '_brightcove_plugin_activated' ) ) {
 				delete_option( '_brightcove_plugin_activated' );
@@ -405,10 +410,22 @@ class BC_Setup {
 
 		}
 
+		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 && empty( $players ) && is_array( $players ) ) {
+			$notices[] = array(
+				'message' => sprintf(
+					'%s <a href="%s"><strong>%s</strong></a>',
+					esc_html__( 'It looks like one or more of your accounts API authentication changed recently. Please update your settings ', 'brightcove' ),
+					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
+					esc_html__( 'here', 'brightcove' )
+				),
+				'type'    => 'error',
+			);
+		}
+
 		if ( get_option( '_brightcove_plugin_activated' ) !== false
-		     && current_user_can( 'manage_options' )
-		     && get_current_screen()->base !== 'brightcove_page_brightcove-sources'
-		     && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
+			 && current_user_can( 'manage_options' )
+			 && get_current_screen()->base !== 'brightcove_page_brightcove-sources'
+			 && get_current_screen()->base !== 'brightcove_page_brightcove-edit-source'
 			 && get_current_screen()->base !== 'admin_page_page-brightcove-edit-source'
 		) {
 
@@ -422,8 +439,10 @@ class BC_Setup {
 				'type'    => 'updated',
 			);
 
-			BC_Utility::admin_notice_messages( $notices );
+		}
 
+		if ( ! empty( $notices ) ) {
+			BC_Utility::admin_notice_messages( $notices );
 		}
 	}
 
