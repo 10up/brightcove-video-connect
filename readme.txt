@@ -22,6 +22,11 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 1.9.2 =
+
+* Fix: Fatal error when credentials are revoked.
+* Add a notice when credentials are revoked, prompting user to update them.
+
 = 1.9.1 =
 
 * Fix: Bug in preview when switching from classic editor to Gutenberg.
