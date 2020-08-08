@@ -239,7 +239,9 @@ class BC_Admin_Media_API {
 			if ( isset( $_POST['captions'] ) ) {
 				// Maybe update captions
 				$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
-			}
+			} else {
+                $this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+            }
 		}
 
 		BC_Utility::delete_cache_item( '*' );
@@ -882,6 +884,31 @@ class BC_Admin_Media_API {
 	}
 
 	/**
+	 * Handle deleting all captions from the specified video.
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 *
+	 * @param string       $account_hash
+	 * @param int          $video_id
+	 */
+	public function ajax_caption_delete( $account_hash, $video_id ) {
+		global $bc_accounts;
+
+		// Set up the account to which we're pushing data
+		$account = $bc_accounts->set_current_account( $account_hash );
+		if ( false === $account ) {
+			$bc_accounts->restore_default_account();
+
+			return;
+		}
+
+		$this->cms_api->text_track_delete( $video_id );
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+	}
+
+	/**
 	 * Handle an uploaded caption file and associate it with the specified video
 	 *
 	 * @global BC_Accounts $bc_accounts
@@ -893,16 +920,6 @@ class BC_Admin_Media_API {
 	public function ajax_caption_upload( $account_hash, $video_id, $raw_captions ) {
 		global $bc_accounts;
 
-
-		/**
-         * Identify which videos need to be updated/deleted
-         * Separate captions that should be updated and captions that should be ingested
-         * Create new arrays and send json
-         *
-         *
-         */
-		$BC_CMS_API   = new BC_CMS_API();
-        $video_object = $BC_CMS_API->video_get( $video_id );
 		// Set up the account to which we're pushing data
 		$account = $bc_accounts->set_current_account( $account_hash );
 		if ( false === $account ) {
@@ -913,40 +930,41 @@ class BC_Admin_Media_API {
 
 		// Sanitize our passed data
 		$video_id = BC_Utility::sanitize_id( $video_id );
-        $new_captions = array();
-        $old_captions = array();
+		$new_captions = array();
+		$old_captions = array();
 		foreach ( $raw_captions as $caption ) {
 			// Validate required fields
 			if ( ! isset( $caption['source'] ) || ! isset( $caption['language'] ) ) {
 				continue;
 			}
 
-
 			$url  = esc_url( $caption['source'] );
 			$lang = sanitize_text_field( $caption['language'] );
 			if ( empty( $url ) || empty( $lang ) ) {
 				continue; // Attachment has no URL, fail
 			}
-			$label = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
+			$label   = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
+			$default = ( isset( $caption['default'] ) && 'checked' === $caption['default'] ) ? true : false;
 
 			$source = parse_url( $caption['source'] );
 			if ( 0 === strpos( $source['host'], 'brightcove' ) ) {
 				// If the hostname starts with "brightcove," assume this media has already been ingested and add to old captions.
-				$old_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label );
+				$old_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label, $default );
 				continue;
 			}
 
-			$new_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label );
+			$new_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label, $default );
 		}
 
-        $this->cms_api->text_track_update( $video_id, $old_captions );
+		// We need to handle the text track updating first because the PATCH request would override the newly ingested text tracks.
+		$this->cms_api->text_track_update( $video_id, $old_captions );
 
 		if ( empty( $new_captions ) ) {
-            $bc_accounts->restore_default_account();
+			$bc_accounts->restore_default_account();
 			return; // After sanitization, we have no valid new captions
 		}
 
-		// Push the captions to Brightcove
+		// Push the new captions to Brightcove
 		$this->cms_api->text_track_upload( $video_id, $new_captions );
 
 		// Restore our global, default account
