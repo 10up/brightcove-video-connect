@@ -658,28 +658,38 @@ class BC_CMS_API extends BC_API {
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/ingest-requests' ), 'POST', $data );
 	}
 
-    /**
-     * Upload a collection of text tracks for a specific video.
-     *
-     * Sends the URLs of various video text track files to the Dynamic Ingest API for processing.
-     *
-     * @param string $video_id
-     * @param BC_Text_Track[] $text_tracks
-     *
-     * @return string|bool The ingest request ID or false on failure
-     */
-    public function text_track_update( $video_id, $text_tracks ) {
-        // Prepare data
-        $data                = array();
-        $data['callbacks']   = BC_Notification_API::callback_paths();
-        $data['text_tracks'] = array();
-        foreach ( $text_tracks as $track ) {
-            $data['text_tracks'][] = $track->toArray();
-        }
+	/**
+	 * Updates a collection of text tracks for a specific video.
+	 *
+	 * Sends a PATCH request to replace existing text tracks.
+	 *
+	 * @param string $video_id
+	 * @param BC_Text_Track[] $text_tracks
+	 *
+	 * @return string|bool The request ID or false on failure.
+	 */
+	public function text_track_update( $video_id, $text_tracks ) {
+		$data                = array();
+		$data['text_tracks'] = array();
+		foreach ( $text_tracks as $track ) {
+			$data['text_tracks'][] = $track->toArrayPatch();
+		}
 
-        // Send the data
-        return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id  ), 'PATCH', $data );
-    }
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id  ), 'PATCH', $data );
+	}
+
+	/**
+	 * Deletes the existing text tracks by sending an empty JSON text_track array
+	 *
+	 * @param $video_id
+	 * @return string|bool The request ID or false on failure.
+	 */
+	public function text_track_delete( $video_id ) {
+		$data                = array();
+		$data['text_tracks'] = array();
+
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id  ), 'PATCH', $data );
+	}
 
 	/**
 	 * Get a list of custom video fields for the account.
