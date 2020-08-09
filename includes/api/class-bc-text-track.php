@@ -67,7 +67,6 @@ class BC_Text_Track {
 			'srclang'   => $this->srcLang,
 			'kind'      => $this->kind,
 			'default'   => $this->default,
-			'mime_type' => $this->mimeType,
 		);
 
 		if ( ! empty( $this->label ) ) {
