@@ -573,7 +573,8 @@ div.brightcove-uploader div.brightcove-messages .updated {
     box-sizing: border-box;
     display: block;
     float: left;
-    width: 50%; }
+    width: 50%;
+    margin-bottom: 3px; }
     .brightcove.video-edit .caption-secondary-fields label:before, .brightcove.video-edit .caption-secondary-fields label:after {
       content: " ";
       display: table; }
@@ -582,12 +583,14 @@ div.brightcove-uploader div.brightcove-messages .updated {
     .brightcove.video-edit .caption-secondary-fields label:nth-child(1) {
       padding-right: 1em; }
     .brightcove.video-edit .caption-secondary-fields label span,
-    .brightcove.video-edit .caption-secondary-fields label input,
+    .brightcove.video-edit .caption-secondary-fields label input[type="text"],
     .brightcove.video-edit .caption-secondary-fields label select {
       margin: 0;
       min-width: 100%;
       text-align: left;
       width: 100%; }
+    .brightcove.video-edit .caption-secondary-fields label input[type="checkbox"] {
+      margin: auto; }
 
 .playlist-edit.brightcove.attachment-details {
   width: 100%;

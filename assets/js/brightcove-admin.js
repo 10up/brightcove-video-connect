@@ -2739,7 +2739,7 @@ var VideoEditView = BrightcoveView.extend(
 			this.addCaption( source );
 		},
 
-		addCaption: function( source, language, label ) {
+		addCaption: function( source, language, label, defaultcap ) {
 			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
 				container  = document.getElementById( 'js-captions' ),
 				captionUrl = document.getElementById( 'js-caption-url' );
@@ -2761,6 +2761,10 @@ var VideoEditView = BrightcoveView.extend(
 				newRow.find( '.brightcove-captions-label' ).val( label );
 			}
 
+			if ( defaultcap ) {
+				newRow.find( '.brightcove-captions-default' ).val( defaultcap );
+			}
+
 			// Append our new row to the container
 			$( container ).append( newRow );
 
@@ -2777,15 +2781,17 @@ var VideoEditView = BrightcoveView.extend(
 			evnt.preventDefault();
 
 			var caption   = evnt.currentTarget,
-				container = $( caption ).parents( '.caption-repeater' ),
-				source    = container.find( '.brightcove-captions' ),
-				language  = container.find( '.brightcove-captions-launguage' ),
-				label     = container.find( '.brightcove-captions-label' );
+				container    = $( caption ).parents( '.caption-repeater' ),
+				source       = container.find( '.brightcove-captions' ),
+				language     = container.find( '.brightcove-captions-launguage' ),
+				label        = container.find( '.brightcove-captions-label' ),
+				defaultcap   = container.find( '.brightcove-captions-default' );
 
 			// Empty the input fields
 			$( source ).val( '' );
 			$( language ).val( '' );
 			$( label ).val( '' );
+			$( defaultcap ).val( '' );
 
 			// Remove the container entirely
 			container.remove();
@@ -2855,7 +2861,8 @@ var VideoEditView = BrightcoveView.extend(
 						{
 							'source'  : fileName,
 							'language': caption.find( '.brightcove-captions-language' ).val(),
-							'label'   : caption.find( '.brightcove-captions-label' ).val()
+							'label'   : caption.find( '.brightcove-captions-label' ).val(),
+							'default' : caption.find( '.brightcove-captions-default' ).attr('checked')
 						}
 					);
 				} else {
@@ -3007,7 +3014,7 @@ var VideoEditView = BrightcoveView.extend(
 				var captions = this.model.get( 'captions' );
 				for ( var i = 0, l = captions.length; i < l; i++ ) {
 					var caption = captions[i];
-					this.addCaption( caption.source, caption.language, caption.label );
+					this.addCaption( caption.source, caption.language, caption.label, caption.default );
 				}
 			}
 		}
