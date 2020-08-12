@@ -78,6 +78,8 @@ class BC_Text_Track {
 
 	/**
 	 * Return an array representation of a Text Track for use in API PATCH requests
+	 *
+	 * @return array Data to submit.
 	 */
 	public function toArrayPatch() {
 		$data = array(

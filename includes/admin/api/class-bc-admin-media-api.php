@@ -896,7 +896,7 @@ class BC_Admin_Media_API {
 
 		// Set up the account to which we're pushing data
 		$account = $bc_accounts->set_current_account( $account_hash );
-		if ( false === $account ) {
+		if ( ! $account ) {
 			$bc_accounts->restore_default_account();
 
 			return;
@@ -944,7 +944,7 @@ class BC_Admin_Media_API {
 				continue; // Attachment has no URL, fail
 			}
 			$label   = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
-			$default = ( isset( $caption['default'] ) && 'checked' === $caption['default'] ) ? true : false;
+			$default = ( isset( $caption['default'] ) && 'checked' === $caption['default'] );
 
 			$source = parse_url( $caption['source'] );
 			if ( 0 === strpos( $source['host'], 'brightcove' ) ) {
