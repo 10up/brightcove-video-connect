@@ -537,6 +537,7 @@ class BC_Admin_Media_API {
 		$tag_name  = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
 		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
 		$folder_id = ( isset( $_POST['folderId'] ) && '' !== $_POST['folderId'] ) ? sanitize_text_field( $_POST['folderId'] ) : false;
+		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : false;
 
 		/**
 		 * Filter the maximum number of items the brightcove media call will query for.
@@ -584,6 +585,10 @@ class BC_Admin_Media_API {
 				array_unshift( $query_terms, $query );
 			}
 
+			if ( $state && 'all' !== $state ) {
+				$query_terms[] = 'state:' . $state;
+			}
+
 			if ( $video_ids ) {
 
 				// We send the video_ids sorted since we have them returned sorted by ID.
@@ -612,7 +617,7 @@ class BC_Admin_Media_API {
 			 *
 			 * @param string Valid sort field name.
 			 */
-			$bc_video_sort_field = apply_filters( 'bc_video_sort_field', 'updated_at' );
+			$bc_video_sort_field = apply_filters( 'bc_video_sort_field', '-updated_at' );
 
 			// Get a list of videos.
 

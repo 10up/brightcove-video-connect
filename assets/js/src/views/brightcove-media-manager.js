@@ -133,7 +133,14 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.model.set('oldFolderId', this.model.get('folderId'));
 				this.model.set('folderId', folder);
 
-			})
+			});
+
+			this.listenTo( wpbc.broadcast, 'change:stateChanged', function ( state ) {
+				this.clearPreview();
+				this.model.set( 'oldState', 'oldstate' );
+				this.model.set( 'state', 'newstate' );
+
+			});
 
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 

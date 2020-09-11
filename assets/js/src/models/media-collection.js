@@ -90,6 +90,12 @@ var MediaCollection = Backbone.Collection.extend(
 				this.fetch();
 			} );
 
+			this.listenTo( wpbc.broadcast, 'change:stateChanged', function ( state ) {
+				this.oldState = this.state;
+				this.state = state;
+				this.fetch();
+			});
+
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 				this.date = date;
 				this.fetch();
@@ -166,11 +172,13 @@ var MediaCollection = Backbone.Collection.extend(
 					tags :           this.tag,
 					oldFolderId:     this.oldFolderId,
 					folderId: 			 this.folderId,
+					state:			this.state,
+					oldState:			this.oldState,
 					tagName :        wpbc.preload.tags[this.tag],
 					type : this.mediaType || 'videos'
 				} );
 
-				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folderId', 'tagName' );
+				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folderId', 'tagName', 'state' );
 
 				// Determine if we're infinite scrolling or not.
 				this.additionalRequest = _.isEqual( previousRequest, wpbc.previousRequest );
@@ -206,6 +214,7 @@ var MediaCollection = Backbone.Collection.extend(
 					                      context : this,
 					                      data :    options.data
 				                      } ).done( function ( response, status, request ) {
+				                      	console.log( options.data );
 					this.parse( response, status, request, requestChecksum );
 				} ).fail( this.fetchFail );
 
