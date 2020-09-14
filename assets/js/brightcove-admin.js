@@ -439,7 +439,6 @@ var MediaCollection = Backbone.Collection.extend(
 					                      context : this,
 					                      data :    options.data
 				                      } ).done( function ( response, status, request ) {
-				                      	console.log( options.data );
 					this.parse( response, status, request, requestChecksum );
 				} ).fail( this.fetchFail );
 
