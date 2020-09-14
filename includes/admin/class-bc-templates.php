@@ -221,6 +221,13 @@ class BC_Admin_Templates {
 											<input type="text" class="brightcove-captions-label" value="{{caption.label}}">
 										</label>
 
+										<# if ( true === caption.default ) { var checked = ' checked '; } #>
+
+										<label class="-default">
+											<?php esc_html_e( 'Default (Auto Display)', 'brightcove' ); ?>
+											<input type="checkbox" {{checked}} class="brightcove-captions-default" value="true">
+										</label>
+
 										<div class="action-row">
 											<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
 										</div>
@@ -246,6 +253,11 @@ class BC_Admin_Templates {
 									<label class="-label">
 										<?php esc_html_e( 'Label', 'brightcove' )?>
 										<input class="brightcove-captions-label" type="text">
+									</label>
+
+									<label class="-default">
+										<?php esc_html_e( 'Default (Auto Display)', 'brightcove' ); ?>
+										<input type="checkbox" class="brightcove-captions-default" value="true">
 									</label>
 
 									<div class="action-row">

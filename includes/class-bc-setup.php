@@ -341,7 +341,7 @@ class BC_Setup {
 			'tinymce_preview',
 		);
 
-		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies );
+		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION );
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
 		wp_enqueue_script( 'brightcove-admin' );
 
@@ -351,7 +351,7 @@ class BC_Setup {
 			wp_enqueue_media();
 		}
 
-		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array() );
+		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'brightcove-video-connect' );
 
 	}
