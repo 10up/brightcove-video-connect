@@ -9,16 +9,17 @@ var ToolbarView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-media-toolbar' ),
 
 		events : {
-      'click .view-list': 'toggleList',
-      'click .view-grid': 'toggleGrid',
-      'click .brightcove-toolbar': 'toggleToolbar',
-      'change .brightcove-media-source': 'sourceChanged',
-      'change .brightcove-media-dates': 'datesChanged',
-      'change .brightcove-media-tags': 'tagsChanged',
-			'change .brightcove-media-folders': 'foldersChanged',
-      'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
-      'click #media-search': 'searchHandler',
-      'keyup .search': 'enterHandler'
+	  'click .view-list': 'toggleList',
+	  'click .view-grid': 'toggleGrid',
+	  'click .brightcove-toolbar': 'toggleToolbar',
+	  'change .brightcove-media-source': 'sourceChanged',
+	  'change .brightcove-media-dates': 'datesChanged',
+	  'change .brightcove-media-tags': 'tagsChanged',
+	  'change .brightcove-media-folders': 'foldersChanged',
+	  'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
+	  'change .brightcove-media-state-filters': 'stateChanged',
+	  'click #media-search': 'searchHandler',
+	  'keyup .search': 'enterHandler'
 		},
 
 		render : function () {
@@ -113,6 +114,12 @@ var ToolbarView = BrightcoveView.extend(
         this.searchHandler( event );
       }
     },
+
+		stateChanged : function( event ) {
+			this.model.set('oldState', 'oldstate');
+			this.model.set('state', 'newstate');
+			wpbc.broadcast.trigger( 'change:stateChanged', event.target.value );
+		},
 
 		searchHandler : function ( event ) {
 			var searchTerm = $( '#media-search-input' ).val();
