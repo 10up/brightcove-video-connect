@@ -1020,6 +1020,12 @@ class BC_Admin_Templates {
 						</option>
 						<# }); #>
 					</select>
+					<label for="media-state-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by state', 'brightcove' );?></label>
+					<select id="media-state-filters" class="brightcove-media-state-filters attachment-filters">
+						<option value="all"><?php esc_html_e( 'All states', 'brightcove' ); ?></option>
+						<option value="active"><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
+						<option value="inactive"><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
+					</select>
 					<# }#>
 
 					<# if( data.mediaType === 'videoexperience' ) { #>

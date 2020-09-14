@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Brightcove Video Connect 1.9.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2020-06-29 18:43:20+00:00\n"
+"POT-Creation-Date: 2020-09-11 20:53:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,7 +68,7 @@ msgstr ""
 msgid "Successfully deleted your playlist."
 msgstr ""
 
-#: includes/admin/api/class-bc-admin-media-api.php:556
+#: includes/admin/api/class-bc-admin-media-api.php:557
 msgid "Invalid Search Type"
 msgstr ""
 
@@ -726,66 +726,82 @@ msgstr ""
 msgid "All folders"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1028
-#: includes/admin/class-bc-templates.php:1041
+#: includes/admin/class-bc-templates.php:1023
+msgid "Filter by state"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:1025
+msgid "All states"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:1026
+msgid "Active"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:1027
+msgid "Inactive"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:1034
+#: includes/admin/class-bc-templates.php:1047
 msgid "Please note that you can create new Experiences only from Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1033
+#: includes/admin/class-bc-templates.php:1039
 msgid "Leave videos unselected for default Experience behavior."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1049
+#: includes/admin/class-bc-templates.php:1055
 msgid "Please note that you can create new playlists only from Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1054
+#: includes/admin/class-bc-templates.php:1060
 msgid "Hide Empty Playlists"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1057
+#: includes/admin/class-bc-templates.php:1063
 msgid "Delete Selected"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1062
+#: includes/admin/class-bc-templates.php:1068
 msgid "Search Media"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1063
-#: includes/admin/class-bc-templates.php:1064
+#: includes/admin/class-bc-templates.php:1069
+#: includes/admin/class-bc-templates.php:1070
 msgid "Search"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1065
+#: includes/admin/class-bc-templates.php:1071
 msgid "help"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1073
+#: includes/admin/class-bc-templates.php:1079
 msgid "the Brightcove Documentation page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1074
-#: includes/admin/class-bc-templates.php:1082
-#: includes/admin/class-bc-templates.php:1090
+#: includes/admin/class-bc-templates.php:1080
+#: includes/admin/class-bc-templates.php:1088
+#: includes/admin/class-bc-templates.php:1096
 msgid "Dismiss this notice."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1081
+#: includes/admin/class-bc-templates.php:1087
 msgid ""
 "This video was not able to be inserted into the page. Please try again "
 "later. This may be because the video is still processing. For more "
 "information, please visit "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1081
+#: includes/admin/class-bc-templates.php:1087
 msgid "the Brightcove Status page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1089
+#: includes/admin/class-bc-templates.php:1095
 msgid "Search exact word or phrases by wrapping search in quotes."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1089
+#: includes/admin/class-bc-templates.php:1095
 msgid "Example:\"My Favorite Video\""
 msgstr ""
 
