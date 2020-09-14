@@ -426,8 +426,8 @@ class BC_Admin_Media_API {
 		$type,
 		$posts_per_page = 100,
 		$page = 1,
-		$query_string = 'state:active',
-		$sort_order = '-updated_at'
+		$query_string = '',
+		$sort_order = 'updated_at'
 	) {
 
 		global $bc_accounts;
@@ -571,8 +571,6 @@ class BC_Admin_Media_API {
 
 			$query_terms = array();
 
-			$query_terms[] = 'state:active';
-
 			if ( $tag_name ) {
 				// Tag Dropdown Search should use quotes to signify an exact match.
 				// Handles single and multi-word tags
@@ -621,7 +619,7 @@ class BC_Admin_Media_API {
 			 *
 			 * @param string Valid sort field name.
 			 */
-			$bc_video_sort_field = apply_filters( 'bc_video_sort_field', '-updated_at' );
+			$bc_video_sort_field = apply_filters( 'bc_video_sort_field', 'updated_at' );
 
 			// Get a list of videos.
 
@@ -1006,7 +1004,7 @@ class BC_Admin_Media_API {
 			}
 
 			// Get a list of videos
-			$results = $this->cms_api->video_list( $count, 0, 'state:active', '-updated_at' );
+			$results = $this->cms_api->video_list( $count, 0, '', 'updated_at' );
 
 			if ( is_wp_error( $results ) ) {
 
