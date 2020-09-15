@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.0] - TBD
+### Added
+* Feature: Multi language caption processing.
+* Feature: Active/Inactive videos filtering.
+
 ## [1.9.2] - 2020-06-29
 ### Added
 - Add a notice when credentials are revoked, prompting user to update them.
