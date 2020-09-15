@@ -115,18 +115,22 @@
 			display: block;
 			float: left;
 			width: 50%;
+			margin-bottom: 3px;
 
 			&:nth-child(1) {
 				padding-right: 1em;
 			}
 
 			span,
-			input,
+			input[type="text"],
 			select {
 				margin: 0;
 				min-width: 100%;
 				text-align: left;
 				width: 100%;
+			}
+			input[type="checkbox"] {
+				margin: auto;
 			}
 		}
 	}

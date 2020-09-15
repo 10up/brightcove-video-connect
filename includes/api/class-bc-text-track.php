@@ -31,6 +31,11 @@ class BC_Text_Track {
 	protected $default;
 
 	/**
+	 * @var string Set the default Mime Type for captions
+	 */
+	protected $mimeType = 'text/webvtt';
+
+	/**
 	 * Build up the object as needed.
 	 *
 	 * @param string $url
@@ -47,21 +52,42 @@ class BC_Text_Track {
 		} else {
 			$this->kind = $kind;
 		}
-		$this->label = sanitize_text_field( $label );
-		$this->default = !! $default;
+		$this->label   = sanitize_text_field( $label );
+		$this->default = (bool) $default;
 	}
 
 	/**
-	 * Return an array representation of the Text Track for use in API requests
+	 * Return an array representation of the Text Track for use in API ingest requests
 	 *
 	 * @return array
 	 */
 	public function toArray() {
 		$data = array(
-			'url'     => $this->url,
-			'srclang' => $this->srcLang,
-			'kind'    => $this->kind,
-			'default' => $this->default,
+			'url'       => $this->url,
+			'srclang'   => $this->srcLang,
+			'kind'      => $this->kind,
+			'default'   => $this->default,
+		);
+
+		if ( ! empty( $this->label ) ) {
+			$data['label'] = $this->label;
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Return an array representation of a Text Track for use in API PATCH requests
+	 *
+	 * @return array Data to submit.
+	 */
+	public function toArrayPatch() {
+		$data = array(
+			'src'       => $this->url,
+			'srclang'   => $this->srcLang,
+			'kind'      => $this->kind,
+			'default'   => $this->default,
+			'mime_type' => $this->mimeType,
 		);
 
 		if ( ! empty( $this->label ) ) {

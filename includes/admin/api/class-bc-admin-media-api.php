@@ -239,7 +239,9 @@ class BC_Admin_Media_API {
 			if ( isset( $_POST['captions'] ) ) {
 				// Maybe update captions
 				$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
-			}
+			} else {
+                $this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+            }
 		}
 
 		BC_Utility::delete_cache_item( '*' );
@@ -537,6 +539,7 @@ class BC_Admin_Media_API {
 		$tag_name  = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
 		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
 		$folder_id = ( isset( $_POST['folderId'] ) && '' !== $_POST['folderId'] ) ? sanitize_text_field( $_POST['folderId'] ) : false;
+		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : false;
 
 		/**
 		 * Filter the maximum number of items the brightcove media call will query for.
@@ -582,6 +585,10 @@ class BC_Admin_Media_API {
 			if ( $query ) {
 
 				array_unshift( $query_terms, $query );
+			}
+
+			if ( $state && 'all' !== $state ) {
+				$query_terms[] = 'state:' . $state;
 			}
 
 			if ( $video_ids ) {
@@ -882,6 +889,31 @@ class BC_Admin_Media_API {
 	}
 
 	/**
+	 * Handle deleting all captions from the specified video.
+	 *
+	 * @global BC_Accounts $bc_accounts
+	 *
+	 * @param string       $account_hash
+	 * @param int          $video_id
+	 */
+	public function ajax_caption_delete( $account_hash, $video_id ) {
+		global $bc_accounts;
+
+		// Set up the account to which we're pushing data
+		$account = $bc_accounts->set_current_account( $account_hash );
+		if ( ! $account ) {
+			$bc_accounts->restore_default_account();
+
+			return;
+		}
+
+		$this->cms_api->text_track_delete( $video_id );
+
+		// Restore our global, default account
+		$bc_accounts->restore_default_account();
+	}
+
+	/**
 	 * Handle an uploaded caption file and associate it with the specified video
 	 *
 	 * @global BC_Accounts $bc_accounts
@@ -903,36 +935,42 @@ class BC_Admin_Media_API {
 
 		// Sanitize our passed data
 		$video_id = BC_Utility::sanitize_id( $video_id );
-		$captions = array();
+		$new_captions = array();
+		$old_captions = array();
 		foreach ( $raw_captions as $caption ) {
 			// Validate required fields
 			if ( ! isset( $caption['source'] ) || ! isset( $caption['language'] ) ) {
 				continue;
 			}
 
-
 			$url  = esc_url( $caption['source'] );
 			$lang = sanitize_text_field( $caption['language'] );
 			if ( empty( $url ) || empty( $lang ) ) {
 				continue; // Attachment has no URL, fail
 			}
-			$label = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
+			$label   = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
+			$default = ( isset( $caption['default'] ) && 'checked' === $caption['default'] );
 
 			$source = parse_url( $caption['source'] );
 			if ( 0 === strpos( $source['host'], 'brightcove' ) ) {
-				// If the hostname starts with "brightcove," assume this media has already been ingested
+				// If the hostname starts with "brightcove," assume this media has already been ingested and add to old captions.
+				$old_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label, $default );
 				continue;
 			}
 
-			$captions[] = new BC_Text_Track( $url, $lang, 'captions', $label );
+			$new_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label, $default );
 		}
 
-		if ( empty( $captions ) ) {
-			return; // After sanitization, we have no valid captions
+		// We need to handle the text track updating first because the PATCH request would override the newly ingested text tracks.
+		$this->cms_api->text_track_update( $video_id, $old_captions );
+
+		if ( empty( $new_captions ) ) {
+			$bc_accounts->restore_default_account();
+			return; // After sanitization, we have no valid new captions
 		}
 
-		// Push the captions to Brightcove
-		$this->cms_api->text_track_upload( $video_id, $captions );
+		// Push the new captions to Brightcove
+		$this->cms_api->text_track_upload( $video_id, $new_captions );
 
 		// Restore our global, default account
 		$bc_accounts->restore_default_account();

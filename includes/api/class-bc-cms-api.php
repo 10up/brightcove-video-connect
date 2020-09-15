@@ -659,6 +659,39 @@ class BC_CMS_API extends BC_API {
 	}
 
 	/**
+	 * Updates a collection of text tracks for a specific video.
+	 *
+	 * Sends a PATCH request to replace existing text tracks.
+	 *
+	 * @param string $video_id
+	 * @param BC_Text_Track[] $text_tracks
+	 *
+	 * @return string|bool The request ID or false on failure.
+	 */
+	public function text_track_update( $video_id, $text_tracks ) {
+		$data                = array();
+		$data['text_tracks'] = array();
+		foreach ( $text_tracks as $track ) {
+			$data['text_tracks'][] = $track->toArrayPatch();
+		}
+
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id  ), 'PATCH', $data );
+	}
+
+	/**
+	 * Deletes the existing text tracks by sending an empty JSON text_track array
+	 *
+	 * @param $video_id
+	 * @return string|bool The request ID or false on failure.
+	 */
+	public function text_track_delete( $video_id ) {
+		$data                = array();
+		$data['text_tracks'] = array();
+
+		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id  ), 'PATCH', $data );
+	}
+
+	/**
 	 * Get a list of custom video fields for the account.
 	 *
 	 * @return array|bool Array of all custom video fields of false if failure

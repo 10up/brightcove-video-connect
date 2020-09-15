@@ -315,6 +315,12 @@ var MediaCollection = Backbone.Collection.extend(
 				this.fetch();
 			} );
 
+			this.listenTo( wpbc.broadcast, 'change:stateChanged', function ( state ) {
+				this.oldState = this.state;
+				this.state = state;
+				this.fetch();
+			});
+
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 				this.date = date;
 				this.fetch();
@@ -391,11 +397,13 @@ var MediaCollection = Backbone.Collection.extend(
 					tags :           this.tag,
 					oldFolderId:     this.oldFolderId,
 					folderId: 			 this.folderId,
+					state:			this.state,
+					oldState:			this.oldState,
 					tagName :        wpbc.preload.tags[this.tag],
 					type : this.mediaType || 'videos'
 				} );
 
-				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folderId', 'tagName' );
+				var previousRequest = _.pick( options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folderId', 'tagName', 'state' );
 
 				// Determine if we're infinite scrolling or not.
 				this.additionalRequest = _.isEqual( previousRequest, wpbc.previousRequest );
@@ -573,7 +581,6 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 
 			this.set( 'media-collection-view', new MediaCollectionView( {collection : collection} ) );
 			this.set( 'options', options );
-
 		}
 	}
 );
@@ -768,16 +775,17 @@ var ToolbarView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-media-toolbar' ),
 
 		events : {
-      'click .view-list': 'toggleList',
-      'click .view-grid': 'toggleGrid',
-      'click .brightcove-toolbar': 'toggleToolbar',
-      'change .brightcove-media-source': 'sourceChanged',
-      'change .brightcove-media-dates': 'datesChanged',
-      'change .brightcove-media-tags': 'tagsChanged',
-			'change .brightcove-media-folders': 'foldersChanged',
-      'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
-      'click #media-search': 'searchHandler',
-      'keyup .search': 'enterHandler'
+	  'click .view-list': 'toggleList',
+	  'click .view-grid': 'toggleGrid',
+	  'click .brightcove-toolbar': 'toggleToolbar',
+	  'change .brightcove-media-source': 'sourceChanged',
+	  'change .brightcove-media-dates': 'datesChanged',
+	  'change .brightcove-media-tags': 'tagsChanged',
+	  'change .brightcove-media-folders': 'foldersChanged',
+	  'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
+	  'change .brightcove-media-state-filters': 'stateChanged',
+	  'click #media-search': 'searchHandler',
+	  'keyup .search': 'enterHandler'
 		},
 
 		render : function () {
@@ -872,6 +880,12 @@ var ToolbarView = BrightcoveView.extend(
         this.searchHandler( event );
       }
     },
+
+		stateChanged : function( event ) {
+			this.model.set('oldState', 'oldstate');
+			this.model.set('state', 'newstate');
+			wpbc.broadcast.trigger( 'change:stateChanged', event.target.value );
+		},
 
 		searchHandler : function ( event ) {
 			var searchTerm = $( '#media-search-input' ).val();
@@ -1135,7 +1149,14 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.model.set('oldFolderId', this.model.get('folderId'));
 				this.model.set('folderId', folder);
 
-			})
+			});
+
+			this.listenTo( wpbc.broadcast, 'change:stateChanged', function ( state ) {
+				this.clearPreview();
+				this.model.set( 'oldState', 'oldstate' );
+				this.model.set( 'state', 'newstate' );
+
+			});
 
 			this.listenTo( wpbc.broadcast, 'change:date', function ( date ) {
 
@@ -2739,7 +2760,7 @@ var VideoEditView = BrightcoveView.extend(
 			this.addCaption( source );
 		},
 
-		addCaption: function( source, language, label ) {
+		addCaption: function( source, language, label, defaultcap ) {
 			var newRow     = $( document.getElementById( 'js-caption-empty-row' ) ).clone(),
 				container  = document.getElementById( 'js-captions' ),
 				captionUrl = document.getElementById( 'js-caption-url' );
@@ -2761,6 +2782,10 @@ var VideoEditView = BrightcoveView.extend(
 				newRow.find( '.brightcove-captions-label' ).val( label );
 			}
 
+			if ( defaultcap ) {
+				newRow.find( '.brightcove-captions-default' ).val( defaultcap );
+			}
+
 			// Append our new row to the container
 			$( container ).append( newRow );
 
@@ -2777,15 +2802,17 @@ var VideoEditView = BrightcoveView.extend(
 			evnt.preventDefault();
 
 			var caption   = evnt.currentTarget,
-				container = $( caption ).parents( '.caption-repeater' ),
-				source    = container.find( '.brightcove-captions' ),
-				language  = container.find( '.brightcove-captions-launguage' ),
-				label     = container.find( '.brightcove-captions-label' );
+				container    = $( caption ).parents( '.caption-repeater' ),
+				source       = container.find( '.brightcove-captions' ),
+				language     = container.find( '.brightcove-captions-launguage' ),
+				label        = container.find( '.brightcove-captions-label' ),
+				defaultcap   = container.find( '.brightcove-captions-default' );
 
 			// Empty the input fields
 			$( source ).val( '' );
 			$( language ).val( '' );
 			$( label ).val( '' );
+			$( defaultcap ).val( '' );
 
 			// Remove the container entirely
 			container.remove();
@@ -2855,7 +2882,8 @@ var VideoEditView = BrightcoveView.extend(
 						{
 							'source'  : fileName,
 							'language': caption.find( '.brightcove-captions-language' ).val(),
-							'label'   : caption.find( '.brightcove-captions-label' ).val()
+							'label'   : caption.find( '.brightcove-captions-label' ).val(),
+							'default' : caption.find( '.brightcove-captions-default' ).attr('checked')
 						}
 					);
 				} else {
@@ -3007,7 +3035,7 @@ var VideoEditView = BrightcoveView.extend(
 				var captions = this.model.get( 'captions' );
 				for ( var i = 0, l = captions.length; i < l; i++ ) {
 					var caption = captions[i];
-					this.addCaption( caption.source, caption.language, caption.label );
+					this.addCaption( caption.source, caption.language, caption.label, caption.default );
 				}
 			}
 		}

@@ -28,7 +28,6 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend(
 
 			this.set( 'media-collection-view', new MediaCollectionView( {collection : collection} ) );
 			this.set( 'options', options );
-
 		}
 	}
 );
