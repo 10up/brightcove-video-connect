@@ -9,16 +9,17 @@ All notable changes to this project will be documented in this file, per [the Ke
 * Feature: Multi language caption processing.
 * Feature: Active/Inactive videos filtering.
 
-## [1.9.2] - 2020-05-29
-### Fixed
-* Fix: Fatal error when credentials are revoked.
+## [1.9.2] - 2020-06-29
 ### Added
-* Add a notice when credentials are revoked, prompting user to update them.
+- Add a notice when credentials are revoked, prompting user to update them.
+
+### Fixed
+- Fix: Fatal error when credentials are revoked.
 
 ## [1.9.1] - 2020-03-18
 ### Fixed
-* Bug in preview when switching from classic editor to Gutenberg.
-* Bug with editor capabilities.
+- Bug in preview when switching from classic editor to Gutenberg.
+- Bug with editor capabilities.
 
 ## [1.9.0] - 2020-02-19
 ### Added
@@ -270,7 +271,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [1.0.0] - 2015-06-15
 - First release
 
-[Unreleased]: https://github.com/10up/brightcove-video-connect/compare/1.7.1...develop
+[Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[1.9.2]: https://github.com/10up/brightcove-video-connect/compare/1.9.1...1.9.2
+[1.9.1]: https://github.com/10up/brightcove-video-connect/compare/1.9.0...1.9.1
+[1.9.0]: https://github.com/10up/brightcove-video-connect/compare/1.8.2...1.9.0
+[1.8.2]: https://github.com/10up/brightcove-video-connect/compare/1.8.1...1.8.2
 [1.8.1]: https://github.com/10up/brightcove-video-connect/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/10up/brightcove-video-connect/compare/1.7.2...1.8.0
 [1.7.2]: https://github.com/10up/brightcove-video-connect/compare/c7f3fd7...1.7.2
