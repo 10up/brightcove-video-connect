@@ -16,6 +16,7 @@ var ToolbarView = BrightcoveView.extend(
 	  'change .brightcove-media-dates': 'datesChanged',
 	  'change .brightcove-media-tags': 'tagsChanged',
 	  'change .brightcove-media-folders': 'foldersChanged',
+	  'change .brightcove-media-labels': 'labelsChanged',
 	  'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
 	  'change .brightcove-media-state-filters': 'stateChanged',
 	  'click #media-search': 'searchHandler',
@@ -30,6 +31,8 @@ var ToolbarView = BrightcoveView.extend(
 				mediaType : mediaType,
 				tags :      wpbc.preload.tags,
 				folders:    wpbc.preload.folders,
+				labels:     wpbc.preload.labels,
+				labelPath:  this.model.get( 'labelPath' ),
 				folderId:   this.model.get( 'folderId' ),
 				account :   this.model.get( 'account' )
 			};
@@ -103,6 +106,12 @@ var ToolbarView = BrightcoveView.extend(
       this.model.set('folderId', event.target.value);
       wpbc.broadcast.trigger('change:folder', event.target.value);
     },
+
+		labelsChanged: function ( event ) {
+			this.model.set( 'oldLabelPath', this.model.get( 'labelPath' ) );
+			this.model.set( 'labelPath', event.target.value );
+			wpbc.broadcast.trigger( 'change:label', event.target.value );
+		},
 
 		emptyPlaylistsChanged : function ( event ) {
 			var emptyPlaylists = $( event.target ).prop( 'checked' );

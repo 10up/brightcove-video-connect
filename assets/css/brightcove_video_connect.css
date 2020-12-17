@@ -527,6 +527,9 @@ div.brightcove-uploader div.brightcove-messages .updated {
     display: inline-block;
     padding-top: 6px; }
 
+.brightcove.video-edit .label-repeater.empty-row {
+  display: none; }
+
 .brightcove.video-edit button.-captions,
 .brightcove.video-edit .caption-url {
   float: left; }
@@ -558,6 +561,12 @@ div.brightcove-uploader div.brightcove-messages .updated {
 .brightcove.video-edit input.brightcove-captions {
   clear: both;
   margin-bottom: 0.75em;
+  width: 100%; }
+
+.brightcove.video-edit input.brightcove-labels {
+  clear: both;
+  margin-top: 0.7em;
+  margin-bottom: 0.2em;
   width: 100%; }
 
 .brightcove.video-edit .caption-secondary-fields {

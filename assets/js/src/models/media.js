@@ -59,14 +59,15 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
-					oldFolderId:			 this.get( 'oldFolderId' ),
+					oldFolderId:       this.get( 'oldFolderId' ),
 					folderId :         this.get( 'folderId' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
 					history:           this.get( '_change_history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' ),
-					captions:          this.get( 'captions' )
+					captions:          this.get( 'captions' ),
+					labels:            this.get( 'labels' )
 				} );
 
 				var video_ids = this.get( 'video_ids' );

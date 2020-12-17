@@ -49,6 +49,10 @@ class BC_Videos {
 			$update_data['custom_fields'] = $sanitized_post_data['custom_fields'];
 		}
 
+		if ( array_key_exists( 'labels', $sanitized_post_data ) ) {
+			$update_data['labels'] = $sanitized_post_data['labels'];
+		}
+
 		$bc_accounts->set_current_account( $sanitized_post_data['account'] );
 
 		$request = $this->cms_api->video_update( $video_id, $update_data );

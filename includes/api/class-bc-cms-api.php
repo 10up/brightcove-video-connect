@@ -793,4 +793,54 @@ class BC_CMS_API extends BC_API {
 		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folderId . '/videos/' . $videoId;
 		$this->send_request( esc_url_raw( $api_url ), 'DELETE' );
 	}
+
+	/**
+	 * Retrieves a list of the labels associated with the account.
+	 *
+	 * @return mixed A list of labels.
+	 */
+	public function get_account_labels() {
+		$result = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/' ), 'GET' );
+		return  $result['labels'];
+	}
+
+	/**
+	 * Adds a label in studio.
+	 *
+	 * @param string $name The label name.
+	 * @param string $path The label path.
+	 * @return mixed The request response.
+	 */
+	public function add_label( $name, $path ) {
+		$data['path'] = '';
+		if ( ! empty( $path ) ) {
+			$data['path'] .= $path;
+		}
+		$data['path'] .= '/' . stripslashes( $name ) . '/';
+
+		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/' ), 'POST', $data );
+	}
+
+	/**
+	 * Deletes a Label in studio.
+	 *
+	 * @param array $labels An array of labels to delete.
+	 */
+	public function delete_label( $labels ) {
+		foreach ( $labels as $label ) {
+			$this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/by_path/' . $label ), 'DELETE' );
+		}
+	}
+
+	/**
+	 * Updates a label in studio.
+	 *
+	 * @param string $name The label name.
+	 * @param string $path The label path.
+	 * @return mixed The request response.
+	 */
+	public function update_label( $name, $path ) {
+		$data['new_label'] = $name;
+		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/by_path/' . $path ), 'PATCH', $data );
+	}
 }

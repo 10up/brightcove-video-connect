@@ -5,13 +5,16 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :      'saveSync',
-			'click .brightcove.delete' :                'deleteVideo',
-			'click .brightcove.button.back' :           'back',
-			'click .setting .button' :                  'openMediaManager',
-			'click .attachment .check' :                'removeAttachment',
-			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
-			'click .add-remote-caption' :               'addCaptionRow'
+			'click    .brightcove.button.save-sync' :      'saveSync',
+			'click    .brightcove.delete' :                'deleteVideo',
+			'click    .brightcove.button.back' :           'back',
+			'click    .setting .button' :                  'openMediaManager',
+			'click    .attachment .check' :                'removeAttachment',
+			'click    .caption-secondary-fields .delete' : 'removeCaptionRow',
+			'click    .add-remote-caption' :               'addCaptionRow',
+			'click    .add-label' :                        'addLabelRow',
+			'keypress .brightcove-labels' :                'labelAutocomplete',
+			'click    .label-secondary-fields .delete' :   'removeLabelRow',
 		},
 
 		back : function ( event ) {
@@ -138,6 +141,71 @@ var VideoEditView = BrightcoveView.extend(
 			// Remove the preview image
 			container.removeClass( 'active' );
 			image.empty();
+		},
+
+		/**
+		 * Add a label row
+		 *
+		 * @param {Event} evnt
+		 * @param {Object} media
+		 */
+		addLabelRow: function( evnt, media ) {
+			var source = undefined;
+			if ( media ) {
+				source = media.url;
+			}
+
+			this.addLabel( source );
+		},
+
+		/**
+		 * Adds a label
+		 *
+		 * @param source
+		 * @param language
+		 * @param label
+		 * @param defaultcap
+		 */
+		addLabel: function( source, language, label, defaultcap ) {
+			let newRow     = $( document.getElementById( 'js-label-empty-row' ) ).clone(),
+				container  = document.getElementById( 'js-labels' );
+
+			// Clean up our cloned row
+			newRow.find( 'input' ).prop( 'disabled', false );
+			newRow.removeAttr( 'id' );
+			newRow.removeClass( 'empty-row' );
+
+			// Append our new row to the container
+			$( container ).append( newRow );
+		},
+
+		/**
+		 * Fires the autocomplete function
+		 *
+		 * @param {Event} evnt
+		 */
+		labelAutocomplete: function( evnt ) {
+			jQuery( '.brightcove-labels' ).autocomplete({
+				source: wpbc.preload.labels
+			});
+		},
+
+		/**
+		 * Removes a label row
+		 * @param {Event} evnt
+		 */
+		removeLabelRow: function( evnt ) {
+			evnt.preventDefault();
+
+			let label        = evnt.currentTarget,
+				container    = $( label ).parents( '.label-repeater' ),
+				source       = container.find( '.brightcove-labels' );
+
+			// Empty the input fields
+			$( source ).val( '' );
+
+			// Remove the container entirely
+			container.remove();
 		},
 
 		/**
@@ -302,6 +370,18 @@ var VideoEditView = BrightcoveView.extend(
 				}
 			} );
 			this.model.set( 'captions', captions );
+
+
+			// Labels
+			var labels = [];
+			this.$el.find( '.label-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
+				var label = $( this ),
+					Name  = label.find( '.brightcove-labels' ).val();
+
+				labels.push( Name );
+			} );
+
+			this.model.set( 'labels', labels );
 
 			// Custom fields
 			var custom = {},
