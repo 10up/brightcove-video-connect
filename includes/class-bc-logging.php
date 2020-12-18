@@ -30,7 +30,7 @@ class BC_Logging {
 
 			case 'file'     :
 				if( !$file ) {
-					if( $is_vip ) {
+					if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
 						newrelic_notice_error( $message );
 					} else {
 						error_log( $message );
@@ -40,7 +40,7 @@ class BC_Logging {
 				}
 
 				if( !is_file( $file ) ) {
-					if( $is_vip ) {
+					if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
 						newrelic_notice_error( $message );
 					} else {
 						error_log( $message );
@@ -49,7 +49,7 @@ class BC_Logging {
 				}
 
 				if( !is_writable( $file ) ) {
-					if( $is_vip ) {
+					if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
 						newrelic_notice_error( $message );
 					} else {
 						error_log( $message );
@@ -62,7 +62,7 @@ class BC_Logging {
 				break;
 			case 'syslog'   :
 			default         :
-				if( $is_vip ) {
+				if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
 					newrelic_notice_error( $message );
 				} else {
 					error_log( $message );
