@@ -135,24 +135,29 @@ class BC_Admin_Templates {
 				<div class="setting labels">
 					<span class="name"><?php esc_html_e( 'Labels', 'brightcove' )?></span>
 					<div class="setting-content">
-						<button class="button-secondary add-label">
-							<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
-						</button>
-						<div id="js-labels">
+						<div>
+							<button class="button-secondary add-bc-label">
+								<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
+							</button>
+							<a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
+								<?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
+							</a>
+						</div>
+						<div id="js-bc-labels">
 							<# _.each( data.labels, function( label ) { #>
-							<div id="js-caption-fields" class="label-repeater repeater-row">
+							<div id="js-caption-fields" class="bc-label-repeater repeater-row">
 								<input type="text" class="brightcove-labels" value="{{label}}">
 
-								<div class="label-secondary-fields">
+								<div class="bc-label-secondary-fields">
 									<div class="action-row">
 										<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
 									</div>
 								</div>
 							</div>
 							<# }); #>
-							<div id="js-label-empty-row" class="label-repeater repeater-row empty-row">
+							<div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
 								<input id="" type="text" class="brightcove-labels" value=""/>
-								<div class="label-secondary-fields">
+								<div class="bc-label-secondary-fields">
 									<div class="action-row">
 										<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
 									</div>

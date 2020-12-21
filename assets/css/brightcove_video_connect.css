@@ -502,7 +502,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   width: 64%; }
   .brightcove.video-edit .setting-content .button-secondary {
     clear: left;
-    display: block; }
+    display: inline-block; }
 
 .brightcove.video-edit .attachment {
   cursor: pointer;
@@ -658,3 +658,6 @@ div.brightcove-uploader div.brightcove-messages .updated {
       text-align: left;
       position: relative;
       left: auto; }
+
+.brightcove-labels-column {
+  padding: 8px; }

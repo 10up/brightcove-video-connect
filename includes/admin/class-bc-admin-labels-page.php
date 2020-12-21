@@ -85,7 +85,7 @@ class BC_Admin_Labels_Page {
 								<div class="form-field">
 									<label for="label-path"><?php esc_html_e( 'Parent Label', 'brightcove' ); ?></label>
 									<input name="label-path" id="label-path" type="text" value="" size="40">
-									<p><?php esc_html_e( 'Type the hierarchy you want your label to have. Example "/animals/mammals/ Leave blank if you do not wish to add a hierarchy.', 'brightcove' ); ?></p>
+									<p><?php esc_html_e( 'Type the hierarchy you want your label to have. Example "/animals/mammals/" Leave blank if you do not wish to add a hierarchy.', 'brightcove' ); ?></p>
 								</div>
 								<p class="submit">
 									<input type="submit" name="submit" class="button button-primary" value="Add New label">
@@ -105,10 +105,10 @@ class BC_Admin_Labels_Page {
 							<input type="hidden" name="action" value="brightcove-delete-label">
 							<div class="tablenav top">
 								<div class="alignleft actions bulkactions">
-									<label for="bulk-action-selector-top" class="screen-reader-text">Select bulk action</label>
+									<label for="bulk-action-selector-top" class="screen-reader-text"><?php esc_html_e( 'Select bulk action' ); ?></label>
 									<select name="test" id="bulk-action-selector-top">
-										<option value="-1">Bulk actions</option>
-										<option value="delete">Delete</option>
+										<option value="-1"><?php esc_html_e( 'Bulk actions' ); ?></option>
+										<option value="delete"><?php esc_html_e( 'Delete' ); ?></option>
 									</select>
 									<input type="submit" name="submit" class="button action" value="Apply"<span class="spinner"></span>
 								</div>
@@ -116,32 +116,36 @@ class BC_Admin_Labels_Page {
 							<table class="wp-list-table widefat fixed striped table-view-list">
 								<thead>
 								<tr>
-									<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1">Select All</label><input id="cb-select-all-1" type="checkbox"></td><th scope="col" id="name" class="manage-column column-name column-primary sortable desc"><span>Name</span></th>	</tr>
+									<td id="cb" class="manage-column column-cb check-column brightcove-labels-column"><label class="screen-reader-text" for="cb-select-all-1"><?php esc_html_e( 'Select All' ); ?></label><input id="cb-select-all-1" type="checkbox"></td><th scope="col" id="name" class="manage-column column-name column-primary"><span><?php esc_html_e( 'Name' ); ?></span></th></tr>
 								</thead>
 								<tbody id="the-list">
-								<?php foreach ( $labels as $index => $label ) : ?>
-								<tr class="level-0"><th scope="row" class="check-column">
-										<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $index ); ?>"></label>
-										<input type="checkbox" name="delete_labels[]" value="<?php echo esc_attr( $label ); ?>" id="cb-select-<?php echo esc_attr( $index ); ?>">
-										</th>
+								<?php if ( $labels ) {
+									 foreach ( $labels as $index => $label ) : ?>
+										<tr class="level-0">
+											<th scope="row" class="check-column">
+												<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $index ); ?>"></label>
+												<input type="checkbox" name="delete_labels[]" value="<?php echo esc_attr( $label ); ?>" id="cb-select-<?php echo esc_attr( $index ); ?>">
+											</th>
 											<td class="name column-name has-row-actions column-primary">
-												<strong><?php echo esc_html( $label ); ?></strong>
-												<br>
-												<div class="hidden" id="inline_1">
-													<div class="name"><?php echo esc_html( $label ); ?></div>
-													<div class="slug"><?php echo esc_html( $label ); ?></div>
-												</div>
-												<div class="row-actions">
-													<span class="edit"><a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-label') . '&update_label=' . $label ); ?>" aria-label="Edit “Uncategorized”"><?php echo esc_html_e( 'Edit' ); ?></a>
-													</span>
-												</div>
+											<strong><?php echo esc_html( $label ); ?></strong>
+											<br>
+											<div class="hidden" id="inline_1">
+												<div class="name"><?php echo esc_html( $label ); ?></div>
+												<div class="slug"><?php echo esc_html( $label ); ?></div>
+											</div>
+											<div class="row-actions">
+												<span class="edit"><a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-label') . '&update_label=' . $label ); ?>" aria-label="Edit “Uncategorized”"><?php echo esc_html_e( 'Edit' ); ?></a></span>
+											</div>
 											</td>
-								</tr
-								></tbody>
-								<?php endforeach; ?>
+										</tr>
+									<?php endforeach;
+								} ?>
+								</tbody>
 								<tfoot>
 								<tr>
-									<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2"><?php esc_html_e( 'Select All' ); ?></label><input id="cb-select-all-2" type="checkbox"></td><th scope="col" class="manage-column column-name column-primary sortable desc"><span><?php  esc_html_e( 'Name' ); ?></span></th></tr>
+									<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2"><?php esc_html_e( 'Select All' ); ?></label><input id="cb-select-all-2" type="checkbox"></td>
+									<th scope="col" class="manage-column column-name column-primary brightcove-labels-column"><span><?php esc_html_e( 'Name' ); ?></span></th>
+								</tr>
 								</tfoot>
 							</table>
 							<div class="tablenav bottom">

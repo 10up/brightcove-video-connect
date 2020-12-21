@@ -801,7 +801,10 @@ class BC_CMS_API extends BC_API {
 	 */
 	public function get_account_labels() {
 		$result = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/' ), 'GET' );
-		return  $result['labels'];
+		if ( empty( $result['labels'] ) ) {
+			$result['labels'] = false;
+		}
+		return $result['labels'];
 	}
 
 	/**

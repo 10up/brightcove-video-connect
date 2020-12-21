@@ -2638,16 +2638,16 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click    .brightcove.button.save-sync' :      'saveSync',
-			'click    .brightcove.delete' :                'deleteVideo',
-			'click    .brightcove.button.back' :           'back',
-			'click    .setting .button' :                  'openMediaManager',
-			'click    .attachment .check' :                'removeAttachment',
-			'click    .caption-secondary-fields .delete' : 'removeCaptionRow',
-			'click    .add-remote-caption' :               'addCaptionRow',
-			'click    .add-label' :                        'addLabelRow',
-			'keypress .brightcove-labels' :                'labelAutocomplete',
-			'click    .label-secondary-fields .delete' :   'removeLabelRow',
+			'click    .brightcove.button.save-sync' :         'saveSync',
+			'click    .brightcove.delete' :                   'deleteVideo',
+			'click    .brightcove.button.back' :              'back',
+			'click    .setting .button' :                     'openMediaManager',
+			'click    .attachment .check' :                   'removeAttachment',
+			'click    .caption-secondary-fields .delete' :    'removeCaptionRow',
+			'click    .add-remote-caption' :                  'addCaptionRow',
+			'click    .add-bc-label' :                        'addLabelRow',
+			'keypress .brightcove-labels' :                   'labelAutocomplete',
+			'click    .bc-label-secondary-fields .delete' :   'removeLabelRow',
 		},
 
 		back : function ( event ) {
@@ -2800,8 +2800,8 @@ var VideoEditView = BrightcoveView.extend(
 		 * @param defaultcap
 		 */
 		addLabel: function( source, language, label, defaultcap ) {
-			let newRow     = $( document.getElementById( 'js-label-empty-row' ) ).clone(),
-				container  = document.getElementById( 'js-labels' );
+			let newRow     = $( document.getElementById( 'js-bc-label-empty-row' ) ).clone(),
+				container  = document.getElementById( 'js-bc-labels' );
 
 			// Clean up our cloned row
 			newRow.find( 'input' ).prop( 'disabled', false );
@@ -2831,7 +2831,7 @@ var VideoEditView = BrightcoveView.extend(
 			evnt.preventDefault();
 
 			let label        = evnt.currentTarget,
-				container    = $( label ).parents( '.label-repeater' ),
+				container    = $( label ).parents( '.bc-label-repeater' ),
 				source       = container.find( '.brightcove-labels' );
 
 			// Empty the input fields
@@ -3007,7 +3007,7 @@ var VideoEditView = BrightcoveView.extend(
 
 			// Labels
 			var labels = [];
-			this.$el.find( '.label-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
+			this.$el.find( '.bc-label-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
 				var label = $( this ),
 					Name  = label.find( '.brightcove-labels' ).val();
 
