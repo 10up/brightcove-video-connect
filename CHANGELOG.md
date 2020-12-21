@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.0] - TBD
+## [2.1] - TBD
+### Added
+* Feature: Labels.
+* Feature: VIP error logging to NewRelic.
+* Changed to most recent logos.
+* Feature: Status filder.
+
+## [2.0] - 2020-09-15
 ### Added
 * Feature: Multi language caption processing.
 * Feature: Active/Inactive videos filtering.

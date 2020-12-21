@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brightcove Video Connect 2.0\n"
+"Project-Id-Version: Brightcove Video Connect 2.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2020-12-21 15:25:13+00:00\n"
+"POT-Creation-Date: 2020-12-21 20:59:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -996,19 +996,19 @@ msgstr ""
 msgid "Binary content is not supported by the Logging mechanism."
 msgstr ""
 
-#: includes/class-bc-logging.php:37
+#: includes/class-bc-logging.php:33
 msgid ""
 "You must provide a file path and name to use <pre>file</pre> mode. Writing "
 "to the syslog instead."
 msgstr ""
 
-#: includes/class-bc-logging.php:44
+#: includes/class-bc-logging.php:38
 msgid ""
 "The file specified, <pre>%s</pre> does not exist. Writing to the syslog "
 "instead."
 msgstr ""
 
-#: includes/class-bc-logging.php:52
+#: includes/class-bc-logging.php:44
 msgid ""
 "The file specified, <pre>%s</pre> is not writable byt the web server. "
 "Writing to the syslog instead."
