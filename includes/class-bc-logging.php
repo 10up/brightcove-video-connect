@@ -30,30 +30,18 @@ class BC_Logging {
 
 			case 'file'     :
 				if( !$file ) {
-					if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
-						newrelic_notice_error( $message );
-					} else {
-						error_log( $message );
-					}
+					self::determine_error_logging( $is_vip, $message );
 
 					return new WP_Error( 'log-destination-file-not-set', esc_html__( 'You must provide a file path and name to use <pre>file</pre> mode. Writing to the syslog instead.', 'brightcove' ) );
 				}
 
 				if( !is_file( $file ) ) {
-					if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
-						newrelic_notice_error( $message );
-					} else {
-						error_log( $message );
-					}
+					self::determine_error_logging( $is_vip, $message );
 					return new WP_Error( 'log-destination-file-is-invalid', sprintf( __( 'The file specified, <pre>%s</pre> does not exist. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
 
 				if( !is_writable( $file ) ) {
-					if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
-						newrelic_notice_error( $message );
-					} else {
-						error_log( $message );
-					}
+					self::determine_error_logging( $is_vip, $message );
 
 					return new WP_Error( 'log-destination-file-unwritable', sprintf( esc_html__( 'The file specified, <pre>%s</pre> is not writable byt the web server. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
@@ -62,13 +50,23 @@ class BC_Logging {
 				break;
 			case 'syslog'   :
 			default         :
-				if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
-					newrelic_notice_error( $message );
-				} else {
-					error_log( $message );
-				}
+				self::determine_error_logging( $is_vip, $message );
 				break;
 		}
 		return true;
+	}
+
+	/**
+	 * Determine how do we log the errors
+	 *
+	 * @param bool $is_vip check if the environment is VIP and newrelic is activated
+	 * @param string $message The error message
+	 */
+	public static function determine_error_logging( $is_vip, $message ) {
+		if( $is_vip && function_exists( 'newrelic_notice_error' ) ) {
+			newrelic_notice_error( $message );
+		} else {
+			error_log( $message );
+		}
 	}
 }
