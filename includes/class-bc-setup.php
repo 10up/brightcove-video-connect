@@ -25,6 +25,7 @@ class BC_Setup {
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api2.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-experiences-api.php' );
 		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-tags.php' );
+		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-labels.php' );
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
 
@@ -46,6 +47,7 @@ class BC_Setup {
 
 			require_once( BRIGHTCOVE_PATH . 'includes/admin/api/class-bc-admin-media-api.php' );
 			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-settings-page.php' );
+			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-labels-page.php' );
 			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-playlists-page.php' );
 			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-videos-page.php' );
 			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php' );
@@ -55,6 +57,7 @@ class BC_Setup {
 			// Load Brightcove API resources.
 			new BC_Admin_Media_API();
 			new BC_Admin_Settings_Page();
+			new BC_Admin_Labels_Page();
 			new BC_Admin_Playlists_Page();
 			new BC_Admin_Videos_Page();
 			new BC_Admin_Sources();
@@ -237,12 +240,13 @@ class BC_Setup {
 			return false;
 		}
 
-		$params['dates'] = array( $type => BC_Utility::get_video_playlist_dates_for_display( $type ) );
-		$params['nonce'] = wp_create_nonce( '_bc_ajax_search_nonce' );
-		$params['tags']  = $tags->get_tags();
+		$params['dates']   = array( $type => BC_Utility::get_video_playlist_dates_for_display( $type ) );
+		$params['nonce']   = wp_create_nonce( '_bc_ajax_search_nonce' );
+		$params['tags']    = $tags->get_tags();
 		$params['folders'] = array();
 		if ( BC_Utility::current_user_can_brightcove() ) {
 			$params['folders'] = $cms_api->fetch_folders();
+			$params['labels']  = $cms_api->get_account_labels();
 		}
 
 		$params['plupload'] = array(
@@ -310,7 +314,7 @@ class BC_Setup {
 			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
 			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
 			'str_apifailure'  => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
-			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ),
+			'posts_per_page'  => absint( apply_filters( 'brightcove_posts_per_page', 100 ) )
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
@@ -326,6 +330,7 @@ class BC_Setup {
 		wp_localize_script( 'tinymce_preview', 'bctiny', array( 'wp_version' => $wp_version, 'playlistEnabledPlayers' => $playlist_enabled_players_for_accounts ) );
 
 		$dependencies = array(
+			'jquery-ui-autocomplete',
 			'jquery',
 			'backbone',
 			'wp-backbone',

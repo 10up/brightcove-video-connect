@@ -60,14 +60,15 @@ var MediaModel = Backbone.Model.extend(
 					name :             this.get( 'name' ),
 					nonce :            wpbc.preload.nonce,
 					tags :             this.get( 'tags' ),
-					oldFolderId:			 this.get( 'oldFolderId' ),
+					oldFolderId:       this.get( 'oldFolderId' ),
 					folderId :         this.get( 'folderId' ),
 					type :             this.get( 'mediaType' ),
 					custom_fields:     this.get( 'custom_fields' ),
 					history:           this.get( '_change_history' ),
 					poster:            this.get( 'poster' ),
 					thumbnail:         this.get( 'thumbnail' ),
-					captions:          this.get( 'captions' )
+					captions:          this.get( 'captions' ),
+					labels:            this.get( 'labels' )
 				} );
 
 				var video_ids = this.get( 'video_ids' );
@@ -274,6 +275,8 @@ var MediaCollection = Backbone.Collection.extend(
 			this.tag           = options.tag || '';
 			this.folderId      = options.folderId || '';
 			this.oldFolderId   = options.oldFolderId || '';
+			this.labelPath     = options.labelPath || '';
+			this.oldLabelPath  = options.oldLabelPath || '';
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
@@ -312,6 +315,18 @@ var MediaCollection = Backbone.Collection.extend(
 				}
 
 				this.folderId = folderId;
+				this.fetch();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:label', function ( labelPath ) {
+
+				this.oldLabelPath = this.labelPath;
+
+				if ( 'all' === labelPath ) {
+					labelPath = '';
+				}
+
+				this.labelPath = labelPath;
 				this.fetch();
 			} );
 
@@ -395,6 +410,9 @@ var MediaCollection = Backbone.Collection.extend(
 					nonce :          wpbc.preload.nonce,
 					search :         this.searchTerm,
 					tags :           this.tag,
+					labels :         this.labels,
+					labelPath:       this.labelPath,
+					oldLabelPath:    this.oldLabelPath,
 					oldFolderId:     this.oldFolderId,
 					folderId: 			 this.folderId,
 					state:			this.state,
@@ -782,6 +800,7 @@ var ToolbarView = BrightcoveView.extend(
 	  'change .brightcove-media-dates': 'datesChanged',
 	  'change .brightcove-media-tags': 'tagsChanged',
 	  'change .brightcove-media-folders': 'foldersChanged',
+	  'change .brightcove-media-labels': 'labelsChanged',
 	  'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
 	  'change .brightcove-media-state-filters': 'stateChanged',
 	  'click #media-search': 'searchHandler',
@@ -796,6 +815,8 @@ var ToolbarView = BrightcoveView.extend(
 				mediaType : mediaType,
 				tags :      wpbc.preload.tags,
 				folders:    wpbc.preload.folders,
+				labels:     wpbc.preload.labels,
+				labelPath:  this.model.get( 'labelPath' ),
 				folderId:   this.model.get( 'folderId' ),
 				account :   this.model.get( 'account' )
 			};
@@ -869,6 +890,12 @@ var ToolbarView = BrightcoveView.extend(
       this.model.set('folderId', event.target.value);
       wpbc.broadcast.trigger('change:folder', event.target.value);
     },
+
+		labelsChanged: function ( event ) {
+			this.model.set( 'oldLabelPath', this.model.get( 'labelPath' ) );
+			this.model.set( 'labelPath', event.target.value );
+			wpbc.broadcast.trigger( 'change:label', event.target.value );
+		},
 
 		emptyPlaylistsChanged : function ( event ) {
 			var emptyPlaylists = $( event.target ).prop( 'checked' );
@@ -1150,6 +1177,12 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 				this.model.set('folderId', folder);
 
 			});
+
+			this.listenTo( wpbc.broadcast, 'change:label', function ( labelPath ) {
+				this.clearPreview();
+				this.model.set( 'oldLabelPath', this.model.get('labelPath' ) );
+				this.model.set( 'labelPath', labelPath );
+			} );
 
 			this.listenTo( wpbc.broadcast, 'change:stateChanged', function ( state ) {
 				this.clearPreview();
@@ -2605,13 +2638,16 @@ var VideoEditView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-video-edit' ),
 
 		events : {
-			'click .brightcove.button.save-sync' :      'saveSync',
-			'click .brightcove.delete' :                'deleteVideo',
-			'click .brightcove.button.back' :           'back',
-			'click .setting .button' :                  'openMediaManager',
-			'click .attachment .check' :                'removeAttachment',
-			'click .caption-secondary-fields .delete' : 'removeCaptionRow',
-			'click .add-remote-caption' :               'addCaptionRow'
+			'click    .brightcove.button.save-sync' :         'saveSync',
+			'click    .brightcove.delete' :                   'deleteVideo',
+			'click    .brightcove.button.back' :              'back',
+			'click    .setting .button' :                     'openMediaManager',
+			'click    .attachment .check' :                   'removeAttachment',
+			'click    .caption-secondary-fields .delete' :    'removeCaptionRow',
+			'click    .add-remote-caption' :                  'addCaptionRow',
+			'click    .add-bc-label' :                        'addLabelRow',
+			'keypress .brightcove-labels' :                   'labelAutocomplete',
+			'click    .bc-label-secondary-fields .delete' :   'removeLabelRow',
 		},
 
 		back : function ( event ) {
@@ -2738,6 +2774,71 @@ var VideoEditView = BrightcoveView.extend(
 			// Remove the preview image
 			container.removeClass( 'active' );
 			image.empty();
+		},
+
+		/**
+		 * Add a label row
+		 *
+		 * @param {Event} evnt
+		 * @param {Object} media
+		 */
+		addLabelRow: function( evnt, media ) {
+			var source = undefined;
+			if ( media ) {
+				source = media.url;
+			}
+
+			this.addLabel( source );
+		},
+
+		/**
+		 * Adds a label
+		 *
+		 * @param source
+		 * @param language
+		 * @param label
+		 * @param defaultcap
+		 */
+		addLabel: function( source, language, label, defaultcap ) {
+			let newRow     = $( document.getElementById( 'js-bc-label-empty-row' ) ).clone(),
+				container  = document.getElementById( 'js-bc-labels' );
+
+			// Clean up our cloned row
+			newRow.find( 'input' ).prop( 'disabled', false );
+			newRow.removeAttr( 'id' );
+			newRow.removeClass( 'empty-row' );
+
+			// Append our new row to the container
+			$( container ).append( newRow );
+		},
+
+		/**
+		 * Fires the autocomplete function
+		 *
+		 * @param {Event} evnt
+		 */
+		labelAutocomplete: function( evnt ) {
+			jQuery( '.brightcove-labels' ).autocomplete({
+				source: wpbc.preload.labels
+			});
+		},
+
+		/**
+		 * Removes a label row
+		 * @param {Event} evnt
+		 */
+		removeLabelRow: function( evnt ) {
+			evnt.preventDefault();
+
+			let label        = evnt.currentTarget,
+				container    = $( label ).parents( '.bc-label-repeater' ),
+				source       = container.find( '.brightcove-labels' );
+
+			// Empty the input fields
+			$( source ).val( '' );
+
+			// Remove the container entirely
+			container.remove();
 		},
 
 		/**
@@ -2902,6 +3003,18 @@ var VideoEditView = BrightcoveView.extend(
 				}
 			} );
 			this.model.set( 'captions', captions );
+
+
+			// Labels
+			var labels = [];
+			this.$el.find( '.bc-label-repeater.repeater-row' ).not( '.empty-row' ).each( function() {
+				var label = $( this ),
+					Name  = label.find( '.brightcove-labels' ).val();
+
+				labels.push( Name );
+			} );
+
+			this.model.set( 'labels', labels );
 
 			// Custom fields
 			var custom = {},

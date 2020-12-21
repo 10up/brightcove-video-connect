@@ -503,7 +503,7 @@ div.brightcove-uploader div.brightcove-messages .updated {
   width: 64%; }
   .brightcove.video-edit .setting-content .button-secondary {
     clear: left;
-    display: block; }
+    display: inline-block; }
 
 .brightcove.video-edit .attachment {
   cursor: pointer;
@@ -527,6 +527,9 @@ div.brightcove-uploader div.brightcove-messages .updated {
     color: #a00;
     display: inline-block;
     padding-top: 6px; }
+
+.brightcove.video-edit .label-repeater.empty-row {
+  display: none; }
 
 .brightcove.video-edit button.-captions,
 .brightcove.video-edit .caption-url {
@@ -559,6 +562,12 @@ div.brightcove-uploader div.brightcove-messages .updated {
 .brightcove.video-edit input.brightcove-captions {
   clear: both;
   margin-bottom: 0.75em;
+  width: 100%; }
+
+.brightcove.video-edit input.brightcove-labels {
+  clear: both;
+  margin-top: 0.7em;
+  margin-bottom: 0.2em;
   width: 100%; }
 
 .brightcove.video-edit .caption-secondary-fields {
@@ -650,3 +659,6 @@ div.brightcove-uploader div.brightcove-messages .updated {
       text-align: left;
       position: relative;
       left: auto; }
+
+.brightcove-labels-column {
+  padding: 8px; }

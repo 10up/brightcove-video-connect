@@ -130,8 +130,43 @@ class BC_Admin_Templates {
 				</label>
 				<label class="setting tags">
 					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' )?></span>
-					<input type="text" class="brightcove-tags" value="{{data.tags}}" />
+					<input type="text" class="brightcove-tags test" value="{{data.tags}}"/>
 				</label>
+				<div class="setting labels">
+					<span class="name"><?php esc_html_e( 'Labels', 'brightcove' )?></span>
+					<div class="setting-content">
+						<div>
+							<button class="button-secondary add-bc-label">
+								<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
+							</button>
+							<a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
+								<?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
+							</a>
+						</div>
+						<div id="js-bc-labels">
+							<# _.each( data.labels, function( label ) { #>
+							<div id="js-caption-fields" class="bc-label-repeater repeater-row">
+								<input type="text" class="brightcove-labels" value="{{label}}">
+
+								<div class="bc-label-secondary-fields">
+									<div class="action-row">
+										<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
+									</div>
+								</div>
+							</div>
+							<# }); #>
+							<div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
+								<input id="" type="text" class="brightcove-labels" value=""/>
+								<div class="bc-label-secondary-fields">
+									<div class="action-row">
+										<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 				<div class="setting poster">
 					<span class="name"><?php esc_html_e( 'Poster (Sugg. 480x360px)', 'brightcove' )?></span>
 					<div class="setting-content">
@@ -1037,6 +1072,15 @@ class BC_Admin_Templates {
 						<option value="all"><?php esc_html_e( 'All states', 'brightcove' ); ?></option>
 						<option value="active"><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
 						<option value="inactive"><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
+					</select>
+					<label for="media-label-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by label', 'brightcove' );?></label>
+					<select id="media-label-filters" class="brightcove-media-labels attachment-filters">
+						<option value="all"><?php esc_html_e( 'All Labels', 'brightcove' ); ?></option>
+							<# _.each( data.labels, function( label, key ) { #>
+							<option value="{{label}}">
+							{{label}}
+							</option>
+							<# }); #>
 					</select>
 					<# }#>
 
