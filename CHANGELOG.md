@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 * Feature: Labels.
 * Feature: VIP error logging to NewRelic.
 * Changed to most recent logos.
-* Feature: Status filder.
+* Feature: Status filter.
 
 ## [2.0] - 2020-09-15
 ### Added

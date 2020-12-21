@@ -27,7 +27,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 * Feature: Labels.
 * Feature: VIP error logging to NewRelic.
 * Changed to most recent logos.
-* Feature: Status filder.
+* Feature: Status filter.
 
 = 2.0 =
 
