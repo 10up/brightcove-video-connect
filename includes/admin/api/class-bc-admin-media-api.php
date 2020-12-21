@@ -137,6 +137,15 @@ class BC_Admin_Media_API {
 			$updated_data['video_id'] = BC_Utility::sanitize_id( $_POST['video_id'] );
 		}
 
+		$labels = array();
+		if ( isset( $_POST['labels'] ) ) {
+			foreach( $_POST['labels'] as $label ) {
+				$labels[] = sanitize_text_field( $label );
+			}
+		}
+
+		$updated_data['labels'] = $labels;
+
 		// If custom fields are sent, be sure to sanitize them separately
 		if ( isset( $_POST['custom_fields'] ) ) {
 			$custom = array();
@@ -539,7 +548,8 @@ class BC_Admin_Media_API {
 		$tag_name  = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
 		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
 		$folder_id = ( isset( $_POST['folderId'] ) && '' !== $_POST['folderId'] ) ? sanitize_text_field( $_POST['folderId'] ) : false;
-		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : false;
+		$label     = ( isset( $_POST['labelPath'] ) && '' !== $_POST['labelPath'] ) ? sanitize_text_field( $_POST['labelPath'] ) : false;
+		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : apply_filters( 'brightcove_state_filter', false );
 
 		/**
 		 * Filter the maximum number of items the brightcove media call will query for.
@@ -589,6 +599,10 @@ class BC_Admin_Media_API {
 
 			if ( $state && 'all' !== $state ) {
 				$query_terms[] = 'state:' . $state;
+			}
+
+			if( $label ) {
+				$query_terms[] = 'labels:' . $label;
 			}
 
 			if ( $video_ids ) {

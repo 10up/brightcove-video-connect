@@ -21,7 +21,7 @@
 
 		.button-secondary {
 			clear: left;
-			display: block;
+			display: inline-block;
 		}
 	}
 
@@ -57,6 +57,12 @@
 			color: #a00;
 			display: inline-block;
 			padding-top: 6px;
+		}
+	}
+
+	.label-repeater {
+		&.empty-row {
+			display: none;
 		}
 	}
 
@@ -102,6 +108,13 @@
 	input.brightcove-captions {
 		clear: both;
 		margin-bottom: 0.75em;
+		width: 100%;
+	}
+
+	input.brightcove-labels {
+		clear: both;
+		margin-top: 0.7em;
+		margin-bottom: 0.2em;
 		width: 100%;
 	}
 

@@ -135,6 +135,12 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 			});
 
+			this.listenTo( wpbc.broadcast, 'change:label', function ( labelPath ) {
+				this.clearPreview();
+				this.model.set( 'oldLabelPath', this.model.get('labelPath' ) );
+				this.model.set( 'labelPath', labelPath );
+			} );
+
 			this.listenTo( wpbc.broadcast, 'change:stateChanged', function ( state ) {
 				this.clearPreview();
 				this.model.set( 'oldState', 'oldstate' );

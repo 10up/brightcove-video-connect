@@ -24,30 +24,22 @@ class BC_Logging {
 		if( !ctype_print( $message ) )
 			return new WP_Error( 'log-invalid-contents', esc_html__( 'Binary content is not supported by the Logging mechanism.', 'brightcove' ) );
 
-		$is_vip = ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) ? true : false;
-
 		switch( $mode ) {
 
 			case 'file'     :
 				if( !$file ) {
-					if( ! $is_vip ) {
-					error_log( $message );
-					}
+					self::determine_error_logging ( $message );
 
 					return new WP_Error( 'log-destination-file-not-set', esc_html__( 'You must provide a file path and name to use <pre>file</pre> mode. Writing to the syslog instead.', 'brightcove' ) );
 				}
 
 				if( !is_file( $file ) ) {
-					if( ! $is_vip ) {
-					error_log( $message );
-					}
+					self::determine_error_logging( $message );
 					return new WP_Error( 'log-destination-file-is-invalid', sprintf( __( 'The file specified, <pre>%s</pre> does not exist. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
 
 				if( !is_writable( $file ) ) {
-					if( ! $is_vip ) {
-					error_log( $message );
-					}
+					self::determine_error_logging( $message );
 
 					return new WP_Error( 'log-destination-file-unwritable', sprintf( esc_html__( 'The file specified, <pre>%s</pre> is not writable byt the web server. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
@@ -56,11 +48,22 @@ class BC_Logging {
 				break;
 			case 'syslog'   :
 			default         :
-				if( ! $is_vip ) {
-				error_log( $message );
-				}
+				self::determine_error_logging( $message );
 				break;
 		}
 		return true;
+	}
+
+	/**
+	 * Determine how do we log the errors
+	 *
+	 * @param string $message The error message
+	 */
+	public static function determine_error_logging( $message ) {
+		if( ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) && function_exists( 'newrelic_notice_error' ) ) {
+			newrelic_notice_error( $message );
+		} else {
+			error_log( $message );
+		}
 	}
 }

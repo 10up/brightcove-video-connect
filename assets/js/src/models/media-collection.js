@@ -49,6 +49,8 @@ var MediaCollection = Backbone.Collection.extend(
 			this.tag           = options.tag || '';
 			this.folderId      = options.folderId || '';
 			this.oldFolderId   = options.oldFolderId || '';
+			this.labelPath     = options.labelPath || '';
+			this.oldLabelPath  = options.oldLabelPath || '';
 
 			this.listenTo( wpbc.broadcast, 'change:activeAccount', function ( accountId ) {
 				this.activeAccount = accountId;
@@ -87,6 +89,18 @@ var MediaCollection = Backbone.Collection.extend(
 				}
 
 				this.folderId = folderId;
+				this.fetch();
+			} );
+
+			this.listenTo( wpbc.broadcast, 'change:label', function ( labelPath ) {
+
+				this.oldLabelPath = this.labelPath;
+
+				if ( 'all' === labelPath ) {
+					labelPath = '';
+				}
+
+				this.labelPath = labelPath;
 				this.fetch();
 			} );
 
@@ -170,6 +184,9 @@ var MediaCollection = Backbone.Collection.extend(
 					nonce :          wpbc.preload.nonce,
 					search :         this.searchTerm,
 					tags :           this.tag,
+					labels :         this.labels,
+					labelPath:       this.labelPath,
+					oldLabelPath:    this.oldLabelPath,
 					oldFolderId:     this.oldFolderId,
 					folderId: 			 this.folderId,
 					state:			this.state,
