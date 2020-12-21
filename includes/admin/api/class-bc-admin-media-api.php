@@ -549,7 +549,7 @@ class BC_Admin_Media_API {
 		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
 		$folder_id = ( isset( $_POST['folderId'] ) && '' !== $_POST['folderId'] ) ? sanitize_text_field( $_POST['folderId'] ) : false;
 		$label     = ( isset( $_POST['labelPath'] ) && '' !== $_POST['labelPath'] ) ? sanitize_text_field( $_POST['labelPath'] ) : false;
-		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : false;
+		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : apply_filters( 'brightcove_state_filter', false );
 
 		/**
 		 * Filter the maximum number of items the brightcove media call will query for.
