@@ -4,17 +4,22 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.1] - TBD
+## [2.1.1] TBD
+### Fixed
+- Fix: Fresh installation bugfix with labels.
+- Fix: PHPCS issues.
+
+## [2.1] - 2020-12-21
 ### Added
-* Feature: Labels.
-* Feature: VIP error logging to NewRelic.
-* Changed to most recent logos.
-* Feature: Status filter.
+- Feature: Labels.
+- Feature: VIP error logging to NewRelic.
+- Changed to most recent logos.
+- Feature: Status filter.
 
 ## [2.0] - 2020-09-15
 ### Added
-* Feature: Multi language caption processing.
-* Feature: Active/Inactive videos filtering.
+- Feature: Multi language caption processing.
+- Feature: Active/Inactive videos filtering.
 
 ## [1.9.2] - 2020-06-29
 ### Added

@@ -801,8 +801,8 @@ class BC_CMS_API extends BC_API {
 	 */
 	public function get_account_labels() {
 		$result = $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/' ), 'GET' );
-		if ( empty( $result['labels'] ) ) {
-			$result['labels'] = false;
+		if ( is_wp_error( $result) || empty( $result['labels'] ) ) {
+			return false;
 		}
 		return $result['labels'];
 	}
@@ -815,11 +815,12 @@ class BC_CMS_API extends BC_API {
 	 * @return mixed The request response.
 	 */
 	public function add_label( $name, $path ) {
-		$data['path'] = '';
+		
+		$data = array( 'path' => '/' . stripslashes( $name ) . '/' );
+
 		if ( ! empty( $path ) ) {
-			$data['path'] .= $path;
+			$data['path'] = $path . $data['path'];
 		}
-		$data['path'] .= '/' . stripslashes( $name ) . '/';
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/' ), 'POST', $data );
 	}
@@ -843,7 +844,7 @@ class BC_CMS_API extends BC_API {
 	 * @return mixed The request response.
 	 */
 	public function update_label( $name, $path ) {
-		$data['new_label'] = $name;
+		$data = array( 'new_label' => $name );
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/by_path/' . $path ), 'PATCH', $data );
 	}
 }
