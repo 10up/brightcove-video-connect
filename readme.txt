@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 5.6
-Stable tag: 2.1
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,11 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 2.1.1 =
+
+* Fix: Fresh installation bugfix with labels.
+* Fix: PHPCS issues.
 
 = 2.1 =
 
