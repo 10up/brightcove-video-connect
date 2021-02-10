@@ -1069,9 +1069,10 @@ class BC_Admin_Templates {
 					</select>
 					<label for="media-state-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by state', 'brightcove' );?></label>
 					<select id="media-state-filters" class="brightcove-media-state-filters attachment-filters">
+                        <?php $default_state = apply_filters( 'brightcove_state_filter', false ); ?>
 						<option value="all"><?php esc_html_e( 'All states', 'brightcove' ); ?></option>
-						<option value="active"><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
-						<option value="inactive"><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
+						<option <?php selected( $default_state, 'active' ); ?>value="active"><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
+						<option <?php selected( $default_state, 'inactive' ); ?> value="inactive"><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
 					</select>
 					<label for="media-label-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by label', 'brightcove' );?></label>
 					<select id="media-label-filters" class="brightcove-media-labels attachment-filters">
