@@ -2710,30 +2710,14 @@ var VideoEditView = BrightcoveView.extend(
 		 * @returns {boolean}
 		 */
 		setAttachment: function( media, field ) {
-			var field           = field.prevObject[0].currentTarget,
-				field           = $( field ).prev( 'input' ),
-				attachment      = field.parents( '.attachment' ),
-				preview         = attachment.find( '.-image' );
+			var field             = field.prevObject[0].currentTarget,
+				field             = $( field ).prev( 'input' ),
+				attachment        = field.parents( '.attachment' ),
+				preview           = attachment.find( '.-image' ),
+				ThumbnailOrPoster = [ 'brightcove-poster', 'brightcove-thumbnail' ];
 
 			// Perform different setup actions based on the type of upload
-			if ( attachment.context.className.indexOf( 'captions' ) > -1 ) {
-				// Executed if the user is uploading a closed caption
-				if ( 'vtt' === media.subtype ) {
-					this.addCaptionRow( false, media );
-				} else {
-					var template = wp.template( 'brightcove-badformat-notice' );
-
-					// Throw a notice to the user that the file is not the correct format
-					$( '.brightcove-media-videos' ).prepend( template );
-
-					// Allow the user to dismiss the notice
-					$( '.badformat.notice-dismiss' ).on( 'click', function() {
-						$( '.notice.badformat' ).first().fadeOut( 500, function() {
-							$( this ).remove();
-						} );
-					} );
-				}
-			} else {
+			if ( ThumbnailOrPoster.includes( field.attr( 'class' ) ) ) {
 				// Executed if the user is uploading a poster image or thumbnail
 				var selectedMedia = {
 					url:    media.sizes.full.url,
@@ -2751,6 +2735,23 @@ var VideoEditView = BrightcoveView.extend(
 				// Display a preview image
 				attachment.addClass( 'active' );
 				preview.html( image ); // .html() considered okay because auth is required to view this screen
+			} else {
+				// Executed if the user is uploading a closed caption
+				if ( 'vtt' === media.subtype ) {
+					this.addCaptionRow( false, media );
+				} else {
+					var template = wp.template( 'brightcove-badformat-notice' );
+
+					// Throw a notice to the user that the file is not the correct format
+					$( '.brightcove-media-videos' ).prepend( template );
+
+					// Allow the user to dismiss the notice
+					$( '.badformat.notice-dismiss' ).on( 'click', function() {
+						$( '.notice.badformat' ).first().fadeOut( 500, function() {
+							$( this ).remove();
+						} );
+					} );
+				}
 			}
 
 			// Add our meta to the hidden field
