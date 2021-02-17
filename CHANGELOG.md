@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.1.1] TBD
+## [2.1.2] TBD
+### Fixed
+- Fix: Default state filter: display filtered default on dropdown.
+- Fix: jQuery context deprecation.
+
+## [2.1.1] - 2021-01-11
 ### Fixed
 - Fix: Fresh installation bugfix with labels.
 - Fix: PHPCS issues.

@@ -3,7 +3,7 @@
 	"private": true,
 	"title": "brightcove-video-connect",
 	"description": "A Brightcove plugin for WordPress.",
-	"version": "1.7.1",
+	"version": "2.1.2",
 	"homepage": "https://wordpress.org/plugins/brightcove-video-connect/",
 	"author": {
 		"name": "10up",
