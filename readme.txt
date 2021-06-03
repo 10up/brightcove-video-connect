@@ -22,6 +22,10 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 2.1.3 =
+
+* Fix: Playlist player is not available.
+
 = 2.1.2 =
 
 * Fix: Default state filter: display filtered default on dropdown.
