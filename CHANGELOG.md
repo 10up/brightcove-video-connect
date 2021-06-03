@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Fixed
 - Fix: Playlist player is not available
 
-## [2.1.2] TBD
+## [2.1.2] - 2021-02-17
 ### Fixed
 - Fix: Default state filter: display filtered default on dropdown.
 - Fix: jQuery context deprecation.
