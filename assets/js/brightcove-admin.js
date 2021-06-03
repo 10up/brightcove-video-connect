@@ -1957,7 +1957,7 @@ var MediaDetailsView = BrightcoveView.extend(
 		generatePlaylistShortcode: function () {
 		    var playlistId = this.model.get( 'id' ).replace( /\D/g, '' ),
 				accountId = this.model.get( 'account_id' ).replace( /\D/g, '' ),
-				playerId = $( '#video-player' ).val(),
+				playerId = $( '#video-player' ).val() || 'default',
 				autoplay = ( $( '#autoplay' ).is( ':checked' ) ) ? 'autoplay': '',
 				playsinline = ( $( '#playsinline' ).is( ':checked' ) ) ? 'playsinline': '',
 				mute = ( $( '#mute' ).is( ':checked' ) ) ? 'muted': '',
