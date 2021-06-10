@@ -147,8 +147,9 @@ class BC_Admin_Sources {
 
 			if ( isset( $_POST['source-default-account'] ) && 'on' === $_POST['source-default-account'] ) {
 				update_option( '_brightcove_default_account', sanitize_text_field( $_POST['hash'] ) );
+			} else {
+				delete_option( '_brightcove_default_account' );
 			}
-
 		}
 
 		// Deleting transient to allow syncing from the new account, otherwise we won't be able to sync it until this transient expires.
