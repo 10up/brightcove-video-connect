@@ -2049,7 +2049,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		toggleShortcodeGeneration: function () {
 		    var method = $( '#generate-shortcode' ).val(),
-                $fields = $( '#video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' );
+                $fields = $( '#video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' );
 
 		    if ( 'manual' === method ) {
 		    	$( '#shortcode' ).removeAttr( 'readonly' );
@@ -2097,7 +2097,6 @@ var MediaDetailsView = BrightcoveView.extend(
 		}
 	}
 );
-
 
 var MediaView = BrightcoveView.extend(
 	{
