@@ -20,7 +20,8 @@ var ToolbarView = BrightcoveView.extend(
 	  'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
 	  'change .brightcove-media-state-filters': 'stateChanged',
 	  'click #media-search': 'searchHandler',
-	  'keyup .search': 'enterHandler'
+	  'keyup .search': 'enterHandler',
+	  'input #media-search-input': 'handleEmptySearchInput'
 		},
 
 		render : function () {
@@ -118,11 +119,18 @@ var ToolbarView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'change:emptyPlaylists', emptyPlaylists );
 		},
 
-    enterHandler : function ( event ) {
-      if ( event.keyCode === 13 ) {
-        this.searchHandler( event );
-      }
-    },
+		enterHandler : function ( event ) {
+			if ( event.keyCode === 13 ) {
+				this.searchHandler( event );
+			}
+		},
+
+		handleEmptySearchInput : function ( event ) {
+			if (this.model.get( 'search' ) && !event.target.value) {
+				this.model.set('search', '');
+				wpbc.broadcast.trigger( 'change:searchTerm', '' );
+			}
+		}, 
 
 		stateChanged : function( event ) {
 			this.model.set('oldState', 'oldstate');
@@ -137,7 +145,7 @@ var ToolbarView = BrightcoveView.extend(
 				this.model.set( 'search', searchTerm );
 				wpbc.broadcast.trigger( 'change:searchTerm', searchTerm );
 			} else if (searchTerm.length === 0) {
-  			wpbc.broadcast.trigger( 'change:searchTerm', "" );
+  				wpbc.broadcast.trigger( 'change:searchTerm', "" );
 			}
 		}
 	}
