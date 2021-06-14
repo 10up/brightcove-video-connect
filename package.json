@@ -9,6 +9,10 @@
 		"name": "10up",
 		"email": "sales@10up.com"
 	},
+	"scripts": {
+		"watch": "grunt watch",
+		"build": "grunt build"
+	},
 	"dependencies": {},
 	"devDependencies": {
 		"grunt": "^1.0.4",
