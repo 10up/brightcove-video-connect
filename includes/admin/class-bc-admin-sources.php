@@ -147,8 +147,9 @@ class BC_Admin_Sources {
 
 			if ( isset( $_POST['source-default-account'] ) && 'on' === $_POST['source-default-account'] ) {
 				update_option( '_brightcove_default_account', sanitize_text_field( $_POST['hash'] ) );
+			} else {
+				delete_option( '_brightcove_default_account' );
 			}
-
 		}
 
 		// Deleting transient to allow syncing from the new account, otherwise we won't be able to sync it until this transient expires.
@@ -283,9 +284,16 @@ class BC_Admin_Sources {
 					<tr class="brightcove-account-row">
 						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ) ?></th>
 						<td>
-							<input type="checkbox" <?php checked( 'on', $default_account ); ?>
-							       name="source-default-account" value="on">&nbsp;
-							<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
+							<label for="source-default-account">
+								<input
+									type="checkbox"
+									id="source-default-account"
+									name="source-default-account"
+									value="on"
+									<?php checked( 'on', $default_account ); ?>
+								>&nbsp;
+								<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
+							</label>
 						</td>
 					</tr>
 					</tbody>
@@ -339,9 +347,15 @@ class BC_Admin_Sources {
 					<tr class="brightcove-account-row">
 						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ) ?></th>
 						<td>
-							<input type="checkbox"
-							       name="source-default-account" <?php checked( get_option( '_brightcove_default_account' ), $account['hash'] ) ?> >&nbsp;
-							<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
+							<label for="source-default-account">
+								<input
+									type="checkbox"
+									id="source-default-account"
+									name="source-default-account"
+									<?php checked( get_option( '_brightcove_default_account' ), $account['hash'] ); ?> 
+								>&nbsp;
+								<?php esc_html_e( 'Make this the default source for new users', 'brightcove' ); ?>
+							</label>
 						</td>
 					</tr>
 				</table>
