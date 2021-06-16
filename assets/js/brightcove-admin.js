@@ -793,18 +793,19 @@ var ToolbarView = BrightcoveView.extend(
 		template :  wp.template( 'brightcove-media-toolbar' ),
 
 		events : {
-	  'click .view-list': 'toggleList',
-	  'click .view-grid': 'toggleGrid',
-	  'click .brightcove-toolbar': 'toggleToolbar',
-	  'change .brightcove-media-source': 'sourceChanged',
-	  'change .brightcove-media-dates': 'datesChanged',
-	  'change .brightcove-media-tags': 'tagsChanged',
-	  'change .brightcove-media-folders': 'foldersChanged',
-	  'change .brightcove-media-labels': 'labelsChanged',
-	  'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
-	  'change .brightcove-media-state-filters': 'stateChanged',
-	  'click #media-search': 'searchHandler',
-	  'keyup .search': 'enterHandler'
+			'click .view-list': 'toggleList',
+			'click .view-grid': 'toggleGrid',
+			'click .brightcove-toolbar': 'toggleToolbar',
+			'change .brightcove-media-source': 'sourceChanged',
+			'change .brightcove-media-dates': 'datesChanged',
+			'change .brightcove-media-tags': 'tagsChanged',
+			'change .brightcove-media-folders': 'foldersChanged',
+			'change .brightcove-media-labels': 'labelsChanged',
+			'change .brightcove-empty-playlists': 'emptyPlaylistsChanged',
+			'change .brightcove-media-state-filters': 'stateChanged',
+			'click #media-search': 'searchHandler',
+			'keyup .search': 'enterHandler',
+			'input #media-search-input': 'handleEmptySearchInput'
 		},
 
 		render : function () {
@@ -885,11 +886,11 @@ var ToolbarView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'change:tag', event.target.value );
 		},
 
-    foldersChanged: function (event) {
-      this.model.set('oldFolderId', this.model.get('folderId'));
-      this.model.set('folderId', event.target.value);
-      wpbc.broadcast.trigger('change:folder', event.target.value);
-    },
+		foldersChanged: function (event) {
+			this.model.set('oldFolderId', this.model.get('folderId'));
+			this.model.set('folderId', event.target.value);
+			wpbc.broadcast.trigger('change:folder', event.target.value);
+		},
 
 		labelsChanged: function ( event ) {
 			this.model.set( 'oldLabelPath', this.model.get( 'labelPath' ) );
@@ -902,11 +903,18 @@ var ToolbarView = BrightcoveView.extend(
 			wpbc.broadcast.trigger( 'change:emptyPlaylists', emptyPlaylists );
 		},
 
-    enterHandler : function ( event ) {
-      if ( event.keyCode === 13 ) {
-        this.searchHandler( event );
-      }
-    },
+		enterHandler : function ( event ) {
+			if ( event.keyCode === 13 ) {
+				this.searchHandler( event );
+			}
+		},
+
+		handleEmptySearchInput : function ( event ) {
+			if (this.model.get( 'search' ) && !event.target.value) {
+				this.model.set('search', '');
+				wpbc.broadcast.trigger( 'change:searchTerm', '' );
+			}
+		}, 
 
 		stateChanged : function( event ) {
 			this.model.set('oldState', 'oldstate');
@@ -921,7 +929,7 @@ var ToolbarView = BrightcoveView.extend(
 				this.model.set( 'search', searchTerm );
 				wpbc.broadcast.trigger( 'change:searchTerm', searchTerm );
 			} else if (searchTerm.length === 0) {
-  			wpbc.broadcast.trigger( 'change:searchTerm', "" );
+  				wpbc.broadcast.trigger( 'change:searchTerm', "" );
 			}
 		}
 	}
