@@ -1364,6 +1364,21 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 						this.detailsView.render();
 						this.detailsView.$el.toggle( true ); // Always show new view
+						
+						const contentElement = $('.brightcove-modal .media-frame-content').first();
+						
+						if (contentElement.length) {
+							const maxTopValue = $('#brightcove-media-frame-content').outerHeight() - this.detailsView.$el.outerHeight();
+
+							let topValue = contentElement.scrollTop() - $('#brightcove-media-frame-router').outerHeight() + 25;
+	
+							if (topValue > maxTopValue) {
+								topValue = maxTopValue
+							}
+	
+							this.detailsView.$el.css('top', topValue > 0 ? topValue : 0 );
+						}
+
 						this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
 						mediaView.$el.addClass( 'highlighted' );
 						wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
