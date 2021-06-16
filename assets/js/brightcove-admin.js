@@ -1372,6 +1372,21 @@ var BrightcoveMediaManagerView = BrightcoveView.extend(
 
 						this.detailsView.render();
 						this.detailsView.$el.toggle( true ); // Always show new view
+						
+						const contentElement = $('.brightcove-modal .media-frame-content').first();
+						
+						if (contentElement.length) {
+							const maxTopValue = $('#brightcove-media-frame-content').outerHeight() - this.detailsView.$el.outerHeight();
+
+							let topValue = contentElement.scrollTop() - $('#brightcove-media-frame-router').outerHeight() + 25;
+	
+							if (topValue > maxTopValue) {
+								topValue = maxTopValue
+							}
+	
+							this.detailsView.$el.css('top', topValue > 0 ? topValue : 0 );
+						}
+
 						this.model.get( 'media-collection-view' ).$el.addClass( 'menu-visible' );
 						mediaView.$el.addClass( 'highlighted' );
 						wpbc.broadcast.trigger( 'toggle:insertButton', 'enabled' );
@@ -2057,7 +2072,7 @@ var MediaDetailsView = BrightcoveView.extend(
 
 		toggleShortcodeGeneration: function () {
 		    var method = $( '#generate-shortcode' ).val(),
-                $fields = $( '#video-player, #autoplay, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' );
+                $fields = $( '#video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units' );
 
 		    if ( 'manual' === method ) {
 		    	$( '#shortcode' ).removeAttr( 'readonly' );
@@ -2105,7 +2120,6 @@ var MediaDetailsView = BrightcoveView.extend(
 		}
 	}
 );
-
 
 var MediaView = BrightcoveView.extend(
 	{

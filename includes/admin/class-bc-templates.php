@@ -13,9 +13,9 @@ class BC_Admin_Templates {
 
 		<?php /* Used by views/media-manager.js */?>
 		<script type="text/html" id="tmpl-brightcove-media">
-			<div class="brightcove media-frame-router"></div>
+			<div id="brightcove-media-frame-router" class="brightcove media-frame-router"></div>
 			<div class="brightcove-message message hidden"></div>
-			<div class="brightcove media-frame-content">
+			<div id="brightcove-media-frame-content" class="brightcove media-frame-content">
 				<span id="js-media-loading" class="spinner"></span>
 			</div>
 			<div class="brightcove media-frame-menu hidden"></div>
