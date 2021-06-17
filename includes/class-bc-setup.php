@@ -149,6 +149,9 @@ class BC_Setup {
 					'autoplay'    => array(
 						'type' => 'string',
 					),
+					'mute'    => array(
+						'type' => 'string',
+					),
 					'playsinline'    => array(
 						'type' => 'string',
 					),
