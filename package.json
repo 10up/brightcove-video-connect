@@ -11,7 +11,7 @@
 	},
 	"scripts": {
 		"watch": "grunt watch",
-		"build": "grunt build",
+		"build": "grunt",
 		"lint-js": "eslint assets/js/src/**",
 		"lint-js:fix": "eslint assets/js/src/** --fix"
 	},
