@@ -13,7 +13,9 @@
 		"watch": "grunt watch",
 		"build": "grunt",
 		"lint-js": "eslint assets/js/src/**",
-		"lint-js:fix": "eslint assets/js/src/** --fix"
+		"lint-js:fix": "eslint assets/js/src/** --fix",
+		"lint-php": "composer run lint",
+		"lint-php:fix": "composer run lint-fix"
 	},
 	"dependencies": {},
 	"devDependencies": {
