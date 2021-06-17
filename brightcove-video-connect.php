@@ -35,7 +35,7 @@ define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	require_once( BRIGHTCOVE_PATH . 'cli/class-brightcove-cli.php' );
+	require_once BRIGHTCOVE_PATH . 'cli/class-brightcove-cli.php';
 }
 /**
  * Activate the plugin
@@ -54,14 +54,14 @@ function brightcove_deactivate() {
 	BC_Utility::deactivate();
 }
 
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-utility.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php';
+require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php';
+require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php';
+require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php';
 
 // Wireup actions.
 if ( is_admin() ) {
@@ -83,7 +83,7 @@ add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
 
-//add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) ); // @TODO Verify API as errors don't seem to match the documentation
+// add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) ); // @TODO Verify API as errors don't seem to match the documentation
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 
@@ -97,8 +97,8 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 }
 
 // Add WP-CLI Support (should be before init).
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-setup.php' );
-require_once( BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php' );
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-setup.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php';
 
 // Upgrade routine
 $installed = get_option( 'brightcove_version' );

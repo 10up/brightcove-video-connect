@@ -22,7 +22,6 @@ class BC_Experiences_API extends BC_API {
 	 * Sets up class variables allowing for processing of Brightcove Experiences API functionality.
 	 *
 	 * @since 1.4.2
-	 *
 	 */
 	public function __construct() {
 
@@ -55,7 +54,6 @@ class BC_Experiences_API extends BC_API {
 			if ( is_wp_error( $account_experiences ) ) {
 				return [];
 			}
-
 		}
 
 		return apply_filters( 'brightcove_get_experiences', $experiences );

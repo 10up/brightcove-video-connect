@@ -64,13 +64,13 @@ class BC_Admin_Media_API {
 
 	public function resolve_shortcode() {
 
-		$video_id          = ( ! empty( $_POST['video_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['video_id'] ) ) : 0;
-		$account_id        = ( ! empty( $_POST['account_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['account_id'] ) ) : 0;
+		$video_id   = ( ! empty( $_POST['video_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['video_id'] ) ) : 0;
+		$account_id = ( ! empty( $_POST['account_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['account_id'] ) ) : 0;
 
-		$default_shortcode = '[bc_video video_id="' . absint($video_id) . '" account_id="' . absint($account_id) . '" player_id="default" embed="iframe" padding_top="56.25%" autoplay="" min_width="0px" max_width="640px" mute="" width="100%" height="100%"]';
+		$default_shortcode = '[bc_video video_id="' . absint( $video_id ) . '" account_id="' . absint( $account_id ) . '" player_id="default" embed="iframe" padding_top="56.25%" autoplay="" min_width="0px" max_width="640px" mute="" width="100%" height="100%"]';
 
 		// If no shortcode was supplied, let's show a default one.
-		$shortcode         = ( ! empty( $_POST['shortcode'] ) ) ? sanitize_text_field( wp_unslash( $_POST['shortcode'] ) ) : $default_shortcode;
+		$shortcode = ( ! empty( $_POST['shortcode'] ) ) ? sanitize_text_field( wp_unslash( $_POST['shortcode'] ) ) : $default_shortcode;
 
 		wp_send_json_success( do_shortcode( $shortcode ) );
 	}
@@ -112,11 +112,11 @@ class BC_Admin_Media_API {
 			'video_id',
 			'tags',
 			'width',
-			'height'
+			'height',
 		);
 
 		foreach ( $fields as $field ) {
-			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash($_POST[ $field ]) ) : '';
+			$updated_data[ $field ] = isset( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : '';
 		}
 
 		// Only Playlists have playlist_videos. We only do this if we're updating playlists.
@@ -139,7 +139,7 @@ class BC_Admin_Media_API {
 
 		$labels = array();
 		if ( isset( $_POST['labels'] ) ) {
-			foreach( $_POST['labels'] as $label ) {
+			foreach ( $_POST['labels'] as $label ) {
 				$labels[] = sanitize_text_field( $label );
 			}
 		}
@@ -249,8 +249,8 @@ class BC_Admin_Media_API {
 				// Maybe update captions
 				$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
 			} else {
-                $this->ajax_caption_delete( $hash, $updated_data['video_id'] );
-            }
+				$this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+			}
 		}
 
 		BC_Utility::delete_cache_item( '*' );
@@ -543,7 +543,6 @@ class BC_Admin_Media_API {
 			$account_id = BC_Utility::sanitize_id( $_POST['account'] );
 		}
 
-
 		$query     = ( isset( $_POST['search'] ) && '' !== $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : false;
 		$tag_name  = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
 		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
@@ -570,8 +569,6 @@ class BC_Admin_Media_API {
 			exit; // Type can only be videos or playlists.
 
 		}
-
-
 
 		global $bc_accounts;
 
@@ -601,7 +598,7 @@ class BC_Admin_Media_API {
 				$query_terms[] = 'state:' . $state;
 			}
 
-			if( $label ) {
+			if ( $label ) {
 				$query_terms[] = 'labels:' . $label;
 			}
 
@@ -611,11 +608,11 @@ class BC_Admin_Media_API {
 				// This way we get cache hits when playlist order, but not content have changed.
 				$video_ids_sorted = $video_ids;
 				sort( $video_ids_sorted );
-				$query_terms[] = "id:" . implode( "+id:", $video_ids_sorted );
+				$query_terms[] = 'id:' . implode( '+id:', $video_ids_sorted );
 
 			}
 
-			$query_string = implode( "+", apply_filters( 'bc_video_query_terms', $query_terms ) );
+			$query_string = implode( '+', apply_filters( 'bc_video_query_terms', $query_terms ) );
 
 			/**
 			 * For playlists, we specify the order in the query string as follows:
@@ -825,11 +822,11 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string       $account_hash
-	 * @param int          $video_id
-	 * @param string       $url
-	 * @param int          $width
-	 * @param int          $height
+	 * @param string $account_hash
+	 * @param int    $video_id
+	 * @param string $url
+	 * @param int    $width
+	 * @param int    $height
 	 */
 	public function ajax_poster_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -866,11 +863,11 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string       $account_hash
-	 * @param int          $video_id
-	 * @param string       $url
-	 * @param int          $width
-	 * @param int          $height
+	 * @param string $account_hash
+	 * @param int    $video_id
+	 * @param string $url
+	 * @param int    $width
+	 * @param int    $height
 	 */
 	public function ajax_thumb_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -907,8 +904,8 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string       $account_hash
-	 * @param int          $video_id
+	 * @param string $account_hash
+	 * @param int    $video_id
 	 */
 	public function ajax_caption_delete( $account_hash, $video_id ) {
 		global $bc_accounts;
@@ -932,9 +929,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string       $account_hash
-	 * @param int          $video_id
-	 * @param array        $raw_captions
+	 * @param string $account_hash
+	 * @param int    $video_id
+	 * @param array  $raw_captions
 	 */
 	public function ajax_caption_upload( $account_hash, $video_id, $raw_captions ) {
 		global $bc_accounts;
@@ -948,7 +945,7 @@ class BC_Admin_Media_API {
 		}
 
 		// Sanitize our passed data
-		$video_id = BC_Utility::sanitize_id( $video_id );
+		$video_id     = BC_Utility::sanitize_id( $video_id );
 		$new_captions = array();
 		$old_captions = array();
 		foreach ( $raw_captions as $caption ) {
@@ -993,8 +990,8 @@ class BC_Admin_Media_API {
 	/**
 	 * Return a set of the most recent videos for the specified account.
 	 *
-	 * @param string       $account_id
-	 * @param int          $count
+	 * @param string $account_id
+	 * @param int    $count
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
@@ -1026,7 +1023,6 @@ class BC_Admin_Media_API {
 
 				return array();
 			}
-
 
 			// Get a list of available custom fields
 			$fields = $this->cms_api->video_fields();
