@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.1.3] TBD
+## [2.1.4] - 2021-06-23
 ### Fixed
-- Fix: Playlist player is not available
+- Fix: Default Source field when is submitted unchecked.
+- Fix: Adjust the position of media details in the editing modal.
+- Fix: Clear filtered results when the input search is empty.
+- Fix: Add missing mute attribute in the block.
+
+## [2.1.3] - 2021-06-03
+### Fixed
+- Fix: Playlist player is not available.
 
 ## [2.1.2] - 2021-02-17
 ### Fixed
@@ -293,6 +300,12 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.1.4]: https://github.com/10up/brightcove-video-connect/compare/2.1.3...2.1.4
+[2.1.3]: https://github.com/10up/brightcove-video-connect/compare/2.1.2...2.1.3
+[2.1.2]: https://github.com/10up/brightcove-video-connect/compare/2.1.1...2.1.2
+[2.1.1]: https://github.com/10up/brightcove-video-connect/compare/2.1...2.1.1
+[2.1.0]: https://github.com/10up/brightcove-video-connect/compare/2.0...2.1
+[2.0.0]: https://github.com/10up/brightcove-video-connect/compare/1.9.2...2.0
 [1.9.2]: https://github.com/10up/brightcove-video-connect/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/10up/brightcove-video-connect/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/10up/brightcove-video-connect/compare/1.8.2...1.9.0
