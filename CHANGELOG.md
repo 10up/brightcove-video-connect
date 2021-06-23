@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.1.4] - TBD
+## [2.1.4] - 2021-06-23
 ### Fixed
 - Fix: Default Source field when is submitted unchecked.
 - Fix: Adjust the position of media details in the editing modal.
