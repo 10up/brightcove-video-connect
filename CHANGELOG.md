@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.1.3] TBD
+## [2.1.4] - TBD
 ### Fixed
-- Fix: Playlist player is not available
+- Fix: Default Source field when is submitted unchecked.
+- Fix: Adjust the position of media details in the editing modal.
+- Fix: Clear filtered results when the input search is empty.
+- Fix: Add missing mute attribute in the block.
+
+## [2.1.3] - 2021-06-03
+### Fixed
+- Fix: Playlist player is not available.
 
 ## [2.1.2] - 2021-02-17
 ### Fixed

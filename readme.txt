@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 5.6
-Stable tag: 2.1.3
+Tested up to: 5.7
+Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,13 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 2.1.4 = 
+
+* Fix: Default Source field when is submitted unchecked.
+* Fix: Adjust the position of media details in the editing modal.
+* Fix: Clear filtered results when the input search is empty.
+* Fix: Add missing mute attribute in the block.
 
 = 2.1.3 =
 
