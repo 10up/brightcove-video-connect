@@ -71,6 +71,7 @@
 					max_width: attrs.named.max_width,
 					padding_top: '',
 					autoplay: '',
+					mute: '',
 					playsinline: '',
 					picture_in_picture: '',
 					embed: attrs.named.embed,
@@ -80,6 +81,7 @@
 					setAttrs.player_id = attrs.named.player_id;
 					setAttrs.video_id = sanitizeIds(attrs.named.video_id);
 					setAttrs.autoplay = attrs.named.autoplay;
+					setAttrs.mute = attrs.named.mute;
 					setAttrs.playsinline = attrs.named.playsinline;
 					setAttrs.picture_in_picture = attrs.named.picture_in_picture;
 					setAttrs.padding_top = attrs.named.padding_top;
@@ -87,6 +89,7 @@
 					setAttrs.player_id = attrs.named.player_id;
 					setAttrs.playlist_id = sanitizeIds(attrs.named.playlist_id);
 					setAttrs.autoplay = attrs.named.autoplay;
+					setAttrs.mute = attrs.named.mute;
 					setAttrs.playsinline = attrs.named.playsinline;
 					setAttrs.padding_top = attrs.named.padding_top;
 				} else if (attrs.numeric[0] === '[bc_experience') {
