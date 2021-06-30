@@ -23,11 +23,11 @@ class BC_Permissions {
 
 	public function __construct() {
 		global $wp_roles;
-		if ( ! isset( $wp_roles->roles[ 'administrator' ][ 'capabilities' ][ 'brightcove_manipulate_accounts' ] ) ){
+		if ( ! isset( $wp_roles->roles['administrator']['capabilities']['brightcove_manipulate_accounts'] ) ) {
 			$this->add_admin_capabilities();
 		}
 
-		if ( ! isset( $wp_roles->roles[ 'editor' ][ 'capabilities' ][ 'brightcove_manipulate_videos' ] ) ){
+		if ( ! isset( $wp_roles->roles['editor']['capabilities']['brightcove_manipulate_videos'] ) ) {
 			$this->add_editor_capabilities();
 		}
 	}
@@ -43,13 +43,13 @@ class BC_Permissions {
 			'brightcove_manipulate_videos',
 		);
 
-		if( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) {
+		if ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) {
 			wpcom_vip_add_role_caps( 'administrator', $admin_roles );
 		} else {
 
 			$administrator = get_role( 'administrator' );
 
-			foreach( $admin_roles as $admin_role ) {
+			foreach ( $admin_roles as $admin_role ) {
 				$administrator->add_cap( $admin_role );
 			}
 		}
@@ -62,13 +62,13 @@ class BC_Permissions {
 			'brightcove_manipulate_videos',
 		);
 
-		if( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) {
+		if ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) {
 			wpcom_vip_add_role_caps( 'editor', $editor_roles );
 		} else {
 
 			$editor = get_role( 'editor' );
 
-			foreach( $editor_roles as $editor_role ) {
+			foreach ( $editor_roles as $editor_role ) {
 				$editor->add_cap( $editor_role );
 			}
 		}

@@ -8,8 +8,8 @@ class BC_Logging {
 	 * is not writable, the method will write to the syslog instead.
 	 *
 	 * @param        $message. Cannot be binary as `error_log()` is not binary-safe.
-	 * @param string $mode syslog|file. Default: syslog
-	 * @param bool   $file Full path to custom log file
+	 * @param string  $mode syslog|file. Default: syslog
+	 * @param bool    $file Full path to custom log file
 	 *
 	 * @return bool|WP_Error
 	 */
@@ -18,27 +18,29 @@ class BC_Logging {
 		// Sanity. Add a newline to the end as appending a messages to a file does not do it itself.
 		$message = $message . "\n";
 
-		if( !defined( 'WP_DEBUG' ) )
+		if ( ! defined( 'WP_DEBUG' ) ) {
 			return false;
+		}
 
-		if( !ctype_print( $message ) )
+		if ( ! ctype_print( $message ) ) {
 			return new WP_Error( 'log-invalid-contents', esc_html__( 'Binary content is not supported by the Logging mechanism.', 'brightcove' ) );
+		}
 
-		switch( $mode ) {
+		switch ( $mode ) {
 
-			case 'file'     :
-				if( !$file ) {
-					self::determine_error_logging ( $message );
+			case 'file':
+				if ( ! $file ) {
+					self::determine_error_logging( $message );
 
 					return new WP_Error( 'log-destination-file-not-set', esc_html__( 'You must provide a file path and name to use <pre>file</pre> mode. Writing to the syslog instead.', 'brightcove' ) );
 				}
 
-				if( !is_file( $file ) ) {
+				if ( ! is_file( $file ) ) {
 					self::determine_error_logging( $message );
 					return new WP_Error( 'log-destination-file-is-invalid', sprintf( __( 'The file specified, <pre>%s</pre> does not exist. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
 
-				if( !is_writable( $file ) ) {
+				if ( ! is_writable( $file ) ) {
 					self::determine_error_logging( $message );
 
 					return new WP_Error( 'log-destination-file-unwritable', sprintf( esc_html__( 'The file specified, <pre>%s</pre> is not writable byt the web server. Writing to the syslog instead.', 'brightcove' ), $file ) );
@@ -46,8 +48,8 @@ class BC_Logging {
 
 				error_log( $message, 3, $file );
 				break;
-			case 'syslog'   :
-			default         :
+			case 'syslog':
+			default:
 				self::determine_error_logging( $message );
 				break;
 		}
@@ -60,7 +62,7 @@ class BC_Logging {
 	 * @param string $message The error message
 	 */
 	public static function determine_error_logging( $message ) {
-		if( ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) && function_exists( 'newrelic_notice_error' ) ) {
+		if ( ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) && function_exists( 'newrelic_notice_error' ) ) {
 			newrelic_notice_error( $message );
 		} else {
 			error_log( $message );

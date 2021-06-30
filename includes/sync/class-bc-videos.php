@@ -84,7 +84,7 @@ class BC_Videos {
 	 * create/update WP data store with Brightcove data.
 	 *
 	 * @param      $video
-	 * @param bool $add_only True denotes that we know the object is not in our library and we are adding it first time to the library. This is to improve the initial sync.
+	 * @param bool  $add_only True denotes that we know the object is not in our library and we are adding it first time to the library. This is to improve the initial sync.
 	 *
 	 * @return bool|WP_Error
 	 */
@@ -92,7 +92,7 @@ class BC_Videos {
 		$hash     = BC_Utility::get_hash_for_object( $video );
 		$video_id = $video['id'];
 
-		if ( !$add_only ) {
+		if ( ! $add_only ) {
 			$stored_hash = $this->get_video_hash_by_id( $video_id );
 			// No change to existing playlist
 			if ( $hash === $stored_hash ) {
@@ -100,9 +100,9 @@ class BC_Videos {
 			}
 		}
 
-		$post_excerpt = ( !is_null( $video['description'] ) ) ? $video['description'] : '';
-		$post_content = ( !is_null( $video['long_description'] ) ) ? $video['long_description'] : $post_excerpt;
-		$post_title   = ( !is_null( $video['name'] ) ) ? $video['name'] : '';
+		$post_excerpt = ( ! is_null( $video['description'] ) ) ? $video['description'] : '';
+		$post_content = ( ! is_null( $video['long_description'] ) ) ? $video['long_description'] : $post_excerpt;
+		$post_title   = ( ! is_null( $video['name'] ) ) ? $video['name'] : '';
 
 		$post_date = new DateTime( $video['created_at'] );
 		$post_date = $post_date->format( 'Y-m-d g:i:s' );
@@ -121,7 +121,7 @@ class BC_Videos {
 			'post_status'   => 'publish',
 		);
 
-		if ( !$add_only ) {
+		if ( ! $add_only ) {
 			$existing_post = $this->get_video_by_id( $video_id );
 
 			if ( $existing_post ) {
@@ -138,18 +138,18 @@ class BC_Videos {
 			$post_id = wp_insert_post( $video_post_args );
 		}
 
-		if ( !$post_id ) {
+		if ( ! $post_id ) {
 
-			$error_message = esc_html__('The video has not been created in WordPress', 'brightcove' );
-			BC_Logging::log( sprintf( 'BC WORDPRESS ERROR: %s' ), $error_message );
+			$error_message = esc_html__( 'The video has not been created in WordPress', 'brightcove' );
+			BC_Logging::log( sprintf( 'BC WordPress ERROR: %s' ), $error_message );
 
 			return new WP_Error( 'post-not-created', $error_message );
 
 		}
 
-		BC_Logging::log( sprintf( esc_html__( 'BC WORDPRESS: Video with ID #%d has been created', 'brightcove' ), $post_id ) );
+		BC_Logging::log( sprintf( esc_html__( 'BC WordPress: Video with ID #%d has been created', 'brightcove' ), $post_id ) );
 
-		if ( !empty( $video['tags'] ) ) {
+		if ( ! empty( $video['tags'] ) ) {
 			wp_set_post_terms( $post_id, $video['tags'], 'brightcove_tags', false );
 		}
 
@@ -160,21 +160,23 @@ class BC_Videos {
 		update_post_meta( $post_id, '_brightcove_video_object', $video );
 
 		$meta      = array();
-		$meta_keys = apply_filters( 'brightcove_meta_keys', array(
-			'images',
-			'state',
-			'cue_points',
-			'custom_fields',
-			'duration',
-			'economics',
-		) );
+		$meta_keys = apply_filters(
+			'brightcove_meta_keys',
+			array(
+				'images',
+				'state',
+				'cue_points',
+				'custom_fields',
+				'duration',
+				'economics',
+			)
+		);
 
 		foreach ( $meta_keys as $key ) {
 
-			if ( !empty( $video[$key] ) ) {
-				$meta[$key] = $video[$key];
+			if ( ! empty( $video[ $key ] ) ) {
+				$meta[ $key ] = $video[ $key ];
 			}
-
 		}
 
 		update_post_meta( $post_id, '_brightcove_metadata', $meta );
@@ -204,7 +206,7 @@ class BC_Videos {
 			)
 		);
 
-		if ( !$existing_video->have_posts() ) {
+		if ( ! $existing_video->have_posts() ) {
 			return false;
 		}
 
@@ -214,7 +216,7 @@ class BC_Videos {
 	public function get_video_hash_by_id( $video_id ) {
 		$video = $this->get_video_by_id( $video_id );
 
-		if ( !$video ) {
+		if ( ! $video ) {
 			return false;
 		} else {
 			return get_post_meta( $video->ID, '_brightcove_hash', true );
@@ -229,12 +231,12 @@ class BC_Videos {
 	public function get_in_progress_videos() {
 		$args = array(
 			'no_rows_found' => true,
-			'fields' => 'ids',
-			'post_type' => $this->video_cpt,
-			'post_status' => array( 'publish', 'future' ),
+			'fields'        => 'ids',
+			'post_type'     => $this->video_cpt,
+			'post_status'   => array( 'publish', 'future' ),
 		);
 
 		$wp_query = new \WP_Query();
-		return $wp_query->query( $args);
+		return $wp_query->query( $args );
 	}
 }

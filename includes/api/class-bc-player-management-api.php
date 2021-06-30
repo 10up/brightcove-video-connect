@@ -133,30 +133,30 @@ class BC_Player_Management_API extends BC_API {
 
 	}
 
-    /**
-     * List all players for all accounts available
-     *
-     * Returns a list of available players for each accounts, as well as
-     * the total count of players available, grouped by account
-     *
-     * @since 1.2.3
-     *
-     * @return array|bool Array of available players or false if error
-     */
-    public function all_player_by_account() {
+	/**
+	 * List all players for all accounts available
+	 *
+	 * Returns a list of available players for each accounts, as well as
+	 * the total count of players available, grouped by account
+	 *
+	 * @since 1.2.3
+	 *
+	 * @return array|bool Array of available players or false if error
+	 */
+	public function all_player_by_account() {
 
-        global $bc_accounts;
+		global $bc_accounts;
 
-        $all_accounts_id = $bc_accounts->get_all_accounts_id();
-        $players = false;
+		$all_accounts_id = $bc_accounts->get_all_accounts_id();
+		$players         = false;
 
-        foreach ($all_accounts_id as $account_id) {
-            $url = esc_url_raw( self::BASE_URL . $account_id . '/players/');
-            $players[$account_id] = $this->send_request($url);
-        }
+		foreach ( $all_accounts_id as $account_id ) {
+			$url                    = esc_url_raw( self::BASE_URL . $account_id . '/players/' );
+			$players[ $account_id ] = $this->send_request( $url );
+		}
 
-        return apply_filters( 'brightcove_all_player_by_account', $players );
-    }
+		return apply_filters( 'brightcove_all_player_by_account', $players );
+	}
 
 	/**
 	 * Update a player
@@ -165,7 +165,7 @@ class BC_Player_Management_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $player_id             Required. The hex representation of the player as presented by the API
+	 * @param string      $player_id             Required. The hex representation of the player as presented by the API
 	 * @param bool|string $name             Optional. The new name for the player. Default is false (no update)
 	 * @param bool|string $description      Optional. The new description for the player. Default is false (no update)
 	 *
@@ -207,8 +207,8 @@ class BC_Player_Management_API extends BC_API {
 	 * @since 1.0.0
 	 *
 	 * @param string $player_id             Required. The hex representation of the player as presented by the API
-	 * @param bool  $autoplay               Optional. Default is false
-	 * @param array $media                  Optional. Media settings as defined in the API
+	 * @param bool   $autoplay               Optional. Default is false
+	 * @param array  $media                  Optional. Media settings as defined in the API
 	 *
 	 * @return bool|mixed
 	 */
@@ -217,16 +217,16 @@ class BC_Player_Management_API extends BC_API {
 		global $bc_accounts;
 
 		$player_id = sanitize_title_with_dashes( $player_id );
-		$url = esc_url_raw( self::BASE_URL . $bc_accounts->get_account_id() . '/players/' . $player_id . '/configuration' );
+		$url       = esc_url_raw( self::BASE_URL . $bc_accounts->get_account_id() . '/players/' . $player_id . '/configuration' );
 
-		$data = new stdClass;
-		$data->player = new stdClass;
+		$data                   = new stdClass();
+		$data->player           = new stdClass();
 		$data->player->autoplay = ( $autoplay ) ? true : false;
 
-		if( is_array( $media ) ) {
-			$data->media = new stdClass;
-			//$data->media = (object) $media;
-			foreach( $media as $key => $val ) {
+		if ( is_array( $media ) ) {
+			$data->media = new stdClass();
+			// $data->media = (object) $media;
+			foreach ( $media as $key => $val ) {
 				$data->media->key = is_array( $val ) ? (object) $val : $val;
 			}
 		}
@@ -245,9 +245,9 @@ class BC_Player_Management_API extends BC_API {
 	 */
 	public function player_list_playlist_enabled( $player_id = '' ) {
 		$all_players = $this->player_list( $player_id );
-		$players = array();
+		$players     = array();
 		if ( ! is_wp_error( $all_players ) && is_array( $all_players ) && isset( $all_players['items'] ) ) {
-			foreach( $all_players['items'] as $key => $player ) {
+			foreach ( $all_players['items'] as $key => $player ) {
 				$is_playlist_enabled = ( isset( $player['branches']['master']['configuration']['playlist'] ) && true === $player['branches']['master']['configuration']['playlist'] ) ? true : false;
 				if ( true === $is_playlist_enabled ) {
 					$players[] = $player;
@@ -256,7 +256,7 @@ class BC_Player_Management_API extends BC_API {
 		} else {
 			return $all_players;
 		}
-		$all_players['items'] = $players;
+		$all_players['items']      = $players;
 		$all_players['item_count'] = count( $players );
 
 		return $all_players;

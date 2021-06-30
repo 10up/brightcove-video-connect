@@ -24,19 +24,19 @@ class BC_Video_Shortcode {
 	public static function bc_video( $atts ) {
 
 		$defaults = array(
-			'player_id'   => 'default',
-			'account_id'  => '',
-			'video_id'    => '',
-			'autoplay'    => '',
-			'mute'    => '',
-			'embed'       => '',
-			'padding_top' => '56.25%',
-			'min_width'   => '0px',
-			'max_width'   => '100%',
-			'height'      => 0,
-			'width'       => 0,
-			'playsinline' => '',
-            'picture_in_picture' => '',
+			'player_id'          => 'default',
+			'account_id'         => '',
+			'video_id'           => '',
+			'autoplay'           => '',
+			'mute'               => '',
+			'embed'              => '',
+			'padding_top'        => '56.25%',
+			'min_width'          => '0px',
+			'max_width'          => '100%',
+			'height'             => 0,
+			'width'              => 0,
+			'playsinline'        => '',
+			'picture_in_picture' => '',
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );

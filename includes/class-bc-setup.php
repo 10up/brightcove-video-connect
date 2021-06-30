@@ -8,24 +8,24 @@ class BC_Setup {
 	public static function action_init() {
 		global $bc_accounts;
 
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-errors.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-logging.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-video-upload.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-text-track.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api2.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/api/class-bc-experiences-api.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-tags.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-labels.php' );
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-errors.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-logging.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-upload.php';
+		require_once BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php';
+		require_once BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-text-track.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-cms-api.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api2.php';
+		require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-experiences-api.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-tags.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-labels.php';
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'brightcove' );
 
@@ -45,14 +45,14 @@ class BC_Setup {
 		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/api/class-bc-admin-media-api.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-settings-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-labels-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-playlists-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-videos-page.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-user-profile.php' );
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-templates.php' );
+			require_once BRIGHTCOVE_PATH . 'includes/admin/api/class-bc-admin-media-api.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-settings-page.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-labels-page.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-playlists-page.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-videos-page.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-user-profile.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-templates.php';
 
 			// Load Brightcove API resources.
 			new BC_Admin_Media_API();
@@ -90,15 +90,15 @@ class BC_Setup {
 	 */
 	public static function action_init_all() {
 
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-utility.php' );
-		require_once( BRIGHTCOVE_PATH . 'includes/class-bc-permissions.php' );
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-utility.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-permissions.php';
 
 		// Load WordPress resources.
 		new BC_Permissions();
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			require_once( BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-menu.php' );
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-menu.php';
 
 			new BC_Admin_Menu();
 
@@ -109,7 +109,7 @@ class BC_Setup {
 		add_rewrite_rule( 'bc-api$', 'index.php?bc-api=1', 'top' );
 
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
-		add_action( 'init',  array( 'BC_Setup', 'register_post_types' ) );
+		add_action( 'init', array( 'BC_Setup', 'register_post_types' ) );
 
 		if ( function_exists( 'register_block_type' ) ) {
 			wp_register_script(
@@ -121,60 +121,63 @@ class BC_Setup {
 
 			wp_localize_script( 'brightcove-block', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
 
-			register_block_type( 'bc/brightcove', array(
-				'editor_script'   => 'brightcove-block',
-				'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
-				'attributes'      => array(
-					'account_id'  => array(
-						'type' => 'int',
+			register_block_type(
+				'bc/brightcove',
+				array(
+					'editor_script'   => 'brightcove-block',
+					'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
+					'attributes'      => array(
+						'account_id'         => array(
+							'type' => 'int',
+						),
+						'player_id'          => array(
+							'type' => 'string',
+						),
+						'video_id'           => array(
+							'type' => 'int',
+						),
+						'playlist_id'        => array(
+							'type' => 'int',
+						),
+						'experience_id'      => array(
+							'type' => 'string',
+						),
+						'video_ids'          => array(
+							'type' => 'int',
+						),
+						'embed'              => array(
+							'type' => 'string',
+						),
+						'autoplay'           => array(
+							'type' => 'string',
+						),
+						'mute'               => array(
+							'type' => 'string',
+						),
+						'playsinline'        => array(
+							'type' => 'string',
+						),
+						'picture_in_picture' => array(
+							'type' => 'string',
+						),
+						'height'             => array(
+							'type' => 'string',
+						),
+						'width'              => array(
+							'type' => 'string',
+						),
+						'min_width'          => array(
+							'type' => 'string',
+						),
+						'max_width'          => array(
+							'type' => 'string',
+						),
+						'padding_top'        => array(
+							'type' => 'string',
+						),
 					),
-					'player_id'   => array(
-						'type' => 'string',
-					),
-					'video_id'    => array(
-						'type' => 'int',
-					),
-					'playlist_id' => array(
-						'type' => 'int',
-					),
-					'experience_id'    => array(
-						'type' => 'string',
-					),
-					'video_ids' => array(
-						'type' => 'int',
-					),
-					'embed'       => array(
-						'type' => 'string',
-					),
-					'autoplay'    => array(
-						'type' => 'string',
-					),
-					'mute'    => array(
-						'type' => 'string',
-					),
-					'playsinline'    => array(
-						'type' => 'string',
-					),
-					'picture_in_picture'    => array(
-						'type' => 'string',
-					),
-					'height'      => array(
-						'type' => 'string',
-					),
-					'width'       => array(
-						'type' => 'string',
-					),
-					'min_width'    => array(
-						'type' => 'string',
-					),
-					'max_width'    => array(
-						'type' => 'string',
-					),
-					'padding_top'  => array(
-						'type' => 'string',
-					),
-				),
-			) );
+				)
+			);
 		}
 	}
 
@@ -193,9 +196,9 @@ class BC_Setup {
 
 		if ( ! empty( $atts['experience_id'] ) ) {
 			$output = call_user_func( array( 'BC_Experiences_Shortcode', 'bc_experience' ), $atts );
-		} else if ( ! empty( $atts['video_id'] ) ) {
+		} elseif ( ! empty( $atts['video_id'] ) ) {
 			$output = call_user_func( array( 'BC_Video_Shortcode', 'bc_video' ), $atts );
-		} else if ( ! empty( $atts['playlist_id'] ) ) {
+		} elseif ( ! empty( $atts['playlist_id'] ) ) {
 			$output = call_user_func( array( 'BC_Playlist_Shortcode', 'bc_playlist' ), $atts );
 		}
 
@@ -253,17 +256,22 @@ class BC_Setup {
 		}
 
 		$params['plupload'] = array(
-			'browse_button'       => 'brightcove-select-files-button',
-			'container'           => 'drop-target',
-			'drop_element'        => 'drop-target',
-			'multiple_queues'     => true,
-			'max_file_size'       => wp_max_upload_size() . 'b',
-			'url'                 => admin_url( 'admin-ajax.php?action=bc_media_upload' ),
-			'filters'             => array( array( 'title' => esc_html__( 'Allowed Files' ), 'extensions' => '*' ) ),
-			'multipart'           => true,
-			'urlstream_upload'    => true,
-			'multi_selection'     => true,
-			'multipart_params'    => array(
+			'browse_button'    => 'brightcove-select-files-button',
+			'container'        => 'drop-target',
+			'drop_element'     => 'drop-target',
+			'multiple_queues'  => true,
+			'max_file_size'    => wp_max_upload_size() . 'b',
+			'url'              => admin_url( 'admin-ajax.php?action=bc_media_upload' ),
+			'filters'          => array(
+				array(
+					'title'      => esc_html__( 'Allowed Files' ),
+					'extensions' => '*',
+				),
+			),
+			'multipart'        => true,
+			'urlstream_upload' => true,
+			'multi_selection'  => true,
+			'multipart_params' => array(
 				'action' => 'bc_media_upload',
 			),
 		);
@@ -298,26 +306,26 @@ class BC_Setup {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		$player_api = new BC_Player_Management_API2();
-		$players = $player_api->get_all_players();
+		$players    = $player_api->get_all_players();
 
 		$experiences_api = new BC_Experiences_API();
 		$experiences     = $experiences_api->get_experiences();
 
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
-			'preload'        => BC_Setup::preload_params(),
+			'preload'        => self::preload_params(),
 			'wp_version'     => $wp_version,
-			'languages'  => BC_Utility::languages(),
-			'players'    => $players,
-			'experiences' => $experiences,
+			'languages'      => BC_Utility::languages(),
+			'players'        => $players,
+			'experiences'    => $experiences,
 			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
 			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
 			'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),
 			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
 			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
-			'str_apifailure'  => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
-			'posts_per_page'  => absint( apply_filters( 'brightcove_posts_per_page', 100 ) )
+			'str_apifailure' => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
+			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ),
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
@@ -330,7 +338,14 @@ class BC_Setup {
 		}
 
 		wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ) );
-		wp_localize_script( 'tinymce_preview', 'bctiny', array( 'wp_version' => $wp_version, 'playlistEnabledPlayers' => $playlist_enabled_players_for_accounts ) );
+		wp_localize_script(
+			'tinymce_preview',
+			'bctiny',
+			array(
+				'wp_version'             => $wp_version,
+				'playlistEnabledPlayers' => $playlist_enabled_players_for_accounts,
+			)
+		);
 
 		$dependencies = array(
 			'jquery-ui-autocomplete',
@@ -406,7 +421,7 @@ class BC_Setup {
 
 		global $bc_accounts;
 		$player_api = new BC_Player_Management_API2();
-		$players = $player_api->get_all_players();
+		$players    = $player_api->get_all_players();
 
 		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 && ! empty( $players ) && is_array( $players ) ) {
 
@@ -459,7 +474,7 @@ class BC_Setup {
 	 */
 	public static function register_post_types() {
 		$labels = array(
-			'name' => __( 'BC In Process Videos', 'brightcove' )
+			'name' => __( 'BC In Process Videos', 'brightcove' ),
 		);
 
 		$args = array(

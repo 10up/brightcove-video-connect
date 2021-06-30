@@ -4,7 +4,6 @@
  * Brightcove oAuth 2.0 API
  *
  * Uses the Brightcove oAuth implementation to secure an access token for API requests.
- *
  */
 class BC_Oauth_API {
 
@@ -39,8 +38,8 @@ class BC_Oauth_API {
 		$this->_http_headers  = array(
 			'headers' => array(
 				'Content-type'  => 'application/json',
-				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_client_id . ':' . $this->_client_secret ) )
-			)
+				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_client_id . ':' . $this->_client_secret ) ),
+			),
 		);
 
 	}
@@ -104,7 +103,6 @@ class BC_Oauth_API {
 				return $this->_request_access_token( $force_new_token, false );
 
 			}
-
 		}
 
 		return $token;

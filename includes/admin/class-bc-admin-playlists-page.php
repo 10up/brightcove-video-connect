@@ -43,12 +43,13 @@ class BC_Admin_Playlists_Page {
 		$player_api = new BC_Player_Management_API();
 		$players    = $player_api->player_list_playlist_enabled();
 		if ( is_wp_error( $players ) || ! is_array( $players ) || $players['item_count'] < 1 ) {
-			BC_Utility::admin_notice_messages( array(
-				                                   array(
-					                                   'message' => __( 'A specified Source does not have a playlist capable player <a href="https://studio.brightcove.com/products/videocloud/players/">configured</a>. Make sure there is at least one player with "Display Playlist" enabled.', 'brightcove' ),
-					                                   'type'    => 'error',
-				                                   ),
-			                                   )
+			BC_Utility::admin_notice_messages(
+				array(
+					array(
+						'message' => __( 'A specified Source does not have a playlist capable player <a href="https://studio.brightcove.com/products/videocloud/players/">configured</a>. Make sure there is at least one player with "Display Playlist" enabled.', 'brightcove' ),
+						'type'    => 'error',
+					),
+				)
 			);
 		}
 	}

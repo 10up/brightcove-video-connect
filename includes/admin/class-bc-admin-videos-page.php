@@ -4,7 +4,7 @@ class BC_Admin_Videos_Page {
 
 	public function __construct() {
 		add_action( 'brightcove/admin/videos_page', array( $this, 'render' ) );
-        add_action( 'current_screen', array( $this, 'verify_source_configuration' ) );
+		add_action( 'current_screen', array( $this, 'verify_source_configuration' ) );
 	}
 
 	/**
@@ -29,17 +29,17 @@ class BC_Admin_Videos_Page {
 		<?php
 	}
 
-    public function verify_source_configuration() {
+	public function verify_source_configuration() {
 
-	    global $bc_accounts;
+		global $bc_accounts;
 
-        if( 'brightcove_page_page-brightcove-videos' !== get_current_screen()->id ) {
-            return false;
-        }
+		if ( 'brightcove_page_page-brightcove-videos' !== get_current_screen()->id ) {
+			return false;
+		}
 
-        $account = $bc_accounts->get_account_details_for_user( get_current_user_id() );
-        if( ! $account ) {
-            wp_safe_redirect( admin_url( 'admin.php?page=brightcove-sources' ) );
-        }
-    }
+		$account = $bc_accounts->get_account_details_for_user( get_current_user_id() );
+		if ( ! $account ) {
+			wp_safe_redirect( admin_url( 'admin.php?page=brightcove-sources' ) );
+		}
+	}
 }
