@@ -58,7 +58,7 @@ class BC_Admin_Labels_Page {
 	 * Generates an HTML table with all configured sources
 	 */
 	public function render_labels_page() {
-		$maybe_refresh = $_GET['refresh_labels'] ? (bool) $_GET['refresh_labels'] : false;
+		$maybe_refresh = isset( $_GET['refresh_labels'] ) ? (bool) $_GET['refresh_labels'] : false;
 		$labels        = $this->bc_labels->fetch_all( $maybe_refresh );
 		?>
 		<div class="wrap">
