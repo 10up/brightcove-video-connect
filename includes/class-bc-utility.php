@@ -563,7 +563,7 @@ class BC_Utility {
 
 			$account_hash = $bc_accounts->get_account_hash();
 
-			self::delete_cache_item( 'brightcove_oauth_access_token_' . $account_hash );
+			self::delete_cache_item( self::generate_transient_key( 'brightcove_oauth_access_token_', $account_hash ) );
 
 			$bc_accounts->restore_default_account();
 
