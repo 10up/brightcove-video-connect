@@ -85,7 +85,7 @@ class BC_Labels {
 	public function fetch_all( $refresh = false ) {
 		global $bc_accounts;
 
-		$transient_key = 'brightcove_get_labels_' . $bc_accounts->get_account_id();
+		$transient_key = BC_Utility::generate_transient_key( 'brightcove_get_labels_', $bc_accounts->get_account_id() );
 		$results       = BC_Utility::get_cache_item( $transient_key );
 
 		if ( ! $results ) {

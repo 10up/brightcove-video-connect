@@ -20,7 +20,7 @@ class BC_Oauth_API {
 
 		global $bc_accounts;
 
-		$this->transient_name = 'brightcove_oauth_access_token_' . $bc_accounts->get_account_hash();
+		$this->transient_name = BC_Utility::generate_transient_key( 'brightcove_oauth_access_token_', $bc_accounts->get_account_hash() );
 		$this->set_account_credentials( $bc_accounts->get_client_id(), $bc_accounts->get_client_secret() );
 
 	}
