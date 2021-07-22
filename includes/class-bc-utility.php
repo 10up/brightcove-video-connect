@@ -763,16 +763,6 @@ class BC_Utility {
 
 		$transient = get_transient( $key );
 
-		if ( false === $transient ) { // Delete if from the list if the transient has expired.
-
-			$transient_keys = self::list_cache_items();
-
-			unset( $transient_keys[ $key ] );
-
-			update_option( 'bc_transient_keys', $transient_keys, false );
-
-		}
-
 		return $transient;
 
 	}
