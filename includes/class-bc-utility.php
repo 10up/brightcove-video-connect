@@ -645,24 +645,14 @@ class BC_Utility {
 		$type       = sanitize_text_field( $type );
 		$expiration = absint( $expiration );
 
-		$transient_keys = self::list_cache_items();
+		$transient_value = get_transient( $key );
 
-		if ( in_array( $key, $transient_keys ) && get_transient( $key ) ) {
-			return - 1; // Key already cached.
-		}
-
-		if ( set_transient( sanitize_key( $key ), $value, $expiration ) ) {
-
-			$transient_keys[ sanitize_key( $key ) ] = sanitize_text_field( $type );
-
-		} else { // For some reason we couldn't save the transient
-
-			return 0;
-
-		}
-
-		if ( update_option( 'bc_transient_keys', $transient_keys, false ) ) {
-			return 1; // Key saved to Brightcove registry.
+		if ( false === $transient_value ) {
+			if ( set_transient( $key, $value, $expiration ) ) {
+				return 1;
+			}
+		} else {
+			return -1;
 		}
 
 		return 0;
