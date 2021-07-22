@@ -699,67 +699,28 @@ class BC_Utility {
 	 * @since 1.1.1
 	 *
 	 * @param string $key  The cache key or * for all.
-	 * @param string $type The type of cache key (for group cleanup).
 	 *
 	 * @return bool True on success or false.
 	 */
-	public static function delete_cache_item( $key = '', $type = '' ) {
+	public static function delete_cache_item( $key = '' ) {
 
 		// Check that valid item was given.
-		if ( '' === $key && '' === $type ) {
+		if ( '' === $key ) {
 			return false;
 		}
 
-		$transient_keys = self::list_cache_items();
-		$transients     = array();
-
 		if ( '*' === $key ) { // Clear all saved cache items.
 
-			foreach ( $transient_keys as $transient_key => $transient_value ) {
-				delete_transient( $transient_key );
+			$transient_version = get_transient( 'bc_transient_version' );
+
+			if ( is_integer( $transient_version ) ) {
+				return set_transient( 'bc_transient_version', $transient_version++ );
+			} elseif ( false !== $transient_version ) {
+				return delete_transient( 'bc_transient_version' );
 			}
-
-			delete_option( 'bc_transient_keys' );
-
-		} else { // Only clear specified items.
-
-			if ( ! $transient_keys || ! is_array( $transient_keys ) ) {
-				return false;
-			}
-
-			// If a specific key is set arrange it for clearing.
-			if ( '' !== $key ) {
-
-				$key = sanitize_key( $key );
-
-				if ( ! array_search( $key, $transient_keys ) ) {
-					return false;
-				}
-
-				unset( $transient_keys[ $key ] );
-				$transients[] = $key;
-
-			}
-
-			// If type is set clear by type.
-			if ( '' !== $type ) {
-
-				$type = sanitize_text_field( $type );
-
-				foreach ( $transient_keys as $transient_key => $transient_type ) {
-
-					if ( $type === $transient_type ) {
-						$transients[] = $transient_key;
-					}
-				}
-			}
-
-			foreach ( $transients as $key ) {
-				delete_transient( $key );
-			}
+		} else {
+			return delete_transient( sanitize_key( $key ) );
 		}
-
-		return update_option( 'bc_transient_keys', $transient_keys, false );
 
 	}
 
