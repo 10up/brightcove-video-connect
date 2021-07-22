@@ -621,6 +621,38 @@ class BC_Utility {
 	}
 
 	/**
+	 * Generate a transient key
+	 *
+	 * @param string $name Key name
+	 * @param string $unique_identifier An optional unique identifier to append to the name
+	 * @return string
+	 */
+	public static function generate_transient_key( $name, $unique_identifier = false ) {
+
+		$transient_key     = '';
+		$transient_version = get_transient( 'bc_transient_version' );
+
+		if ( false === $transient_version ) {
+			$transient_version = 1;
+			set_transient( 'bc_transient_version', $transient_version );
+		}
+
+		if ( is_string( $name ) && ! empty( $name ) ) {
+			$transient_key = $name;
+		}
+
+		if ( is_string( $unique_identifier ) && ! empty( $unique_identifier ) ) {
+			$transient_key .= $unique_identifier;
+		}
+
+		if ( ! empty( $transient_key ) ) {
+			$transient_key = substr( $transient_key, 0, 42 ) . '_v' . $transient_version;
+		}
+
+		return $transient_key;
+	}
+
+	/**
 	 * Store cache item
 	 *
 	 * Stores an item to transient cache for later use.
