@@ -125,5 +125,5 @@ if ( ! $installed || version_compare( $installed, BRIGHTCOVE_VERSION, '<' ) ) {
 	do_action( 'brightcove_upgrade', $installed );
 
 	// Store the version installed for later
-	update_option( 'brightcove_version', BRIGHTCOVE_VERSION );
+	update_option( 'brightcove_version', BRIGHTCOVE_VERSION, false );
 }
