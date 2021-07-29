@@ -442,7 +442,7 @@ class BC_Admin_Media_API {
 		global $bc_accounts;
 
 		$request_identifier = "{$type}-{$posts_per_page}-{$query_string}-{$sort_order}";
-		$transient_key      = substr( '_brightcove_req_all_' . BC_Utility::get_hash_for_object( $request_identifier ), 0, 45 );
+		$transient_key      = BC_Utility::generate_transient_key( '_brightcove_req_all_', BC_Utility::get_hash_for_object( $request_identifier ) );
 		$results            = BC_Utility::get_cache_item( $transient_key );
 		$results            = is_array( $results ) ? $results : array();
 
@@ -1000,7 +1000,7 @@ class BC_Admin_Media_API {
 	protected function fetch_videos( $account_id, $count = 10 ) {
 		global $bc_accounts;
 
-		$transient_key = substr( '_brightcove_req_heartbeat_' . $account_id, 0, 45 );
+		$transient_key = BC_Utility::generate_transient_key( '_brightcove_req_heartbeat_', $account_id );
 		$results       = BC_Utility::get_cache_item( $transient_key );
 		$results       = is_array( $results ) ? $results : array();
 

@@ -100,6 +100,20 @@ if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-setup.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-notification-api.php';
 
+
+/**
+ * Upgrade routine of v2.2.0
+ *
+ * @param string $installed The current installed version
+ * @return void
+ */
+function brightcove_upgrade_2_2_0( $installed ) {
+	if ( $installed && version_compare( $installed, '2.2.0', '<' ) ) {
+		delete_option( 'bc_transient_keys' );
+	}
+}
+add_action( 'brightcove_upgrade', 'brightcove_upgrade_2_2_0' );
+
 // Upgrade routine
 $installed = get_option( 'brightcove_version' );
 if ( ! $installed || version_compare( $installed, BRIGHTCOVE_VERSION, '<' ) ) {
@@ -111,5 +125,5 @@ if ( ! $installed || version_compare( $installed, BRIGHTCOVE_VERSION, '<' ) ) {
 	do_action( 'brightcove_upgrade', $installed );
 
 	// Store the version installed for later
-	add_option( 'brightcove_version', BRIGHTCOVE_VERSION, '', 'yes' );
+	update_option( 'brightcove_version', BRIGHTCOVE_VERSION, false );
 }

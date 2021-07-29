@@ -563,7 +563,7 @@ class BC_Utility {
 
 			$account_hash = $bc_accounts->get_account_hash();
 
-			self::delete_cache_item( 'brightcove_oauth_access_token_' . $account_hash );
+			self::delete_cache_item( self::generate_transient_key( 'brightcove_oauth_access_token_', $account_hash ) );
 
 			$bc_accounts->restore_default_account();
 
@@ -621,6 +621,38 @@ class BC_Utility {
 	}
 
 	/**
+	 * Generate a transient key
+	 *
+	 * @param string $name Key name
+	 * @param string $unique_identifier An optional unique identifier to append to the name
+	 * @return string
+	 */
+	public static function generate_transient_key( $name, $unique_identifier = false ) {
+
+		$transient_key     = '';
+		$transient_version = get_transient( 'bc_transient_version' );
+
+		if ( false === $transient_version ) {
+			$transient_version = 1;
+			set_transient( 'bc_transient_version', $transient_version );
+		}
+
+		if ( is_string( $name ) && ! empty( $name ) ) {
+			$transient_key = $name;
+		}
+
+		if ( is_string( $unique_identifier ) && ! empty( $unique_identifier ) ) {
+			$transient_key .= $unique_identifier;
+		}
+
+		if ( ! empty( $transient_key ) ) {
+			$transient_key = substr( $transient_key, 0, 42 ) . '_v' . $transient_version;
+		}
+
+		return $transient_key;
+	}
+
+	/**
 	 * Store cache item
 	 *
 	 * Stores an item to transient cache for later use.
@@ -632,7 +664,7 @@ class BC_Utility {
 	 *
 	 * @since 1.1.1
 	 *
-	 * @return int 1 on success, 0 on failure or -1 if key is already cached
+	 * @return bool True if the value was set, false otherwise.
 	 */
 	public static function set_cache_item( $key, $type, $value, $expiration = 600 ) {
 
@@ -645,28 +677,13 @@ class BC_Utility {
 		$type       = sanitize_text_field( $type );
 		$expiration = absint( $expiration );
 
-		$transient_keys = self::list_cache_items();
+		$transient_value = get_transient( $key );
 
-		if ( in_array( $key, $transient_keys ) && get_transient( $key ) ) {
-			return - 1; // Key already cached.
+		if ( false === $transient_value ) {
+			return set_transient( $key, $value, $expiration );
 		}
 
-		if ( set_transient( sanitize_key( $key ), $value, $expiration ) ) {
-
-			$transient_keys[ sanitize_key( $key ) ] = sanitize_text_field( $type );
-
-		} else { // For some reason we couldn't save the transient
-
-			return 0;
-
-		}
-
-		if ( update_option( 'bc_transient_keys', $transient_keys, false ) ) {
-			return 1; // Key saved to Brightcove registry.
-		}
-
-		return 0;
-
+		return true; // already cached
 	}
 
 	/**
@@ -677,67 +694,28 @@ class BC_Utility {
 	 * @since 1.1.1
 	 *
 	 * @param string $key  The cache key or * for all.
-	 * @param string $type The type of cache key (for group cleanup).
 	 *
 	 * @return bool True on success or false.
 	 */
-	public static function delete_cache_item( $key = '', $type = '' ) {
+	public static function delete_cache_item( $key = '' ) {
 
 		// Check that valid item was given.
-		if ( '' === $key && '' === $type ) {
+		if ( '' === $key ) {
 			return false;
 		}
 
-		$transient_keys = self::list_cache_items();
-		$transients     = array();
-
 		if ( '*' === $key ) { // Clear all saved cache items.
 
-			foreach ( $transient_keys as $transient_key => $transient_value ) {
-				delete_transient( $transient_key );
+			$transient_version = get_transient( 'bc_transient_version' );
+
+			if ( is_integer( $transient_version ) ) {
+				return set_transient( 'bc_transient_version', $transient_version++ );
+			} elseif ( false !== $transient_version ) {
+				return delete_transient( 'bc_transient_version' );
 			}
-
-			delete_option( 'bc_transient_keys' );
-
-		} else { // Only clear specified items.
-
-			if ( ! $transient_keys || ! is_array( $transient_keys ) ) {
-				return false;
-			}
-
-			// If a specific key is set arrange it for clearing.
-			if ( '' !== $key ) {
-
-				$key = sanitize_key( $key );
-
-				if ( ! array_search( $key, $transient_keys ) ) {
-					return false;
-				}
-
-				unset( $transient_keys[ $key ] );
-				$transients[] = $key;
-
-			}
-
-			// If type is set clear by type.
-			if ( '' !== $type ) {
-
-				$type = sanitize_text_field( $type );
-
-				foreach ( $transient_keys as $transient_key => $transient_type ) {
-
-					if ( $type === $transient_type ) {
-						$transients[] = $transient_key;
-					}
-				}
-			}
-
-			foreach ( $transients as $key ) {
-				delete_transient( $key );
-			}
+		} else {
+			return delete_transient( sanitize_key( $key ) );
 		}
-
-		return update_option( 'bc_transient_keys', $transient_keys, false );
 
 	}
 
@@ -762,16 +740,6 @@ class BC_Utility {
 		$key = sanitize_key( $key );
 
 		$transient = get_transient( $key );
-
-		if ( false === $transient ) { // Delete if from the list if the transient has expired.
-
-			$transient_keys = self::list_cache_items();
-
-			unset( $transient_keys[ $key ] );
-
-			update_option( 'bc_transient_keys', $transient_keys, false );
-
-		}
 
 		return $transient;
 

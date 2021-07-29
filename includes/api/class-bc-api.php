@@ -98,8 +98,7 @@ abstract class BC_API {
 		 */
 		$cache_time_in_seconds = apply_filters( 'brightcove_proxy_cache_time_in_seconds', 180 );
 		$account_id            = $bc_accounts->get_account_id();
-		$max_key_length        = 45; // transients support a max key of 45
-		$transient_key         = substr( '_brightcove_req_' . $account_id . BC_Utility::get_hash_for_object( $url ), 0, $max_key_length );
+		$transient_key         = BC_Utility::generate_transient_key( '_brightcove_req_', $account_id . BC_Utility::get_hash_for_object( $url ) );
 		$request               = BC_Utility::get_cache_item( $transient_key );
 		if ( false === $request ) {
 			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
@@ -160,7 +159,7 @@ abstract class BC_API {
 				0,
 				20
 			);
-			$transient_key  = "_bc_request_$hash";
+			$transient_key  = BC_Utility::generate_transient_key( '_bc_request_', $hash );
 			$cached_request = BC_Utility::get_cache_item( $transient_key );
 
 			if ( false !== $cached_request ) {
