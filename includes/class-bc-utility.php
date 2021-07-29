@@ -664,7 +664,7 @@ class BC_Utility {
 	 *
 	 * @since 1.1.1
 	 *
-	 * @return int 1 on success, 0 on failure or -1 if key is already cached
+	 * @return bool True if the value was set, false otherwise.
 	 */
 	public static function set_cache_item( $key, $type, $value, $expiration = 600 ) {
 
@@ -680,15 +680,10 @@ class BC_Utility {
 		$transient_value = get_transient( $key );
 
 		if ( false === $transient_value ) {
-			if ( set_transient( $key, $value, $expiration ) ) {
-				return 1;
-			}
-		} else {
-			return -1;
+			return set_transient( $key, $value, $expiration );
 		}
 
-		return 0;
-
+		return true; // already cached
 	}
 
 	/**
