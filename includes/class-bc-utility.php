@@ -210,7 +210,6 @@ class BC_Utility {
 		// Delete account players
 		$player_ids = get_option( '_bc_player_ids_' . self::sanitize_id( $account_id ), array() );
 
-		delete_option( '_bc_player_playlist_ids_' . self::sanitize_id( $account_id ) );
 		delete_option( '_bc_player_ids_' . self::sanitize_id( $account_id ) );
 		foreach ( $player_ids as $player_id ) {
 			delete_option( '_bc_player_' . self::sanitize_player_id( $player_id ) . '_' . self::sanitize_id( $account_id ) );

@@ -97,9 +97,7 @@
 					playlistWidth = 500;
 				}
 
-				var player_id =
-					bctiny.playlistEnabledPlayers[self.shortcode.attrs.named.account_id][0] ||
-					'default';
+				var player_id = self.shortcode.attrs.named.player_id || 'default';
 
 				var src =
 					'//players.brightcove.net/' +
@@ -233,10 +231,9 @@
 						playlistWidth = 500;
 					}
 
-					var player_id =
-						bctiny.playlistEnabledPlayers[
-							options.shortcode.attrs.named.account_id
-						][0] || 'default';
+					console.log({ self });
+
+					var player_id = self.shortcode.attrs.named.player_id || 'default';
 
 					var src =
 						'//players.brightcove.net/' +
