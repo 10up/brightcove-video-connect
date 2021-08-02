@@ -231,8 +231,6 @@
 						playlistWidth = 500;
 					}
 
-					console.log({ self });
-
 					var player_id = self.shortcode.attrs.named.player_id || 'default';
 
 					var src =
