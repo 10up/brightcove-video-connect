@@ -36,11 +36,6 @@ class BC_Setup {
 		new BC_Errors();
 
 		$bc_accounts = new BC_Accounts();
-		$players     = get_option( '_bc_player_playlist_ids_' . $bc_accounts->get_account_id() );
-
-		if ( false === $players || ! is_array( $players ) ) {
-			define( 'BRIGHTCOVE_FORCE_SYNC', true );
-		}
 
 		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
@@ -300,7 +295,6 @@ class BC_Setup {
 	public static function admin_enqueue_scripts() {
 
 		global $wp_version;
-		global $bc_accounts;
 
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
@@ -330,20 +324,12 @@ class BC_Setup {
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js' );
 
-		$playlist_enabled_players_for_accounts = array();
-		$accounts                              = $bc_accounts->get_sanitized_all_accounts();
-
-		foreach ( $accounts as $account ) {
-			$playlist_enabled_players_for_accounts[ $account['account_id'] ] = get_option( '_bc_player_playlist_ids_' . $account['account_id'] );
-		}
-
 		wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ) );
 		wp_localize_script(
 			'tinymce_preview',
 			'bctiny',
 			array(
-				'wp_version'             => $wp_version,
-				'playlistEnabledPlayers' => $playlist_enabled_players_for_accounts,
+				'wp_version' => $wp_version,
 			)
 		);
 

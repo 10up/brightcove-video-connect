@@ -180,7 +180,6 @@
 					'_default/index.html?videoId=' +
 					videoId;
 			} else {
-				playerId = bctiny.playlistEnabledPlayers[accountId][0] || 'default';
 				src =
 					'//players.brightcove.net/' +
 					accountId +

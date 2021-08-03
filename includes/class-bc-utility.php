@@ -210,7 +210,6 @@ class BC_Utility {
 		// Delete account players
 		$player_ids = get_option( '_bc_player_ids_' . self::sanitize_id( $account_id ), array() );
 
-		delete_option( '_bc_player_playlist_ids_' . self::sanitize_id( $account_id ) );
 		delete_option( '_bc_player_ids_' . self::sanitize_id( $account_id ) );
 		foreach ( $player_ids as $player_id ) {
 			delete_option( '_bc_player_' . self::sanitize_player_id( $player_id ) . '_' . self::sanitize_id( $account_id ) );
@@ -218,50 +217,6 @@ class BC_Utility {
 		delete_option( '_bc_player_default_' . self::sanitize_id( $account_id ) );
 
 		wp_reset_postdata();
-	}
-
-	/**
-	 * Function to delete players that are stored as an option.
-	 *
-	 * @param $ids_to_keep
-	 *
-	 * @return bool true if all options deleted, false on failure or non-existent player
-	 */
-	public static function remove_deleted_players( $ids_to_keep ) {
-
-		global $bc_accounts;
-		$all_ids_key = '_bc_player_ids_' . $bc_accounts->get_account_id();
-		$all_ids     = get_option( $all_ids_key );
-
-		$all_ids_playlists_key = '_bc_player_playlist_ids_' . $bc_accounts->get_account_id();
-		$all_ids_playlists     = get_option( $all_ids_playlists_key );
-
-		$return_state = true;
-
-		if ( is_array( $all_ids ) ) {
-			$ids_to_delete = array_diff( $all_ids, $ids_to_keep );
-
-			foreach ( $ids_to_delete as $id ) {
-				$key     = self::get_player_key( $id );
-				$success = delete_option( $key );
-				if ( ! $success ) {
-					$return_state = false;
-				}
-			}
-		}
-
-		if ( is_array( $all_ids_playlists ) ) {
-			foreach ( $all_ids_playlists as $id ) {
-				if ( in_array( $id, $all_ids_playlists ) ) {
-					unset( $all_ids_playlists[ $id ] );
-				}
-			}
-		}
-
-		update_option( $all_ids_key, $ids_to_keep );
-		update_option( $all_ids_playlists_key, $all_ids_playlists );
-
-		return $return_state;
 	}
 
 	/**
