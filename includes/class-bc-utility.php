@@ -413,7 +413,7 @@ class BC_Utility {
 
 	public static function admin_notice_messages( $notices ) {
 
-		global $allowed_tags;
+		global $allowedtags;
 
 		if ( empty( $notices ) ) {
 			return false;
@@ -422,7 +422,7 @@ class BC_Utility {
 		$html = '';
 		foreach ( $notices as $notice ) {
 			$html .= sprintf( '<div class="%1$s brightcove-settings-%1$s notice is-dismissible">', esc_attr( $notice['type'] ) );
-			$html .= sprintf( '<p>%s</p>', wp_kses( $notice['message'], $allowed_tags ) );
+			$html .= sprintf( '<p>%s</p>', wp_kses( $notice['message'], $allowedtags ) );
 			$html .= '</div>';
 		}
 
