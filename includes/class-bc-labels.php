@@ -95,6 +95,7 @@ class BC_Labels {
 
 		if ( $refresh ) {
 			BC_Utility::delete_cache_item( '*' );
+			$transient_key = BC_Utility::generate_transient_key( 'brightcove_get_labels_', $bc_accounts->get_account_id() );
 			$results = $this->cms_api->get_account_labels();
 			BC_Utility::set_cache_item( $transient_key, 'label_list', $results, 5 * MINUTE_IN_SECONDS );
 		}
