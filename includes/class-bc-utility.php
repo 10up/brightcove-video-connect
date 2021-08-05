@@ -661,11 +661,11 @@ class BC_Utility {
 
 		if ( '*' === $key ) { // Clear all saved cache items.
 
-			$transient_version = get_transient( 'bc_transient_version' );
+			$transient_version = (int) get_transient( 'bc_transient_version' );
 
-			if ( is_integer( $transient_version ) ) {
-				return set_transient( 'bc_transient_version', $transient_version++ );
-			} elseif ( false !== $transient_version ) {
+			if ( $transient_version ) {
+				return set_transient( 'bc_transient_version', $transient_version + 1 );
+			} else {
 				return delete_transient( 'bc_transient_version' );
 			}
 		} else {
