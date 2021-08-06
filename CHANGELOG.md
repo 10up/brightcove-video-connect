@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.2.0] - 2021-08-09
+
+### Breaking Changes
+- BC_Utility API changed:
+  - See `set_cache_item` and `delete_cache_item` in `includes/class-bc-utility.php`.
+  - Removed `remove_deleted_players` function. 
+### Fixed
+- Fix: undefined index warnings. Props [@sanketio](https://github.com/sanketio).
+- Fix: typo for the `$allowedtags` global used in conjunction with wp_kses. Props [@theskinnyghost](https://github.com/theskinnyghost).
+- Fix: performance issue related with bc_transient_keys option. Props [@Rahmon](https://github.com/Rahmon)
+- Fix: playlist preview in the editor. Props [@Rahmon](https://github.com/Rahmon).
+
+### Security
+- Bump `hosted-git-info` from 2.8.8 to 2.8.9 (props [@dependabot](https://github.com/dependabot) via [#212](https://github.com/10up/brightcove-video-connect/pull/212))
+- Bump `normalize-url` from 4.5.0 to 4.5.1 (props [@dependabot](https://github.com/dependabot) via [#213](https://github.com/10up/brightcove-video-connect/pull/213))
+
 ## [2.1.4] - 2021-06-23
 ### Fixed
 - Fix: Default Source field when is submitted unchecked.
@@ -300,6 +316,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.2.0]: https://github.com/10up/brightcove-video-connect/compare/2.1.4...2.2.0
 [2.1.4]: https://github.com/10up/brightcove-video-connect/compare/2.1.3...2.1.4
 [2.1.3]: https://github.com/10up/brightcove-video-connect/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/10up/brightcove-video-connect/compare/2.1.1...2.1.2
