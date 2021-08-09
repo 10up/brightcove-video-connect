@@ -11,10 +11,10 @@ All notable changes to this project will be documented in this file, per [the Ke
   - See `set_cache_item` and `delete_cache_item` in `includes/class-bc-utility.php`.
   - Removed `remove_deleted_players` function. 
 ### Fixed
-- Fix: undefined index warnings. Props [@sanketio](https://github.com/sanketio).
-- Fix: typo for the `$allowedtags` global used in conjunction with wp_kses. Props [@theskinnyghost](https://github.com/theskinnyghost).
-- Fix: performance issue related with bc_transient_keys option. Props [@Rahmon](https://github.com/Rahmon)
-- Fix: playlist preview in the editor. Props [@Rahmon](https://github.com/Rahmon).
+- Undefined index warnings. Props [@sanketio](https://github.com/sanketio).
+- Typo for the `$allowedtags` global used in conjunction with wp_kses. Props [@theskinnyghost](https://github.com/theskinnyghost).
+- Performance issue related with bc_transient_keys option. Props [@Rahmon](https://github.com/Rahmon)
+- Playlist preview in the editor. Props [@Rahmon](https://github.com/Rahmon).
 
 ### Security
 - Bump `hosted-git-info` from 2.8.8 to 2.8.9 (props [@dependabot](https://github.com/dependabot) via [#212](https://github.com/10up/brightcove-video-connect/pull/212))
