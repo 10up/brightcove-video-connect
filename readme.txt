@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 5.7
-Stable tag: 2.1.4
+Tested up to: 5.8
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,22 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
 == Changelog ==
+
+= 2.2.0 =
+
+Breaking Changes
+* BC_Utility API changed: See `set_cache_item` and `delete_cache_item` in `includes/class-bc-utility.php`.
+* BC_Utility API changed: Removed `remove_deleted_players` function.
+
+Fixed
+* Undefined index warnings. Props [@sanketio](https://github.com/sanketio) via [#197](https://github.com/10up/brightcove-video-connect/pull/197).
+* Typo for the `$allowedtags` global used in conjunction with wp_kses. Props [@theskinnyghost](https://github.com/theskinnyghost) via [#203](https://github.com/10up/brightcove-video-connect/pull/203).
+* Performance issue related with bc_transient_keys option. Props [@Rahmon](https://github.com/Rahmon) via [#215](https://github.com/10up/brightcove-video-connect/pull/215).
+* Playlist preview in the editor. Props [@Rahmon](https://github.com/Rahmon) via [#216](https://github.com/10up/brightcove-video-connect/pull/216).
+
+Security
+* Bump `hosted-git-info` from 2.8.8 to 2.8.9 (props [@dependabot](https://github.com/dependabot) via [#212](https://github.com/10up/brightcove-video-connect/pull/212))
+* Bump `normalize-url` from 4.5.0 to 4.5.1 (props [@dependabot](https://github.com/dependabot) via [#213](https://github.com/10up/brightcove-video-connect/pull/213))
 
 = 2.1.4 = 
 
