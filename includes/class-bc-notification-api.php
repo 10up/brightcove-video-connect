@@ -10,7 +10,7 @@ class BC_Notification_API {
 	 * Wire up any actions or filters that need to be present
 	 */
 	public static function setup() {
-		add_action( 'brightcove_api_request',     array( 'BC_Notification_API', 'flush_cache' ) );
+		add_action( 'brightcove_api_request', array( 'BC_Notification_API', 'flush_cache' ) );
 
 		// @TODO Verify API as errors don't seem to match the documentation
 		// add_action( 'brightcove_created_account', array( 'BC_Notification_API', 'create_subscription' ) );
@@ -36,7 +36,7 @@ class BC_Notification_API {
 	public static function callback_paths() {
 		$callbacks = array();
 
-		$api_url = home_url( 'bc-api' );
+		$api_url     = home_url( 'bc-api' );
 		$callbacks[] = esc_url( $api_url );
 
 		/**
@@ -62,7 +62,7 @@ class BC_Notification_API {
 			global $bc_accounts;
 
 			$accounts = $bc_accounts->get_sanitized_all_accounts();
-			$hashes = array_keys( $accounts );
+			$hashes   = array_keys( $accounts );
 
 			// Walk through each account and create an API change notification subscription
 			array_map( array( 'BC_Notification_API', 'create_subscription' ), $hashes );
@@ -90,7 +90,7 @@ class BC_Notification_API {
 		// We're in a static method, so instantiate the API we need
 		$cms_api = new BC_CMS_API();
 
-		foreach( self::callback_paths() as $path ) {
+		foreach ( self::callback_paths() as $path ) {
 			// Subscribe to allthethings
 			$subscription_id = $cms_api->create_subscription( $path, array( 'video-change' ) );
 
@@ -105,9 +105,9 @@ class BC_Notification_API {
 
 	/**
 	 * Remove a subscription listener for a specific account.
-	 * 
+	 *
 	 * @global BC_Accounts $bc_accounts
-	 * 
+	 *
 	 * @param string $account_hash
 	 */
 	public static function remove_subscription( $account_hash ) {
@@ -120,10 +120,10 @@ class BC_Notification_API {
 			$bc_accounts->restore_default_account();
 			return;
 		}
-		
+
 		// Get the subscription ID so we can delete it
 		$subscription_id = get_option( 'bc_sub_' . $account_hash );
-		
+
 		if ( false !== $subscription_id ) {
 			// We're in a static method, so instantiate the API we need
 			$cms_api = new BC_CMS_API();

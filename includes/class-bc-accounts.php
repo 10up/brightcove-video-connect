@@ -15,7 +15,6 @@
  *
  * We ONLY support read-write tokens and delegate permissions via the WordPress permissioning system. For
  * permissions, check the BC_Permissions Class.
- *
  */
 class BC_Accounts {
 
@@ -36,15 +35,15 @@ class BC_Accounts {
 		$this->current_account  = $this->original_account;
 	}
 
-    public function get_all_accounts_id() {
-        $all_accounts = $this->get_all_accounts();
-        $account_ids = array();
+	public function get_all_accounts_id() {
+		$all_accounts = $this->get_all_accounts();
+		$account_ids  = array();
 
-        foreach ($all_accounts as $account) {
-            $account_ids[] = $account["account_id"];
-        }
-        return $account_ids;
-    }
+		foreach ( $all_accounts as $account ) {
+			$account_ids[] = $account['account_id'];
+		}
+		return $account_ids;
+	}
 
 	public function get_account_id() {
 
@@ -171,7 +170,7 @@ class BC_Accounts {
 
 	public function delete_account( $hash ) {
 
-		if ( ! BC_Accounts::get_account_by_hash( $hash ) ) {
+		if ( ! self::get_account_by_hash( $hash ) ) {
 			return new WP_Error( 'brightcove-account-not-configured', esc_html__( 'The specified Brightcove Account has not been configured in WordPress', 'brightcove' ) );
 		}
 
@@ -188,7 +187,7 @@ class BC_Accounts {
 			}
 		}
 
-		if ( $account_id_in_accounts_list ) { //only run deletion for the provided account ID if it is actually an active account.
+		if ( $account_id_in_accounts_list ) { // only run deletion for the provided account ID if it is actually an active account.
 
 			BC_Utility::remove_all_media_objects_for_account_id( $account_id );
 
@@ -247,7 +246,7 @@ class BC_Accounts {
 
 		if ( ! $user_id ) {
 			$user_id = get_current_user_id();
-		} else if ( ! current_user_can( 'brightcove_get_user_default_account' ) ) {
+		} elseif ( ! current_user_can( 'brightcove_get_user_default_account' ) ) {
 			return false; // Permissions violation.
 		}
 
@@ -276,7 +275,7 @@ class BC_Accounts {
 
 		if ( ! $user_id ) {
 			$user_id = get_current_user_id();
-		} else if ( ! current_user_can( 'brightcove_set_user_default_account' ) ) {
+		} elseif ( ! current_user_can( 'brightcove_set_user_default_account' ) ) {
 			return false; // Permissions violation.
 		}
 
@@ -551,14 +550,14 @@ class BC_Accounts {
 
 		if ( ! $valid_credentials ) {
 			$errors[] = new WP_Error( 'account-invalid-credentials', esc_html__( 'Invalid account credentials', 'brightcove' ) );
-		} else if ( $check_access ) {
+		} elseif ( $check_access ) {
 			$permission_issues = $this->check_permissions_level();
-			if ( count ( $permission_issues ) > 0 ) {
+			if ( count( $permission_issues ) > 0 ) {
 				$errors[] = new WP_Error(
 					'account-permission-issue',
-					esc_html__( "Supplied account doesn't have the following permissions: ", 'brightcove' ) . 
+					esc_html__( "Supplied account doesn't have the following permissions: ", 'brightcove' ) .
 						implode( ', ', $permission_issues ) . '. ' .
-			            esc_html__( 'Please use an account that has these permissions.' , 'brightcove' )
+						esc_html__( 'Please use an account that has these permissions.', 'brightcove' )
 				);
 			}
 		}
@@ -566,7 +565,7 @@ class BC_Accounts {
 		// Restore current account transient (if exists).
 		$this->current_account = $old_account;
 
-		return ( ! empty ( $errors ) ) ? $errors : true;
+		return ( ! empty( $errors ) ) ? $errors : true;
 	}
 
 }

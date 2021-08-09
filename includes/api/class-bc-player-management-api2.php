@@ -78,14 +78,14 @@ class BC_Player_Management_API2 extends BC_API {
 
 			foreach ( $account_players['items'] as $key => $player ) {
 				// If a player is set to inactive, we should not send any data about it to the plugin
-				if ( isset( $player['branches']["preview"]["configuration"]["player"]["inactive"] )
+				if ( isset( $player['branches']['preview']['configuration']['player']['inactive'] )
 					&&
-					$player['branches']["preview"]["configuration"]["player"]["inactive"]
+					$player['branches']['preview']['configuration']['player']['inactive']
 					&&
-					isset( $player['branches']["master"]["configuration"]["player"]["inactive"] )
+					isset( $player['branches']['master']['configuration']['player']['inactive'] )
 					&&
-					$player['branches']["master"]["configuration"]["player"]["inactive"] ) {
-					unset( $account_players['items'][$key] );
+					$player['branches']['master']['configuration']['player']['inactive'] ) {
+					unset( $account_players['items'][ $key ] );
 				} else {
 					$player['is_playlist'] = false;
 
@@ -105,7 +105,6 @@ class BC_Player_Management_API2 extends BC_API {
 					$players[ $account_id ][] = $player;
 				}
 			}
-
 		}
 
 		return apply_filters( 'brightcove_get_all_player', $players );

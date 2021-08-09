@@ -13,5 +13,12 @@
 	"require": {
 		"php": ">=5.2.4",
 		"composer/installers": "~1.0"
+	},
+	"require-dev": {
+		"10up/phpcs-composer": "dev-master"
+	},
+	"scripts": {
+		"lint": "phpcs .",
+		"lint-fix": "phpcbf ."
 	}
 }

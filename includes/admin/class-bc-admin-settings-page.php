@@ -3,7 +3,7 @@
 class BC_Admin_Settings_Page {
 
 	public function __construct() {
-        add_action( 'admin_init', array( $this, 'admin_init_settings' ) );
+		add_action( 'admin_init', array( $this, 'admin_init_settings' ) );
 		add_action( 'brightcove/admin/settings_page', array( $this, 'render' ) );
 		add_action( 'admin_init', array( $this, 'delete_source' ) );
 	}
@@ -19,7 +19,7 @@ class BC_Admin_Settings_Page {
 
 		global $bc_accounts;
 
-		if ( ! isset( $_GET['_wpnonce'] ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || empty( $_GET['account'] ) ) {
 			return false;
 		}
 
@@ -29,10 +29,24 @@ class BC_Admin_Settings_Page {
 
 		$delete_account = $bc_accounts->delete_account( sanitize_text_field( $_GET['account'] ) );
 		if ( is_wp_error( $delete_account ) ) {
-			BC_Utility::admin_notice_messages( array( array( 'message' => $delete_account->get_error_message(), 'type' => 'error' ) ) );
+			BC_Utility::admin_notice_messages(
+				array(
+					array(
+						'message' => $delete_account->get_error_message(),
+						'type'    => 'error',
+					),
+				)
+			);
 		}
 
-		BC_Utility::admin_notice_messages( array( array( 'message' => esc_html__( 'Source Deleted', 'brightcove' ), 'type' => 'updated' ) ) );
+		BC_Utility::admin_notice_messages(
+			array(
+				array(
+					'message' => esc_html__( 'Source Deleted', 'brightcove' ),
+					'type'    => 'updated',
+				),
+			)
+		);
 
 		return true;
 
@@ -56,9 +70,9 @@ class BC_Admin_Settings_Page {
 			<table class="wp-list-table widefat">
 				<thead>
 				<tr>
-					<th><?php esc_html_e( 'Source Name', 'brightcove' ) ?></th>
-					<th><?php esc_html_e( 'Account ID', 'brightcove' ) ?></th>
-					<th><?php esc_html_e( 'Client ID', 'brightcove' ) ?></th>
+					<th><?php esc_html_e( 'Source Name', 'brightcove' ); ?></th>
+					<th><?php esc_html_e( 'Account ID', 'brightcove' ); ?></th>
+					<th><?php esc_html_e( 'Client ID', 'brightcove' ); ?></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -122,12 +136,13 @@ class BC_Admin_Settings_Page {
 
 		if ( current_user_can( 'brightcove_manipulate_accounts' ) ) {
 			$actions['edit']   = sprintf( '<a href="%1$s" class="brightcove-action-links brightcove-action-edit-source" title="%2$s">%2$s</a>', admin_url( sprintf( 'admin.php?page=page-brightcove-edit-source&account=%s', $hash ) ), esc_html__( 'Edit Source', 'brightcove' ) );
-			$actions['delete'] = sprintf( '<a href="%1$s" class="brightcove-action-links brightcove-action-delete-source" title="%2$s" data-alert-message="%3$s">%2$s</a>',
-			                              esc_url(
-				                              admin_url( sprintf( 'admin.php?page=brightcove-sources&action=delete&account=%1$s&_wpnonce=%2$s', $hash, wp_create_nonce( 'bc_delete_source_id_' . $hash ) ) )
-			                              ),
-			                              esc_html__( 'Delete Source', 'brightcove' ),
-			                              esc_html__( 'By deleting this source, WordPress will no longer have access to associated videos and playlists. Your content remains in Brightcove.', 'brightcove' )
+			$actions['delete'] = sprintf(
+				'<a href="%1$s" class="brightcove-action-links brightcove-action-delete-source" title="%2$s" data-alert-message="%3$s">%2$s</a>',
+				esc_url(
+					admin_url( sprintf( 'admin.php?page=brightcove-sources&action=delete&account=%1$s&_wpnonce=%2$s', $hash, wp_create_nonce( 'bc_delete_source_id_' . $hash ) ) )
+				),
+				esc_html__( 'Delete Source', 'brightcove' ),
+				esc_html__( 'By deleting this source, WordPress will no longer have access to associated videos and playlists. Your content remains in Brightcove.', 'brightcove' )
 			);
 		}
 
@@ -139,8 +154,8 @@ class BC_Admin_Settings_Page {
 		 * @param array $actions {
 		 *      The array of available actions.
 		 *
-		 * 		@param string $action      The name of the action.
-		 * 		@param string $action_link The link for the action.
+		 *      @param string $action      The name of the action.
+		 *      @param string $action_link The link for the action.
 		 * }
 		 */
 		$actions = apply_filters( 'brightcove_account_actions', $actions );
@@ -190,7 +205,7 @@ class BC_Admin_Settings_Page {
 		$default_account      = get_option( '_brightcove_default_account' );
 		$default_account_text = ( $default_account === $hash ) ? '<strong> &mdash; ' . esc_html__( 'Default', 'brightcove' ) . '</strong>' : false;
 
-		$html = sprintf( '<tr class="source source-%s">', esc_attr( $source['account_id'] ) );
+		$html  = sprintf( '<tr class="source source-%s">', esc_attr( $source['account_id'] ) );
 		$html .= '<th>';
 		$html .= '<strong>' . esc_html( $source['account_name'] ) . '</strong>' . $default_account_text; // escaped above
 		$html .= $this->action_links( $hash );
@@ -214,7 +229,7 @@ class BC_Admin_Settings_Page {
 	 */
 	public function render_no_source_row() {
 
-		$html = '<tr class="source no-sources">';
+		$html  = '<tr class="source no-sources">';
 		$html .= '<td colspan="3">' . esc_html__( 'There are no sources defined. Add one below', 'brightcove' ) . '</td>';
 		$html .= '</tr>';
 

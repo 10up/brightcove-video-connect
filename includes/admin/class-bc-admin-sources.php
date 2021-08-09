@@ -36,7 +36,10 @@ class BC_Admin_Sources {
 
 				$error_message = esc_html__( 'This account could not be found', 'brightcove' );
 				BC_Logging::log( sprintf( 'ACCOUNT: %s', $error_message ) );
-				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
+				$this->notices[] = array(
+					'message' => $error_message,
+					'type'    => 'error',
+				);
 
 				return new WP_Error( 'brightcove-account-sources-edit-not-found', $error_message );
 
@@ -71,7 +74,10 @@ class BC_Admin_Sources {
 
 			$error_message = esc_html__( 'You do not have permission to manage this account.', 'brightcove' );
 			BC_Logging::log( sprintf( 'ACCOUNT: %s', $error_message ) );
-			$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
+			$this->notices[] = array(
+				'message' => $error_message,
+				'type'    => 'error',
+			);
 
 			return new WP_Error( 'brightcove-account-manage-permissions', $error_message );
 
@@ -97,7 +103,6 @@ class BC_Admin_Sources {
 				if ( ! array_key_exists( $key, $_POST ) ) {
 					return false;
 				}
-
 			}
 
 			$account_id    = BC_Utility::sanitize_id( $_POST['source-account-id'] );
@@ -123,7 +128,10 @@ class BC_Admin_Sources {
 
 				BC_Logging::log( sprintf( 'BC ACCOUNTS: %s', $error_message ) );
 
-				$this->notices[] = array( 'message' => $error_message, 'type' => 'error' );
+				$this->notices[] = array(
+					'message' => $error_message,
+					'type'    => 'error',
+				);
 
 				return new WP_Error( 'bc-account-exists-error', $error_message );
 
@@ -161,8 +169,8 @@ class BC_Admin_Sources {
 				esc_html__( 'Congratulations! Your credentials have been authenticated. You can now ', 'brightcove' ),
 				admin_url( 'admin.php?page=page-brightcove-videos' ),
 				esc_html__( 'add videos', 'brightcove' ),
-				esc_html__('or', 'brightcove'),
-		        admin_url( 'admin.php?page=brightcove-sources' ),
+				esc_html__( 'or', 'brightcove' ),
+				admin_url( 'admin.php?page=brightcove-sources' ),
 				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
 			'type'    => 'updated',
@@ -219,37 +227,42 @@ class BC_Admin_Sources {
 		} ?>
 
 		<div class="wrap">
-			<h2><?php
+			<h2>
+			<?php
 				printf( '<img src="%s" class="bc-page-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
-				?><?php esc_html_e( 'Add Brightcove Account', 'brightcove' ) ?></h2>
+			?>
+				<?php esc_html_e( 'Add Brightcove Account', 'brightcove' ); ?></h2>
 
 			<form action="" method="post">
 				<table class="form-table brightcove-add-source-name">
 					<tbody>
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Source Name', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Source Name', 'brightcove' ); ?></th>
 						<td>
 							<input type="text" name="source-name" id="source-name"
-							       placeholder="<?php esc_html_e( 'My Brightcove Account Name', 'brightcove' ) ?>"
-							       class="regular-text" required="required" value="<?php echo esc_attr( $source_name ); ?>">
+								   placeholder="<?php esc_html_e( 'My Brightcove Account Name', 'brightcove' ); ?>"
+								   class="regular-text" required="required" value="<?php echo esc_attr( $source_name ); ?>">
 
-							<p class="description"><?php esc_html_e( 'This is how the source will be identified in WordPress', 'brightcove' ) ?></p>
+							<p class="description"><?php esc_html_e( 'This is how the source will be identified in WordPress', 'brightcove' ); ?></p>
 						</td>
 					</tr>
 					</tbody>
 				</table>
 
-				<h3><?php esc_html_e( 'Credentials', 'brightcove' ) ?></h3>
+				<h3><?php esc_html_e( 'Credentials', 'brightcove' ); ?></h3>
 
-				<p class="description">
-					 <?php echo sprintf( '%s <a target="_blank" href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a> %s.',
-	                    esc_html__( 'The following information can be found by logging into your', 'brightcove' ),
-	                    esc_html__( 'Video Cloud Studio', 'brightcove' ),
-					    esc_html__( 'account', 'brightcove' )
-					);
-					?>
+										 <?php
+											echo sprintf(
+												'%s <a target="_blank" href="https://studio.brightcove.com/products/videocloud/admin/oauthsettings">%s</a> %s.',
+												esc_html__( 'The following information can be found by logging into your', 'brightcove' ),
+												esc_html__( 'Video Cloud Studio', 'brightcove' ),
+												esc_html__( 'account', 'brightcove' )
+											);
+											?>
 					<br>
-					<?php echo sprintf( '%s <a target="_blank" href="https://support.brightcove.com/managing-api-authentication-credentials">%s</a>.',
+					<?php
+					echo sprintf(
+						'%s <a target="_blank" href="https://support.brightcove.com/managing-api-authentication-credentials">%s</a>.',
 						esc_html__( 'For more details on the different API permissions or settings below, please check out our documentation at', 'brightcove' ),
 						esc_html__( 'Managing API Authentication Credentials', 'brightcove' )
 					);
@@ -258,31 +271,31 @@ class BC_Admin_Sources {
 				<table class="form-table brightcove-add-source-details">
 					<tbody>
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Account ID', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Account ID', 'brightcove' ); ?></th>
 						<td>
 							<input type="text" name="source-account-id" id="source-account-id" class="regular-text"
-							       required="required" value="<?php echo esc_attr( $account_id ); ?>">
+								   required="required" value="<?php echo esc_attr( $account_id ); ?>">
 						</td>
 					</tr>
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Client ID', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Client ID', 'brightcove' ); ?></th>
 						<td>
 							<input type="password" name="source-client-id" id="source-client-id" class="regular-text"
-							       required="required" value="<?php echo esc_attr( $client_id ); ?>">
-							<p class="description"><?php esc_html_e( 'A unique identifier for a client generated by Brightcove', 'brightcove' ) ?></p>
+								   required="required" value="<?php echo esc_attr( $client_id ); ?>">
+							<p class="description"><?php esc_html_e( 'A unique identifier for a client generated by Brightcove', 'brightcove' ); ?></p>
 						</td>
 					</tr>
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Client Secret', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Client Secret', 'brightcove' ); ?></th>
 						<td>
 							<input type="password" name="source-client-secret" id="source-client-secret"
-							       class="regular-text" required="required" value="<?php echo esc_attr( $client_secret ); ?>">
-							<p class="description"><?php esc_html_e( 'A unique identifier generated by Brightcove, used with a client id. Serves as a password to authenticate a client', 'brightcove' ) ?></p>
+								   class="regular-text" required="required" value="<?php echo esc_attr( $client_secret ); ?>">
+							<p class="description"><?php esc_html_e( 'A unique identifier generated by Brightcove, used with a client id. Serves as a password to authenticate a client', 'brightcove' ); ?></p>
 						</td>
 					</tr>
 
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ); ?></th>
 						<td>
 							<label for="source-default-account">
 								<input
@@ -305,7 +318,7 @@ class BC_Admin_Sources {
 				<p class="submit">
 					<input type="hidden" name="source-action" value="create"/>
 					<input type="submit" name="brightcove-edit-account-submit" id="brightcove-edit-account-submit"
-					       class="button button-primary" value="<?php esc_html_e( 'Check Credentials', 'brightcove' ) ?>">
+						   class="button button-primary" value="<?php esc_html_e( 'Check Credentials', 'brightcove' ); ?>">
 				</p>
 			</form>
 		</div>
@@ -317,15 +330,17 @@ class BC_Admin_Sources {
 		?>
 		<div class="wrap">
 
-			<h2><?php
+			<h2>
+			<?php
 				printf( '<img src="%s" class="brightcove-admin-icon"/>', plugins_url( 'images/menu-icon.svg', dirname( __DIR__ ) ) );
-				?><?php esc_html_e( 'Edit Source', 'brightcove' ) ?></h2>
+			?>
+				<?php esc_html_e( 'Edit Source', 'brightcove' ); ?></h2>
 
 			<form action="" method="post">
 				<table class="form-table brightcove-add-source-name">
 					<tbody>
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Source Name', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Source Name', 'brightcove' ); ?></th>
 						<td>
 							<?php echo esc_html( $account['account_name'] ); ?>
 						</td>
@@ -336,16 +351,16 @@ class BC_Admin_Sources {
 				<table class="form-table brightcove-add-source-details">
 					<tbody>
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Account ID', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Account ID', 'brightcove' ); ?></th>
 						<td>
-							<?php echo esc_html( $account['account_id'] ) ?>
+							<?php echo esc_html( $account['account_id'] ); ?>
 						</td>
 					</tr>
 				</table>
 
 				<table class="form-table">
 					<tr class="brightcove-account-row">
-						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ) ?></th>
+						<th scope="row"><?php esc_html_e( 'Default Source', 'brightcove' ); ?></th>
 						<td>
 							<label for="source-default-account">
 								<input
@@ -364,10 +379,10 @@ class BC_Admin_Sources {
 				wp_nonce_field( '_brightcove_check_oauth_for_source', 'brightcove-check_oauth', false, true );
 				?>
 				<p class="submit">
-					<input type="hidden" name="hash" value="<?php echo esc_attr( $account['hash'] ) ?>">
+					<input type="hidden" name="hash" value="<?php echo esc_attr( $account['hash'] ); ?>">
 					<input type="hidden" name="source-action" value="update"/>
 					<input type="submit" name="brightcove-edit-account-submit" id="brightcove-edit-account-submit"
-					       class="button button-primary" value="<?php esc_html_e( 'Save Changes', 'brightcove' ) ?>">
+						   class="button button-primary" value="<?php esc_html_e( 'Save Changes', 'brightcove' ); ?>">
 				</p>
 			</form>
 		</div>

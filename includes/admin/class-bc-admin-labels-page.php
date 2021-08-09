@@ -34,13 +34,13 @@ class BC_Admin_Labels_Page {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="validate">
 				<?php wp_nonce_field( 'brightcove-edit-label', 'brightcove-edit-label-nonce' ); ?>
 				<input type="hidden" name="action" value="brightcove-edit-label">
-				<input type="hidden" name="label-path" value="<?php echo ! empty ( $_GET['update_label'] ) ? esc_attr( $_GET['update_label'] ) : ''; ?>">
+				<input type="hidden" name="label-path" value="<?php echo ! empty( $_GET['update_label'] ) ? esc_attr( $_GET['update_label'] ) : ''; ?>">
 				<table class="form-table">
 					<tbody>
 						<tr class="form-field form-required term-name-wrap">
 							<th scope="row"><label for="name">Label</label></th>
 							<td>
-								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end ( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true">
+								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true">
 								<p class="description"><?php esc_html_e( 'Enter the new label name.', 'brightcove' ); ?></p>
 							</td>
 						</tr>
@@ -58,7 +58,7 @@ class BC_Admin_Labels_Page {
 	 * Generates an HTML table with all configured sources
 	 */
 	public function render_labels_page() {
-		$maybe_refresh = $_GET['refresh_labels'] ? (bool) $_GET['refresh_labels'] : false;
+		$maybe_refresh = isset( $_GET['refresh_labels'] ) ? (bool) $_GET['refresh_labels'] : false;
 		$labels        = $this->bc_labels->fetch_all( $maybe_refresh );
 		?>
 		<div class="wrap">
@@ -119,8 +119,10 @@ class BC_Admin_Labels_Page {
 									<td id="cb" class="manage-column column-cb check-column brightcove-labels-column"><label class="screen-reader-text" for="cb-select-all-1"><?php esc_html_e( 'Select All' ); ?></label><input id="cb-select-all-1" type="checkbox"></td><th scope="col" id="name" class="manage-column column-name column-primary"><span><?php esc_html_e( 'Name' ); ?></span></th></tr>
 								</thead>
 								<tbody id="the-list">
-								<?php if ( $labels ) {
-									 foreach ( $labels as $index => $label ) : ?>
+								<?php
+								if ( $labels ) {
+									foreach ( $labels as $index => $label ) :
+										?>
 										<tr class="level-0">
 											<th scope="row" class="check-column">
 												<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $index ); ?>"></label>
@@ -134,12 +136,14 @@ class BC_Admin_Labels_Page {
 												<div class="slug"><?php echo esc_html( $label ); ?></div>
 											</div>
 											<div class="row-actions">
-												<span class="edit"><a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-label') . '&update_label=' . $label ); ?>" aria-label="Edit “Uncategorized”"><?php echo esc_html_e( 'Edit' ); ?></a></span>
+												<span class="edit"><a href="<?php echo esc_url( admin_url( 'admin.php?page=page-brightcove-edit-label' ) . '&update_label=' . $label ); ?>" aria-label="Edit “Uncategorized”"><?php echo esc_html_e( 'Edit' ); ?></a></span>
 											</div>
 											</td>
 										</tr>
-									<?php endforeach;
-								} ?>
+										<?php
+									endforeach;
+								}
+								?>
 								</tbody>
 								<tfoot>
 								<tr>

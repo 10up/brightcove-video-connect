@@ -4,7 +4,6 @@
  * Brightcove oAuth 2.0 API
  *
  * Uses the Brightcove oAuth implementation to secure an access token for API requests.
- *
  */
 class BC_Oauth_API {
 
@@ -21,7 +20,7 @@ class BC_Oauth_API {
 
 		global $bc_accounts;
 
-		$this->transient_name = 'brightcove_oauth_access_token_' . $bc_accounts->get_account_hash();
+		$this->transient_name = BC_Utility::generate_transient_key( 'brightcove_oauth_access_token_', $bc_accounts->get_account_hash() );
 		$this->set_account_credentials( $bc_accounts->get_client_id(), $bc_accounts->get_client_secret() );
 
 	}
@@ -39,8 +38,8 @@ class BC_Oauth_API {
 		$this->_http_headers  = array(
 			'headers' => array(
 				'Content-type'  => 'application/json',
-				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_client_id . ':' . $this->_client_secret ) )
-			)
+				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_client_id . ':' . $this->_client_secret ) ),
+			),
 		);
 
 	}
@@ -104,7 +103,6 @@ class BC_Oauth_API {
 				return $this->_request_access_token( $force_new_token, false );
 
 			}
-
 		}
 
 		return $token;

@@ -98,8 +98,7 @@ abstract class BC_API {
 		 */
 		$cache_time_in_seconds = apply_filters( 'brightcove_proxy_cache_time_in_seconds', 180 );
 		$account_id            = $bc_accounts->get_account_id();
-		$max_key_length        = 45; // transients support a max key of 45
-		$transient_key         = substr( '_brightcove_req_' . $account_id . BC_Utility::get_hash_for_object( $url ), 0, $max_key_length );
+		$transient_key         = BC_Utility::generate_transient_key( '_brightcove_req_', $account_id . BC_Utility::get_hash_for_object( $url ) );
 		$request               = BC_Utility::get_cache_item( $transient_key );
 		if ( false === $request ) {
 			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
@@ -128,7 +127,6 @@ abstract class BC_API {
 	 * @param array   $data            array of further data to send to the server
 	 * @param boolean $force_new_token whether or not to force obtaining a new oAuth token
 	 *
-	 *
 	 * @return mixed the return data from the call of false if a failure occurred
 	 */
 	protected function send_request( $url, $method = 'GET', $data = array(), $force_new_token = false ) {
@@ -143,19 +141,25 @@ abstract class BC_API {
 			'PUT',
 			'JSON_DELETE',
 			'JSON_POST',
-		); //only allow methods required by the brightcove APIs
+		); // only allow methods required by the brightcove APIs
 
 		if ( ! in_array( $method, $allowed_methods ) ) {
 			return false;
 		}
 
 		$transient_key = false;
-		if ( $method === "GET" ) {
-			$hash           = substr( BC_Utility::get_hash_for_object( array(
-				                                                           "url"  => $url,
-				                                                           "data" => $data,
-			                                                           ) ), 0, 20 );
-			$transient_key  = "_bc_request_$hash";
+		if ( $method === 'GET' ) {
+			$hash           = substr(
+				BC_Utility::get_hash_for_object(
+					array(
+						'url'  => $url,
+						'data' => $data,
+					)
+				),
+				0,
+				20
+			);
+			$transient_key  = BC_Utility::generate_transient_key( '_bc_request_', $hash );
 			$cached_request = BC_Utility::get_cache_item( $transient_key );
 
 			if ( false !== $cached_request ) {
@@ -188,20 +192,17 @@ abstract class BC_API {
 		switch ( $method ) {
 
 			case 'GET':
-
 				$request = $this->cached_get( $url, $args );
 
 				break;
 
 			case 'POST':
-
 				$args['body'] = wp_json_encode( $data );
 
 				$request = wp_remote_post( $url, $args );
 				break;
 
 			default:
-
 				$args['method'] = $method;
 				$args['body']   = wp_json_encode( $data );
 
@@ -215,7 +216,7 @@ abstract class BC_API {
 		}
 
 		if ( 401 === wp_remote_retrieve_response_code( $request ) ) {
-			if ( "Unauthorized" === $request['response']['message'] ) {
+			if ( 'Unauthorized' === $request['response']['message'] ) {
 				// Token may have expired, so before we give up, let's retry
 				// the request with a fresh OAuth token.
 				if ( ! $force_new_token ) {
@@ -231,7 +232,7 @@ abstract class BC_API {
 			}
 		}
 
-		//log errors for further processing or return the body
+		// log errors for further processing or return the body
 		if ( is_wp_error( $request ) ) {
 
 			$this->errors[] = array(
@@ -253,7 +254,7 @@ abstract class BC_API {
 
 				$message = $body[0]['error_code'];
 
-			} elseif ( isset ( $body['message'] ) ) {
+			} elseif ( isset( $body['message'] ) ) {
 
 				$message = $body['message'];
 
@@ -275,15 +276,14 @@ abstract class BC_API {
 		}
 
 		if ( is_wp_error( $request ) ) {
-			//
-			$this->errors[] = array(
-				'url'   => $url,
-				'error' => $request,
-			);
+						$this->errors[] = array(
+							'url'   => $url,
+							'error' => $request,
+						);
 
-			BC_Logging::log( sprintf( 'BC API ERROR: %s', $request->get_error_message() ) );
+						BC_Logging::log( sprintf( 'BC API ERROR: %s', $request->get_error_message() ) );
 
-			return false;
+						return false;
 		}
 
 		if ( $transient_key && $body && ( ! defined( 'WP_DEBUG' ) || false === WP_DEBUG ) ) {
