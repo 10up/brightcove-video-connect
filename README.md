@@ -60,6 +60,50 @@ http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size (cl
 For apache:
 http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitRequestBody)
 
+## Screenshots
+
+1. Settings page to add an account and set up the player width.
+![](/.wordpress-org/screenshot-1.jpg)
+
+2. Adding an account.
+![](/.wordpress-org/screenshot-2.jpg)
+
+3. Successfully adding an account.
+![](/.wordpress-org/screenshot-3.jpg)
+
+4. Listing the videos added to the selected account.
+![](/.wordpress-org/screenshot-4.jpg)
+
+5. Selecting a video to show the details on the sidebar.
+![](/.wordpress-org/screenshot-5.jpg)
+
+6. Videos' page to upload a new video.
+![](/.wordpress-org/screenshot-6.jpg)
+
+7. Editing an account.
+![](/.wordpress-org/screenshot-7.jpg)
+
+8. Video successfully uploaded to the Brightcove.
+![](/.wordpress-org/screenshot-8.jpg)
+
+9. Listing the playlists added to the selected account.
+![](/.wordpress-org/screenshot-9.jpg)
+
+10. Adding two Brightcove shortcodes to a post in the text mode.
+![](/.wordpress-org/screenshot-10.jpg)
+
+11. Showing two videos added to a post in the visual mode.
+![](/.wordpress-org/screenshot-11.jpg)
+
+12. Previewing a video.
+![](/.wordpress-org/screenshot-12.jpg)
+
+13. Showing a sample post with a video added.
+![](/.wordpress-org/screenshot-13.jpg)
+
+14. Selecting a playlist to show the details on the sidebar.
+![](/.wordpress-org/screenshot-14.jpg)
+
 ## Support Level
 
 **Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
