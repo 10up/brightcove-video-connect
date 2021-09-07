@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 5.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,11 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 14. Selecting a playlist to show the details on the sidebar.
 
 == Changelog ==
+
+= 2.2.1 =
+
+Changed
+* Updated the screenshots.
 
 = 2.2.0 =
 
