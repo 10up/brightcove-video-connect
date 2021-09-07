@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.2.1] - 2021-09-08
+
+### Changed
+- Updated the screenshots. Props [@Rahmon](https://github.com/Rahmon), and [@jeffpaul](https://github.com/jeffpaul) via [#224](https://github.com/10up/brightcove-video-connect/pull/224).
+
+
 ## [2.2.0] - 2021-08-09
 
 ### Breaking Changes
@@ -316,6 +322,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.2.1]: https://github.com/10up/brightcove-video-connect/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/10up/brightcove-video-connect/compare/2.1.4...2.2.0
 [2.1.4]: https://github.com/10up/brightcove-video-connect/compare/2.1.3...2.1.4
 [2.1.3]: https://github.com/10up/brightcove-video-connect/compare/2.1.2...2.1.3
