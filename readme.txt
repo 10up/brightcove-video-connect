@@ -20,6 +20,23 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 
 For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
 
+== Screenshots ==
+
+1. Settings page to add an account and set up the player width.
+2. Adding an account.
+3. Successfully adding an account.
+4. Listing the videos added to the selected account.
+5. Selecting a video to show the details on the sidebar.
+6. Videos' page to upload a new video.
+7. Editing an account.
+8. Video successfully uploaded to the Brightcove.
+9. Listing the playlists added to the selected account.
+10. Adding two Brightcove shortcodes to a post in the text mode.
+11. Showing two videos added to a post in the visual mode.
+12. Previewing a video.
+13. Showing a sample post with a video added.
+14. Selecting a playlist to show the details on the sidebar.
+
 == Changelog ==
 
 = 2.2.0 =
