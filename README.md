@@ -63,46 +63,46 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 ## Screenshots
 
 1. Settings page to add an account and set up the player width.
-![](/.wordpress-org/screenshot-1.jpg)
+![](/.wordpress-org/screenshot-1.png)
 
 2. Adding an account.
-![](/.wordpress-org/screenshot-2.jpg)
+![](/.wordpress-org/screenshot-2.png)
 
 3. Successfully adding an account.
-![](/.wordpress-org/screenshot-3.jpg)
+![](/.wordpress-org/screenshot-3.png)
 
 4. Listing the videos added to the selected account.
-![](/.wordpress-org/screenshot-4.jpg)
+![](/.wordpress-org/screenshot-4.png)
 
 5. Selecting a video to show the details on the sidebar.
-![](/.wordpress-org/screenshot-5.jpg)
+![](/.wordpress-org/screenshot-5.png)
 
 6. Videos' page to upload a new video.
-![](/.wordpress-org/screenshot-6.jpg)
+![](/.wordpress-org/screenshot-6.png)
 
 7. Editing an account.
-![](/.wordpress-org/screenshot-7.jpg)
+![](/.wordpress-org/screenshot-7.png)
 
 8. Video successfully uploaded to the Brightcove.
-![](/.wordpress-org/screenshot-8.jpg)
+![](/.wordpress-org/screenshot-8.png)
 
 9. Listing the playlists added to the selected account.
-![](/.wordpress-org/screenshot-9.jpg)
+![](/.wordpress-org/screenshot-9.png)
 
 10. Adding two Brightcove shortcodes to a post in the text mode.
-![](/.wordpress-org/screenshot-10.jpg)
+![](/.wordpress-org/screenshot-10.png)
 
 11. Showing two videos added to a post in the visual mode.
-![](/.wordpress-org/screenshot-11.jpg)
+![](/.wordpress-org/screenshot-11.png)
 
 12. Previewing a video.
-![](/.wordpress-org/screenshot-12.jpg)
+![](/.wordpress-org/screenshot-12.png)
 
 13. Showing a sample post with a video added.
-![](/.wordpress-org/screenshot-13.jpg)
+![](/.wordpress-org/screenshot-13.png)
 
 14. Selecting a playlist to show the details on the sidebar.
-![](/.wordpress-org/screenshot-14.jpg)
+![](/.wordpress-org/screenshot-14.png)
 
 ## Support Level
 
