@@ -124,6 +124,12 @@
 				}
 			}, [maxWidth, maxHeight, aspectRatio]);
 
+			element.useEffect(() => {
+				if (embed === 'in-page-horizontal' || embed === 'in-page-vertical') {
+					props.setAttributes({ ...props.attributes, sizing: 'fixed' });
+				}
+			}, [embed]);
+
 			// Sanitize the IDs we need
 			var sanitizeIds = function (id) {
 				if (id.indexOf('ref:') === 0) {
@@ -301,6 +307,42 @@
 					];
 				}, []);
 
+			let embedStyleOptions = [{ label: __('iFrame', 'brightcove'), value: 'iframe' }];
+			embedStyleOptions = playlistId
+				? [
+						...embedStyleOptions,
+						{
+							label: __('JavaScript Horizontal', 'brightcove'),
+							value: 'in-page-horizontal',
+						},
+						{
+							label: __('JavaScript Vertical', 'brightcove'),
+							value: 'in-page-vertical',
+						},
+				  ]
+				: [
+						{ label: __('JavaScript', 'brightcove'), value: 'in-page' },
+						...embedStyleOptions,
+				  ];
+
+			const sizingField = el(components.RadioControl, {
+				label: __('Sizing', 'brightcove'),
+				selected: sizing,
+				options: [
+					{
+						label: __('Responsive', 'brightcove'),
+						value: 'responsive',
+					},
+					{ label: __('Fixed', 'brightcove'), value: 'fixed' },
+				],
+				onChange: function (value) {
+					props.setAttributes({
+						...props.attributes,
+						sizing: value,
+					});
+				},
+			});
+
 			return [
 				userPermission ? controls : '',
 				el('iframe', {
@@ -320,7 +362,8 @@
 							initialOpen: true,
 						},
 						el('p', {}, `Source: ${accountName}`),
-						el('p', {}, `Video ID: ${videoId}`),
+						videoId && el('p', {}, `Video ID: ${videoId}`),
+						playlistId && el('p', {}, `Playlist ID: ${playlistId}`),
 						el(components.SelectControl, {
 							label: __('Video Player', 'brightcove'),
 							value: playerId,
@@ -362,23 +405,21 @@
 								});
 							},
 						}),
-						el(components.CheckboxControl, {
-							label: __('Enable Picture in Picturee', 'brightcove'),
-							checked: pictureinpicture,
-							onChange: function (value) {
-								props.setAttributes({
-									...props.attributes,
-									picture_in_picture: value && 'pictureinpicture',
-								});
-							},
-						}),
+						!playlistId &&
+							el(components.CheckboxControl, {
+								label: __('Enable Picture in Picturee', 'brightcove'),
+								checked: pictureinpicture,
+								onChange: function (value) {
+									props.setAttributes({
+										...props.attributes,
+										picture_in_picture: value && 'pictureinpicture',
+									});
+								},
+							}),
 						el(components.RadioControl, {
 							label: __('Embed Style', 'brightcove'),
 							selected: embed,
-							options: [
-								{ label: __('JavaScript', 'brightcove'), value: 'in-page' },
-								{ label: __('iFrame', 'brightcove'), value: 'iframe' },
-							],
+							options: embedStyleOptions,
 							onChange: function (value) {
 								props.setAttributes({
 									...props.attributes,
@@ -386,20 +427,9 @@
 								});
 							},
 						}),
-						el(components.RadioControl, {
-							label: __('Sizing', 'brightcove'),
-							selected: sizing,
-							options: [
-								{ label: __('Responsive', 'brightcove'), value: 'responsive' },
-								{ label: __('Fixed', 'brightcove'), value: 'fixed' },
-							],
-							onChange: function (value) {
-								props.setAttributes({
-									...props.attributes,
-									sizing: value,
-								});
-							},
-						}),
+						embed === 'in-page-horizontal' || embed === 'in-page-vertical'
+							? el(components.Disabled, {}, sizingField)
+							: sizingField,
 						el(components.SelectControl, {
 							label: __('Aspect Ratio', 'brightcove'),
 							value: aspectRatio,
