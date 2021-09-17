@@ -1,5 +1,7 @@
 /* global wp, bctiny, bcBlock */
 (function (blocks, element, components, editor) {
+	const { __ } = wp.i18n;
+
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
 		Placeholder = components.Placeholder,
@@ -10,8 +12,11 @@
 		TextControl = components.TextControl;
 
 	registerBlockType('bc/brightcove', {
-		title: 'Brightcove',
-		description: 'The Brightcove block allows you to embed videos from Brightcove.',
+		title: __('Brightcove', 'brightcove'),
+		description: __(
+			'The Brightcove block allows you to embed videos from Brightcove.',
+			'brightcove',
+		),
 		icon: 'video-alt3',
 		category: 'common',
 		supports: {
@@ -198,7 +203,9 @@
 					el(IconButton, {
 						className:
 							'brightcove-add-media components-icon-button components-toolbar__control',
-						label: videoId.playlist_id ? 'Change Playlist' : 'Change Video',
+						label: videoId.playlist_id
+							? __('Change Playlist', 'brightcove')
+							: __('Change Video', 'brightcove'),
 						icon: 'edit',
 						'data-target': '#' + target,
 					}),
@@ -215,8 +222,11 @@
 					icon: 'media-video',
 					label: 'Brightcove',
 					instructions: userPermission
-						? 'Select a video file or playlist from your Brightcove library'
-						: "You don't have permissions to add Brightcove videos.",
+						? __(
+								'Select a video file or playlist from your Brightcove library',
+								'brightcove',
+						  )
+						: __("You don't have permissions to add Brightcove videos.", 'brightcove'),
 					children: [
 						userPermission
 							? el(
@@ -226,7 +236,7 @@
 										'data-target': '#' + target,
 										key: 'button',
 									},
-									'Brightcove Media',
+									__('Brightcove Media', 'brightcove'),
 							  )
 							: '',
 						el('input', { id: target, hidden: true, key: 'input' }),
@@ -306,13 +316,13 @@
 					el(
 						components.PanelBody,
 						{
-							title: 'Settings',
+							title: __('Settings', 'brightcove'),
 							initialOpen: true,
 						},
 						el('p', {}, `Source: ${accountName}`),
 						el('p', {}, `Video ID: ${videoId}`),
 						el(components.SelectControl, {
-							label: 'Video Player',
+							label: __('Video Player', 'brightcove'),
 							value: playerId,
 							options: players,
 							onChange: function (value) {
@@ -323,7 +333,7 @@
 							},
 						}),
 						el(components.CheckboxControl, {
-							label: 'Autoplay',
+							label: __('Autoplay', 'brightcove'),
 							checked: autoplay,
 							onChange: function (value) {
 								props.setAttributes({
@@ -333,7 +343,7 @@
 							},
 						}),
 						el(components.CheckboxControl, {
-							label: 'Mute',
+							label: __('Mute', 'brightcove'),
 							checked: mute,
 							onChange: function (value) {
 								props.setAttributes({
@@ -343,7 +353,7 @@
 							},
 						}),
 						el(components.CheckboxControl, {
-							label: 'Plays in line',
+							label: __('Plays in line', 'brightcove'),
 							checked: playsinline,
 							onChange: function (value) {
 								props.setAttributes({
@@ -353,7 +363,7 @@
 							},
 						}),
 						el(components.CheckboxControl, {
-							label: 'Enable Picture in Picturee',
+							label: __('Enable Picture in Picturee', 'brightcove'),
 							checked: pictureinpicture,
 							onChange: function (value) {
 								props.setAttributes({
@@ -363,11 +373,11 @@
 							},
 						}),
 						el(components.RadioControl, {
-							label: 'Embed Style',
+							label: __('Embed Style', 'brightcove'),
 							selected: embed,
 							options: [
-								{ label: 'JavaScript', value: 'in-page' },
-								{ label: 'iFrame', value: 'iframe' },
+								{ label: __('JavaScript', 'brightcove'), value: 'in-page' },
+								{ label: __('iFrame', 'brightcove'), value: 'iframe' },
 							],
 							onChange: function (value) {
 								props.setAttributes({
@@ -377,11 +387,11 @@
 							},
 						}),
 						el(components.RadioControl, {
-							label: 'Sizing',
+							label: __('Sizing', 'brightcove'),
 							selected: sizing,
 							options: [
-								{ label: 'Responsive', value: 'responsive' },
-								{ label: 'Fixed', value: 'fixed' },
+								{ label: __('Responsive', 'brightcove'), value: 'responsive' },
+								{ label: __('Fixed', 'brightcove'), value: 'fixed' },
 							],
 							onChange: function (value) {
 								props.setAttributes({
@@ -391,19 +401,19 @@
 							},
 						}),
 						el(components.SelectControl, {
-							label: 'Aspect Ratio',
+							label: __('Aspect Ratio', 'brightcove'),
 							value: aspectRatio,
 							options: [
 								{
-									label: '16:9',
+									label: __('16:9', 'brightcove'),
 									value: '16:9',
 								},
 								{
-									label: '4:3',
+									label: __('4:3', 'brightcove'),
 									value: '4:3',
 								},
 								{
-									label: 'Custom',
+									label: __('Custom', 'brightcove'),
 									value: 'custom',
 								},
 							],
@@ -436,7 +446,7 @@
 							},
 						}),
 						el(components.TextControl, {
-							label: 'Width',
+							label: __('Width', 'brightcove'),
 							type: 'number',
 							value: width,
 							onChange: function (value) {
@@ -455,7 +465,7 @@
 							},
 						}),
 						el(components.TextControl, {
-							label: 'Height',
+							label: __('Height', 'brightcove'),
 							type: 'number',
 							value: sizing === 'fixed' ? height : maxHeight,
 							disabled: isHeightFieldDisabled,
