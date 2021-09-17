@@ -1,6 +1,6 @@
 /* global wp, bctiny, bcBlock */
 (function (blocks, element, components, editor) {
-	const { __ } = wp.i18n;
+	const { __, sprintf } = wp.i18n;
 
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
@@ -361,9 +361,11 @@
 							title: __('Settings', 'brightcove'),
 							initialOpen: true,
 						},
-						el('p', {}, `Source: ${accountName}`),
-						videoId && el('p', {}, `Video ID: ${videoId}`),
-						playlistId && el('p', {}, `Playlist ID: ${playlistId}`),
+						el('p', {}, sprintf(__('Source: %1$s', 'brightcove'), accountName)),
+						videoId &&
+							el('p', {}, sprintf(__('Video ID: %1$s', 'brightcove'), videoId)),
+						playlistId &&
+							el('p', {}, sprintf(__('Playlist ID: %1$s', 'brightcove'), playlistId)),
 						el(components.SelectControl, {
 							label: __('Video Player', 'brightcove'),
 							value: playerId,
