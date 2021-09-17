@@ -170,6 +170,15 @@ class BC_Setup {
 						'padding_top'        => array(
 							'type' => 'string',
 						),
+						'sizing'             => array(
+							'type' => 'string',
+						),
+						'aspect_ratio'       => array(
+							'type' => 'string',
+						),
+						'max_height'         => array(
+							'type' => 'string',
+						),
 					),
 				)
 			);
