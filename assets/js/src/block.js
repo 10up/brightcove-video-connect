@@ -132,10 +132,10 @@
 
 			// Sanitize the IDs we need
 			var sanitizeIds = function (id) {
-				if (id.indexOf('ref:') === 0) {
+				if (id?.indexOf('ref:') === 0) {
 					return id;
 				}
-				return id.replace(/\D/g, '');
+				return id?.replace(/\D/g, '');
 			};
 
 			/**
