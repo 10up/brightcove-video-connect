@@ -56,10 +56,10 @@
 			const maxHeight = props.attributes.max_height?.replace(/[^0-9]/g, '') || height;
 			const maxWidth = props.attributes.max_width?.replace(/[^0-9]/g, '') || width;
 
-			const account = _.findWhere(wpbc.preload.accounts, {
-				account_id: accountId,
+			const account = _.find(wpbc?.preload?.accounts, function (account) {
+				return account?.account_id === accountId;
 			});
-			const accountName = account.account_name;
+			const accountName = account?.account_name || '';
 
 			element.useEffect(() => {
 				if (aspectRatio === 'custom') {
