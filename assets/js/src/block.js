@@ -166,6 +166,7 @@
 					playsinline: '',
 					picture_in_picture: '',
 					embed: attrs.named.embed,
+					sizing: attrs.named.sizing,
 				};
 
 				if (attrs.numeric[0] === '[bc_video') {
