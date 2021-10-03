@@ -73,9 +73,20 @@
 				if (!props.attributes.max_height) {
 					const height =
 						props.attributes.sizing === 'responsive' ? '100%' : props.attributes.height;
+
+					let maxHeight;
+					if (props.attributes.aspect_ratio === '16:9') {
+						maxHeight = '360px';
+					} else if (props.attributes.aspect_ratio === '4:3') {
+						maxHeight = '480px';
+					}
+
 					props.setAttributes({
 						...props.attributes,
-						max_height: props.attributes.height,
+						max_height:
+							props.attributes.height === '100%' && maxHeight
+								? maxHeight
+								: props.attributes.height,
 						height,
 					});
 				}
@@ -86,13 +97,45 @@
 					props.attributes.sizing === 'responsive' &&
 					props.attributes.height !== '100%'
 				) {
+					let maxHeight;
+					if (props.attributes.aspect_ratio === '16:9') {
+						maxHeight = '360px';
+					} else if (props.attributes.aspect_ratio === '4:3') {
+						maxHeight = '480px';
+					} else {
+						maxHeight = props.attributes.height;
+					}
+
 					props.setAttributes({
 						...props.attributes,
 						height: '100%',
-						max_height: `${props.attributes.height?.replace(/[^0-9]/g, '')}px`,
+						max_height: maxHeight,
 					});
 				}
 			}, [props.attributes.height, props.attributes.sizing]);
+
+			element.useEffect(() => {
+				if (props.attributes.sizing === 'responsive' && !props.attributes.max_height) {
+					let maxHeight;
+					if (props.attributes.aspect_ratio === '16:9') {
+						maxHeight = '360px';
+					} else if (props.attributes.aspect_ratio === '4:3') {
+						maxHeight = '480px';
+					} else {
+						maxHeight = props.attributes.height;
+					}
+
+					props.setAttributes({
+						...props.attributes,
+						max_height: maxHeight,
+					});
+				}
+			}, [
+				props.attributes.max_height,
+				props.attributes.sizing,
+				props.attributes.aspect_ratio,
+				props.attributes.height,
+			]);
 
 			element.useEffect(() => {
 				if (
@@ -167,6 +210,7 @@
 					picture_in_picture: '',
 					embed: attrs.named.embed,
 					sizing: attrs.named.sizing,
+					aspect_ratio: attrs.named.aspect_ratio,
 				};
 
 				if (attrs.numeric[0] === '[bc_video') {
@@ -287,11 +331,11 @@
 			}
 
 			if (typeof height === 'undefined') {
-				height = 250;
+				height = maxHeight || 250;
 			}
 
 			if (typeof width === 'undefined') {
-				width = 500;
+				width = maxWidth || 500;
 			}
 
 			const players = wpbc.players[accountId]
@@ -461,11 +505,12 @@
 									height = '480px';
 									padding_top = '75%';
 								} else {
-									height = `${maxHeight}px`;
+									const isMaxHeightNumber = typeof maxHeight === 'number';
+
+									height = isMaxHeightNumber ? `${maxHeight}px` : undefined;
 
 									padding_top =
-										typeof maxHeight === 'number' &&
-										typeof maxWidth === 'number'
+										isMaxHeightNumber && typeof maxWidth === 'number'
 											? `${(maxHeight / maxWidth) * 100}%`
 											: '56%';
 								}
