@@ -486,13 +486,18 @@
 									height = '480px';
 									padding_top = '75%';
 								} else {
-									const isMaxHeightNumber = typeof maxHeight === 'number';
+									const maxHeightNumber =
+										maxHeight && Number(maxHeight?.replace(/[^0-9]/g, ''));
+									const maxWidthNumber =
+										maxWidth && Number(maxWidth?.replace(/[^0-9]/g, ''));
+									const isMaxHeightNumber = typeof maxHeightNumber === 'number';
+									const isMaxWidthNumber = typeof maxWidthNumber === 'number';
 
-									height = isMaxHeightNumber ? `${maxHeight}px` : undefined;
+									height = isMaxHeightNumber ? maxHeight : undefined;
 
 									padding_top =
-										isMaxHeightNumber && typeof maxWidth === 'number'
-											? `${(maxHeight / maxWidth) * 100}%`
+										isMaxHeightNumber && isMaxWidthNumber && maxHeightNumber > 0
+											? `${(maxHeightNumber / maxWidthNumber) * 100}%`
 											: '56%';
 								}
 
@@ -500,6 +505,7 @@
 									...props.attributes,
 									aspect_ratio: value,
 									height,
+									max_height: height,
 									padding_top,
 								});
 							},
