@@ -46,15 +46,12 @@
 			var mute = props.attributes.mute || '';
 			var sizing = props.attributes.sizing || 'responsive';
 			var aspectRatio = props.attributes.aspect_ratio || '16:9';
-			var width =
-				sizing === 'fixed'
-					? props.attributes.width?.replace(/[^0-9]/g, '') || '640'
-					: props.attributes.max_width?.replace(/[^0-9]/g, '') || '640';
 
-			var height = props.attributes.height?.replace(/[^0-9]/g, '');
+			var width = props.attributes.width || '640px';
+			var height = props.attributes.height || '360px';
 
-			const maxHeight = props.attributes.max_height?.replace(/[^0-9]/g, '') || height;
-			const maxWidth = props.attributes.max_width?.replace(/[^0-9]/g, '') || width;
+			const maxHeight = props.attributes.max_height || height;
+			const maxWidth = props.attributes.max_width || width;
 
 			const account = _.find(wpbc?.preload?.accounts, function (account) {
 				return account?.account_id === accountId;
@@ -70,91 +67,75 @@
 			}, [aspectRatio]);
 
 			element.useEffect(() => {
-				if (!props.attributes.max_height) {
-					const height =
-						props.attributes.sizing === 'responsive' ? '100%' : props.attributes.height;
+				if (sizing === 'responsive' && maxWidth) {
+					props.setAttributes({ ...props.attributes, width: maxWidth || '640px' });
+				}
+			}, [sizing, width, maxWidth]);
 
-					let maxHeight;
-					if (props.attributes.aspect_ratio === '16:9') {
-						maxHeight = '360px';
-					} else if (props.attributes.aspect_ratio === '4:3') {
-						maxHeight = '480px';
+			element.useEffect(() => {
+				if (!maxHeight) {
+					let newMaxHeight;
+					if (aspectRatio === '16:9') {
+						newMaxHeight = '360px';
+					} else if (aspectRatio === '4:3') {
+						newMaxHeight = '480px';
+					} else {
+						newMaxHeight = height;
 					}
 
 					props.setAttributes({
 						...props.attributes,
-						max_height:
-							props.attributes.height === '100%' && maxHeight
-								? maxHeight
-								: props.attributes.height,
-						height,
+						max_height: height === '100%' && newMaxHeight ? newMaxHeight : height,
 					});
 				}
 			}, []);
 
 			element.useEffect(() => {
-				if (
-					props.attributes.sizing === 'responsive' &&
-					props.attributes.height !== '100%'
-				) {
-					let maxHeight;
-					if (props.attributes.aspect_ratio === '16:9') {
-						maxHeight = '360px';
-					} else if (props.attributes.aspect_ratio === '4:3') {
-						maxHeight = '480px';
+				if (sizing === 'responsive' && height !== '100%') {
+					let newMaxHeight;
+					if (aspectRatio === '16:9') {
+						newMaxHeight = '360px';
+					} else if (aspectRatio === '4:3') {
+						newMaxHeight = '480px';
 					} else {
-						maxHeight = props.attributes.height;
+						newMaxHeight = height;
 					}
 
 					props.setAttributes({
 						...props.attributes,
 						height: '100%',
-						max_height: maxHeight,
+						max_height: newMaxHeight,
 					});
 				}
-			}, [props.attributes.height, props.attributes.sizing]);
+			}, [height, sizing, aspectRatio]);
 
 			element.useEffect(() => {
-				if (props.attributes.sizing === 'responsive' && !props.attributes.max_height) {
-					let maxHeight;
-					if (props.attributes.aspect_ratio === '16:9') {
-						maxHeight = '360px';
-					} else if (props.attributes.aspect_ratio === '4:3') {
-						maxHeight = '480px';
+				if (sizing === 'responsive' && !maxHeight) {
+					let newMaxHeight;
+					if (aspectRatio === '16:9') {
+						newMaxHeight = '360px';
+					} else if (aspectRatio === '4:3') {
+						newMaxHeight = '480px';
 					} else {
-						maxHeight = props.attributes.height;
+						newMaxHeight = height;
 					}
 
 					props.setAttributes({
 						...props.attributes,
-						max_height: maxHeight,
+						max_height: newMaxHeight,
 					});
 				}
-			}, [
-				props.attributes.max_height,
-				props.attributes.sizing,
-				props.attributes.aspect_ratio,
-				props.attributes.height,
-			]);
+			}, [maxHeight, sizing, aspectRatio, height]);
 
 			element.useEffect(() => {
-				if (
-					props.attributes.sizing === 'fixed' &&
-					(props.attributes.width === '100%' || props.attributes.height === '100%')
-				) {
+				if (sizing === 'fixed' && (width === '100%' || height === '100%')) {
 					props.setAttributes({
 						...props.attributes,
-						width:
-							props.attributes.width === '100%'
-								? props.attributes.max_width
-								: undefined,
-						height:
-							props.attributes.height === '100%'
-								? props.attributes.max_height
-								: undefined,
+						width: width === '100%' ? maxWidth : undefined,
+						height: height === '100%' ? maxHeight : undefined,
 					});
 				}
-			}, [props.attributes.width, props.attributes.sizing]);
+			}, [width, sizing, height, maxWidth, maxHeight]);
 
 			element.useEffect(() => {
 				if (aspectRatio === 'custom') {
@@ -526,7 +507,7 @@
 						el(components.TextControl, {
 							label: __('Width', 'brightcove'),
 							type: 'number',
-							value: width,
+							value: width?.replace(/[^0-9]/g, ''),
 							onChange: function (value) {
 								let width = `${value}px`;
 								const max_width = width;
@@ -545,7 +526,10 @@
 						el(components.TextControl, {
 							label: __('Height', 'brightcove'),
 							type: 'number',
-							value: sizing === 'fixed' ? height : maxHeight,
+							value:
+								sizing === 'fixed'
+									? height?.replace(/[^0-9]/g, '')
+									: maxHeight?.replace(/[^0-9]/g, ''),
 							disabled: isHeightFieldDisabled,
 							onChange: function (value) {
 								let height = `${value}px`;
