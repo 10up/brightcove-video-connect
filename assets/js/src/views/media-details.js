@@ -196,6 +196,8 @@ var MediaDetailsView = BrightcoveView.extend({
 			width +
 			'" height="' +
 			height +
+			'" aspect_ratio="' +
+			aspectRatio +
 			'" sizing="' +
 			sizing +
 			'"' +
