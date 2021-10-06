@@ -219,7 +219,10 @@
 					}
 				}
 
-				props.setAttributes(setAttrs);
+				// Prevent set attributes with empty values
+				if (btn.value) {
+					props.setAttributes(setAttrs);
+				}
 			};
 
 			// Listen for a change event on our hidden input
