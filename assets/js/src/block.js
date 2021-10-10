@@ -154,6 +154,12 @@
 				}
 			}, [embed]);
 
+			element.useEffect(() => {
+				if (pictureinpicture === 'pictureinpicture' && embed === 'iframe') {
+					props.setAttributes({ ...props.attributes, embed: 'in-page' });
+				}
+			}, [pictureinpicture]);
+
 			// Sanitize the IDs we need
 			var sanitizeIds = function (id) {
 				if (id?.indexOf('ref:') === 0) {
@@ -372,6 +378,18 @@
 				},
 			});
 
+			const embedStyleField = el(components.RadioControl, {
+				label: __('Embed Style', 'brightcove'),
+				selected: embed,
+				options: embedStyleOptions,
+				onChange: function (value) {
+					props.setAttributes({
+						...props.attributes,
+						embed: value,
+					});
+				},
+			});
+
 			return [
 				userPermission ? controls : '',
 				el('iframe', {
@@ -438,7 +456,7 @@
 						}),
 						!playlistId &&
 							el(components.CheckboxControl, {
-								label: __('Enable Picture in Picturee', 'brightcove'),
+								label: __('Enable Picture in Picture', 'brightcove'),
 								checked: pictureinpicture,
 								onChange: function (value) {
 									props.setAttributes({
@@ -447,17 +465,9 @@
 									});
 								},
 							}),
-						el(components.RadioControl, {
-							label: __('Embed Style', 'brightcove'),
-							selected: embed,
-							options: embedStyleOptions,
-							onChange: function (value) {
-								props.setAttributes({
-									...props.attributes,
-									embed: value,
-								});
-							},
-						}),
+						pictureinpicture === 'pictureinpicture'
+							? el(components.Disabled, {}, embedStyleField)
+							: embedStyleField,
 						embed === 'in-page-horizontal' || embed === 'in-page-vertical'
 							? el(components.Disabled, {}, sizingField)
 							: sizingField,
