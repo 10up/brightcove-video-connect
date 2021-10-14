@@ -466,10 +466,18 @@
 								},
 							}),
 						pictureinpicture === 'pictureinpicture'
-							? el(components.Disabled, {}, embedStyleField)
+							? el(
+									components.Disabled,
+									{ style: { marginBottom: '24px' } },
+									embedStyleField,
+							  )
 							: embedStyleField,
 						embed === 'in-page-horizontal' || embed === 'in-page-vertical'
-							? el(components.Disabled, {}, sizingField)
+							? el(
+									components.Disabled,
+									{ style: { marginBottom: '24px' } },
+									sizingField,
+							  )
 							: sizingField,
 						el(components.SelectControl, {
 							label: __('Aspect Ratio', 'brightcove'),
