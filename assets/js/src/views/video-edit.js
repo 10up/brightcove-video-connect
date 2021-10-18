@@ -192,6 +192,7 @@ var VideoEditView = BrightcoveView.extend({
 			select: function () {
 				$(this).parent('.bc-label-repeater.empty-row').removeClass('empty-row');
 			},
+			appendTo: '.media-modal',
 		});
 	},
 
