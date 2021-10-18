@@ -2908,7 +2908,7 @@ var VideoEditView = BrightcoveView.extend({
 			container = document.getElementById('js-bc-labels');
 
 		// Clean up our cloned row
-		newRow.find('input').prop('disabled', false);
+		newRow.find('input').prop('disabled', false).val('');
 		newRow.removeAttr('id');
 		newRow.removeClass('empty-row');
 
@@ -2924,6 +2924,10 @@ var VideoEditView = BrightcoveView.extend({
 	labelAutocomplete: function (evnt) {
 		jQuery('.brightcove-labels').autocomplete({
 			source: wpbc.preload.labels,
+			select: function () {
+				$(this).parent('.bc-label-repeater.empty-row').removeClass('empty-row');
+			},
+			appendTo: '.media-modal',
 		});
 	},
 
