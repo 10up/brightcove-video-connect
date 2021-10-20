@@ -110,9 +110,13 @@ class BC_Setup {
 			wp_register_script(
 				'brightcove-block',
 				BRIGHTCOVE_URL . 'assets/js/src/block.js',
-				array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ),
+				array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-i18n' ),
 				filemtime( BRIGHTCOVE_PATH . 'assets/js/src/block.js' )
 			);
+
+			if ( function_exists( 'wp_set_script_translations' ) ) {
+				wp_set_script_translations( 'brightcove-block', 'brightcove', plugin_basename( BRIGHTCOVE_PATH ) . '/languages/' );
+			}
 
 			wp_localize_script( 'brightcove-block', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
 
@@ -168,6 +172,15 @@ class BC_Setup {
 							'type' => 'string',
 						),
 						'padding_top'        => array(
+							'type' => 'string',
+						),
+						'sizing'             => array(
+							'type' => 'string',
+						),
+						'aspect_ratio'       => array(
+							'type' => 'string',
+						),
+						'max_height'         => array(
 							'type' => 'string',
 						),
 					),
