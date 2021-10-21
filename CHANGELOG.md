@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.3.0] - 2021-10-21
+
+### Added
+- Settings sidebar to the Brightcove block. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#229](https://github.com/10up/brightcove-video-connect/pull/229).
+
+### Security
+- Bump `path-parse` from 1.0.6 to 1.0.7. Props [@dependabot](https://github.com/dependabot) via [#222](https://github.com/10up/brightcove-video-connect/pull/222).
+- Bump `tar` from 6.1.5 to 6.1.11. Props [@dependabot](https://github.com/dependabot) via [#223](https://github.com/10up/brightcove-video-connect/pull/223).
+
 ## [2.2.1] - 2021-09-08
 
 ### Changed
@@ -322,6 +331,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.3.0]: https://github.com/10up/brightcove-video-connect/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/10up/brightcove-video-connect/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/10up/brightcove-video-connect/compare/2.1.4...2.2.0
 [2.1.4]: https://github.com/10up/brightcove-video-connect/compare/2.1.3...2.1.4
