@@ -1,18 +1,38 @@
 # Copyright (C) 2021 10up
-# This file is distributed under the GPLv2+.
+# This file is distributed under the same license as the Brightcove Video Connect plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brightcove Video Connect 2.2.1\n"
-"Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2021-08-06 19:44:24+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: Brightcove Video Connect 2.3.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/brightcove-video-connect\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-09-20T11:30:37+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: brightcove\n"
+
+#. Plugin Name of the plugin
+msgid "Brightcove Video Connect"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/brightcove-video-connect/"
+msgstr ""
+
+#. Description of the plugin
+msgid "A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities"
+msgstr ""
+
+#. Author of the plugin
+msgid "10up"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://10up.com"
+msgstr ""
 
 #: includes/admin/api/class-bc-admin-media-api.php:40
 msgid "You do not have permission to use this Brightcove Account"
@@ -103,47 +123,12 @@ msgid "Parent Label"
 msgstr ""
 
 #: includes/admin/class-bc-admin-labels-page.php:88
-msgid ""
-"Type the hierarchy you want your label to have. Example "
-"\"/animals/mammals/\" Leave blank if you do not wish to add a hierarchy."
-msgstr ""
-
-#: includes/admin/class-bc-admin-labels-page.php:108
-#: includes/admin/class-bc-admin-labels-page.php:157
-msgid "Select bulk action"
-msgstr ""
-
-#: includes/admin/class-bc-admin-labels-page.php:110
-msgid "Bulk actions"
-msgstr ""
-
-#: includes/admin/class-bc-admin-labels-page.php:111
-#: includes/admin/class-bc-templates.php:316
-msgid "Delete"
-msgstr ""
-
-#: includes/admin/class-bc-admin-labels-page.php:119
-#: includes/admin/class-bc-admin-labels-page.php:150
-msgid "Select All"
-msgstr ""
-
-#: includes/admin/class-bc-admin-labels-page.php:119
-#: includes/admin/class-bc-admin-labels-page.php:151
-#: includes/admin/class-bc-templates.php:106
-#: includes/admin/class-bc-templates.php:471
-msgid "Name"
-msgstr ""
-
-#: includes/admin/class-bc-admin-labels-page.php:139
-#: includes/admin/class-bc-templates.php:578
-#: includes/admin/class-bc-templates.php:620
-#: includes/admin/class-bc-templates.php:623
-#: includes/admin/class-bc-templates.php:920
-msgid "Edit"
+msgid "Type the hierarchy you want your label to have. Example \"/animals/mammals/\" Leave blank if you do not wish to add a hierarchy."
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:18
 #: includes/admin/class-bc-templates.php:369
+#: assets/js/src/block.js:14
 msgid "Brightcove"
 msgstr ""
 
@@ -174,7 +159,9 @@ msgstr ""
 msgid "Brightcove Settings"
 msgstr ""
 
-#: includes/admin/class-bc-admin-menu.php:21 includes/class-bc-utility.php:435
+#: includes/admin/class-bc-admin-menu.php:21
+#: includes/class-bc-utility.php:435
+#: assets/js/src/block.js:360
 msgid "Settings"
 msgstr ""
 
@@ -189,11 +176,7 @@ msgstr ""
 
 #: includes/admin/class-bc-admin-playlists-page.php:49
 #: includes/class-bc-utility.php:973
-msgid ""
-"A specified Source does not have a playlist capable player <a "
-"href=\"https://studio.brightcove.com/products/videocloud/players/\""
-">configured</a>. Make sure there is at least one player with \"Display "
-"Playlist\" enabled."
+msgid "A specified Source does not have a playlist capable player <a href=\"https://studio.brightcove.com/products/videocloud/players/\">configured</a>. Make sure there is at least one player with \"Display Playlist\" enabled."
 msgstr ""
 
 #: includes/admin/class-bc-admin-settings-page.php:45
@@ -249,9 +232,7 @@ msgid "Delete Source"
 msgstr ""
 
 #: includes/admin/class-bc-admin-settings-page.php:145
-msgid ""
-"By deleting this source, WordPress will no longer have access to associated "
-"videos and playlists. Your content remains in Brightcove."
+msgid "By deleting this source, WordPress will no longer have access to associated videos and playlists. Your content remains in Brightcove."
 msgstr ""
 
 #: includes/admin/class-bc-admin-settings-page.php:206
@@ -319,9 +300,7 @@ msgid "account"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:266
-msgid ""
-"For more details on the different API permissions or settings below, please "
-"check out our documentation at"
+msgid "For more details on the different API permissions or settings below, please check out our documentation at"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:267
@@ -337,9 +316,7 @@ msgid "Client Secret"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:293
-msgid ""
-"A unique identifier generated by Brightcove, used with a client id. Serves "
-"as a password to authenticate a client"
+msgid "A unique identifier generated by Brightcove, used with a client id. Serves as a password to authenticate a client"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:298
@@ -416,6 +393,11 @@ msgstr ""
 msgid "Video search"
 msgstr ""
 
+#: includes/admin/class-bc-templates.php:106
+#: includes/admin/class-bc-templates.php:471
+msgid "Name"
+msgstr ""
+
 #: includes/admin/class-bc-templates.php:108
 msgid "The name is limited to 255 characters."
 msgstr ""
@@ -464,7 +446,8 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:188
 #: includes/admin/class-bc-templates.php:211
-#: includes/admin/class-bc-templates.php:226 includes/class-bc-setup.php:319
+#: includes/admin/class-bc-templates.php:226
+#: includes/class-bc-setup.php:330
 msgid "Select File"
 msgstr ""
 
@@ -476,7 +459,8 @@ msgstr ""
 msgid "Closed Captions"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:224 includes/class-bc-setup.php:317
+#: includes/admin/class-bc-templates.php:224
+#: includes/class-bc-setup.php:328
 msgid "Add Another Caption"
 msgstr ""
 
@@ -521,6 +505,10 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:310
 msgid "Nothing yet ..."
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:316
+msgid "Delete"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:328
@@ -595,6 +583,11 @@ msgstr ""
 msgid "Drop files anywhere to upload"
 msgstr ""
 
+#: includes/admin/class-bc-templates.php:509
+msgctxt "Uploader: Drop files here - or - Select Files"
+msgid "or"
+msgstr ""
+
 #: includes/admin/class-bc-templates.php:510
 msgid "Select Files"
 msgstr ""
@@ -604,9 +597,7 @@ msgid "Maximum upload file size: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:529
-msgid ""
-"Please reference the readme.txt file of this plugin for further information "
-"on upload file size limits."
+msgid "Please reference the readme.txt file of this plugin for further information on upload file size limits."
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:561
@@ -617,6 +608,13 @@ msgstr ""
 #: includes/admin/class-bc-templates.php:566
 #: includes/admin/class-bc-templates.php:912
 msgid "Smart"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:578
+#: includes/admin/class-bc-templates.php:620
+#: includes/admin/class-bc-templates.php:623
+#: includes/admin/class-bc-templates.php:920
+msgid "Edit"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:579
@@ -669,6 +667,7 @@ msgstr ""
 #: includes/admin/class-bc-templates.php:692
 #: includes/admin/class-bc-templates.php:779
 #: includes/admin/class-bc-templates.php:857
+#: assets/js/src/block.js:323
 msgid "JavaScript"
 msgstr ""
 
@@ -676,6 +675,7 @@ msgstr ""
 #: includes/admin/class-bc-templates.php:780
 #: includes/admin/class-bc-templates.php:858
 #: includes/admin/class-bc-templates.php:982
+#: assets/js/src/block.js:309
 msgid "iFrame"
 msgstr ""
 
@@ -690,6 +690,7 @@ msgstr ""
 #: includes/admin/class-bc-templates.php:787
 #: includes/admin/class-bc-templates.php:865
 #: includes/admin/class-bc-templates.php:1003
+#: assets/js/src/block.js:332
 msgid "Responsive"
 msgstr ""
 
@@ -697,6 +698,7 @@ msgstr ""
 #: includes/admin/class-bc-templates.php:788
 #: includes/admin/class-bc-templates.php:866
 #: includes/admin/class-bc-templates.php:1004
+#: assets/js/src/block.js:335
 msgid "Fixed"
 msgstr ""
 
@@ -707,6 +709,7 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:710
 #: includes/admin/class-bc-templates.php:1013
+#: assets/js/src/block.js:447
 msgid "Custom"
 msgstr ""
 
@@ -776,10 +779,12 @@ msgid "Playlist Type: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:989
+#: assets/js/src/block.js:314
 msgid "JavaScript Horizontal"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:996
+#: assets/js/src/block.js:318
 msgid "JavaScript Vertical"
 msgstr ""
 
@@ -872,10 +877,7 @@ msgid "Dismiss this notice."
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:1151
-msgid ""
-"This video was not able to be inserted into the page. Please try again "
-"later. This may be because the video is still processing. For more "
-"information, please visit "
+msgid "This video was not able to be inserted into the page. Please try again later. This may be because the video is still processing. For more information, please visit "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:1151
@@ -911,9 +913,7 @@ msgid "New Account"
 msgstr ""
 
 #: includes/class-bc-accounts.php:131
-msgid ""
-"Account credentials are invalid. Please ensure you are using all the "
-"correct information from Brightcove Video Cloud Studio to secure a token."
+msgid "Account credentials are invalid. Please ensure you are using all the correct information from Brightcove Video Cloud Studio to secure a token."
 msgstr ""
 
 #: includes/class-bc-accounts.php:148
@@ -997,97 +997,72 @@ msgid "Binary content is not supported by the Logging mechanism."
 msgstr ""
 
 #: includes/class-bc-logging.php:35
-msgid ""
-"You must provide a file path and name to use <pre>file</pre> mode. Writing "
-"to the syslog instead."
+msgid "You must provide a file path and name to use <pre>file</pre> mode. Writing to the syslog instead."
 msgstr ""
 
 #: includes/class-bc-logging.php:40
-msgid ""
-"The file specified, <pre>%s</pre> does not exist. Writing to the syslog "
-"instead."
+msgid "The file specified, <pre>%s</pre> does not exist. Writing to the syslog instead."
 msgstr ""
 
 #: includes/class-bc-logging.php:46
-msgid ""
-"The file specified, <pre>%s</pre> is not writable byt the web server. "
-"Writing to the syslog instead."
+msgid "The file specified, <pre>%s</pre> is not writable byt the web server. Writing to the syslog instead."
 msgstr ""
 
-#: includes/class-bc-setup.php:206
-msgid "Brightcove Media"
+#: includes/class-bc-setup.php:217
+msgid "Brightcove Media2"
 msgstr ""
 
-#: includes/class-bc-setup.php:262
-msgid "Allowed Files"
+#: includes/class-bc-setup.php:286
+msgid "Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?"
 msgstr ""
 
-#: includes/class-bc-setup.php:275
-msgid ""
-"Deleting this video will prevent it from showing in any existing posts. Are "
-"you sure you want to delete?"
+#: includes/class-bc-setup.php:287
+msgid "We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete."
 msgstr ""
 
-#: includes/class-bc-setup.php:276
-msgid ""
-"We are currently performing a sync of your new Brightcove source, you may "
-"not see all videos and playlists until that is complete."
-msgstr ""
-
-#: includes/class-bc-setup.php:277
+#: includes/class-bc-setup.php:288
 msgid "Successfully uploaded file with name %%s%%."
 msgstr ""
 
-#: includes/class-bc-setup.php:278
-msgid ""
-"We were unable to upload the file with name %%s%%. Please try reuploading "
-"it again."
+#: includes/class-bc-setup.php:289
+msgid "We were unable to upload the file with name %%s%%. Please try reuploading it again."
 msgstr ""
 
-#: includes/class-bc-setup.php:315
-msgid ""
-"This file is not the proper format. Please use .vtt files, for more "
-"information visit"
+#: includes/class-bc-setup.php:326
+msgid "This file is not the proper format. Please use .vtt files, for more information visit"
 msgstr ""
 
-#: includes/class-bc-setup.php:318
+#: includes/class-bc-setup.php:329
 msgid "Add another remote file"
 msgstr ""
 
-#: includes/class-bc-setup.php:320
+#: includes/class-bc-setup.php:331
 msgid "Use a remote file instead"
 msgstr ""
 
-#: includes/class-bc-setup.php:321
-msgid ""
-"Sorry! We weren't able to reach the Brightcove API even after trying a few "
-"times. Please try refreshing the page."
+#: includes/class-bc-setup.php:332
+msgid "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:426
-msgid ""
-"It looks like one or more of your accounts API authentication changed "
-"recently. Please update your settings "
+#: includes/class-bc-setup.php:437
+msgid "It looks like one or more of your accounts API authentication changed recently. Please update your settings "
 msgstr ""
 
-#: includes/class-bc-setup.php:428 includes/class-bc-setup.php:446
+#: includes/class-bc-setup.php:439
+#: includes/class-bc-setup.php:457
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:444
+#: includes/class-bc-setup.php:455
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:463
+#: includes/class-bc-setup.php:474
 msgid "BC In Process Videos"
 msgstr ""
 
-#: includes/class-bc-setup.php:491
-msgid ""
-"<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
-"has been <strong>deactivated</strong> because it's incompatibale with "
-"WordPress version %s! The minimum compatible WordPress version is "
-"<strong>4.2</strong></p></div>"
+#: includes/class-bc-setup.php:502
+msgid "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> has been <strong>deactivated</strong> because it's incompatibale with WordPress version %s! The minimum compatible WordPress version is <strong>4.2</strong></p></div>"
 msgstr ""
 
 #: includes/class-bc-utility.php:1184
@@ -1830,29 +1805,86 @@ msgstr ""
 msgid "BC WordPress: Video with ID #%d has been created"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "Brightcove Video Connect"
+#: assets/js/src/block.js:15
+msgid "The Brightcove block allows you to embed videos from Brightcove."
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://wordpress.org/plugins/brightcove-video-connect/"
+#: assets/js/src/block.js:212
+msgid "Change Playlist"
 msgstr ""
 
-#. Description of the plugin/theme
-msgid ""
-"A Brightcove™ Connector for WordPress that leverages enhanced APIs and "
-"Brightcove™ Capabilities"
+#: assets/js/src/block.js:213
+msgid "Change Video"
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "10up"
+#: assets/js/src/block.js:230
+msgid "Select a video file or playlist from your Brightcove library"
 msgstr ""
 
-#. Author URI of the plugin/theme
-msgid "http://10up.com"
+#: assets/js/src/block.js:234
+msgid "You don't have permissions to add Brightcove videos."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:509
-msgctxt "Uploader: Drop files here - or - Select Files"
-msgid "or"
+#: assets/js/src/block.js:244
+msgid "Brightcove Media"
+msgstr ""
+
+#: assets/js/src/block.js:328
+msgid "Sizing"
+msgstr ""
+
+#: assets/js/src/block.js:363
+msgid "Source: %1$s"
+msgstr ""
+
+#: assets/js/src/block.js:365
+msgid "Video ID: %1$s"
+msgstr ""
+
+#: assets/js/src/block.js:367
+msgid "Playlist ID: %1$s"
+msgstr ""
+
+#: assets/js/src/block.js:369
+msgid "Video Player"
+msgstr ""
+
+#: assets/js/src/block.js:380
+msgid "Autoplay"
+msgstr ""
+
+#: assets/js/src/block.js:390
+msgid "Mute"
+msgstr ""
+
+#: assets/js/src/block.js:400
+msgid "Plays in line"
+msgstr ""
+
+#: assets/js/src/block.js:411
+msgid "Enable Picture in Picturee"
+msgstr ""
+
+#: assets/js/src/block.js:421
+msgid "Embed Style"
+msgstr ""
+
+#: assets/js/src/block.js:435
+msgid "Aspect Ratio"
+msgstr ""
+
+#: assets/js/src/block.js:439
+msgid "16:9"
+msgstr ""
+
+#: assets/js/src/block.js:443
+msgid "4:3"
+msgstr ""
+
+#: assets/js/src/block.js:480
+msgid "Width"
+msgstr ""
+
+#: assets/js/src/block.js:499
+msgid "Height"
 msgstr ""
