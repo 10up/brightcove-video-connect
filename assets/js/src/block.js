@@ -1,16 +1,22 @@
 /* global wp, bctiny, bcBlock */
-
 (function (blocks, element, components, editor) {
+	const { __, sprintf } = wp.i18n;
+
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
 		Placeholder = components.Placeholder,
 		BlockControls = editor.BlockControls,
 		IconButton = components.IconButton,
-		userPermission = !!bcBlock.userPermission;
+		userPermission = !!bcBlock.userPermission,
+		InspectorControls = wp.blockEditor.InspectorControls,
+		TextControl = components.TextControl;
 
 	registerBlockType('bc/brightcove', {
-		title: 'Brightcove',
-		description: 'The Brightcove block allows you to embed videos from Brightcove.',
+		title: __('Brightcove', 'brightcove'),
+		description: __(
+			'The Brightcove block allows you to embed videos from Brightcove.',
+			'brightcove',
+		),
 		icon: 'video-alt3',
 		category: 'common',
 		supports: {
@@ -19,6 +25,8 @@
 		},
 
 		edit: function (props) {
+			const [isHeightFieldDisabled, setIsHeightFieldDisabled] = element.useState(true);
+
 			// Set the field we want to target
 			var target = 'brightcove-' + props.clientId;
 
@@ -29,22 +37,135 @@
 			var playlistId = props.attributes.playlist_id || '';
 			var experienceId = props.attributes.experience_id || '';
 			var videoIds = props.attributes.video_ids || '';
-			var height = props.attributes.height || '';
-			var width = props.attributes.width || '';
 			var minWidth = props.attributes.min_width || '';
-			var maxWidth = props.attributes.max_width || '';
 			var paddingTop = props.attributes.padding_top || '';
 			var autoplay = props.attributes.autoplay || '';
 			var playsinline = props.attributes.playsinline || '';
 			var pictureinpicture = props.attributes.picture_in_picture || '';
 			var embed = props.attributes.embed || '';
+			var mute = props.attributes.mute || '';
+			var sizing = props.attributes.sizing || 'responsive';
+			var aspectRatio = props.attributes.aspect_ratio || '16:9';
+
+			var width = props.attributes.width || '640px';
+			var height = props.attributes.height || '360px';
+
+			const maxHeight = props.attributes.max_height || height;
+			const maxWidth = props.attributes.max_width || width;
+
+			const account = _.find(wpbc?.preload?.accounts, function (account) {
+				return account?.account_id === accountId;
+			});
+			const accountName = account?.account_name || '';
+
+			element.useEffect(() => {
+				if (aspectRatio === 'custom') {
+					setIsHeightFieldDisabled(false);
+				} else {
+					setIsHeightFieldDisabled(true);
+				}
+			}, [aspectRatio]);
+
+			element.useEffect(() => {
+				if (sizing === 'responsive' && maxWidth) {
+					props.setAttributes({ ...props.attributes, width: maxWidth || '640px' });
+				}
+			}, [sizing, width, maxWidth]);
+
+			element.useEffect(() => {
+				if (!maxHeight) {
+					let newMaxHeight;
+					if (aspectRatio === '16:9') {
+						newMaxHeight = '360px';
+					} else if (aspectRatio === '4:3') {
+						newMaxHeight = '480px';
+					} else {
+						newMaxHeight = height;
+					}
+
+					props.setAttributes({
+						...props.attributes,
+						max_height: height === '100%' && newMaxHeight ? newMaxHeight : height,
+					});
+				}
+			}, []);
+
+			element.useEffect(() => {
+				if (sizing === 'responsive' && height !== '100%') {
+					let newMaxHeight;
+					if (aspectRatio === '16:9') {
+						newMaxHeight = '360px';
+					} else if (aspectRatio === '4:3') {
+						newMaxHeight = '480px';
+					} else {
+						newMaxHeight = height;
+					}
+
+					props.setAttributes({
+						...props.attributes,
+						height: '100%',
+						max_height: newMaxHeight,
+					});
+				}
+			}, [height, sizing, aspectRatio]);
+
+			element.useEffect(() => {
+				if (sizing === 'responsive' && !maxHeight) {
+					let newMaxHeight;
+					if (aspectRatio === '16:9') {
+						newMaxHeight = '360px';
+					} else if (aspectRatio === '4:3') {
+						newMaxHeight = '480px';
+					} else {
+						newMaxHeight = height;
+					}
+
+					props.setAttributes({
+						...props.attributes,
+						max_height: newMaxHeight,
+					});
+				}
+			}, [maxHeight, sizing, aspectRatio, height]);
+
+			element.useEffect(() => {
+				if (sizing === 'fixed' && (width === '100%' || height === '100%')) {
+					props.setAttributes({
+						...props.attributes,
+						width: width === '100%' ? maxWidth : undefined,
+						height: height === '100%' ? maxHeight : undefined,
+					});
+				}
+			}, [width, sizing, height, maxWidth, maxHeight]);
+
+			element.useEffect(() => {
+				if (aspectRatio === 'custom') {
+					const padding_top =
+						typeof maxHeight === 'number' && typeof maxWidth === 'number'
+							? `${(maxHeight / maxWidth) * 100}%`
+							: '56%';
+
+					props.setAttributes({ ...props.attributes, padding_top });
+				}
+			}, [maxWidth, maxHeight, aspectRatio]);
+
+			element.useEffect(() => {
+				if (embed === 'in-page-horizontal' || embed === 'in-page-vertical') {
+					props.setAttributes({ ...props.attributes, sizing: 'fixed' });
+				}
+			}, [embed]);
+
+			element.useEffect(() => {
+				if (pictureinpicture === 'pictureinpicture' && embed === 'iframe') {
+					props.setAttributes({ ...props.attributes, embed: 'in-page' });
+				}
+			}, [pictureinpicture]);
 
 			// Sanitize the IDs we need
 			var sanitizeIds = function (id) {
-				if (id.indexOf('ref:') === 0) {
+				if (id?.indexOf('ref:') === 0) {
 					return id;
 				}
-				return id.replace(/\D/g, '');
+				return id?.replace(/\D/g, '');
 			};
 
 			/**
@@ -75,6 +196,8 @@
 					playsinline: '',
 					picture_in_picture: '',
 					embed: attrs.named.embed,
+					sizing: attrs.named.sizing,
+					aspect_ratio: attrs.named.aspect_ratio,
 				};
 
 				if (attrs.numeric[0] === '[bc_video') {
@@ -102,7 +225,10 @@
 					}
 				}
 
-				props.setAttributes(setAttrs);
+				// Prevent set attributes with empty values
+				if (btn.value) {
+					props.setAttributes(setAttrs);
+				}
 			};
 
 			// Listen for a change event on our hidden input
@@ -118,7 +244,9 @@
 					el(IconButton, {
 						className:
 							'brightcove-add-media components-icon-button components-toolbar__control',
-						label: videoId.playlist_id ? 'Change Playlist' : 'Change Video',
+						label: videoId.playlist_id
+							? __('Change Playlist', 'brightcove')
+							: __('Change Video', 'brightcove'),
 						icon: 'edit',
 						'data-target': '#' + target,
 					}),
@@ -135,8 +263,11 @@
 					icon: 'media-video',
 					label: 'Brightcove',
 					instructions: userPermission
-						? 'Select a video file or playlist from your Brightcove library'
-						: "You don't have permissions to add Brightcove videos.",
+						? __(
+								'Select a video file or playlist from your Brightcove library',
+								'brightcove',
+						  )
+						: __("You don't have permissions to add Brightcove videos.", 'brightcove'),
 					children: [
 						userPermission
 							? el(
@@ -146,7 +277,7 @@
 										'data-target': '#' + target,
 										key: 'button',
 									},
-									'Brightcove Media',
+									__('Brightcove Media', 'brightcove'),
 							  )
 							: '',
 						el('input', { id: target, hidden: true, key: 'input' }),
@@ -190,12 +321,74 @@
 			}
 
 			if (typeof height === 'undefined') {
-				height = 250;
+				height = maxHeight || 250;
 			}
 
 			if (typeof width === 'undefined') {
-				width = 500;
+				width = maxWidth || 500;
 			}
+
+			const players = wpbc.players[accountId]
+				.filter((player) => {
+					return playlistId ? player.is_playlist : !player.is_playlist;
+				})
+				.reduce((previousValue, currentValue) => {
+					return [
+						...previousValue,
+						{
+							label: currentValue.name,
+							value: currentValue.id,
+						},
+					];
+				}, []);
+
+			let embedStyleOptions = [{ label: __('iFrame', 'brightcove'), value: 'iframe' }];
+			embedStyleOptions = playlistId
+				? [
+						...embedStyleOptions,
+						{
+							label: __('JavaScript Horizontal', 'brightcove'),
+							value: 'in-page-horizontal',
+						},
+						{
+							label: __('JavaScript Vertical', 'brightcove'),
+							value: 'in-page-vertical',
+						},
+				  ]
+				: [
+						{ label: __('JavaScript', 'brightcove'), value: 'in-page' },
+						...embedStyleOptions,
+				  ];
+
+			const sizingField = el(components.RadioControl, {
+				label: __('Sizing', 'brightcove'),
+				selected: sizing,
+				options: [
+					{
+						label: __('Responsive', 'brightcove'),
+						value: 'responsive',
+					},
+					{ label: __('Fixed', 'brightcove'), value: 'fixed' },
+				],
+				onChange: function (value) {
+					props.setAttributes({
+						...props.attributes,
+						sizing: value,
+					});
+				},
+			});
+
+			const embedStyleField = el(components.RadioControl, {
+				label: __('Embed Style', 'brightcove'),
+				selected: embed,
+				options: embedStyleOptions,
+				onChange: function (value) {
+					props.setAttributes({
+						...props.attributes,
+						embed: value,
+					});
+				},
+			});
 
 			return [
 				userPermission ? controls : '',
@@ -206,6 +399,182 @@
 					key: 'iframe',
 				}),
 				el('input', { id: target, hidden: true, key: 'input' }),
+				el(
+					InspectorControls,
+					{ key: 'inspector' }, // Display the block options in the inspector panel.
+					el(
+						components.PanelBody,
+						{
+							title: __('Settings', 'brightcove'),
+							initialOpen: true,
+						},
+						el('p', {}, sprintf(__('Source: %1$s', 'brightcove'), accountName)),
+						videoId &&
+							el('p', {}, sprintf(__('Video ID: %1$s', 'brightcove'), videoId)),
+						playlistId &&
+							el('p', {}, sprintf(__('Playlist ID: %1$s', 'brightcove'), playlistId)),
+						el(components.SelectControl, {
+							label: __('Video Player', 'brightcove'),
+							value: playerId,
+							options: players,
+							onChange: function (value) {
+								props.setAttributes({
+									...props.attributes,
+									player_id: value,
+								});
+							},
+						}),
+						el(components.CheckboxControl, {
+							label: __('Autoplay', 'brightcove'),
+							checked: autoplay,
+							onChange: function (value) {
+								props.setAttributes({
+									...props.attributes,
+									autoplay: value && 'autoplay',
+								});
+							},
+						}),
+						el(components.CheckboxControl, {
+							label: __('Mute', 'brightcove'),
+							checked: mute,
+							onChange: function (value) {
+								props.setAttributes({
+									...props.attributes,
+									mute: value && 'muted',
+								});
+							},
+						}),
+						el(components.CheckboxControl, {
+							label: __('Plays in line', 'brightcove'),
+							checked: playsinline,
+							onChange: function (value) {
+								props.setAttributes({
+									...props.attributes,
+									playsinline: value && 'playsinline',
+								});
+							},
+						}),
+						!playlistId &&
+							el(components.CheckboxControl, {
+								label: __('Enable Picture in Picture', 'brightcove'),
+								checked: pictureinpicture,
+								onChange: function (value) {
+									props.setAttributes({
+										...props.attributes,
+										picture_in_picture: value && 'pictureinpicture',
+									});
+								},
+							}),
+						pictureinpicture === 'pictureinpicture'
+							? el(
+									components.Disabled,
+									{ style: { marginBottom: '24px' } },
+									embedStyleField,
+							  )
+							: embedStyleField,
+						embed === 'in-page-horizontal' || embed === 'in-page-vertical'
+							? el(
+									components.Disabled,
+									{ style: { marginBottom: '24px' } },
+									sizingField,
+							  )
+							: sizingField,
+						el(components.SelectControl, {
+							label: __('Aspect Ratio', 'brightcove'),
+							value: aspectRatio,
+							options: [
+								{
+									label: __('16:9', 'brightcove'),
+									value: '16:9',
+								},
+								{
+									label: __('4:3', 'brightcove'),
+									value: '4:3',
+								},
+								{
+									label: __('Custom', 'brightcove'),
+									value: 'custom',
+								},
+							],
+							onChange: function (value) {
+								let height;
+								let padding_top;
+
+								if (value === '16:9') {
+									height = '360px';
+									padding_top = '56%';
+								} else if (value === '4:3') {
+									height = '480px';
+									padding_top = '75%';
+								} else {
+									const maxHeightNumber =
+										maxHeight && Number(maxHeight?.replace(/[^0-9]/g, ''));
+									const maxWidthNumber =
+										maxWidth && Number(maxWidth?.replace(/[^0-9]/g, ''));
+									const isMaxHeightNumber = typeof maxHeightNumber === 'number';
+									const isMaxWidthNumber = typeof maxWidthNumber === 'number';
+
+									height = isMaxHeightNumber ? maxHeight : undefined;
+
+									padding_top =
+										isMaxHeightNumber && isMaxWidthNumber && maxHeightNumber > 0
+											? `${(maxHeightNumber / maxWidthNumber) * 100}%`
+											: '56%';
+								}
+
+								props.setAttributes({
+									...props.attributes,
+									aspect_ratio: value,
+									height,
+									max_height: height,
+									padding_top,
+								});
+							},
+						}),
+						el(components.TextControl, {
+							label: __('Width', 'brightcove'),
+							type: 'number',
+							value: width?.replace(/[^0-9]/g, ''),
+							onChange: function (value) {
+								let width = `${value}px`;
+								const max_width = width;
+
+								if (sizing === 'responsive') {
+									width = '100%';
+								}
+
+								props.setAttributes({
+									...props.attributes,
+									width,
+									max_width,
+								});
+							},
+						}),
+						el(components.TextControl, {
+							label: __('Height', 'brightcove'),
+							type: 'number',
+							value:
+								sizing === 'fixed'
+									? height?.replace(/[^0-9]/g, '')
+									: maxHeight?.replace(/[^0-9]/g, ''),
+							disabled: isHeightFieldDisabled,
+							onChange: function (value) {
+								let height = `${value}px`;
+								const max_height = height;
+
+								if (sizing === 'responsive') {
+									height = '100%';
+								}
+
+								props.setAttributes({
+									...props.attributes,
+									height,
+									max_height,
+								});
+							},
+						}),
+					),
+				),
 			];
 		},
 
