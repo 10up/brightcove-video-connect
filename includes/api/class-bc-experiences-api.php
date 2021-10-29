@@ -58,32 +58,4 @@ class BC_Experiences_API extends BC_API {
 
 		return apply_filters( 'brightcove_get_experiences', $experiences );
 	}
-
-	/**
-	 * Fetches templates
-	 *
-	 * @since 2.4.0
-	 * @return array
-	 */
-	public function get_templates() {
-		global $bc_accounts;
-
-		$all_accounts_id = $bc_accounts->get_all_accounts_id();
-		$templates       = array();
-
-		foreach ( $all_accounts_id as $account_id ) {
-			$bc_accounts->set_current_account_by_id( $account_id );
-
-			$url               = esc_url_raw( self::BASE_URL . $account_id . '/templates/' );
-			$account_templates = $this->send_request( $url );
-
-			if ( is_wp_error( $account_templates ) ) {
-				return [];
-			}
-
-			$templates[ $account_id ] = $account_templates;
-		}
-
-		return apply_filters( 'brightcove_get_templates', $templates );
-	}
 }
