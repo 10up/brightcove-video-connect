@@ -42,7 +42,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 = 2.3.1 =
 
 Fixed
-* Label field on video editing. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#232](https://github.com/10up/brightcove-video-connect/pull/232).
+* Label field on video editing.
 
 = 2.3.0 =
 
