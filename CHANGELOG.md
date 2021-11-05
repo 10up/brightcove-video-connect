@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.3.1] - 2021-11-04
+
+### Fixed
+- Label field on video editing. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#232](https://github.com/10up/brightcove-video-connect/pull/232).
+
 ## [2.3.0] - 2021-10-21
 
 ### Added
@@ -331,6 +336,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.3.1]: https://github.com/10up/brightcove-video-connect/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/10up/brightcove-video-connect/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/10up/brightcove-video-connect/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/10up/brightcove-video-connect/compare/2.1.4...2.2.0
