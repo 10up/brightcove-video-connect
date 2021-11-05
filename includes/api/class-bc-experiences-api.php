@@ -58,4 +58,26 @@ class BC_Experiences_API extends BC_API {
 
 		return apply_filters( 'brightcove_get_experiences', $experiences );
 	}
+
+	/**
+	 * Fetch a In-Page experience
+	 *
+	 * @param string $in_page_expirence_id ID of In-Page experience
+	 * @return array
+	 */
+	public function get_in_page_experience( $in_page_expirence_id ) {
+		global $bc_accounts;
+
+		$account_id = $bc_accounts->get_account_id();
+
+		$url = esc_url_raw( self::BASE_URL . $account_id . '/experiences/' . $in_page_expirence_id );
+
+		$in_page_experience = $this->send_request( $url );
+
+		if ( is_wp_error( $in_page_experience ) ) {
+			return [];
+		}
+
+		return apply_filters( 'brightcove_get_in_page_experience', $in_page_experience );
+	}
 }
