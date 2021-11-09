@@ -75,7 +75,14 @@ var BrightcoveModalView = BrightcoveView.extend({
 		}
 		$(event.target).addClass('active');
 		var tab = _.without(event.target.classList, 'media-menu-item', 'brightcove')[0];
-		var tabs = ['videos', 'upload', 'playlists', 'video-experience', 'playlist-experience'];
+		var tabs = [
+			'videos',
+			'upload',
+			'playlists',
+			'in-page-experiences',
+			'video-experience',
+			'playlist-experience',
+		];
 		_.each(_.without(tabs, tab), function (otherTab) {
 			$('.brightcove.media-menu-item.' + otherTab).removeClass('active');
 		});
