@@ -13,6 +13,7 @@ class BC_Setup {
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php';
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php';
+		require_once BRIGHTCOVE_PATH . 'includes/class-bc-in-page-experience-shortcode.php';
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-upload.php';
 		require_once BRIGHTCOVE_PATH . 'includes/sync/class-bc-playlists.php';
 		require_once BRIGHTCOVE_PATH . 'includes/sync/class-bc-videos.php';
@@ -126,61 +127,64 @@ class BC_Setup {
 					'editor_script'   => 'brightcove-block',
 					'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
 					'attributes'      => array(
-						'account_id'         => array(
+						'account_id'            => array(
 							'type' => 'int',
 						),
-						'player_id'          => array(
+						'player_id'             => array(
 							'type' => 'string',
 						),
-						'video_id'           => array(
+						'video_id'              => array(
 							'type' => 'int',
 						),
-						'playlist_id'        => array(
+						'playlist_id'           => array(
 							'type' => 'int',
 						),
-						'experience_id'      => array(
+						'experience_id'         => array(
 							'type' => 'string',
 						),
-						'video_ids'          => array(
+						'video_ids'             => array(
 							'type' => 'int',
 						),
-						'embed'              => array(
+						'embed'                 => array(
 							'type' => 'string',
 						),
-						'autoplay'           => array(
+						'autoplay'              => array(
 							'type' => 'string',
 						),
-						'mute'               => array(
+						'mute'                  => array(
 							'type' => 'string',
 						),
-						'playsinline'        => array(
+						'playsinline'           => array(
 							'type' => 'string',
 						),
-						'picture_in_picture' => array(
+						'picture_in_picture'    => array(
 							'type' => 'string',
 						),
-						'height'             => array(
+						'height'                => array(
 							'type' => 'string',
 						),
-						'width'              => array(
+						'width'                 => array(
 							'type' => 'string',
 						),
-						'min_width'          => array(
+						'min_width'             => array(
 							'type' => 'string',
 						),
-						'max_width'          => array(
+						'max_width'             => array(
 							'type' => 'string',
 						),
-						'padding_top'        => array(
+						'padding_top'           => array(
 							'type' => 'string',
 						),
-						'sizing'             => array(
+						'sizing'                => array(
 							'type' => 'string',
 						),
-						'aspect_ratio'       => array(
+						'aspect_ratio'          => array(
 							'type' => 'string',
 						),
-						'max_height'         => array(
+						'max_height'            => array(
+							'type' => 'string',
+						),
+						'in_page_experience_id' => array(
 							'type' => 'string',
 						),
 					),
@@ -208,6 +212,8 @@ class BC_Setup {
 			$output = call_user_func( array( 'BC_Video_Shortcode', 'bc_video' ), $atts );
 		} elseif ( ! empty( $atts['playlist_id'] ) ) {
 			$output = call_user_func( array( 'BC_Playlist_Shortcode', 'bc_playlist' ), $atts );
+		} elseif ( ! empty( $atts['in_page_experience_id'] ) ) {
+			$output = call_user_func( array( 'BC_In_Page_Experience_Shortcode', 'bc_in_page_experience' ), $atts );
 		}
 
 		return $output;
@@ -315,16 +321,12 @@ class BC_Setup {
 		$player_api = new BC_Player_Management_API2();
 		$players    = $player_api->get_all_players();
 
-		$experiences_api = new BC_Experiences_API();
-		$experiences     = $experiences_api->get_experiences();
-
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => self::preload_params(),
 			'wp_version'     => $wp_version,
 			'languages'      => BC_Utility::languages(),
 			'players'        => $players,
-			'experiences'    => $experiences,
 			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
 			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
