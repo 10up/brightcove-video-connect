@@ -18,7 +18,7 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 
 == Installation and Usage and FAQ ==
 
-For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
+For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://integrations.support.brightcove.com/wordpress/getting-started-brightcove-video-connect-wordpress-cms.html).
 
 == Screenshots ==
 
