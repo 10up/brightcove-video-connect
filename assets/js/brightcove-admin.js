@@ -705,6 +705,17 @@ var BrightcoveModalModel = Backbone.Model.extend({
 				tags: 'all',
 				viewType: 'grid',
 			},
+			'in-page-experiences': {
+				accounts: 'all',
+				date: 'all',
+				embedType: 'modal',
+				mediaType: 'inpageexperiences',
+				mode: 'manager',
+				preload: true,
+				search: '',
+				tags: 'all',
+				viewType: 'grid',
+			},
 		};
 
 		if (undefined !== settings[tab]) {
@@ -1654,7 +1665,14 @@ var BrightcoveModalView = BrightcoveView.extend({
 		}
 		$(event.target).addClass('active');
 		var tab = _.without(event.target.classList, 'media-menu-item', 'brightcove')[0];
-		var tabs = ['videos', 'upload', 'playlists', 'video-experience', 'playlist-experience'];
+		var tabs = [
+			'videos',
+			'upload',
+			'playlists',
+			'in-page-experiences',
+			'video-experience',
+			'playlist-experience',
+		];
 		_.each(_.without(tabs, tab), function (otherTab) {
 			$('.brightcove.media-menu-item.' + otherTab).removeClass('active');
 		});
@@ -1836,6 +1854,9 @@ var MediaDetailsView = BrightcoveView.extend({
 				break;
 			case 'playlistexperience':
 				this.generatePlaylistExperienceShortcode();
+				break;
+			case 'inpageexperiences':
+				this.generateInPageExperienceShortcode();
 				break;
 			default:
 				this.generatePlaylistShortcode();
@@ -2149,6 +2170,38 @@ var MediaDetailsView = BrightcoveView.extend({
 		$('#shortcode').val(shortcode);
 	},
 
+	generateInPageExperienceShortcode: function () {
+		const accountId = `${this.model.get('accountId')}`.replace(/\D/g, '');
+		const inPageExperienceId = this.model.get('id');
+		const embedStyle = $('input[name="embed-style"]:checked').val();
+
+		let width = '';
+		let height = '';
+
+		const widthValue = Number($('#width').val());
+		const heightValue = Number($('#height').val());
+
+		if (typeof widthValue === 'number' && widthValue > 0) {
+			width = `${widthValue}px`;
+		}
+
+		if (typeof heightValue === 'number' && heightValue > 0) {
+			height = `${heightValue}px`;
+		}
+
+		const shortcode = `[bc_in_page_experience \
+			account_id="${accountId}" \
+			in_page_experience_id="${inPageExperienceId}" \
+			embed="${embedStyle}" \
+			width="${width}" \
+			height="${height}"\
+		]
+		`;
+
+		// remove Tabs from shortcode
+		$('#shortcode').val(shortcode.replace(/\t+/g, ' '));
+	},
+
 	toggleShortcodeGeneration: function () {
 		var method = $('#generate-shortcode').val(),
 			$fields = $(
@@ -2177,9 +2230,10 @@ var MediaDetailsView = BrightcoveView.extend({
 	 */
 	render: function (options) {
 		options = _.extend({}, options, this.model.toJSON());
-		options.duration = this.model.getReadableDuration();
-		options.updated_at_readable = this.model.getReadableDate('updated_at');
-		options.created_at_readable = this.model.getReadableDate('created_at');
+		// options.duration = this.model.getReadableDuration();
+		options.duration = '0:05';
+		options.updated_at_readable = this.model.getReadableDate('updatedAt');
+		options.created_at_readable = this.model.getReadableDate('createdAt');
 		options.account_name = this.model.getAccountName();
 
 		this.template = wp.template('brightcove-media-item-details-' + this.mediaType);
@@ -2255,8 +2309,11 @@ var MediaView = BrightcoveView.extend({
 	render: function () {
 		var options = this.model.toJSON();
 		options.duration = this.model.getReadableDuration();
-		options.updated_at_readable = this.model.getReadableDate('updated_at');
+		options.updated_at_readable = options.updatedAt
+			? this.model.getReadableDate('updatedAt')
+			: this.model.getReadableDate('updated_at');
 		options.account_name = this.model.getAccountName();
+		options.height = this.model.getReadableDate('height');
 
 		if (options.viewType === 'existingPlaylists') {
 			this.template = wp.template('brightcove-playlist-edit-video-in-playlist');

@@ -57,6 +57,7 @@ function brightcove_deactivate() {
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-in-page-experience-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-utility.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php';
 require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php';
@@ -80,6 +81,7 @@ if ( is_admin() ) {
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
+add_action( 'init', array( 'BC_In_Page_Experience_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
 
