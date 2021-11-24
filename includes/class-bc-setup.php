@@ -361,6 +361,7 @@ class BC_Setup {
 			'brightcove',
 			'wp-mediaelement',
 			'tinymce_preview',
+			'jquery-ui-datepicker',
 		);
 
 		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION );
@@ -372,10 +373,11 @@ class BC_Setup {
 		} else {
 			wp_enqueue_media();
 		}
-
+       
 		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'brightcove-video-connect' );
-
+		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/jquery-ui-datepicker' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
+		wp_enqueue_style( 'jquery-ui-datepicker-style' );
 	}
 
 	public static function frontend_enqueue_scripts() {
