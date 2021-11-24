@@ -102,6 +102,13 @@ class BC_Admin_Templates {
 		<?php /* Used by views/video-edit.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-video-edit">
 			<div class="settings">
+				<label class="setting state">
+					<span class="name"><?php esc_html_e( 'State', 'brightcove' ); ?></span>
+					<select class="brightcove-state">
+						<option value="ACTIVE" <# if ( data.state === 'ACTIVE' ) { #>selected<# } #>><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
+						<option value="INACTIVE" <# if ( data.state === 'INACTIVE' ) { #>selected<# } #>><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
+					</select>
+				</label>
 				<label class="setting video-name">
 					<span class="name"><?php esc_html_e( 'Name', 'brightcove' ); ?></span>
 					<input type="text" class="brightcove-name" maxlength="255" value="{{data.name}}" />
@@ -116,6 +123,86 @@ class BC_Admin_Templates {
 					<span class="name"><?php esc_html_e( 'Long Description', 'brightcove' ); ?></span>
 					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
 					<p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' ); ?></p>
+				</label>
+				<label class="setting start-date">
+					<span class="schedule-start-date"><?php esc_html_e( 'Scheduled Start date (GMT)', 'brightcove' ); ?></span>
+					<div class="brightcove-datetime-wrapper">
+						<input type="text" class="brightcove-datetime brightcove-start-date" value="{{data.schedule_start_date}}" autocomplete="off" />
+						<select class="brightcove-start-date-hour">
+							<?php for ( $hour = 1; $hour <= 12; $hour++ ) : ?> 
+								<option 
+									<# if ( data.schedule_start_hour === '<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>' ) { #>selected<# } #>
+								>
+									<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>
+								</option>
+							<?php endfor; ?>
+						</select>
+						<span class="brightcove-datetime-colon">:</span>
+						<select class="brightcove-start-date-minute">
+							<?php for ( $minute = 0; $minute <= 59; $minute++ ) : ?> 
+								<option
+									<# if ( data.schedule_start_minute === '<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>' ) { #>selected<# } #> 
+								>
+								<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>
+							</option>
+							<?php endfor; ?>
+						</select>
+						<select class="brightcove-start-date-am-pm">
+							<option
+								<# if ( data.schedule_start_am_pm === 'AM' ) { #>selected<# } #> 
+							>
+								<?php esc_html_e( 'AM', 'brightcove' ); ?>
+							</option>
+							<option
+								<# if ( data.schedule_start_am_pm === 'PM' ) { #>selected<# } #> 
+							>
+								<?php esc_html_e( 'PM', 'brightcove' ); ?>
+							</option>
+						</select>
+					</div>
+					<p class="description"><?php esc_html_e( 'Leave empty to be available immediately.', 'brightcove' ); ?></p>
+				</label>
+				<label class="setting end-date">
+					<span class="schedule-end-date"><?php esc_html_e( 'Scheduled End Date (GMT)', 'brightcove' ); ?></span>
+					<div class="brightcove-datetime-wrapper">
+						<input 
+							type="text" 
+							class="brightcove-datetime brightcove-end-date" 
+							value="{{data.schedule_end_date}}"
+							autocomplete="off" 
+						/>
+						<select class="brightcove-end-date-hour">
+							<?php for ( $hour = 1; $hour <= 12; $hour++ ) : ?> 
+								<option 
+									<# if ( data.schedule_end_hour === '<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>' ) { #>selected<# } #>
+								>
+									<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>
+								</option>
+							<?php endfor; ?>
+						</select>
+						<span class="brightcove-datetime-colon">:</span>
+						<select class="brightcove-end-date-minute">
+							<?php for ( $minute = 0; $minute <= 59; $minute++ ) : ?> 
+								<option
+									<# if ( data.schedule_end_minute === '<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>' ) { #>selected<# } #> 
+								>
+									<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>
+								</option>
+							<?php endfor; ?>
+						</select>
+						<select class="brightcove-end-date-am-pm">
+							<option
+								<# if ( data.schedule_end_am_pm === 'AM' ) { #>selected<# } #> 
+							>
+								<?php esc_html_e( 'AM', 'brightcove' ); ?>
+							</option>
+							<option
+								<# if ( data.schedule_end_am_pm === 'PM' ) { #>selected<# } #> 
+							>
+								<?php esc_html_e( 'PM', 'brightcove' ); ?>
+							</option>
+						</select>
+					</div>
 				</label>
 				<label class="setting folder">
 					<span class="name"><?php esc_html_e( 'Folder', 'brightcove' ); ?></span>

@@ -113,6 +113,9 @@ class BC_Admin_Media_API {
 			'tags',
 			'width',
 			'height',
+			'state',
+			'scheduled_start_date',
+			'scheduled_end_date',
 		);
 
 		foreach ( $fields as $field ) {
