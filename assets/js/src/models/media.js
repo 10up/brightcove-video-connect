@@ -79,6 +79,9 @@ var MediaModel = Backbone.Model.extend({
 				options.data.type = 'playlists';
 			} else {
 				options.data.video_id = this.id;
+				options.data.state = this.get('state');
+				options.data.scheduled_start_date = this.get('scheduled_start_date');
+				options.data.scheduled_end_date = this.get('scheduled_end_date');
 			}
 
 			options.success = this.successFunction;
