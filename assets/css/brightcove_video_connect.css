@@ -345,6 +345,18 @@ div.brightcove-uploader div.brightcove-messages .updated {
       @media screen and (min-width: 700px) {
         .brightcove.media-frame-content .attachment .media-actions, .playlist-edit-container .attachment .media-actions {
           display: none; } }
+  .brightcove.media-frame-content .brightcove-datetime-wrapper, .playlist-edit-container .brightcove-datetime-wrapper {
+    display: -ms-flexbox;
+    display: flex; }
+  .brightcove.media-frame-content .brightcove-datetime-colon, .playlist-edit-container .brightcove-datetime-colon {
+    width: 10px;
+    min-width: auto;
+    margin-right: 0;
+    font-size: 14px; }
+  .brightcove.media-frame-content .schedule-start-date,
+  .brightcove.media-frame-content .schedule-end-date, .playlist-edit-container .schedule-start-date,
+  .playlist-edit-container .schedule-end-date {
+    margin-right: calc(4% + 7px); }
 
 .brightcove.media-frame-menu {
   height: 100%;
