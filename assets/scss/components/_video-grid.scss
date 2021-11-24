@@ -186,6 +186,22 @@
 
 	}
 
+	.brightcove-datetime-wrapper {
+		display: flex;
+	}
+
+	.brightcove-datetime-colon {
+		width: 10px;
+    	min-width: auto;
+    	margin-right: 0;
+    	font-size: 14px;
+	}
+
+	.schedule-start-date,
+	.schedule-end-date {
+		margin-right: calc(4% + 7px);
+	}
+
 }
 
 .brightcove.media-frame-menu {
