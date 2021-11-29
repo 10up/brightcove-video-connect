@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 5.8
-Stable tag: 2.3.1
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ With this plugin, developed by 10up.com, you have the power to handle multiple a
 
 == Installation and Usage and FAQ ==
 
-For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://support.brightcove.com/getting-started-brightcove-video-connect-wordpress-cms).
+For installation, usage, and Frequently Asked Question please see the [Brightcove Support Site](https://integrations.support.brightcove.com/wordpress/getting-started-brightcove-video-connect-wordpress-cms.html).
 
 == Screenshots ==
 
@@ -38,6 +38,10 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 14. Selecting a playlist to show the details on the sidebar.
 
 == Changelog ==
+
+= 2.4.0 =
+
+* Add: In-Page Experiences.
 
 = 2.3.1 =
 
