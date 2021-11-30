@@ -52,8 +52,11 @@ var MediaView = BrightcoveView.extend({
 	render: function () {
 		var options = this.model.toJSON();
 		options.duration = this.model.getReadableDuration();
-		options.updated_at_readable = this.model.getReadableDate('updated_at');
+		options.updated_at_readable = options.updatedAt
+			? this.model.getReadableDate('updatedAt')
+			: this.model.getReadableDate('updated_at');
 		options.account_name = this.model.getAccountName();
+		options.height = this.model.getReadableDate('height');
 
 		if (options.viewType === 'existingPlaylists') {
 			this.template = wp.template('brightcove-playlist-edit-video-in-playlist');

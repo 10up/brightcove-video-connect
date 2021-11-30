@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.4.0] - 2021-11-29
+
+### Added
+- In-Page Experiences. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#239](https://github.com/10up/brightcove-video-connect/pull/239).
+
 ## [2.3.1] - 2021-11-04
 
 ### Fixed
@@ -336,6 +341,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.4.0]: https://github.com/10up/brightcove-video-connect/compare/2.3.1...2.4.0
 [2.3.1]: https://github.com/10up/brightcove-video-connect/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/10up/brightcove-video-connect/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/10up/brightcove-video-connect/compare/2.2.0...2.2.1

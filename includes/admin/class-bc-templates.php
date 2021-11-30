@@ -374,6 +374,7 @@ class BC_Admin_Templates {
 						<a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' ); ?></a>
 						<a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' ); ?></a>
 						<a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' ); ?></a>
+						<a href="#" class="brightcove in-page-experiences media-menu-item"><?php esc_html_e( 'In-Page Experiences', 'brightcove' ); ?></a>
 						<a href="#" class="brightcove video-experience media-menu-item"><?php esc_html_e( 'Video Experience', 'brightcove' ); ?></a>
 						<a href="#" class="brightcove playlist-experience media-menu-item"><?php esc_html_e( 'Playlist Experience', 'brightcove' ); ?></a>
 					</div>
@@ -1033,6 +1034,58 @@ class BC_Admin_Templates {
 
 						<textarea class="clear" name="shortcode" id="shortcode" cols="40" rows="8" readonly></textarea>
 
+					<?php endif; ?>
+				</div>
+			</div>
+		</script>
+
+		<?php /* Used by views/media-details.js */ ?>
+		<script type="text/html" id="tmpl-brightcove-media-item-details-inpageexperiences">
+			<div class="attachment-detail js--select-attachment type-list subtype-{{ data.subtype }} {{ data.orientation }}">
+				<div class="thumbnail 4">
+					<img src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/video-playlist-large.png' ); ?>" class="detail-icon" draggable="false" width="300" height="172"  />
+				</div>
+
+				<div class="inpageexperiences-info">
+					<span class="inpageexperiences-name">{{ data.name }}</span>
+				</div>
+
+				<div class="inpageexperiences-details">
+					<span class="left-col">
+						<?php esc_html_e( 'Experience ID: ', 'brightcove' ); ?>
+					</span>
+					<span class="data">{{ data.id }}</span>
+
+					<span class="left-col"><?php esc_html_e( 'Account Name: ', 'brightcove' ); ?></span><span class="right-col">{{ data.account_name }}</span>
+					<span class="left-col"><?php esc_html_e( 'Created At: ', 'brightcove' ); ?></span><span class="right-col">{{ data.created_at_readable }}</span>
+					<span class="left-col"><?php esc_html_e( 'Updated At: ', 'brightcove' ); ?></span><span class="right-col">{{ data.updated_at_readable }}</span>
+
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'edit' === $parent_base ) :
+						?>
+						<label for="embed-style-in-page">
+							<?php esc_html_e( 'Embed Style: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="radio" value="in-page" id="embed-style-in-page" checked name="embed-style"><?php esc_html_e( 'JavaScript', 'brightcove' ); ?>
+							<input type="radio" value="iframe" id="embed-style-iframe" name="embed-style"><?php esc_html_e( 'iFrame', 'brightcove' ); ?>
+						</div>
+
+						<label for="generate-shortcode">
+							<?php esc_html_e( 'Shortcode', 'brightcove' ); ?>
+						</label>
+						<select name="generate-shortcode" id="generate-shortcode" class="right-col">
+							<option value="autogenerate"><?php esc_html_e( 'Auto generate', 'brightcove' ); ?></option>
+							<option value="manual"><?php esc_html_e( 'Manual', 'brightcove' ); ?></option>
+						</select>
+
+						<input type="hidden" id="height" name="height" value="{{ data.height }}" />
+						<input type="hidden" id="width" name="width" value="{{ data.width }}" />
+
+						<textarea class="clear" name="shortcode" id="shortcode" cols="40" rows="8" readonly></textarea>
 					<?php endif; ?>
 				</div>
 			</div>

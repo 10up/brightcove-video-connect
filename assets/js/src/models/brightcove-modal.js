@@ -63,6 +63,17 @@ var BrightcoveModalModel = Backbone.Model.extend({
 				tags: 'all',
 				viewType: 'grid',
 			},
+			'in-page-experiences': {
+				accounts: 'all',
+				date: 'all',
+				embedType: 'modal',
+				mediaType: 'inpageexperiences',
+				mode: 'manager',
+				preload: true,
+				search: '',
+				tags: 'all',
+				viewType: 'grid',
+			},
 		};
 
 		if (undefined !== settings[tab]) {

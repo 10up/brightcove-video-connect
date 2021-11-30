@@ -3,7 +3,7 @@
  * Plugin Name: Brightcove Video Connect
  * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
  * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version: 2.3.1
+ * Version: 2.4.0
  * Author: 10up
  * Author URI: http://10up.com
  * License: GPLv2+
@@ -29,7 +29,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  021.0.2301  USA
  */
 
-define( 'BRIGHTCOVE_VERSION', '2.3.1' );
+define( 'BRIGHTCOVE_VERSION', '2.4.0' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
@@ -57,6 +57,7 @@ function brightcove_deactivate() {
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php';
+require_once BRIGHTCOVE_PATH . 'includes/class-bc-in-page-experience-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-utility.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php';
 require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php';
@@ -80,6 +81,7 @@ if ( is_admin() ) {
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
+add_action( 'init', array( 'BC_In_Page_Experience_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
 
