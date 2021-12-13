@@ -57,22 +57,26 @@ class BC_Videos {
 			$update_data['state'] = $sanitized_post_data['state'];
 		}
 
-		if ( array_key_exists( 'scheduled_start_date', $sanitized_post_data ) ) {
+		if ( ! empty( $sanitized_post_data['scheduled_start_date'] ) ) {
 			$start_date = date_create( $sanitized_post_data['scheduled_start_date'], new DateTimeZone( 'Europe/London' ) );
 
 			if ( $start_date ) {
 				// ISO 8601
 				$update_data['schedule']['starts_at'] = $start_date->format( 'c' );
 			}
+		} else {
+			$update_data['schedule']['starts_at'] = null;
 		}
 
-		if ( array_key_exists( 'scheduled_start_date', $sanitized_post_data ) ) {
+		if ( ! empty( $sanitized_post_data['scheduled_end_date'] ) ) {
 			$end_date = date_create( $sanitized_post_data['scheduled_end_date'], new DateTimeZone( 'Europe/London' ) );
 
 			if ( $end_date ) {
 				// ISO 8601
 				$update_data['schedule']['ends_at'] = $end_date->format( 'c' );
 			}
+		} else {
+			$update_data['schedule']['ends_at'] = null;
 		}
 
 		$bc_accounts->set_current_account( $sanitized_post_data['account'] );
