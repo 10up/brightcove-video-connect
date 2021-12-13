@@ -867,4 +867,37 @@ class BC_CMS_API extends BC_API {
 		$data = array( 'new_label' => $name );
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/labels/by_path/' . $path ), 'PATCH', $data );
 	}
+
+	/**
+	 * Get a list of all In-Page Experiences
+	 *
+	 * Retrieves a list of all In-Page Experiences in the user's account
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $query Keyword Search Query.
+	 * @return array|bool|mixed array of all playlists of false if failure
+	 */
+	public function in_page_experiences_list( $query = '' ) {
+
+		$url = self::CMS_BASE_URL . $this->get_account_id() . '/experiences';
+		if ( $query ) {
+			$url = add_query_arg( 'q', rawurlencode( $query ), $url );
+		}
+		$results = $this->send_request( esc_url_raw( $url ) );
+
+		if ( is_array( $results ) ) {
+
+			foreach ( $results as $index => $result ) {
+
+				// Note: the width and height parameters added here are currently unused.
+				$results[ $index ]['width']  = apply_filters( 'bv_playlist_default_width', 0 );
+				$results[ $index ]['height'] = apply_filters( 'bv_playlist_default_height', 0 );
+
+			}
+		}
+
+		return $results;
+
+	}
 }

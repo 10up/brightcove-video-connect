@@ -566,7 +566,7 @@ class BC_Admin_Media_API {
 
 		$type = isset( $_POST['type'] ) ? sanitize_key( $_POST['type'] ) : false;
 
-		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience', 'playlistexperience' ) ) ) {
+		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience', 'playlistexperience', 'inpageexperiences' ) ) ) {
 
 			wp_send_json_error( esc_html__( 'Invalid Search Type', 'brightcove' ) );
 			exit; // Type can only be videos or playlists.
@@ -678,7 +678,7 @@ class BC_Admin_Media_API {
 				$results = $ordered_results;
 
 			}
-		} else {
+		} elseif ( 'playlists' === $type || 'playlistexperience' === $type ) {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 
@@ -695,6 +695,28 @@ class BC_Admin_Media_API {
 			if ( is_wp_error( $results ) ) {
 				wp_send_json_error();
 			}
+		} elseif ( 'inpageexperiences' === $type ) {
+			if ( ! is_numeric( $account_id ) ) {
+				$account_id = $bc_accounts->get_account_id();
+			}
+
+			$bc_accounts->set_current_account_by_id( $account_id );
+
+			for ( $i = 0; $i < $tries; $i ++ ) {
+				$results = $this->experiences_api->get_experiences_by_account_id( $account_id );
+
+				if ( ! is_wp_error( $results ) ) {
+					break;
+				} else {
+					sleep( 1 ); // Sleep for 1 second on a failure
+				}
+			}
+
+			if ( is_wp_error( $results ) || ! isset( $results['items'] ) ) {
+				wp_send_json_error();
+			}
+
+			$results = $results['items'];
 		}
 
 		// Get a list of available custom fields

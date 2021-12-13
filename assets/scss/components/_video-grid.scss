@@ -263,13 +263,15 @@
 		}
 
 		.video-info,
-		.playlist-info {
+		.playlist-info,
+		.inpageexperiences-info {
 
 			margin   : 10px 0;
 			overflow : hidden;
 
 			.video-name,
-			.playlist-name {
+			.playlist-name,
+			.inpageexperiences-name {
 				clear       : both;
 				float       : left;
 				font-size   : 130%;
@@ -311,7 +313,7 @@
 			}
 		}
 
-		.video-details, .playlist-details {
+		.video-details, .playlist-details, .inpageexperiences-details {
 			.left-col, label {
 				display: inline-block;
 				float: left;
