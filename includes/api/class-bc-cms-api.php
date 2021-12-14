@@ -480,6 +480,26 @@ class BC_CMS_API extends BC_API {
 				$results[ $index ]['width']  = apply_filters( 'bv_video_default_width', 0 );
 				$results[ $index ]['height'] = apply_filters( 'bv_video_default_height', 0 );
 
+				if ( ! empty( $result['schedule'] ) ) {
+
+					if ( ! empty( $result['schedule']['starts_at'] ) ) {
+						$start_date = date_create( $result['schedule']['starts_at'], new DateTimeZone( 'Europe/London' ) );
+
+						$results[ $index ]['schedule_start_date']   = $start_date ? $start_date->format( 'F d, Y' ) : '';
+						$results[ $index ]['schedule_start_hour']   = $start_date ? $start_date->format( 'h' ) : '';
+						$results[ $index ]['schedule_start_minute'] = $start_date ? $start_date->format( 'i' ) : '';
+						$results[ $index ]['schedule_start_am_pm']  = $start_date ? $start_date->format( 'A' ) : '';
+					}
+
+					if ( ! empty( $result['schedule']['ends_at'] ) ) {
+						$end_date = date_create( $result['schedule']['ends_at'], new DateTimeZone( 'Europe/London' ) );
+
+						$results[ $index ]['schedule_end_date']   = $end_date ? $end_date->format( 'F d, Y' ) : '';
+						$results[ $index ]['schedule_end_hour']   = $end_date ? $end_date->format( 'h' ) : '';
+						$results[ $index ]['schedule_end_minute'] = $end_date ? $end_date->format( 'i' ) : '';
+						$results[ $index ]['schedule_end_am_pm']  = $end_date ? $end_date->format( 'A' ) : '';
+					}
+				}
 			}
 		}
 
