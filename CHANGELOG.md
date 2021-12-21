@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.5.0] - 2021-12-21
+
+### Added
+- State, Scheduled Start Date, and Scheduled End Date fields to the video edit screen. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#241](https://github.com/10up/brightcove-video-connect/pull/241).
+
 ## [2.4.0] - 2021-11-29
 
 ### Added
@@ -341,6 +346,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.5.0]: https://github.com/10up/brightcove-video-connect/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/10up/brightcove-video-connect/compare/2.3.1...2.4.0
 [2.3.1]: https://github.com/10up/brightcove-video-connect/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/10up/brightcove-video-connect/compare/2.2.1...2.3.0

@@ -80,6 +80,9 @@ var MediaModel = Backbone.Model.extend({
 				options.data.type = 'playlists';
 			} else {
 				options.data.video_id = this.id;
+				options.data.state = this.get('state');
+				options.data.scheduled_start_date = this.get('scheduled_start_date');
+				options.data.scheduled_end_date = this.get('scheduled_end_date');
 			}
 
 			options.success = this.successFunction;
@@ -3126,9 +3129,34 @@ var VideoEditView = BrightcoveView.extend({
 		$mediaFrame.find('.delete-action').hide();
 
 		wpbc.broadcast.trigger('spinner:on');
+		this.model.set('state', this.$el.find('.brightcove-state').val());
 		this.model.set('name', this.$el.find('.brightcove-name').val());
 		this.model.set('description', this.$el.find('.brightcove-description').val());
 		this.model.set('long_description', this.$el.find('.brightcove-long-description').val());
+
+		const startDate = this.$el.find('.brightcove-start-date').val();
+		if (startDate) {
+			const startDateHour = this.$el.find('.brightcove-start-date-hour').val();
+			const startDateMinute = this.$el.find('.brightcove-start-date-minute').val();
+			const startDateAMPM = this.$el.find('.brightcove-start-date-am-pm').val();
+
+			this.model.set(
+				'scheduled_start_date',
+				`${startDate} ${startDateHour}:${startDateMinute}:00 ${startDateAMPM}`,
+			);
+		}
+
+		const endDate = this.$el.find('.brightcove-end-date').val();
+		if (endDate) {
+			const endDateHour = this.$el.find('.brightcove-end-date-hour').val();
+			const endDateMinute = this.$el.find('.brightcove-end-date-minute').val();
+			const endDateAMPM = this.$el.find('.brightcove-end-date-am-pm').val();
+
+			this.model.set(
+				'scheduled_end_date',
+				`${endDate} ${endDateHour}:${endDateMinute}:00 ${endDateAMPM}`,
+			);
+		}
 
 		// Trim whitespace and commas from tags beginning/end.
 		this.model.set(
@@ -3272,6 +3300,8 @@ var VideoEditView = BrightcoveView.extend({
 
 		// Render the model into the template
 		this.$el.html(this.template(options));
+
+		this.$('.brightcove-datetime').datepicker();
 
 		// Render custom fields into the template
 		var customContainer = this.$el.find('#brightcove-custom-fields'),

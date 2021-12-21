@@ -258,6 +258,10 @@ class BC_Utility {
 
 		foreach ( $args as $index => $value ) {
 
+			if ( is_null( $value ) ) {
+				continue;
+			}
+
 			if ( is_array( $value ) ) {
 				$args[ $index ] = self::sanitize_payload_args_recursive( $value );
 			} else {
