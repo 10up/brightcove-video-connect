@@ -321,12 +321,16 @@ class BC_Setup {
 		$player_api = new BC_Player_Management_API2();
 		$players    = $player_api->get_all_players();
 
+		$experiences_api = new BC_Experiences_API();
+		$experiences     = $experiences_api->get_experiences();
+
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => self::preload_params(),
 			'wp_version'     => $wp_version,
 			'languages'      => BC_Utility::languages(),
 			'players'        => $players,
+			'experiences'    => $experiences,
 			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
 			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
