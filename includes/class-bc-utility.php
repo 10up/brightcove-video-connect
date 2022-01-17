@@ -822,6 +822,7 @@ class BC_Utility {
 		$id          = self::sanitize_id( $atts['video_id'] );
 		$height      = sanitize_text_field( $atts['height'] );
 		$width       = sanitize_text_field( $atts['width'] );
+		$sizing      = sanitize_text_field( $atts['sizing'] );
 		$min_width   = sanitize_text_field( $atts['min_width'] );
 		$max_width   = sanitize_text_field( $atts['max_width'] );
 		$padding_top = sanitize_text_field( $atts['padding_top'] );
@@ -863,7 +864,7 @@ class BC_Utility {
 							data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 							data-embed="default" class="video-js"
 							controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
-							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+							style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</video>
 
 					<script src="<?php echo esc_url( $js_src ); ?>"></script>
@@ -892,7 +893,7 @@ class BC_Utility {
 							allowfullscreen
 							webkitallowfullscreen
 							mozallowfullscreen
-							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+                            style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</iframe>
 				</div>
 			</div>
@@ -960,6 +961,7 @@ class BC_Utility {
 		$id          = self::sanitize_id( $atts['playlist_id'] );
 		$height      = sanitize_text_field( $atts['height'] );
 		$width       = sanitize_text_field( $atts['width'] );
+		$sizing      = sanitize_text_field( $atts['sizing'] );
 		$min_width   = sanitize_text_field( $atts['min_width'] );
 		$max_width   = sanitize_text_field( $atts['max_width'] );
 		$padding_top = sanitize_text_field( $atts['padding_top'] );
@@ -1116,7 +1118,7 @@ class BC_Utility {
 							allowfullscreen
 							webkitallowfullscreen
 							mozallowfullscreen
-							style="width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+							style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</iframe>
 				</div>
 			</div>
