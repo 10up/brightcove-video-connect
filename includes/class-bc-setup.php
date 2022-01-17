@@ -330,7 +330,7 @@ class BC_Setup {
 			'wp_version'     => $wp_version,
 			'languages'      => BC_Utility::languages(),
 			'players'        => $players,
-			'experiences' => $experiences,
+			'experiences'    => $experiences,
 			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
 			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
