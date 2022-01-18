@@ -27,6 +27,7 @@ class BC_Playlist_Shortcode {
 			'autoplay'    => '',
 			'mute'        => '',
 			'embed'       => '',
+			'sizing'      => 'responsive',
 			'padding_top' => '56.25%',
 			'min_width'   => '0px',
 			'max_width'   => '100%',
