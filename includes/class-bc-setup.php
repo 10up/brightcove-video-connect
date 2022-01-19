@@ -128,22 +128,22 @@ class BC_Setup {
 					'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
 					'attributes'      => array(
 						'account_id'            => array(
-							'type' => 'int',
+							'type' => 'string',
 						),
 						'player_id'             => array(
 							'type' => 'string',
 						),
 						'video_id'              => array(
-							'type' => 'int',
+							'type' => 'string',
 						),
 						'playlist_id'           => array(
-							'type' => 'int',
+							'type' => 'string',
 						),
 						'experience_id'         => array(
 							'type' => 'string',
 						),
 						'video_ids'             => array(
-							'type' => 'int',
+							'type' => 'string',
 						),
 						'embed'                 => array(
 							'type' => 'string',
