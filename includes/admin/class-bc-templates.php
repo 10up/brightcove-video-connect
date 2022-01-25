@@ -729,6 +729,15 @@ class BC_Admin_Templates {
 					</span>
 					<span class="right-col">{{ data.id }}</span>
 
+					<span class="left-col">
+						<?php esc_html_e( 'Video URL: ', 'brightcove' ); ?>
+					</span>
+					<span class="right-col">
+						<a href="https://players.brightcove.net/{{data.account_id}}/default_default/index.html?videoId={{data.id}}">
+							https://players.brightcove.net/{{data.account_id}}/default_default/index.html?videoId={{data.id}}
+						</a>
+					</span>
+
 					<?php
 					$screen      = get_current_screen();
 					$parent_base = $screen->parent_base;

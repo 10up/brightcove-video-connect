@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.5.1] - 2022-01-24
+
+### Added
+- Ability to display video URL in videos page. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#247](https://github.com/10up/brightcove-video-connect/pull/247).
+
+### Fixed
+- Video and Playlist experiences displays wrong block settings. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#250](https://github.com/10up/brightcove-video-connect/pull/250).
+- Update attribute type from int to string. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#246](https://github.com/10up/brightcove-video-connect/pull/246).
+- Pass sizing attribute to determine if responsiveness should be enabled. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#249](https://github.com/10up/brightcove-video-connect/pull/249).
+- Fix broken Brightcove experiences embedding. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#248](https://github.com/10up/brightcove-video-connect/pull/248)  
+
 ## [2.5.0] - 2021-12-21
 
 ### Added
@@ -346,6 +357,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.5.1]: https://github.com/10up/brightcove-video-connect/compare/2.5.0...2.5.1
 [2.5.0]: https://github.com/10up/brightcove-video-connect/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/10up/brightcove-video-connect/compare/2.3.1...2.4.0
 [2.3.1]: https://github.com/10up/brightcove-video-connect/compare/2.3.0...2.3.1
