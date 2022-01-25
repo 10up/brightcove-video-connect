@@ -400,6 +400,8 @@
 				},
 			});
 
+			const isExperience = inPageExperienceId || experienceId;
+
 			return [
 				userPermission ? controls : '',
 				el('iframe', {
@@ -423,7 +425,7 @@
 							el('p', {}, sprintf(__('Video ID: %1$s', 'brightcove'), videoId)),
 						playlistId &&
 							el('p', {}, sprintf(__('Playlist ID: %1$s', 'brightcove'), playlistId)),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.SelectControl, {
 								label: __('Video Player', 'brightcove'),
 								value: playerId,
@@ -435,7 +437,7 @@
 									});
 								},
 							}),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.CheckboxControl, {
 								label: __('Autoplay', 'brightcove'),
 								checked: autoplay,
@@ -446,7 +448,7 @@
 									});
 								},
 							}),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.CheckboxControl, {
 								label: __('Mute', 'brightcove'),
 								checked: mute,
@@ -457,7 +459,7 @@
 									});
 								},
 							}),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.CheckboxControl, {
 								label: __('Plays in line', 'brightcove'),
 								checked: playsinline,
@@ -469,7 +471,7 @@
 								},
 							}),
 						!playlistId &&
-							!inPageExperienceId &&
+							!isExperience &&
 							el(components.CheckboxControl, {
 								label: __('Enable Picture in Picture', 'brightcove'),
 								checked: pictureinpicture,
@@ -487,7 +489,7 @@
 									embedStyleField,
 							  )
 							: embedStyleField,
-						!inPageExperienceId &&
+						!isExperience &&
 							(embed === 'in-page-horizontal' || embed === 'in-page-vertical'
 								? el(
 										components.Disabled,
@@ -495,7 +497,7 @@
 										sizingField,
 								  )
 								: sizingField),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.SelectControl, {
 								label: __('Aspect Ratio', 'brightcove'),
 								value: aspectRatio,
@@ -551,7 +553,7 @@
 									});
 								},
 							}),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.TextControl, {
 								label: __('Width', 'brightcove'),
 								type: 'number',
@@ -571,7 +573,7 @@
 									});
 								},
 							}),
-						!inPageExperienceId &&
+						!isExperience &&
 							el(components.TextControl, {
 								label: __('Height', 'brightcove'),
 								type: 'number',
