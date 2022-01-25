@@ -39,6 +39,18 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 2.5.1 =
+
+Added
+* Ability to display video URL in videos page.
+
+Fixed
+
+* Video and Playlist experiences displays wrong block settings.
+* Update attribute type from int to string.
+* Pass sizing attribute to determine if responsiveness should be enabled.
+* Fix broken Brightcove experiences embedding.
+
 = 2.5.0 =
 
 * Add:  State, Scheduled Start Date, and Scheduled End Date fields to the video edit screen.

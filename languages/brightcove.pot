@@ -1,38 +1,18 @@
-# Copyright (C) 2021 10up
-# This file is distributed under the same license as the Brightcove Video Connect plugin.
+# Copyright (C) 2022 10up
+# This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
 "Project-Id-Version: Brightcove Video Connect 2.5.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/brightcove-video-connect\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/brightcove-video-connect\n"
+"POT-Creation-Date: 2022-01-24 19:52:22+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-20T22:21:30+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
-"X-Domain: brightcove\n"
-
-#. Plugin Name of the plugin
-msgid "Brightcove Video Connect"
-msgstr ""
-
-#. Plugin URI of the plugin
-msgid "https://wordpress.org/plugins/brightcove-video-connect/"
-msgstr ""
-
-#. Description of the plugin
-msgid "A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities"
-msgstr ""
-
-#. Author of the plugin
-msgid "10up"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "http://10up.com"
-msgstr ""
+"X-Generator: grunt-wp-i18n 1.0.3\n"
 
 #: includes/admin/api/class-bc-admin-media-api.php:40
 msgid "You do not have permission to use this Brightcove Account"
@@ -123,12 +103,47 @@ msgid "Parent Label"
 msgstr ""
 
 #: includes/admin/class-bc-admin-labels-page.php:88
-msgid "Type the hierarchy you want your label to have. Example \"/animals/mammals/\" Leave blank if you do not wish to add a hierarchy."
+msgid ""
+"Type the hierarchy you want your label to have. Example "
+"\"/animals/mammals/\" Leave blank if you do not wish to add a hierarchy."
+msgstr ""
+
+#: includes/admin/class-bc-admin-labels-page.php:108
+#: includes/admin/class-bc-admin-labels-page.php:157
+msgid "Select bulk action"
+msgstr ""
+
+#: includes/admin/class-bc-admin-labels-page.php:110
+msgid "Bulk actions"
+msgstr ""
+
+#: includes/admin/class-bc-admin-labels-page.php:111
+#: includes/admin/class-bc-templates.php:403
+msgid "Delete"
+msgstr ""
+
+#: includes/admin/class-bc-admin-labels-page.php:119
+#: includes/admin/class-bc-admin-labels-page.php:150
+msgid "Select All"
+msgstr ""
+
+#: includes/admin/class-bc-admin-labels-page.php:119
+#: includes/admin/class-bc-admin-labels-page.php:151
+#: includes/admin/class-bc-templates.php:113
+#: includes/admin/class-bc-templates.php:559
+msgid "Name"
+msgstr ""
+
+#: includes/admin/class-bc-admin-labels-page.php:139
+#: includes/admin/class-bc-templates.php:666
+#: includes/admin/class-bc-templates.php:708
+#: includes/admin/class-bc-templates.php:711
+#: includes/admin/class-bc-templates.php:1017
+msgid "Edit"
 msgstr ""
 
 #: includes/admin/class-bc-admin-menu.php:18
 #: includes/admin/class-bc-templates.php:456
-#: assets/js/src/block.js:15
 msgid "Brightcove"
 msgstr ""
 
@@ -140,7 +155,7 @@ msgstr ""
 #: includes/admin/class-bc-admin-menu.php:19
 #: includes/admin/class-bc-templates.php:462
 #: includes/admin/class-bc-templates.php:651
-#: includes/admin/class-bc-templates.php:997
+#: includes/admin/class-bc-templates.php:1006
 msgid "Videos"
 msgstr ""
 
@@ -159,9 +174,7 @@ msgstr ""
 msgid "Brightcove Settings"
 msgstr ""
 
-#: includes/admin/class-bc-admin-menu.php:21
-#: includes/class-bc-utility.php:439
-#: assets/js/src/block.js:418
+#: includes/admin/class-bc-admin-menu.php:21 includes/class-bc-utility.php:439
 msgid "Settings"
 msgstr ""
 
@@ -175,8 +188,12 @@ msgid "Add Source"
 msgstr ""
 
 #: includes/admin/class-bc-admin-playlists-page.php:49
-#: includes/class-bc-utility.php:977
-msgid "A specified Source does not have a playlist capable player <a href=\"https://studio.brightcove.com/products/videocloud/players/\">configured</a>. Make sure there is at least one player with \"Display Playlist\" enabled."
+#: includes/class-bc-utility.php:979
+msgid ""
+"A specified Source does not have a playlist capable player <a "
+"href=\"https://studio.brightcove.com/products/videocloud/players/\""
+">configured</a>. Make sure there is at least one player with \"Display "
+"Playlist\" enabled."
 msgstr ""
 
 #: includes/admin/class-bc-admin-settings-page.php:45
@@ -232,7 +249,9 @@ msgid "Delete Source"
 msgstr ""
 
 #: includes/admin/class-bc-admin-settings-page.php:145
-msgid "By deleting this source, WordPress will no longer have access to associated videos and playlists. Your content remains in Brightcove."
+msgid ""
+"By deleting this source, WordPress will no longer have access to associated "
+"videos and playlists. Your content remains in Brightcove."
 msgstr ""
 
 #: includes/admin/class-bc-admin-settings-page.php:206
@@ -300,7 +319,9 @@ msgid "account"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:266
-msgid "For more details on the different API permissions or settings below, please check out our documentation at"
+msgid ""
+"For more details on the different API permissions or settings below, please "
+"check out our documentation at"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:267
@@ -316,7 +337,9 @@ msgid "Client Secret"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:293
-msgid "A unique identifier generated by Brightcove, used with a client id. Serves as a password to authenticate a client"
+msgid ""
+"A unique identifier generated by Brightcove, used with a client id. Serves "
+"as a password to authenticate a client"
 msgstr ""
 
 #: includes/admin/class-bc-admin-sources.php:298
@@ -398,18 +421,13 @@ msgid "State"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:108
-#: includes/admin/class-bc-templates.php:1221
+#: includes/admin/class-bc-templates.php:1230
 msgid "Active"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:109
-#: includes/admin/class-bc-templates.php:1222
+#: includes/admin/class-bc-templates.php:1231
 msgid "Inactive"
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:113
-#: includes/admin/class-bc-templates.php:559
-msgid "Name"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:115
@@ -482,8 +500,7 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:275
 #: includes/admin/class-bc-templates.php:298
-#: includes/admin/class-bc-templates.php:313
-#: includes/class-bc-setup.php:334
+#: includes/admin/class-bc-templates.php:313 includes/class-bc-setup.php:338
 msgid "Select File"
 msgstr ""
 
@@ -495,8 +512,7 @@ msgstr ""
 msgid "Closed Captions"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:311
-#: includes/class-bc-setup.php:332
+#: includes/admin/class-bc-templates.php:311 includes/class-bc-setup.php:336
 msgid "Add Another Caption"
 msgstr ""
 
@@ -541,10 +557,6 @@ msgstr ""
 
 #: includes/admin/class-bc-templates.php:397
 msgid "Nothing yet ..."
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:403
-msgid "Delete"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:415
@@ -623,11 +635,6 @@ msgstr ""
 msgid "Drop files anywhere to upload"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:597
-msgctxt "Uploader: Drop files here - or - Select Files"
-msgid "or"
-msgstr ""
-
 #: includes/admin/class-bc-templates.php:598
 msgid "Select Files"
 msgstr ""
@@ -637,24 +644,19 @@ msgid "Maximum upload file size: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:617
-msgid "Please reference the readme.txt file of this plugin for further information on upload file size limits."
+msgid ""
+"Please reference the readme.txt file of this plugin for further information "
+"on upload file size limits."
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:649
-#: includes/admin/class-bc-templates.php:995
+#: includes/admin/class-bc-templates.php:1004
 msgid "Video"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:654
-#: includes/admin/class-bc-templates.php:1000
+#: includes/admin/class-bc-templates.php:1009
 msgid "Smart"
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:666
-#: includes/admin/class-bc-templates.php:708
-#: includes/admin/class-bc-templates.php:711
-#: includes/admin/class-bc-templates.php:1008
-msgid "Edit"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:667
@@ -664,8 +666,8 @@ msgid "Preview"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:723
-#: includes/admin/class-bc-templates.php:834
-#: includes/admin/class-bc-templates.php:912
+#: includes/admin/class-bc-templates.php:843
+#: includes/admin/class-bc-templates.php:921
 msgid "Source: "
 msgstr ""
 
@@ -673,267 +675,267 @@ msgstr ""
 msgid "Video ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:740
-#: includes/admin/class-bc-templates.php:1035
+#: includes/admin/class-bc-templates.php:733
+msgid "Video URL: "
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:749
+#: includes/admin/class-bc-templates.php:1044
 msgid "Video Player: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:751
-#: includes/admin/class-bc-templates.php:1046
+#: includes/admin/class-bc-templates.php:760
+#: includes/admin/class-bc-templates.php:1055
 msgid "Autoplay: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:758
-#: includes/admin/class-bc-templates.php:1053
+#: includes/admin/class-bc-templates.php:767
+#: includes/admin/class-bc-templates.php:1062
 msgid "Mute: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:765
-#: includes/admin/class-bc-templates.php:1060
+#: includes/admin/class-bc-templates.php:774
+#: includes/admin/class-bc-templates.php:1069
 msgid "Plays in line: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:771
+#: includes/admin/class-bc-templates.php:780
 msgid "Enable Picture in Picture: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:777
-#: includes/admin/class-bc-templates.php:864
-#: includes/admin/class-bc-templates.php:942
-#: includes/admin/class-bc-templates.php:1067
-#: includes/admin/class-bc-templates.php:1157
+#: includes/admin/class-bc-templates.php:786
+#: includes/admin/class-bc-templates.php:873
+#: includes/admin/class-bc-templates.php:951
+#: includes/admin/class-bc-templates.php:1076
+#: includes/admin/class-bc-templates.php:1166
 msgid "Embed Style: "
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:780
-#: includes/admin/class-bc-templates.php:867
-#: includes/admin/class-bc-templates.php:945
-#: includes/admin/class-bc-templates.php:1160
-#: assets/js/src/block.js:369
-msgid "JavaScript"
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:781
-#: includes/admin/class-bc-templates.php:868
-#: includes/admin/class-bc-templates.php:946
-#: includes/admin/class-bc-templates.php:1070
-#: includes/admin/class-bc-templates.php:1161
-#: assets/js/src/block.js:355
-msgid "iFrame"
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:785
-#: includes/admin/class-bc-templates.php:872
-#: includes/admin/class-bc-templates.php:950
-#: includes/admin/class-bc-templates.php:1088
-msgid "Sizing: "
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:788
-#: includes/admin/class-bc-templates.php:875
-#: includes/admin/class-bc-templates.php:953
-#: includes/admin/class-bc-templates.php:1091
-#: assets/js/src/block.js:378
-msgid "Responsive"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:789
 #: includes/admin/class-bc-templates.php:876
 #: includes/admin/class-bc-templates.php:954
-#: includes/admin/class-bc-templates.php:1092
-#: assets/js/src/block.js:381
-msgid "Fixed"
+#: includes/admin/class-bc-templates.php:1169
+msgid "JavaScript"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:793
-#: includes/admin/class-bc-templates.php:1096
-msgid "Aspect Ratio: "
+#: includes/admin/class-bc-templates.php:790
+#: includes/admin/class-bc-templates.php:877
+#: includes/admin/class-bc-templates.php:955
+#: includes/admin/class-bc-templates.php:1079
+#: includes/admin/class-bc-templates.php:1170
+msgid "iFrame"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:794
+#: includes/admin/class-bc-templates.php:881
+#: includes/admin/class-bc-templates.php:959
+#: includes/admin/class-bc-templates.php:1097
+msgid "Sizing: "
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:797
+#: includes/admin/class-bc-templates.php:884
+#: includes/admin/class-bc-templates.php:962
+#: includes/admin/class-bc-templates.php:1100
+msgid "Responsive"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:798
+#: includes/admin/class-bc-templates.php:885
+#: includes/admin/class-bc-templates.php:963
 #: includes/admin/class-bc-templates.php:1101
-#: assets/js/src/block.js:512
-msgid "Custom"
+msgid "Fixed"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:802
-#: includes/admin/class-bc-templates.php:880
-#: includes/admin/class-bc-templates.php:958
 #: includes/admin/class-bc-templates.php:1105
-msgid "Width: "
+msgid "Aspect Ratio: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:807
-#: includes/admin/class-bc-templates.php:885
-#: includes/admin/class-bc-templates.php:963
 #: includes/admin/class-bc-templates.php:1110
-msgid "Height: "
+msgid "Custom"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:812
-#: includes/admin/class-bc-templates.php:890
-#: includes/admin/class-bc-templates.php:968
-#: includes/admin/class-bc-templates.php:1115
-#: includes/admin/class-bc-templates.php:1165
-msgid "Shortcode"
-msgstr ""
-
-#: includes/admin/class-bc-templates.php:815
-#: includes/admin/class-bc-templates.php:893
-#: includes/admin/class-bc-templates.php:971
-#: includes/admin/class-bc-templates.php:1118
-#: includes/admin/class-bc-templates.php:1168
-msgid "Auto generate"
+#: includes/admin/class-bc-templates.php:811
+#: includes/admin/class-bc-templates.php:889
+#: includes/admin/class-bc-templates.php:967
+#: includes/admin/class-bc-templates.php:1114
+msgid "Width: "
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:816
 #: includes/admin/class-bc-templates.php:894
 #: includes/admin/class-bc-templates.php:972
 #: includes/admin/class-bc-templates.php:1119
-#: includes/admin/class-bc-templates.php:1169
+msgid "Height: "
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:821
+#: includes/admin/class-bc-templates.php:899
+#: includes/admin/class-bc-templates.php:977
+#: includes/admin/class-bc-templates.php:1124
+#: includes/admin/class-bc-templates.php:1174
+msgid "Shortcode"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:824
+#: includes/admin/class-bc-templates.php:902
+#: includes/admin/class-bc-templates.php:980
+#: includes/admin/class-bc-templates.php:1127
+#: includes/admin/class-bc-templates.php:1177
+msgid "Auto generate"
+msgstr ""
+
+#: includes/admin/class-bc-templates.php:825
+#: includes/admin/class-bc-templates.php:903
+#: includes/admin/class-bc-templates.php:981
+#: includes/admin/class-bc-templates.php:1128
+#: includes/admin/class-bc-templates.php:1178
 msgid "Manual"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:839
+#: includes/admin/class-bc-templates.php:848
 msgid "Video IDs: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:851
-#: includes/admin/class-bc-templates.php:929
+#: includes/admin/class-bc-templates.php:860
+#: includes/admin/class-bc-templates.php:938
 msgid "Experience Player: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:917
-#: includes/admin/class-bc-templates.php:1018
+#: includes/admin/class-bc-templates.php:926
+#: includes/admin/class-bc-templates.php:1027
 msgid "Playlist ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1022
-#: includes/admin/class-bc-templates.php:1146
+#: includes/admin/class-bc-templates.php:1031
+#: includes/admin/class-bc-templates.php:1155
 msgid "Account Name: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1023
-#: includes/admin/class-bc-templates.php:1147
+#: includes/admin/class-bc-templates.php:1032
+#: includes/admin/class-bc-templates.php:1156
 msgid "Created At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1024
-#: includes/admin/class-bc-templates.php:1148
+#: includes/admin/class-bc-templates.php:1033
+#: includes/admin/class-bc-templates.php:1157
 msgid "Updated At: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1025
+#: includes/admin/class-bc-templates.php:1034
 msgid "Playlist Type: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1077
-#: assets/js/src/block.js:360
+#: includes/admin/class-bc-templates.php:1086
 msgid "JavaScript Horizontal"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1084
-#: assets/js/src/block.js:364
+#: includes/admin/class-bc-templates.php:1093
 msgid "JavaScript Vertical"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1142
+#: includes/admin/class-bc-templates.php:1151
 msgid "Experience ID: "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1184
+#: includes/admin/class-bc-templates.php:1193
 msgid "Filter by source"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1200
+#: includes/admin/class-bc-templates.php:1209
 msgid "Filter by tag"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1202
+#: includes/admin/class-bc-templates.php:1211
 msgid "All tags"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1208
+#: includes/admin/class-bc-templates.php:1217
 msgid "Filter by folder"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1210
+#: includes/admin/class-bc-templates.php:1219
 msgid "All folders"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1217
+#: includes/admin/class-bc-templates.php:1226
 msgid "Filter by state"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1220
+#: includes/admin/class-bc-templates.php:1229
 msgid "All states"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1224
+#: includes/admin/class-bc-templates.php:1233
 msgid "Filter by label"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1226
+#: includes/admin/class-bc-templates.php:1235
 msgid "All Labels"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1238
-#: includes/admin/class-bc-templates.php:1251
+#: includes/admin/class-bc-templates.php:1247
+#: includes/admin/class-bc-templates.php:1260
 msgid "Please note that you can create new Experiences only from Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1243
+#: includes/admin/class-bc-templates.php:1252
 msgid "Leave videos unselected for default Experience behavior."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1259
+#: includes/admin/class-bc-templates.php:1268
 msgid "Please note that you can create new playlists only from Brightcove."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1264
+#: includes/admin/class-bc-templates.php:1273
 msgid "Hide Empty Playlists"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1267
+#: includes/admin/class-bc-templates.php:1276
 msgid "Delete Selected"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1272
+#: includes/admin/class-bc-templates.php:1281
 msgid "Search Media"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1273
-#: includes/admin/class-bc-templates.php:1274
+#: includes/admin/class-bc-templates.php:1282
+#: includes/admin/class-bc-templates.php:1283
 msgid "Search"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1275
+#: includes/admin/class-bc-templates.php:1284
 msgid "help"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1283
+#: includes/admin/class-bc-templates.php:1292
 msgid "the Brightcove Documentation page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1284
-#: includes/admin/class-bc-templates.php:1292
-#: includes/admin/class-bc-templates.php:1300
+#: includes/admin/class-bc-templates.php:1293
+#: includes/admin/class-bc-templates.php:1301
+#: includes/admin/class-bc-templates.php:1309
 msgid "Dismiss this notice."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1291
-msgid "This video was not able to be inserted into the page. Please try again later. This may be because the video is still processing. For more information, please visit "
+#: includes/admin/class-bc-templates.php:1300
+msgid ""
+"This video was not able to be inserted into the page. Please try again "
+"later. This may be because the video is still processing. For more "
+"information, please visit "
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1291
+#: includes/admin/class-bc-templates.php:1300
 msgid "the Brightcove Status page."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1299
+#: includes/admin/class-bc-templates.php:1308
 msgid "Search exact word or phrases by wrapping search in quotes."
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:1299
+#: includes/admin/class-bc-templates.php:1308
 msgid "Example:\"My Favorite Video\""
 msgstr ""
 
@@ -958,7 +960,9 @@ msgid "New Account"
 msgstr ""
 
 #: includes/class-bc-accounts.php:131
-msgid "Account credentials are invalid. Please ensure you are using all the correct information from Brightcove Video Cloud Studio to secure a token."
+msgid ""
+"Account credentials are invalid. Please ensure you are using all the "
+"correct information from Brightcove Video Cloud Studio to secure a token."
 msgstr ""
 
 #: includes/class-bc-accounts.php:148
@@ -1042,28 +1046,41 @@ msgid "Binary content is not supported by the Logging mechanism."
 msgstr ""
 
 #: includes/class-bc-logging.php:35
-msgid "You must provide a file path and name to use <pre>file</pre> mode. Writing to the syslog instead."
+msgid ""
+"You must provide a file path and name to use <pre>file</pre> mode. Writing "
+"to the syslog instead."
 msgstr ""
 
 #: includes/class-bc-logging.php:40
-msgid "The file specified, <pre>%s</pre> does not exist. Writing to the syslog instead."
+msgid ""
+"The file specified, <pre>%s</pre> does not exist. Writing to the syslog "
+"instead."
 msgstr ""
 
 #: includes/class-bc-logging.php:46
-msgid "The file specified, <pre>%s</pre> is not writable byt the web server. Writing to the syslog instead."
+msgid ""
+"The file specified, <pre>%s</pre> is not writable byt the web server. "
+"Writing to the syslog instead."
 msgstr ""
 
 #: includes/class-bc-setup.php:225
-#: assets/js/src/block.js:288
 msgid "Brightcove Media"
 msgstr ""
 
+#: includes/class-bc-setup.php:281
+msgid "Allowed Files"
+msgstr ""
+
 #: includes/class-bc-setup.php:294
-msgid "Deleting this video will prevent it from showing in any existing posts. Are you sure you want to delete?"
+msgid ""
+"Deleting this video will prevent it from showing in any existing posts. Are "
+"you sure you want to delete?"
 msgstr ""
 
 #: includes/class-bc-setup.php:295
-msgid "We are currently performing a sync of your new Brightcove source, you may not see all videos and playlists until that is complete."
+msgid ""
+"We are currently performing a sync of your new Brightcove source, you may "
+"not see all videos and playlists until that is complete."
 msgstr ""
 
 #: includes/class-bc-setup.php:296
@@ -1071,763 +1088,774 @@ msgid "Successfully uploaded file with name %%s%%."
 msgstr ""
 
 #: includes/class-bc-setup.php:297
-msgid "We were unable to upload the file with name %%s%%. Please try reuploading it again."
+msgid ""
+"We were unable to upload the file with name %%s%%. Please try reuploading "
+"it again."
 msgstr ""
 
-#: includes/class-bc-setup.php:330
-msgid "This file is not the proper format. Please use .vtt files, for more information visit"
+#: includes/class-bc-setup.php:334
+msgid ""
+"This file is not the proper format. Please use .vtt files, for more "
+"information visit"
 msgstr ""
 
-#: includes/class-bc-setup.php:333
+#: includes/class-bc-setup.php:337
 msgid "Add another remote file"
 msgstr ""
 
-#: includes/class-bc-setup.php:335
+#: includes/class-bc-setup.php:339
 msgid "Use a remote file instead"
 msgstr ""
 
-#: includes/class-bc-setup.php:336
-msgid "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page."
+#: includes/class-bc-setup.php:340
+msgid ""
+"Sorry! We weren't able to reach the Brightcove API even after trying a few "
+"times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:443
-msgid "It looks like one or more of your accounts API authentication changed recently. Please update your settings "
+#: includes/class-bc-setup.php:447
+msgid ""
+"It looks like one or more of your accounts API authentication changed "
+"recently. Please update your settings "
 msgstr ""
 
-#: includes/class-bc-setup.php:445
-#: includes/class-bc-setup.php:463
+#: includes/class-bc-setup.php:449 includes/class-bc-setup.php:467
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:461
+#: includes/class-bc-setup.php:465
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:480
+#: includes/class-bc-setup.php:484
 msgid "BC In Process Videos"
 msgstr ""
 
-#: includes/class-bc-setup.php:508
-msgid "<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> has been <strong>deactivated</strong> because it's incompatibale with WordPress version %s! The minimum compatible WordPress version is <strong>4.2</strong></p></div>"
-msgstr ""
-
-#: includes/class-bc-utility.php:1188
-msgid "English"
-msgstr ""
-
-#: includes/class-bc-utility.php:1189
-msgid "Abkhaz"
+#: includes/class-bc-setup.php:512
+msgid ""
+"<div class=\"error\"><p><strong>Brightcove Video Cloud Enhanced</strong> "
+"has been <strong>deactivated</strong> because it's incompatibale with "
+"WordPress version %s! The minimum compatible WordPress version is "
+"<strong>4.2</strong></p></div>"
 msgstr ""
 
 #: includes/class-bc-utility.php:1190
-msgid "Afar"
+msgid "English"
 msgstr ""
 
 #: includes/class-bc-utility.php:1191
-msgid "Afrikaans"
+msgid "Abkhaz"
 msgstr ""
 
 #: includes/class-bc-utility.php:1192
-msgid "Akan"
+msgid "Afar"
 msgstr ""
 
 #: includes/class-bc-utility.php:1193
-msgid "Albanian"
+msgid "Afrikaans"
 msgstr ""
 
 #: includes/class-bc-utility.php:1194
-msgid "Amharic"
+msgid "Akan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1195
-msgid "Arabic"
+msgid "Albanian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1196
-msgid "Aragonese"
+msgid "Amharic"
 msgstr ""
 
 #: includes/class-bc-utility.php:1197
-msgid "Armenian"
+msgid "Arabic"
 msgstr ""
 
 #: includes/class-bc-utility.php:1198
-msgid "Assamese"
+msgid "Aragonese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1199
-msgid "Avaric"
+msgid "Armenian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1200
-msgid "Avestan"
+msgid "Assamese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1201
-msgid "Aymara"
+msgid "Avaric"
 msgstr ""
 
 #: includes/class-bc-utility.php:1202
-msgid "Azerbaijani"
+msgid "Avestan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1203
-msgid "Bambara"
+msgid "Aymara"
 msgstr ""
 
 #: includes/class-bc-utility.php:1204
-msgid "Bashkir"
+msgid "Azerbaijani"
 msgstr ""
 
 #: includes/class-bc-utility.php:1205
-msgid "Basque"
+msgid "Bambara"
 msgstr ""
 
 #: includes/class-bc-utility.php:1206
-msgid "Belarusian"
+msgid "Bashkir"
 msgstr ""
 
 #: includes/class-bc-utility.php:1207
-msgid "Bengali"
+msgid "Basque"
 msgstr ""
 
 #: includes/class-bc-utility.php:1208
-msgid "Bihari"
+msgid "Belarusian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1209
-msgid "Bislama"
+msgid "Bengali"
 msgstr ""
 
 #: includes/class-bc-utility.php:1210
-msgid "Bosnian"
+msgid "Bihari"
 msgstr ""
 
 #: includes/class-bc-utility.php:1211
-msgid "Breton"
+msgid "Bislama"
 msgstr ""
 
 #: includes/class-bc-utility.php:1212
-msgid "Bulgarian"
+msgid "Bosnian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1213
-msgid "Burmese"
+msgid "Breton"
 msgstr ""
 
 #: includes/class-bc-utility.php:1214
-msgid "Catalan"
+msgid "Bulgarian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1215
-msgid "Chomorro"
+msgid "Burmese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1216
-msgid "Chechen"
+msgid "Catalan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1217
-msgid "Chichewa"
+msgid "Chomorro"
 msgstr ""
 
 #: includes/class-bc-utility.php:1218
-msgid "Chinese"
+msgid "Chechen"
 msgstr ""
 
 #: includes/class-bc-utility.php:1219
-msgid "Chuvash"
+msgid "Chichewa"
 msgstr ""
 
 #: includes/class-bc-utility.php:1220
-msgid "Cornish"
+msgid "Chinese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1221
-msgid "Corsican"
+msgid "Chuvash"
 msgstr ""
 
 #: includes/class-bc-utility.php:1222
-msgid "Cree"
+msgid "Cornish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1223
-msgid "Croatian"
+msgid "Corsican"
 msgstr ""
 
 #: includes/class-bc-utility.php:1224
-msgid "Czech"
+msgid "Cree"
 msgstr ""
 
 #: includes/class-bc-utility.php:1225
-msgid "Danish"
+msgid "Croatian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1226
-msgid "Divehi"
+msgid "Czech"
 msgstr ""
 
 #: includes/class-bc-utility.php:1227
-msgid "Dutch"
+msgid "Danish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1228
-msgid "Dzongkha"
+msgid "Divehi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1229
-msgid "Esperanto"
+msgid "Dutch"
 msgstr ""
 
 #: includes/class-bc-utility.php:1230
-msgid "Estonian"
+msgid "Dzongkha"
 msgstr ""
 
 #: includes/class-bc-utility.php:1231
-msgid "Ewe"
+msgid "Esperanto"
 msgstr ""
 
 #: includes/class-bc-utility.php:1232
-msgid "Faroese"
+msgid "Estonian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1233
-msgid "Fijian"
+msgid "Ewe"
 msgstr ""
 
 #: includes/class-bc-utility.php:1234
-msgid "Finnish"
+msgid "Faroese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1235
-msgid "French"
+msgid "Fijian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1236
-msgid "Fula"
+msgid "Finnish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1237
-msgid "Galician"
+msgid "French"
 msgstr ""
 
 #: includes/class-bc-utility.php:1238
-msgid "Georgian"
+msgid "Fula"
 msgstr ""
 
 #: includes/class-bc-utility.php:1239
-msgid "German"
+msgid "Galician"
 msgstr ""
 
 #: includes/class-bc-utility.php:1240
-msgid "Greek"
+msgid "Georgian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1241
-msgid "Guarani"
+msgid "German"
 msgstr ""
 
 #: includes/class-bc-utility.php:1242
-msgid "Gujarati"
+msgid "Greek"
 msgstr ""
 
 #: includes/class-bc-utility.php:1243
-msgid "Haitian"
+msgid "Guarani"
 msgstr ""
 
 #: includes/class-bc-utility.php:1244
-msgid "Hausa"
+msgid "Gujarati"
 msgstr ""
 
 #: includes/class-bc-utility.php:1245
-msgid "Hebrew"
+msgid "Haitian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1246
-msgid "Herero"
+msgid "Hausa"
 msgstr ""
 
 #: includes/class-bc-utility.php:1247
-msgid "Hindi"
+msgid "Hebrew"
 msgstr ""
 
 #: includes/class-bc-utility.php:1248
-msgid "Hiri Motu"
+msgid "Herero"
 msgstr ""
 
 #: includes/class-bc-utility.php:1249
-msgid "Hungarian"
+msgid "Hindi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1250
-msgid "Interlingua"
+msgid "Hiri Motu"
 msgstr ""
 
 #: includes/class-bc-utility.php:1251
-msgid "Indonesian"
+msgid "Hungarian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1252
-msgid "Irish"
+msgid "Interlingua"
 msgstr ""
 
 #: includes/class-bc-utility.php:1253
-msgid "Igbo"
+msgid "Indonesian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1254
-msgid "Inupiaq"
+msgid "Irish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1255
-msgid "Icelandic"
+msgid "Igbo"
 msgstr ""
 
 #: includes/class-bc-utility.php:1256
-msgid "Italian"
+msgid "Inupiaq"
 msgstr ""
 
 #: includes/class-bc-utility.php:1257
-msgid "Inuktitut"
+msgid "Icelandic"
 msgstr ""
 
 #: includes/class-bc-utility.php:1258
-msgid "Japanese"
+msgid "Italian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1259
-msgid "Javanese"
+msgid "Inuktitut"
 msgstr ""
 
 #: includes/class-bc-utility.php:1260
-msgid "Kalaallisut"
+msgid "Japanese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1261
-msgid "Kannada"
+msgid "Javanese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1262
-msgid "Kanuri"
+msgid "Kalaallisut"
 msgstr ""
 
 #: includes/class-bc-utility.php:1263
-msgid "Kashmiri"
+msgid "Kannada"
 msgstr ""
 
 #: includes/class-bc-utility.php:1264
-msgid "Kazakh"
+msgid "Kanuri"
 msgstr ""
 
 #: includes/class-bc-utility.php:1265
-msgid "Khmer"
+msgid "Kashmiri"
 msgstr ""
 
 #: includes/class-bc-utility.php:1266
-msgid "Kikuyu"
+msgid "Kazakh"
 msgstr ""
 
 #: includes/class-bc-utility.php:1267
-msgid "Kinyarwanda"
+msgid "Khmer"
 msgstr ""
 
 #: includes/class-bc-utility.php:1268
-msgid "Kyrgyz"
+msgid "Kikuyu"
 msgstr ""
 
 #: includes/class-bc-utility.php:1269
-msgid "Komi"
+msgid "Kinyarwanda"
 msgstr ""
 
 #: includes/class-bc-utility.php:1270
-msgid "Kongo"
+msgid "Kyrgyz"
 msgstr ""
 
 #: includes/class-bc-utility.php:1271
-msgid "Korean"
+msgid "Komi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1272
-msgid "Kurdish"
+msgid "Kongo"
 msgstr ""
 
 #: includes/class-bc-utility.php:1273
-msgid "Kwanyama"
+msgid "Korean"
 msgstr ""
 
 #: includes/class-bc-utility.php:1274
-msgid "Latin"
+msgid "Kurdish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1275
-msgid "Luxembourgish"
+msgid "Kwanyama"
 msgstr ""
 
 #: includes/class-bc-utility.php:1276
-msgid "Ganda"
+msgid "Latin"
 msgstr ""
 
 #: includes/class-bc-utility.php:1277
-msgid "Limburgish"
+msgid "Luxembourgish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1278
-msgid "Lingala"
+msgid "Ganda"
 msgstr ""
 
 #: includes/class-bc-utility.php:1279
-msgid "Lao"
+msgid "Limburgish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1280
-msgid "Lithuanian"
+msgid "Lingala"
 msgstr ""
 
 #: includes/class-bc-utility.php:1281
-msgid "Luba-Katanga"
+msgid "Lao"
 msgstr ""
 
 #: includes/class-bc-utility.php:1282
-msgid "Latvian"
+msgid "Lithuanian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1283
-msgid "Manx"
+msgid "Luba-Katanga"
 msgstr ""
 
 #: includes/class-bc-utility.php:1284
-msgid "Macedonian"
+msgid "Latvian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1285
-msgid "Malagasy"
+msgid "Manx"
 msgstr ""
 
 #: includes/class-bc-utility.php:1286
-msgid "Malay"
+msgid "Macedonian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1287
-msgid "Malayalam"
+msgid "Malagasy"
 msgstr ""
 
 #: includes/class-bc-utility.php:1288
-msgid "Maltese"
+msgid "Malay"
 msgstr ""
 
 #: includes/class-bc-utility.php:1289
-msgid "Maori"
+msgid "Malayalam"
 msgstr ""
 
 #: includes/class-bc-utility.php:1290
-msgid "Marathi"
+msgid "Maltese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1291
-msgid "Marshallese"
+msgid "Maori"
 msgstr ""
 
 #: includes/class-bc-utility.php:1292
-msgid "Mongolian"
+msgid "Marathi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1293
-msgid "Nauruan"
+msgid "Marshallese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1294
-msgid "Navajo"
+msgid "Mongolian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1295
-msgid "Northern Ndebele"
+msgid "Nauruan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1296
-msgid "Nepali"
+msgid "Navajo"
 msgstr ""
 
 #: includes/class-bc-utility.php:1297
-msgid "Ndonga"
+msgid "Northern Ndebele"
 msgstr ""
 
 #: includes/class-bc-utility.php:1298
-msgid "Norwegian Bokmal"
+msgid "Nepali"
 msgstr ""
 
 #: includes/class-bc-utility.php:1299
-msgid "Norwegian Nyorsk"
+msgid "Ndonga"
 msgstr ""
 
 #: includes/class-bc-utility.php:1300
-msgid "Norwegian"
+msgid "Norwegian Bokmal"
 msgstr ""
 
 #: includes/class-bc-utility.php:1301
-msgid "Nuosu"
+msgid "Norwegian Nyorsk"
 msgstr ""
 
 #: includes/class-bc-utility.php:1302
-msgid "Southern Ndebele"
+msgid "Norwegian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1303
-msgid "Occitan"
+msgid "Nuosu"
 msgstr ""
 
 #: includes/class-bc-utility.php:1304
-msgid "Ojibwe"
+msgid "Southern Ndebele"
 msgstr ""
 
 #: includes/class-bc-utility.php:1305
-msgid "Oromo"
+msgid "Occitan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1306
-msgid "Oriya"
+msgid "Ojibwe"
 msgstr ""
 
 #: includes/class-bc-utility.php:1307
-msgid "Ossetian"
+msgid "Oromo"
 msgstr ""
 
 #: includes/class-bc-utility.php:1308
-msgid "Panjabi"
+msgid "Oriya"
 msgstr ""
 
 #: includes/class-bc-utility.php:1309
-msgid "Pali"
+msgid "Ossetian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1310
-msgid "Persian"
+msgid "Panjabi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1311
-msgid "Polish"
+msgid "Pali"
 msgstr ""
 
 #: includes/class-bc-utility.php:1312
-msgid "Pashto"
+msgid "Persian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1313
-msgid "Portuguese"
+msgid "Polish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1314
-msgid "Quechua"
+msgid "Pashto"
 msgstr ""
 
 #: includes/class-bc-utility.php:1315
-msgid "Romanian"
+msgid "Portuguese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1316
-msgid "Romanish"
+msgid "Quechua"
 msgstr ""
 
 #: includes/class-bc-utility.php:1317
-msgid "Russian"
+msgid "Romanian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1318
-msgid "Sanskrit"
+msgid "Romanish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1319
-msgid "Sardinian"
+msgid "Russian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1320
-msgid "Sindhi"
+msgid "Sanskrit"
 msgstr ""
 
 #: includes/class-bc-utility.php:1321
-msgid "Northern Sami"
+msgid "Sardinian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1322
-msgid "Samoan"
+msgid "Sindhi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1323
-msgid "Sango"
+msgid "Northern Sami"
 msgstr ""
 
 #: includes/class-bc-utility.php:1324
-msgid "Serbian"
+msgid "Samoan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1325
-msgid "Scottish Gaelic"
+msgid "Sango"
 msgstr ""
 
 #: includes/class-bc-utility.php:1326
-msgid "Shona"
+msgid "Serbian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1327
-msgid "Sinhala"
+msgid "Scottish Gaelic"
 msgstr ""
 
 #: includes/class-bc-utility.php:1328
-msgid "Slovak"
+msgid "Shona"
 msgstr ""
 
 #: includes/class-bc-utility.php:1329
-msgid "Slovene"
+msgid "Sinhala"
 msgstr ""
 
 #: includes/class-bc-utility.php:1330
-msgid "Somali"
+msgid "Slovak"
 msgstr ""
 
 #: includes/class-bc-utility.php:1331
-msgid "Southern Sotho"
+msgid "Slovene"
 msgstr ""
 
 #: includes/class-bc-utility.php:1332
-msgid "Spanish"
+msgid "Somali"
 msgstr ""
 
 #: includes/class-bc-utility.php:1333
-msgid "Sudanese"
+msgid "Southern Sotho"
 msgstr ""
 
 #: includes/class-bc-utility.php:1334
-msgid "Swahili"
+msgid "Spanish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1335
-msgid "Swati"
+msgid "Sudanese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1336
-msgid "Swedish"
+msgid "Swahili"
 msgstr ""
 
 #: includes/class-bc-utility.php:1337
-msgid "Tamil"
+msgid "Swati"
 msgstr ""
 
 #: includes/class-bc-utility.php:1338
-msgid "Telugu"
+msgid "Swedish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1339
-msgid "Tajik"
+msgid "Tamil"
 msgstr ""
 
 #: includes/class-bc-utility.php:1340
-msgid "Thai"
+msgid "Telugu"
 msgstr ""
 
 #: includes/class-bc-utility.php:1341
-msgid "Tigrinya"
+msgid "Tajik"
 msgstr ""
 
 #: includes/class-bc-utility.php:1342
-msgid "Tibetan"
+msgid "Thai"
 msgstr ""
 
 #: includes/class-bc-utility.php:1343
-msgid "Turkmen"
+msgid "Tigrinya"
 msgstr ""
 
 #: includes/class-bc-utility.php:1344
-msgid "Tagalog"
+msgid "Tibetan"
 msgstr ""
 
 #: includes/class-bc-utility.php:1345
-msgid "Tswana"
+msgid "Turkmen"
 msgstr ""
 
 #: includes/class-bc-utility.php:1346
-msgid "Tonga"
+msgid "Tagalog"
 msgstr ""
 
 #: includes/class-bc-utility.php:1347
-msgid "Turkish"
+msgid "Tswana"
 msgstr ""
 
 #: includes/class-bc-utility.php:1348
-msgid "Tsonga"
+msgid "Tonga"
 msgstr ""
 
 #: includes/class-bc-utility.php:1349
-msgid "Tatar"
+msgid "Turkish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1350
-msgid "Twi"
+msgid "Tsonga"
 msgstr ""
 
 #: includes/class-bc-utility.php:1351
-msgid "Tahitian"
+msgid "Tatar"
 msgstr ""
 
 #: includes/class-bc-utility.php:1352
-msgid "Uyghur"
+msgid "Twi"
 msgstr ""
 
 #: includes/class-bc-utility.php:1353
-msgid "Ukrainian"
+msgid "Tahitian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1354
-msgid "Urdu"
+msgid "Uyghur"
 msgstr ""
 
 #: includes/class-bc-utility.php:1355
-msgid "Uzbek"
+msgid "Ukrainian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1356
-msgid "Venda"
+msgid "Urdu"
 msgstr ""
 
 #: includes/class-bc-utility.php:1357
-msgid "Vietnamese"
+msgid "Uzbek"
 msgstr ""
 
 #: includes/class-bc-utility.php:1358
-msgid "Volapuk"
+msgid "Venda"
 msgstr ""
 
 #: includes/class-bc-utility.php:1359
-msgid "Walloon"
+msgid "Vietnamese"
 msgstr ""
 
 #: includes/class-bc-utility.php:1360
-msgid "Welsh"
+msgid "Volapuk"
 msgstr ""
 
 #: includes/class-bc-utility.php:1361
-msgid "Wolof"
+msgid "Walloon"
 msgstr ""
 
 #: includes/class-bc-utility.php:1362
-msgid "Western Frisian"
+msgid "Welsh"
 msgstr ""
 
 #: includes/class-bc-utility.php:1363
-msgid "Xhosa"
+msgid "Wolof"
 msgstr ""
 
 #: includes/class-bc-utility.php:1364
-msgid "Yiddish"
+msgid "Western Frisian"
 msgstr ""
 
 #: includes/class-bc-utility.php:1365
-msgid "Yoruba"
+msgid "Xhosa"
 msgstr ""
 
 #: includes/class-bc-utility.php:1366
-msgid "Zhuang"
+msgid "Yiddish"
 msgstr ""
 
 #: includes/class-bc-utility.php:1367
+msgid "Yoruba"
+msgstr ""
+
+#: includes/class-bc-utility.php:1368
+msgid "Zhuang"
+msgstr ""
+
+#: includes/class-bc-utility.php:1369
 msgid "Zulu"
 msgstr ""
 
@@ -1851,82 +1879,29 @@ msgstr ""
 msgid "BC WordPress: Video with ID #%d has been created"
 msgstr ""
 
-#: assets/js/src/block.js:16
-msgid "The Brightcove block allows you to embed videos from Brightcove."
+#. Plugin Name of the plugin/theme
+msgid "Brightcove Video Connect"
 msgstr ""
 
-#: assets/js/src/block.js:256
-msgid "Change Playlist"
+#. Plugin URI of the plugin/theme
+msgid "https://wordpress.org/plugins/brightcove-video-connect/"
 msgstr ""
 
-#: assets/js/src/block.js:257
-msgid "Change Video"
+#. Description of the plugin/theme
+msgid ""
+"A Brightcove™ Connector for WordPress that leverages enhanced APIs and "
+"Brightcove™ Capabilities"
 msgstr ""
 
-#: assets/js/src/block.js:274
-msgid "Select a video file or playlist from your Brightcove library"
+#. Author of the plugin/theme
+msgid "10up"
 msgstr ""
 
-#: assets/js/src/block.js:278
-msgid "You don't have permissions to add Brightcove videos."
+#. Author URI of the plugin/theme
+msgid "http://10up.com"
 msgstr ""
 
-#: assets/js/src/block.js:374
-msgid "Sizing"
-msgstr ""
-
-#: assets/js/src/block.js:392
-msgid "Embed Style"
-msgstr ""
-
-#: assets/js/src/block.js:421
-msgid "Source: %1$s"
-msgstr ""
-
-#: assets/js/src/block.js:423
-msgid "Video ID: %1$s"
-msgstr ""
-
-#: assets/js/src/block.js:425
-msgid "Playlist ID: %1$s"
-msgstr ""
-
-#: assets/js/src/block.js:428
-msgid "Video Player"
-msgstr ""
-
-#: assets/js/src/block.js:440
-msgid "Autoplay"
-msgstr ""
-
-#: assets/js/src/block.js:451
-msgid "Mute"
-msgstr ""
-
-#: assets/js/src/block.js:462
-msgid "Plays in line"
-msgstr ""
-
-#: assets/js/src/block.js:474
-msgid "Enable Picture in Picture"
-msgstr ""
-
-#: assets/js/src/block.js:500
-msgid "Aspect Ratio"
-msgstr ""
-
-#: assets/js/src/block.js:504
-msgid "16:9"
-msgstr ""
-
-#: assets/js/src/block.js:508
-msgid "4:3"
-msgstr ""
-
-#: assets/js/src/block.js:556
-msgid "Width"
-msgstr ""
-
-#: assets/js/src/block.js:576
-msgid "Height"
+#: includes/admin/class-bc-templates.php:597
+msgctxt "Uploader: Drop files here - or - Select Files"
+msgid "or"
 msgstr ""
