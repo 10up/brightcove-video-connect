@@ -116,6 +116,8 @@ class BC_Admin_Media_API {
 			'state',
 			'scheduled_start_date',
 			'scheduled_end_date',
+			'sub_type',
+			'language'
 		);
 
 		foreach ( $fields as $field ) {
@@ -217,42 +219,45 @@ class BC_Admin_Media_API {
 			$type_msg                      = 'playlist';
 
 		} elseif ( 'videos' === $_POST['type'] ) {
-
-			$status   = $this->videos->update_bc_video( $updated_data );
 			$type_msg = 'video';
-
-			if ( isset( $_POST['folderId'] ) && isset( $_POST['oldFolderId'] ) ) {
-				$folderId    = sanitize_text_field( $_POST['folderId'] );
-				$oldFolderId = sanitize_text_field( $_POST['oldFolderId'] );
-
-				$this->cms_api->add_folder_to_video( $oldFolderId, $folderId, $updated_data['video_id'] );
-			}
-
-			// Maybe update poster
-			if ( isset( $_POST['poster'] ) ) {
-				$poster_data = json_decode( wp_unslash( $_POST['poster'] ), true );
-
-				if ( $poster_data ) {
-					// Maybe update poster
-					$this->ajax_poster_upload( $hash, $updated_data['video_id'], $poster_data['url'], $poster_data['width'], $poster_data['height'] );
-				}
-			}
-
-			// Maybe update thumbnail
-			if ( isset( $_POST['thumbnail'] ) ) {
-				$thumb_data = json_decode( wp_unslash( $_POST['thumbnail'] ), true );
-
-				if ( $thumb_data ) {
-					// Maybe update poster
-					$this->ajax_thumb_upload( $hash, $updated_data['video_id'], $thumb_data['url'], $thumb_data['width'], $thumb_data['height'] );
-				}
-			}
-
-			if ( isset( $_POST['captions'] ) ) {
-				// Maybe update captions
-				$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
+			if ( 'variant' === $_POST['sub_type'] ) {
+				$status = $this->videos->update_bc_video( $updated_data, sanitize_text_field( $_POST['sub_type'] ) );
 			} else {
-				$this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+				$status = $this->videos->update_bc_video( $updated_data );
+
+				if ( isset( $_POST['folderId'] ) && isset( $_POST['oldFolderId'] ) ) {
+					$folderId    = sanitize_text_field( $_POST['folderId'] );
+					$oldFolderId = sanitize_text_field( $_POST['oldFolderId'] );
+
+					$this->cms_api->add_folder_to_video( $oldFolderId, $folderId, $updated_data['video_id'] );
+				}
+
+				// Maybe update poster
+				if ( isset( $_POST['poster'] ) ) {
+					$poster_data = json_decode( wp_unslash( $_POST['poster'] ), true );
+
+					if ( $poster_data ) {
+						// Maybe update poster
+						$this->ajax_poster_upload( $hash, $updated_data['video_id'], $poster_data['url'], $poster_data['width'], $poster_data['height'] );
+					}
+				}
+
+				// Maybe update thumbnail
+				if ( isset( $_POST['thumbnail'] ) ) {
+					$thumb_data = json_decode( wp_unslash( $_POST['thumbnail'] ), true );
+
+					if ( $thumb_data ) {
+						// Maybe update poster
+						$this->ajax_thumb_upload( $hash, $updated_data['video_id'], $thumb_data['url'], $thumb_data['width'], $thumb_data['height'] );
+					}
+				}
+
+				if ( isset( $_POST['captions'] ) ) {
+					// Maybe update captions
+					$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
+				} else {
+					$this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+				}
 			}
 		}
 
@@ -417,6 +422,83 @@ class BC_Admin_Media_API {
 
 		$this->videos->add_or_update_wp_video( $ingestion_request_status['videoDetails'], true );
 		wp_send_json_success( $ingestion_request_status );
+	}
+
+	/**
+	 * Fetches a list of media objects
+	 *
+	 * Fetches a list of media objects from the Brightcove api.
+	 *
+	 * @since 1.0
+	 *
+	 * @param string $type The type of object to fetch.
+	 * @param int    $posts_per_page The number of posts to fetch.
+	 * @param int    $page The current page (for paged queries).
+	 * @param string $query_string Extra query parameters to use for listing.
+	 * @param string $sort_order The field to sort by.
+	 *
+	 * @return array An array of media items.
+	 */
+	public function fetch_all( $type, $posts_per_page = 100, $page = 1, $query_string = '', $sort_order = 'updated_at' ) {
+
+		global $bc_accounts;
+
+		$request_identifier = "{$type}-{$posts_per_page}-{$query_string}-{$sort_order}";
+		$transient_key      = BC_Utility::generate_transient_key( '_brightcove_req_all_', BC_Utility::get_hash_for_object( $request_identifier ) );
+		$results            = BC_Utility::get_cache_item( $transient_key );
+		$results            = is_array( $results ) ? $results : array();
+
+		$initial_page = 1;
+		$accounts     = $bc_accounts->get_sanitized_all_accounts();
+		$account_ids  = array();
+
+		foreach ( $accounts as $account ) {
+			$account_ids[] = $account['account_id'];
+		}
+
+		$account_ids = array_unique( $account_ids );
+
+		while ( count( $results ) <= ( $page * $posts_per_page ) ) {
+
+			if ( 0 === count( $account_ids ) ) {
+
+				// No more vids to fetch.
+				break;
+
+			}
+
+			foreach ( $account_ids as $key => $account_id ) {
+
+				$bc_accounts->set_current_account_by_id( $account_id );
+				$account_results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $initial_page - 1 ), $query_string, sanitize_text_field( $sort_order ) );
+
+				// Not enough account results returned, so we assume there are no more results to fetch.
+				if ( count( $account_results ) < $posts_per_page ) {
+					unset( $account_ids[ $key ] );
+				}
+
+				if ( is_array( $account_results ) && count( $account_results ) > 0 ) {
+
+					$results = array_merge( $results, $account_results );
+
+				} else {
+
+					unset( $account_ids[ $key ] );
+
+				}
+			}
+
+			$initial_page ++;
+
+		}
+
+		BC_Utility::set_cache_item( $transient_key, 'video_list', $results, 600 ); // High cache time due to high expense of fetching the data.
+		$results = array_slice( $results, $posts_per_page * ( $page - 1 ), $posts_per_page );
+
+		$bc_accounts->restore_default_account();
+
+		return $results;
+
 	}
 
 	/**

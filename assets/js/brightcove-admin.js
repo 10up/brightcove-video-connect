@@ -71,6 +71,8 @@ var MediaModel = Backbone.Model.extend({
 				thumbnail: this.get('thumbnail'),
 				captions: this.get('captions'),
 				labels: this.get('labels'),
+				sub_type: this.get('subType'),
+				language: this.get('language'),
 			});
 
 			var video_ids = this.get('video_ids');
@@ -2810,9 +2812,38 @@ var VideoEditView = BrightcoveView.extend({
 		'click    .attachment .check': 'removeAttachment',
 		'click    .caption-secondary-fields .delete': 'removeCaptionRow',
 		'click    .add-remote-caption': 'addCaptionRow',
+		'change   .brightcove-variant': 'changeVariant',
 		'click    .add-bc-label': 'addLabelRow',
 		'keypress .brightcove-labels': 'labelAutocomplete',
 		'click    .bc-label-secondary-fields .delete': 'removeLabelRow',
+	},
+
+	/**
+	 * Changes template variant based on current variant.
+	 * @param event
+	 */
+	changeVariant: function (event) {
+		const valueSelected = this.$el.find('.brightcove-variant').val(),
+			options = this.model.toJSON();
+
+		let template;
+
+		if (valueSelected === 'none') {
+			template = wp.template('brightcove-video-edit');
+			$('.brightcove-variant-details').replaceWith(template(options));
+		} else {
+			let variantIndex = options.variants
+				.map(function (variant) {
+					return variant.language;
+				})
+				.indexOf(valueSelected);
+			let variant = options.variants[variantIndex];
+			variant.variantList = options.variants;
+			variant.valueSelected = valueSelected;
+			template = wp.template('brightcove-variants');
+
+			$('.brightcove-variant-details').replaceWith(template(variant));
+		}
 	},
 
 	back: function (event) {
@@ -3158,21 +3189,32 @@ var VideoEditView = BrightcoveView.extend({
 			);
 		}
 
-		// Trim whitespace and commas from tags beginning/end.
-		this.model.set(
-			'tags',
-			this.$el
-				.find('.brightcove-tags')
-				.val()
-				.trim()
-				.replace(/(^,)|(,$)/g, ''),
-		);
+		const brightcoveTags = this.$el.find('.brightcove-tags');
+
+		if (brightcoveTags.length !== 0) {
+			// Trim whitespace and commas from tags beginning/end.
+			this.model.set(
+				'tags',
+				brightcoveTags
+					.val()
+					.trim()
+					.replace(/(^,)|(,$)/g, ''),
+			);
+		}
+
+		this.model.set('mediaType', 'videos');
 		this.model.set('height', this.$el.find('.brightcove-height').val());
 		this.model.set('width', this.$el.find('.brightcove-width').val());
-		this.model.set('mediaType', 'videos');
 		this.model.set('poster', this.$el.find('.brightcove-poster').val());
 		this.model.set('thumbnail', this.$el.find('.brightcove-thumbnail').val());
 		this.model.set('folderId', this.$el.find('.brightcove-folder').val());
+
+		const isVariant = this.$el.find('.brightcove-variant').val();
+
+		if (isVariant !== 'none' && this.model.get('mediaType') === 'videos') {
+			this.model.set('subType', 'variant');
+			this.model.set('language', isVariant);
+		}
 
 		// Captions
 		var captions = [];
