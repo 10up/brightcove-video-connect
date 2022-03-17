@@ -362,7 +362,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
-[2.5.1]: https://github.com/10up/brightcove-video-connect/compare/2.5.1...2.5.2
+[2.5.2]: https://github.com/10up/brightcove-video-connect/compare/2.5.1...2.5.2
 [2.5.1]: https://github.com/10up/brightcove-video-connect/compare/2.5.0...2.5.1
 [2.5.0]: https://github.com/10up/brightcove-video-connect/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/10up/brightcove-video-connect/compare/2.3.1...2.4.0
