@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [2.5.2] - 2022-03-17
 
 ### Added
-- Update multilingual metadata. [@oscarssanchez](https://github.com/oscarssanchez) via [#247](https://github.com/10up/brightcove-video-connect/pull/256).
+- Update multilingual metadata. Props [@oscarssanchez](https://github.com/oscarssanchez) via [#256](https://github.com/10up/brightcove-video-connect/pull/256).
 
 ## [2.5.1] - 2022-01-24
 
