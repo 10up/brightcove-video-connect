@@ -101,320 +101,331 @@ class BC_Admin_Templates {
 
 		<?php /* Used by views/video-edit.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-video-edit">
-			<div class="settings">
-				<label class="setting state">
-					<span class="name"><?php esc_html_e( 'State', 'brightcove' ); ?></span>
-					<select class="brightcove-state">
-						<option value="ACTIVE" <# if ( data.state === 'ACTIVE' ) { #>selected<# } #>><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
-						<option value="INACTIVE" <# if ( data.state === 'INACTIVE' ) { #>selected<# } #>><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
-					</select>
-				</label>
-				<label class="setting video-name">
-					<span class="name"><?php esc_html_e( 'Name', 'brightcove' ); ?></span>
-					<input type="text" class="brightcove-name" maxlength="255" value="{{data.name}}" />
-					<p class="description"><?php esc_html_e( 'The name is limited to 255 characters.', 'brightcove' ); ?></p>
-				</label>
-				<label class="setting short-description">
-					<span class="name"><?php esc_html_e( 'Description', 'brightcove' ); ?></span>
-					<textarea class="brightcove-description" maxlength="250">{{data.description}}</textarea>
-					<p class="description"><?php esc_html_e( 'The description is limited to 250 characters.', 'brightcove' ); ?></p>
-				</label>
-				<label class="setting long-description">
-					<span class="name"><?php esc_html_e( 'Long Description', 'brightcove' ); ?></span>
-					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
-					<p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' ); ?></p>
-				</label>
-				<label class="setting start-date">
-					<span class="schedule-start-date"><?php esc_html_e( 'Scheduled Start date (GMT)', 'brightcove' ); ?></span>
-					<div class="brightcove-datetime-wrapper">
-						<input type="text" class="brightcove-datetime brightcove-start-date" value="{{data.schedule_start_date}}" autocomplete="off" />
-						<select class="brightcove-start-date-hour">
-							<?php for ( $hour = 1; $hour <= 12; $hour++ ) : ?> 
-								<option 
-									<# if ( data.schedule_start_hour === '<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>' ) { #>selected<# } #>
-								>
-									<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>
-								</option>
-							<?php endfor; ?>
-						</select>
-						<span class="brightcove-datetime-colon">:</span>
-						<select class="brightcove-start-date-minute">
-							<?php for ( $minute = 0; $minute <= 59; $minute++ ) : ?> 
-								<option
-									<# if ( data.schedule_start_minute === '<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>' ) { #>selected<# } #> 
-								>
-								<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>
-							</option>
-							<?php endfor; ?>
-						</select>
-						<select class="brightcove-start-date-am-pm">
-							<option
-								<# if ( data.schedule_start_am_pm === 'AM' ) { #>selected<# } #> 
-							>
-								<?php esc_html_e( 'AM', 'brightcove' ); ?>
-							</option>
-							<option
-								<# if ( data.schedule_start_am_pm === 'PM' ) { #>selected<# } #> 
-							>
-								<?php esc_html_e( 'PM', 'brightcove' ); ?>
-							</option>
-						</select>
-					</div>
-					<p class="description"><?php esc_html_e( 'Leave empty to be available immediately.', 'brightcove' ); ?></p>
-				</label>
-				<label class="setting end-date">
-					<span class="schedule-end-date"><?php esc_html_e( 'Scheduled End Date (GMT)', 'brightcove' ); ?></span>
-					<div class="brightcove-datetime-wrapper">
-						<input 
-							type="text" 
-							class="brightcove-datetime brightcove-end-date" 
-							value="{{data.schedule_end_date}}"
-							autocomplete="off" 
-						/>
-						<select class="brightcove-end-date-hour">
-							<?php for ( $hour = 1; $hour <= 12; $hour++ ) : ?> 
-								<option 
-									<# if ( data.schedule_end_hour === '<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>' ) { #>selected<# } #>
-								>
-									<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>
-								</option>
-							<?php endfor; ?>
-						</select>
-						<span class="brightcove-datetime-colon">:</span>
-						<select class="brightcove-end-date-minute">
-							<?php for ( $minute = 0; $minute <= 59; $minute++ ) : ?> 
-								<option
-									<# if ( data.schedule_end_minute === '<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>' ) { #>selected<# } #> 
-								>
-									<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>
-								</option>
-							<?php endfor; ?>
-						</select>
-						<select class="brightcove-end-date-am-pm">
-							<option
-								<# if ( data.schedule_end_am_pm === 'AM' ) { #>selected<# } #> 
-							>
-								<?php esc_html_e( 'AM', 'brightcove' ); ?>
-							</option>
-							<option
-								<# if ( data.schedule_end_am_pm === 'PM' ) { #>selected<# } #> 
-							>
-								<?php esc_html_e( 'PM', 'brightcove' ); ?>
-							</option>
-						</select>
-					</div>
-				</label>
-				<label class="setting folder">
-					<span class="name"><?php esc_html_e( 'Folder', 'brightcove' ); ?></span>
-					<select class="brightcove-folder">
-						<option value="">None</option>
-						<# _.each(data.folders, function (folderName, folderId) { #>
-						<option value="{{ folderId }}" <# if ( data.folder_id === folderId ) { #>selected<# } #>>
-							{{ folderName }}
-						</option>
-						<# }); #>
-					</select>
-				</label>
-				<label class="setting tags">
-					<span class="name"><?php esc_html_e( 'Tags', 'brightcove' ); ?></span>
-					<input type="text" class="brightcove-tags test" value="{{data.tags}}"/>
-				</label>
-				<div class="setting labels">
-					<span class="name"><?php esc_html_e( 'Labels', 'brightcove' ); ?></span>
-					<div class="setting-content">
-						<div>
-							<button class="button-secondary add-bc-label">
-								<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
-							</button>
-							<a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
-								<?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
-							</a>
-						</div>
-						<div id="js-bc-labels">
-							<# _.each( data.labels, function( label ) { #>
-							<div id="js-caption-fields" class="bc-label-repeater repeater-row">
-								<input type="text" class="brightcove-labels" value="{{label}}">
+            <div class="brightcove-variant-details">
+                <div class="settings">
+                    <label class="setting variants">
+                        <span class="name"><?php esc_html_e( 'Variant', 'brightcove' ); ?></span>
+                        <select class="brightcove-variant">
+                            <option value="none" selected>None</option>
+                            <# _.each(data.variants, function (variant) { #>
+                            <option value="{{ variant.language }}" >
+                                {{ variant.language }}
+                            </option>
+                            <# }); #>
+                        </select>
+                    </label>
+                    <label class="setting state">
+                        <span class="name"><?php esc_html_e( 'State', 'brightcove' ); ?></span>
+                        <select class="brightcove-state">
+                            <option value="ACTIVE" <# if ( data.state === 'ACTIVE' ) { #>selected<# } #>><?php esc_html_e( 'Active', 'brightcove' ); ?></option>
+                            <option value="INACTIVE" <# if ( data.state === 'INACTIVE' ) { #>selected<# } #>><?php esc_html_e( 'Inactive', 'brightcove' ); ?></option>
+                        </select>
+                    </label>
+                    <label class="setting video-name">
+                        <span class="name"><?php esc_html_e( 'Name', 'brightcove' ); ?></span>
+                        <input type="text" class="brightcove-name" maxlength="255" value="{{data.name}}" />
+                        <p class="description"><?php esc_html_e( 'The name is limited to 255 characters.', 'brightcove' ); ?></p>
+                    </label>
+                    <label class="setting short-description">
+                        <span class="name"><?php esc_html_e( 'Description', 'brightcove' ); ?></span>
+                        <textarea class="brightcove-description" maxlength="250">{{data.description}}</textarea>
+                        <p class="description"><?php esc_html_e( 'The description is limited to 250 characters.', 'brightcove' ); ?></p>
+                    </label>
+                    <label class="setting long-description">
+                        <span class="name"><?php esc_html_e( 'Long Description', 'brightcove' ); ?></span>
+                        <textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
+                        <p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' ); ?></p>
+                    </label>
+                    <label class="setting start-date">
+                        <span class="schedule-start-date"><?php esc_html_e( 'Scheduled Start date (GMT)', 'brightcove' ); ?></span>
+                        <div class="brightcove-datetime-wrapper">
+                            <input type="text" class="brightcove-datetime brightcove-start-date" value="{{data.schedule_start_date}}" autocomplete="off" />
+                            <select class="brightcove-start-date-hour">
+                                <?php for ( $hour = 1; $hour <= 12; $hour++ ) : ?>
+                                    <option
+                                    <# if ( data.schedule_start_hour === '<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>' ) { #>selected<# } #>
+                                    >
+                                    <?php echo esc_html( sprintf( '%02d', $hour ) ); ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                            <span class="brightcove-datetime-colon">:</span>
+                            <select class="brightcove-start-date-minute">
+                                <?php for ( $minute = 0; $minute <= 59; $minute++ ) : ?>
+                                    <option
+                                    <# if ( data.schedule_start_minute === '<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>' ) { #>selected<# } #>
+                                    >
+                                    <?php echo esc_html( sprintf( '%02d', $minute ) ); ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                            <select class="brightcove-start-date-am-pm">
+                                <option
+                                <# if ( data.schedule_start_am_pm === 'AM' ) { #>selected<# } #>
+                                >
+                                <?php esc_html_e( 'AM', 'brightcove' ); ?>
+                                </option>
+                                <option
+                                <# if ( data.schedule_start_am_pm === 'PM' ) { #>selected<# } #>
+                                >
+                                <?php esc_html_e( 'PM', 'brightcove' ); ?>
+                                </option>
+                            </select>
+                        </div>
+                        <p class="description"><?php esc_html_e( 'Leave empty to be available immediately.', 'brightcove' ); ?></p>
+                    </label>
+                    <label class="setting end-date">
+                        <span class="schedule-end-date"><?php esc_html_e( 'Scheduled End Date (GMT)', 'brightcove' ); ?></span>
+                        <div class="brightcove-datetime-wrapper">
+                            <input
+                                    type="text"
+                                    class="brightcove-datetime brightcove-end-date"
+                                    value="{{data.schedule_end_date}}"
+                                    autocomplete="off"
+                            />
+                            <select class="brightcove-end-date-hour">
+                                <?php for ( $hour = 1; $hour <= 12; $hour++ ) : ?>
+                                    <option
+                                    <# if ( data.schedule_end_hour === '<?php echo esc_html( sprintf( '%02d', $hour ) ); ?>' ) { #>selected<# } #>
+                                    >
+                                    <?php echo esc_html( sprintf( '%02d', $hour ) ); ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                            <span class="brightcove-datetime-colon">:</span>
+                            <select class="brightcove-end-date-minute">
+                                <?php for ( $minute = 0; $minute <= 59; $minute++ ) : ?>
+                                    <option
+                                    <# if ( data.schedule_end_minute === '<?php echo esc_html( sprintf( '%02d', $minute ) ); ?>' ) { #>selected<# } #>
+                                    >
+                                    <?php echo esc_html( sprintf( '%02d', $minute ) ); ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                            <select class="brightcove-end-date-am-pm">
+                                <option
+                                <# if ( data.schedule_end_am_pm === 'AM' ) { #>selected<# } #>
+                                >
+                                <?php esc_html_e( 'AM', 'brightcove' ); ?>
+                                </option>
+                                <option
+                                <# if ( data.schedule_end_am_pm === 'PM' ) { #>selected<# } #>
+                                >
+                                <?php esc_html_e( 'PM', 'brightcove' ); ?>
+                                </option>
+                            </select>
+                        </div>
+                    </label>
+                    <label class="setting folder">
+                        <span class="name"><?php esc_html_e( 'Folder', 'brightcove' ); ?></span>
+                        <select class="brightcove-folder">
+                            <option value="">None</option>
+                            <# _.each(data.folders, function (folderName, folderId) { #>
+                            <option value="{{ folderId }}" <# if ( data.folder_id === folderId ) { #>selected<# } #>>
+                            {{ folderName }}
+                            </option>
+                            <# }); #>
+                        </select>
+                    </label>
+                    <label class="setting tags">
+                        <span class="name"><?php esc_html_e( 'Tags', 'brightcove' ); ?></span>
+                        <input type="text" class="brightcove-tags" value="{{data.tags}}"/>
+                    </label>
+                    <div class="setting labels">
+                        <span class="name"><?php esc_html_e( 'Labels', 'brightcove' ); ?></span>
+                        <div class="setting-content">
+                            <div>
+                                <button class="button-secondary add-bc-label">
+                                    <?php esc_html_e( 'Add Label', 'brightcove' ); ?>
+                                </button>
+                                <a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
+                                    <?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
+                                </a>
+                            </div>
+                            <div id="js-bc-labels">
+                                <# _.each( data.labels, function( label ) { #>
+                                <div id="js-caption-fields" class="bc-label-repeater repeater-row">
+                                    <input type="text" class="brightcove-labels" value="{{label}}">
 
-								<div class="bc-label-secondary-fields">
-									<div class="action-row">
-										<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-									</div>
-								</div>
-							</div>
-							<# }); #>
-							<div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
-								<input id="" type="text" class="brightcove-labels" value=""/>
-								<div class="bc-label-secondary-fields">
-									<div class="action-row">
-										<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-				<div class="setting poster">
-					<span class="name"><?php esc_html_e( 'Poster (Sugg. 480x360px)', 'brightcove' ); ?></span>
-					<div class="setting-content">
-						<div class="attachment <# if ( data.images.poster.src ) { #>active<# } #>">
-							<div class="-image">
-								<# if ( data.images.poster.src ) { #>
-									<img src="{{data.images.poster.src}}" class="thumbnail">
-								<# } #>
-							</div>
+                                    <div class="bc-label-secondary-fields">
+                                        <div class="action-row">
+                                            <a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <# }); #>
+                                <div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
+                                    <input id="" type="text" class="brightcove-labels" value=""/>
+                                    <div class="bc-label-secondary-fields">
+                                        <div class="action-row">
+                                            <a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting poster">
+                    <span class="name"><?php esc_html_e( 'Poster (Sugg. 480x360px)', 'brightcove' ); ?></span>
+                    <div class="setting-content">
+                        <div class="attachment <# if ( data.images.poster.src ) { #>active<# } #>">
+                            <div class="-image">
+                                <# if ( data.images.poster.src ) { #>
+                                <img src="{{data.images.poster.src}}" class="thumbnail">
+                                <# } #>
+                            </div>
 
-							<button type="button" class="button-link check" tabindex="-1">
-								<span class="media-modal-icon"></span>
-								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
-							</button>
+                            <button type="button" class="button-link check" tabindex="-1">
+                                <span class="media-modal-icon"></span>
+                                <span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
+                            </button>
 
-							<input type="hidden" class="brightcove-poster" value="{{data.poster}}">
+                            <input type="hidden" class="brightcove-poster" value="{{data.poster}}">
 
-							<button class="button button-secondary -poster">
-								<?php esc_html_e( 'Select File', 'brightcove' ); ?>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div class="setting thumbnail">
-					<span class="name"><?php esc_html_e( 'Thumbnail (Sugg. 120x90px)', 'brightcove' ); ?></span>
-					<div class="setting-content">
-						<div class="attachment <# if ( data.images.thumbnail.src ) { #>active<# } #>">
-							<div class="-image">
-								<# if ( data.images.thumbnail.src ) { #>
-									<img src="{{data.images.thumbnail.src}}" class="thumbnail">
-								<# } #>
-							</div>
+                            <button class="button button-secondary -poster">
+                                <?php esc_html_e( 'Select File', 'brightcove' ); ?>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting thumbnail">
+                    <span class="name"><?php esc_html_e( 'Thumbnail (Sugg. 120x90px)', 'brightcove' ); ?></span>
+                    <div class="setting-content">
+                        <div class="attachment <# if ( data.images.thumbnail.src ) { #>active<# } #>">
+                            <div class="-image">
+                                <# if ( data.images.thumbnail.src ) { #>
+                                <img src="{{data.images.thumbnail.src}}" class="thumbnail">
+                                <# } #>
+                            </div>
 
-							<button type="button" class="button-link check" tabindex="-1">
-								<span class="media-modal-icon"></span>
-								<span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
-							</button>
+                            <button type="button" class="button-link check" tabindex="-1">
+                                <span class="media-modal-icon"></span>
+                                <span class="screen-reader-text"><?php esc_html_e( 'Remove', 'brightcove' ); ?></span>
+                            </button>
 
-							<input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}">
+                            <input type="hidden" class="brightcove-thumbnail" value="{{data.thumbnail}}">
 
-							<button class="button button-secondary -thumbnail">
-								<?php esc_html_e( 'Select File', 'brightcove' ); ?>
-							</button>
-						</div>
-					</div>
-				</div>
+                            <button class="button button-secondary -thumbnail">
+                                <?php esc_html_e( 'Select File', 'brightcove' ); ?>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-				<div id="brightcove-custom-fields"></div>
+                <div id="brightcove-custom-fields"></div>
 
-				<div class="setting captions">
-					<span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' ); ?></span>
-					<div class="setting-content">
-						<button class="button button-secondary -captions">
-							<# if ( 0 !== data.text_tracks.length ) { #>
-								<?php esc_html_e( 'Add Another Caption', 'brightcove' ); ?>
-							<# } else { #>
-								<?php esc_html_e( 'Select File', 'brightcove' ); ?>
-							<# } #>
-						</button>
-						<a href="#" class="add-remote-caption">
-							<# if ( 0 !== data.text_tracks.length ) { #>
-								<?php esc_html_e( 'Add another remote caption file', 'brightcove' ); ?>
-							<# } else { #>
-								<?php esc_html_e( 'Use a remote caption file instead', 'brightcove' ); ?>
-							<# } #>
-						</a>
+                <div class="setting captions">
+                    <span class="name"><?php esc_html_e( 'Closed Captions', 'brightcove' ); ?></span>
+                    <div class="setting-content">
+                        <button class="button button-secondary -captions">
+                            <# if ( 0 !== data.text_tracks.length ) { #>
+                            <?php esc_html_e( 'Add Another Caption', 'brightcove' ); ?>
+                            <# } else { #>
+                            <?php esc_html_e( 'Select File', 'brightcove' ); ?>
+                            <# } #>
+                        </button>
+                        <a href="#" class="add-remote-caption">
+                            <# if ( 0 !== data.text_tracks.length ) { #>
+                            <?php esc_html_e( 'Add another remote caption file', 'brightcove' ); ?>
+                            <# } else { #>
+                            <?php esc_html_e( 'Use a remote caption file instead', 'brightcove' ); ?>
+                            <# } #>
+                        </a>
 
-						<div id="js-captions">
-							<# _.each( data.text_tracks, function( caption ) { #>
-								<div id="js-caption-fields" class="caption-repeater repeater-row">
-									<input class="brightcove-captions" value="{{caption.src}}">
+                        <div id="js-captions">
+                            <# _.each( data.text_tracks, function( caption ) { #>
+                            <div id="js-caption-fields" class="caption-repeater repeater-row">
+                                <input class="brightcove-captions" value="{{caption.src}}">
 
-									<div class="caption-secondary-fields">
-										<label class="-language">
-											<?php esc_html_e( 'Language', 'brightcove' ); ?>
-											<select class="brightcove-captions-language">
-												<# _.each( wpbc.languages, function( language, key ) { #>
-													<option value="{{language}}" <# if ( language === caption.srclang ) { #>selected<# } #>>
-														{{key}}
-													</option>
-												<# }); #>
-											</select>
-										</label>
+                                <div class="caption-secondary-fields">
+                                    <label class="-language">
+                                        <?php esc_html_e( 'Language', 'brightcove' ); ?>
+                                        <select class="brightcove-captions-language">
+                                            <# _.each( wpbc.languages, function( language, key ) { #>
+                                            <option value="{{language}}" <# if ( language === caption.srclang ) { #>selected<# } #>>
+                                            {{key}}
+                                            </option>
+                                            <# }); #>
+                                        </select>
+                                    </label>
 
-										<label class="-label">
-											<?php esc_html_e( 'Label', 'brightcove' ); ?>
-											<input type="text" class="brightcove-captions-label" value="{{caption.label}}">
-										</label>
+                                    <label class="-label">
+                                        <?php esc_html_e( 'Label', 'brightcove' ); ?>
+                                        <input type="text" class="brightcove-captions-label" value="{{caption.label}}">
+                                    </label>
 
-										<# if ( true === caption.default ) { var checked = ' checked '; } #>
+                                    <# if ( true === caption.default ) { var checked = ' checked '; } #>
 
-										<label class="-default">
-											<?php esc_html_e( 'Default (Auto Display)', 'brightcove' ); ?>
-											<input type="checkbox" {{checked}} class="brightcove-captions-default" value="true">
-										</label>
+                                    <label class="-default">
+                                        <?php esc_html_e( 'Default (Auto Display)', 'brightcove' ); ?>
+                                        <input type="checkbox" {{checked}} class="brightcove-captions-default" value="true">
+                                    </label>
 
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
-							<# }); #>
-							<div id="js-caption-empty-row" class="caption-repeater repeater-row empty-row">
-								<label class="-src">
-									<?php esc_html_e( 'File Source', 'brightcove' ); ?>
-									<input class="brightcove-captions" type="text">
-								</label>
+                                    <div class="action-row">
+                                        <a href="#" class="delete"><?php esc_html_e( 'Remove Caption', 'brightcove' ); ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <# }); #>
+                            <div id="js-caption-empty-row" class="caption-repeater repeater-row empty-row">
+                                <label class="-src">
+                                    <?php esc_html_e( 'File Source', 'brightcove' ); ?>
+                                    <input class="brightcove-captions" type="text">
+                                </label>
 
-								<div class="caption-secondary-fields">
-									<label class="-language">
-										<?php esc_html_e( 'Language', 'brightcove' ); ?>
-										<select class="brightcove-captions-language">
-											<# _.each( wpbc.languages, function( language, key) { #>
-												<option value="{{language}}">{{key}}</option>
-											<# }); #>
-										</select>
-									</label>
+                                <div class="caption-secondary-fields">
+                                    <label class="-language">
+                                        <?php esc_html_e( 'Language', 'brightcove' ); ?>
+                                        <select class="brightcove-captions-language">
+                                            <# _.each( wpbc.languages, function( language, key) { #>
+                                            <option value="{{language}}">{{key}}</option>
+                                            <# }); #>
+                                        </select>
+                                    </label>
 
-									<label class="-label">
-										<?php esc_html_e( 'Label', 'brightcove' ); ?>
-										<input class="brightcove-captions-label" type="text">
-									</label>
+                                    <label class="-label">
+                                        <?php esc_html_e( 'Label', 'brightcove' ); ?>
+                                        <input class="brightcove-captions-label" type="text">
+                                    </label>
 
-									<label class="-default">
-										<?php esc_html_e( 'Default (Auto Display)', 'brightcove' ); ?>
-										<input type="checkbox" class="brightcove-captions-default" value="true">
-									</label>
+                                    <label class="-default">
+                                        <?php esc_html_e( 'Default (Auto Display)', 'brightcove' ); ?>
+                                        <input type="checkbox" class="brightcove-captions-default" value="true">
+                                    </label>
 
-									<div class="action-row">
-										<a href="#" class="delete"><?php esc_html_e( 'Delete Caption', 'brightcove' ); ?></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="brightcove-change-history">
-					<label class="setting history">
-						<span class="name"><?php esc_html_e( 'Change History', 'brightcove' ); ?></span>
-						<textarea class="brightcove-change-history" data-id="history" disabled="disabled"><?php esc_html_e( 'Nothing yet ...', 'brightcove' ); ?></textarea>
-					</label>
-				</div>
-			</div>
-			<div class="brightcove brightcove-buttons">
+                                    <div class="action-row">
+                                        <a href="#" class="delete"><?php esc_html_e( 'Delete Caption', 'brightcove' ); ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="brightcove-change-history">
+                    <label class="setting history">
+                        <span class="name"><?php esc_html_e( 'Change History', 'brightcove' ); ?></span>
+                        <textarea class="brightcove-change-history" data-id="history" disabled="disabled"><?php esc_html_e( 'Nothing yet ...', 'brightcove' ); ?></textarea>
+                    </label>
+                </div>
+                <div class="brightcove brightcove-buttons">
 				<span class="delete-action">
 					<a href="#" class="brightcove delete"><?php esc_html_e( 'Delete', 'brightcove' ); ?></a>
 				</span>
 
-				<span class="more-actions">
+                    <span class="more-actions">
 					<span class="spinner hidden"></span>
 					<?php
-					$screen      = get_current_screen();
-					$parent_base = $screen->parent_base;
+                    $screen      = get_current_screen();
+                    $parent_base = $screen->parent_base;
 
-					if ( 'brightcove' === $parent_base ) {
-						?>
-						<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
-						<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
-					<?php } ?>
+                    if ( 'brightcove' === $parent_base ) {
+                        ?>
+                        <a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+                        <a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+                    <?php } ?>
 				</span>
+                </div>
 			</div>
 		</script>
 		<script type="text/html" id="tmpl-brightcove-video-edit-custom-string">
@@ -1309,6 +1320,55 @@ class BC_Admin_Templates {
 				<button type="button" id="js-tooltip-dismiss" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'brightcove' ); ?></span></button>
 			</div>
 </script>
+		<?php /* Used by views/video-edit.js */ ?>
+		<script type="text/html" id="tmpl-brightcove-variants">
+			<div class="brightcove-variant-details">
+				<label class="setting variants">
+					<span class="name"><?php esc_html_e( 'Variant', 'brightcove' ); ?></span>
+					<select class="brightcove-variant">
+						<option value="none">None</option>
+						<# _.each(data.variantList, function (variant) { #>
+						<option value="{{ variant.language }}" <# if ( variant.language === data.valueSelected ) { #>selected<# } #>>
+							{{ variant.language }}
+						</option>
+						<# }); #>
+					</select>
+				</label>
+				<label class="setting video-name">
+					<span class="name"><?php esc_html_e( 'Name', 'brightcove' ); ?></span>
+					<input type="text" class="brightcove-name" maxlength="255" value="{{data.name}}" />
+					<p class="description"><?php esc_html_e( 'The name is limited to 255 characters.', 'brightcove' ); ?></p>
+				</label>
+				<label class="setting short-description">
+					<span class="name"><?php esc_html_e( 'Description', 'brightcove' ); ?></span>
+					<textarea class="brightcove-description" maxlength="250">{{data.description}}</textarea>
+					<p class="description"><?php esc_html_e( 'The description is limited to 250 characters.', 'brightcove' ); ?></p>
+				</label>
+				<label class="setting long-description">
+					<span class="name"><?php esc_html_e( 'Long Description', 'brightcove' ); ?></span>
+					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
+					<p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' ); ?></p>
+				</label>
+				<label class="setting fields">
+					<span class="name"><?php esc_html_e( 'Custom Fields', 'brightcove' ); ?></span>
+					<textarea class="brightcove-long-description" maxlength="5000" disabled>{{data.custom_fields}}</textarea>
+				</label>
+				<div class="brightcove brightcove-buttons">
+					<span class="more-actions">
+					<span class="spinner hidden"></span>
+					<?php
+					$screen      = get_current_screen();
+					$parent_base = $screen->parent_base;
+
+					if ( 'brightcove' === $parent_base ) {
+						?>
+						<a href="#" class="button button-secondary button-large media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+						<a href="#" class="button button-primary button-large media-button brightcove save-sync"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+					<?php } ?>
+				</span>
+				</div>
+			</div>
+		</script>
 		<?php
 	}
 }
