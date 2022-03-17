@@ -640,7 +640,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Updates a video variant with the provided id and optional other data in the video cloud.
 	 *
-	 * @since 2.5.1
+	 * @since 2.5.2
 	 *
 	 * @param string $video_id the id of the video to update.
      * @param string $language the language the variant belongs to.
