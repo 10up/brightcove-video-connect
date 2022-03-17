@@ -116,6 +116,8 @@ class BC_Admin_Media_API {
 			'state',
 			'scheduled_start_date',
 			'scheduled_end_date',
+			'sub_type',
+			'language'
 		);
 
 		foreach ( $fields as $field ) {
@@ -217,42 +219,45 @@ class BC_Admin_Media_API {
 			$type_msg                      = 'playlist';
 
 		} elseif ( 'videos' === $_POST['type'] ) {
-
-			$status   = $this->videos->update_bc_video( $updated_data );
 			$type_msg = 'video';
-
-			if ( isset( $_POST['folderId'] ) && isset( $_POST['oldFolderId'] ) ) {
-				$folderId    = sanitize_text_field( $_POST['folderId'] );
-				$oldFolderId = sanitize_text_field( $_POST['oldFolderId'] );
-
-				$this->cms_api->add_folder_to_video( $oldFolderId, $folderId, $updated_data['video_id'] );
-			}
-
-			// Maybe update poster
-			if ( isset( $_POST['poster'] ) ) {
-				$poster_data = json_decode( wp_unslash( $_POST['poster'] ), true );
-
-				if ( $poster_data ) {
-					// Maybe update poster
-					$this->ajax_poster_upload( $hash, $updated_data['video_id'], $poster_data['url'], $poster_data['width'], $poster_data['height'] );
-				}
-			}
-
-			// Maybe update thumbnail
-			if ( isset( $_POST['thumbnail'] ) ) {
-				$thumb_data = json_decode( wp_unslash( $_POST['thumbnail'] ), true );
-
-				if ( $thumb_data ) {
-					// Maybe update poster
-					$this->ajax_thumb_upload( $hash, $updated_data['video_id'], $thumb_data['url'], $thumb_data['width'], $thumb_data['height'] );
-				}
-			}
-
-			if ( isset( $_POST['captions'] ) ) {
-				// Maybe update captions
-				$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
+			if ( 'variant' === $_POST['sub_type'] ) {
+				$status = $this->videos->update_bc_video( $updated_data, sanitize_text_field( $_POST['sub_type'] ) );
 			} else {
-				$this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+				$status = $this->videos->update_bc_video( $updated_data );
+
+				if ( isset( $_POST['folderId'] ) && isset( $_POST['oldFolderId'] ) ) {
+					$folderId    = sanitize_text_field( $_POST['folderId'] );
+					$oldFolderId = sanitize_text_field( $_POST['oldFolderId'] );
+
+					$this->cms_api->add_folder_to_video( $oldFolderId, $folderId, $updated_data['video_id'] );
+				}
+
+				// Maybe update poster
+				if ( isset( $_POST['poster'] ) ) {
+					$poster_data = json_decode( wp_unslash( $_POST['poster'] ), true );
+
+					if ( $poster_data ) {
+						// Maybe update poster
+						$this->ajax_poster_upload( $hash, $updated_data['video_id'], $poster_data['url'], $poster_data['width'], $poster_data['height'] );
+					}
+				}
+
+				// Maybe update thumbnail
+				if ( isset( $_POST['thumbnail'] ) ) {
+					$thumb_data = json_decode( wp_unslash( $_POST['thumbnail'] ), true );
+
+					if ( $thumb_data ) {
+						// Maybe update poster
+						$this->ajax_thumb_upload( $hash, $updated_data['video_id'], $thumb_data['url'], $thumb_data['width'], $thumb_data['height'] );
+					}
+				}
+
+				if ( isset( $_POST['captions'] ) ) {
+					// Maybe update captions
+					$this->ajax_caption_upload( $hash, $updated_data['video_id'], $_POST['captions'] );
+				} else {
+					$this->ajax_caption_delete( $hash, $updated_data['video_id'] );
+				}
 			}
 		}
 
@@ -434,13 +439,7 @@ class BC_Admin_Media_API {
 	 *
 	 * @return array An array of media items.
 	 */
-	public function fetch_all(
-		$type,
-		$posts_per_page = 100,
-		$page = 1,
-		$query_string = '',
-		$sort_order = 'updated_at'
-	) {
+	public function fetch_all( $type, $posts_per_page = 100, $page = 1, $query_string = '', $sort_order = 'updated_at' ) {
 
 		global $bc_accounts;
 
