@@ -15,12 +15,12 @@ class BC_Videos {
 	/**
 	 * Updates Metadata to the Brightcove API
 	 *
-	 * @param array $sanitized_post_data This should be sanitized POST data.
+	 * @param array       $sanitized_post_data This should be sanitized POST data.
+	 * @param string|bool $subtype Sub-type. Could be either false or "variant". See: https://apis.support.brightcove.com/cms/references/reference.html#operation/updateVideoVariant
 	 *
 	 * @return bool|WP_Error
 	 */
-	public function update_bc_video( $sanitized_post_data ) {
-
+	public function update_bc_video( $sanitized_post_data, $subtype = false ) {
 		global $bc_accounts;
 
 		$video_id    = BC_Utility::sanitize_id( $sanitized_post_data['video_id'] );
@@ -38,65 +38,71 @@ class BC_Videos {
 			$update_data['long_description'] = BC_Utility::sanitize_payload_item( $sanitized_post_data['long_description'] );
 		}
 
-		if ( array_key_exists( 'tags', $sanitized_post_data ) && ! empty( $sanitized_post_data['tags'] ) ) {
-
-			// Convert tags string to an array.
-			$update_data['tags'] = array_map( 'trim', explode( ',', $sanitized_post_data['tags'] ) );
-
-		}
-
 		if ( array_key_exists( 'custom_fields', $sanitized_post_data ) && ! empty( $sanitized_post_data['custom_fields'] ) ) {
 			$update_data['custom_fields'] = $sanitized_post_data['custom_fields'];
 		}
 
-		if ( array_key_exists( 'labels', $sanitized_post_data ) ) {
-			$update_data['labels'] = $sanitized_post_data['labels'];
-		}
+		if ( ! $subtype ) {
+			if ( array_key_exists( 'tags', $sanitized_post_data ) && ! empty( $sanitized_post_data['tags'] ) ) {
 
-		if ( array_key_exists( 'state', $sanitized_post_data ) ) {
-			$update_data['state'] = $sanitized_post_data['state'];
-		}
+				// Convert tags string to an array.
+				$update_data['tags'] = array_map( 'trim', explode( ',', $sanitized_post_data['tags'] ) );
 
-		if ( ! empty( $sanitized_post_data['scheduled_start_date'] ) ) {
-			$start_date = date_create( $sanitized_post_data['scheduled_start_date'], new DateTimeZone( 'Europe/London' ) );
-
-			if ( $start_date ) {
-				// ISO 8601
-				$update_data['schedule']['starts_at'] = $start_date->format( 'c' );
 			}
-		} else {
-			$update_data['schedule']['starts_at'] = null;
-		}
 
-		if ( ! empty( $sanitized_post_data['scheduled_end_date'] ) ) {
-			$end_date = date_create( $sanitized_post_data['scheduled_end_date'], new DateTimeZone( 'Europe/London' ) );
-
-			if ( $end_date ) {
-				// ISO 8601
-				$update_data['schedule']['ends_at'] = $end_date->format( 'c' );
+			if ( array_key_exists( 'labels', $sanitized_post_data ) ) {
+				$update_data['labels'] = $sanitized_post_data['labels'];
 			}
-		} else {
-			$update_data['schedule']['ends_at'] = null;
+
+			if ( array_key_exists( 'state', $sanitized_post_data ) ) {
+				$update_data['state'] = $sanitized_post_data['state'];
+			}
+
+			if ( ! empty( $sanitized_post_data['scheduled_start_date'] ) ) {
+				$start_date = date_create( $sanitized_post_data['scheduled_start_date'], new DateTimeZone( 'Europe/London' ) );
+
+				if ( $start_date ) {
+					// ISO 8601
+					$update_data['schedule']['starts_at'] = $start_date->format( 'c' );
+				}
+			} else {
+				$update_data['schedule']['starts_at'] = null;
+			}
+
+			if ( ! empty( $sanitized_post_data['scheduled_end_date'] ) ) {
+				$end_date = date_create( $sanitized_post_data['scheduled_end_date'], new DateTimeZone( 'Europe/London' ) );
+
+				if ( $end_date ) {
+					// ISO 8601
+					$update_data['schedule']['ends_at'] = $end_date->format( 'c' );
+				}
+			} else {
+				$update_data['schedule']['ends_at'] = null;
+			}
 		}
 
 		$bc_accounts->set_current_account( $sanitized_post_data['account'] );
 
-		$request = $this->cms_api->video_update( $video_id, $update_data );
+		if ( 'variant' === $subtype ) {
+			$language = sanitize_text_field( $sanitized_post_data['language'] );
+			$request = $this->cms_api->variant_update( $video_id, $language, $update_data );
+		} else{
+			$request = $this->cms_api->video_update( $video_id, $update_data );
+			/**
+			 * If we had any tags in the update, add them to the tags collection if we don't already track them.
+			 */
+			if ( array_key_exists( 'tags', $update_data ) && is_array( $update_data['tags'] ) && count( $update_data['tags'] ) ) {
 
-		$bc_accounts->restore_default_account();
+				$existing_tags = $this->tags->get_tags();
+				$new_tags      = array_diff( $update_data['tags'], $existing_tags );
 
-		/**
-		 * If we had any tags in the update, add them to the tags collection if we don't already track them.
-		 */
-		if ( array_key_exists( 'tags', $update_data ) && is_array( $update_data['tags'] ) && count( $update_data['tags'] ) ) {
-
-			$existing_tags = $this->tags->get_tags();
-			$new_tags      = array_diff( $update_data['tags'], $existing_tags );
-
-			if ( count( $new_tags ) ) {
-				$this->tags->add_tags( $new_tags );
+				if ( count( $new_tags ) ) {
+					$this->tags->add_tags( $new_tags );
+				}
 			}
 		}
+
+		$bc_accounts->restore_default_account();
 
 		if ( is_wp_error( $request ) || false === $request ) {
 			return false;
