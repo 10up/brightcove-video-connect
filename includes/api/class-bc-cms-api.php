@@ -636,6 +636,27 @@ class BC_CMS_API extends BC_API {
 	}
 
 	/**
+	 * Update a video variant in the Brightcove Video Cloud.
+	 *
+	 * Updates a video variant with the provided id and optional other data in the video cloud.
+	 *
+	 * @since 2.5.2
+	 *
+	 * @param string $video_id the id of the video to update.
+     * @param string $language the language the variant belongs to.
+	 * @param array  $args optional array of other arguments used in video creation.
+	 *
+	 * @return array|bool array of data about the updated video or false on failure.
+	 */
+	public function variant_update( $video_id, $language, $args = array() ) {
+		$video_id = utf8_uri_encode( sanitize_text_field( $video_id ) );
+
+		$data = BC_Utility::sanitize_payload_args_recursive( $args );
+
+		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/variants/' . $language ), 'PATCH', $data );
+	}
+
+	/**
 	 * Upload a single caption file for processing
 	 *
 	 * Sends a URL of the video's caption file to the Dynamic Ingest API for processing.

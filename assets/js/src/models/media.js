@@ -70,6 +70,8 @@ var MediaModel = Backbone.Model.extend({
 				thumbnail: this.get('thumbnail'),
 				captions: this.get('captions'),
 				labels: this.get('labels'),
+				sub_type: this.get('subType'),
+				language: this.get('language'),
 			});
 
 			var video_ids = this.get('video_ids');
