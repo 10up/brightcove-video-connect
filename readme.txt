@@ -39,6 +39,11 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 2.5.2 =
+
+Added
+* Update Multilingual metadata.
+
 = 2.5.1 =
 
 Added
