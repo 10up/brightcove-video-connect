@@ -15,10 +15,17 @@
 		"composer/installers": "~1.0"
 	},
 	"require-dev": {
-		"10up/phpcs-composer": "dev-master"
+		"10up/phpcs-composer": "dev-master",
+		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"scripts": {
 		"lint": "phpcs .",
 		"lint-fix": "phpcbf ."
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
