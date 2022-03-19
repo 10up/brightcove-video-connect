@@ -7,10 +7,11 @@ env:
 on:
   push:
     branches:
-      - trunk
+      - develop
+      - master
   pull_request:
     branches:
-      - trunk
+      - develop
 
 jobs:
   php_compatibility:
