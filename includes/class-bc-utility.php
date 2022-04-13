@@ -893,7 +893,7 @@ class BC_Utility {
 							allowfullscreen
 							webkitallowfullscreen
 							mozallowfullscreen
-                            style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+							style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 					</iframe>
 				</div>
 			</div>
