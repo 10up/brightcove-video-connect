@@ -402,6 +402,7 @@ class BC_Admin_Templates {
                         </div>
                     </div>
                 </div>
+                <div class="settings custom-fields"></div>
                 <div id="brightcove-change-history">
                     <label class="setting history">
                         <span class="name"><?php esc_html_e( 'Change History', 'brightcove' ); ?></span>
@@ -428,6 +429,8 @@ class BC_Admin_Templates {
                 </div>
 			</div>
 		</script>
+
+		<?php /* Custom fields templates */ ?>
 		<script type="text/html" id="tmpl-brightcove-video-edit-custom-string">
 			<label class="setting custom">
 				<span class="name">{{data.display_name}}</span>
@@ -1349,10 +1352,7 @@ class BC_Admin_Templates {
 					<textarea class="brightcove-long-description" maxlength="5000">{{data.long_description}}</textarea>
 					<p class="description"><?php esc_html_e( 'The long description is limited to 5,000 characters.', 'brightcove' ); ?></p>
 				</label>
-				<label class="setting fields">
-					<span class="name"><?php esc_html_e( 'Custom Fields', 'brightcove' ); ?></span>
-					<textarea class="brightcove-long-description" maxlength="5000" disabled>{{data.custom_fields}}</textarea>
-				</label>
+				<div id="brightcove-custom-fields"></div>
 				<div class="brightcove brightcove-buttons">
 					<span class="more-actions">
 					<span class="spinner hidden"></span>
