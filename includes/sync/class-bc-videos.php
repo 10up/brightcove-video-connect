@@ -85,8 +85,8 @@ class BC_Videos {
 
 		if ( 'variant' === $subtype ) {
 			$language = sanitize_text_field( $sanitized_post_data['language'] );
-			$request = $this->cms_api->variant_update( $video_id, $language, $update_data );
-		} else{
+			$request  = $this->cms_api->variant_update( $video_id, $language, $update_data );
+		} else {
 			$request = $this->cms_api->video_update( $video_id, $update_data );
 			/**
 			 * If we had any tags in the update, add them to the tags collection if we don't already track them.
