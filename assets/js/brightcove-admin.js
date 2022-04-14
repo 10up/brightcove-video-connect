@@ -2832,7 +2832,6 @@ var VideoEditView = BrightcoveView.extend({
 			template = wp.template('brightcove-video-edit');
 			$('.brightcove-variant-details').replaceWith(template(options));
 			this.setCustomFields(options.custom_fields);
-			this.renderCustomFields();
 		} else {
 			let variantIndex = options.variants
 				.map(function (variant) {
@@ -2846,8 +2845,8 @@ var VideoEditView = BrightcoveView.extend({
 			template = wp.template('brightcove-variants');
 			this.setCustomFields(variant.custom_fields);
 			$('.brightcove-variant-details').replaceWith(template(variant));
-			this.renderCustomFields();
 		}
+		this.renderCustomFields();
 	},
 
 	back: function (event) {
