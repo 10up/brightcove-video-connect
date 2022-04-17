@@ -643,7 +643,7 @@ class BC_CMS_API extends BC_API {
 	 * @since 2.5.2
 	 *
 	 * @param string $video_id the id of the video to update.
-     * @param string $language the language the variant belongs to.
+	 * @param string $language the language the variant belongs to.
 	 * @param array  $args optional array of other arguments used in video creation.
 	 *
 	 * @return array|bool array of data about the updated video or false on failure.

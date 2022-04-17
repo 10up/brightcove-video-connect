@@ -117,7 +117,7 @@ class BC_Admin_Media_API {
 			'scheduled_start_date',
 			'scheduled_end_date',
 			'sub_type',
-			'language'
+			'language',
 		);
 
 		foreach ( $fields as $field ) {
