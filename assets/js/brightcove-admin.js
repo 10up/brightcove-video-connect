@@ -2831,6 +2831,7 @@ var VideoEditView = BrightcoveView.extend({
 		if (valueSelected === 'none') {
 			template = wp.template('brightcove-video-edit');
 			$('.brightcove-variant-details').replaceWith(template(options));
+			this.setCustomFields(options.custom_fields);
 		} else {
 			let variantIndex = options.variants
 				.map(function (variant) {
@@ -2840,10 +2841,12 @@ var VideoEditView = BrightcoveView.extend({
 			let variant = options.variants[variantIndex];
 			variant.variantList = options.variants;
 			variant.valueSelected = valueSelected;
-			template = wp.template('brightcove-variants');
 
+			template = wp.template('brightcove-variants');
+			this.setCustomFields(variant.custom_fields);
 			$('.brightcove-variant-details').replaceWith(template(variant));
 		}
+		this.renderCustomFields();
 	},
 
 	back: function (event) {
@@ -3327,6 +3330,47 @@ var VideoEditView = BrightcoveView.extend({
 	},
 
 	/**
+	 * Renders the "Custom fields" from a video/variant.
+	 */
+	renderCustomFields: function () {
+		var customContainer = this.$el.find('#brightcove-custom-fields'),
+			stringTmp = wp.template('brightcove-video-edit-custom-string'),
+			enumTmp = wp.template('brightcove-video-edit-custom-enum');
+		_.each(this.model.get('custom'), function (custom) {
+			if (custom.id === '_change_history') {
+				return;
+			}
+			switch (custom.type) {
+				case 'string':
+					customContainer.append(stringTmp(custom));
+					break;
+				case 'enum':
+					customContainer.append(enumTmp(custom));
+					break;
+			}
+		});
+	},
+
+	/**
+	 * In order to switch models accordingly to render a video/variant, we update the current model custom fields.
+	 * @param {array} custom_fields
+	 */
+	setCustomFields: function (custom_fields) {
+		let custom = this.model.get('custom');
+
+		custom.forEach((customField) => {
+			let CustomFieldsKeys = Object.keys(custom_fields);
+			CustomFieldsKeys.forEach((index) => {
+				if (customField.id === index) {
+					customField.value = custom_fields[index];
+				}
+			});
+		});
+
+		this.model.set('custom', custom);
+	},
+
+	/**
 	 * Render the actual view for the Video Edit screen.
 	 *
 	 * @param {Object} options
@@ -3345,25 +3389,7 @@ var VideoEditView = BrightcoveView.extend({
 
 		this.$('.brightcove-datetime').datepicker();
 
-		// Render custom fields into the template
-		var customContainer = this.$el.find('#brightcove-custom-fields'),
-			stringTmp = wp.template('brightcove-video-edit-custom-string'),
-			enumTmp = wp.template('brightcove-video-edit-custom-enum');
-
-		_.each(this.model.get('custom'), function (custom) {
-			if (custom.id === '_change_history') {
-				return;
-			}
-
-			switch (custom.type) {
-				case 'string':
-					customContainer.append(stringTmp(custom));
-					break;
-				case 'enum':
-					customContainer.append(enumTmp(custom));
-					break;
-			}
-		});
+		this.renderCustomFields();
 
 		// Render the change history
 		var history = this.model.get('history');
