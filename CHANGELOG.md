@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.6.0] - 2022-04-18
+## [2.6.0] - 2022-04-19
 
 ### Added
 - Support custom fields with multilingual metadata. Props [@felipeelia](https://github.com/felipeelia), and [@oscarssanchez](https://github.com/oscarssanchez) via [#266](https://github.com/10up/brightcove-video-connect/pull/266).
