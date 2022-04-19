@@ -42,12 +42,12 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 = 2.6.0 =
 
 Added
-* Support custom fields with Multilingual metadata.
+* Support custom fields with multilingual metadata.
 
 = 2.5.2 =
 
 Added
-* Update Multilingual metadata.
+* Update multilingual metadata.
 
 = 2.5.1 =
 
