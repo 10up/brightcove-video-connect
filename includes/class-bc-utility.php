@@ -848,9 +848,9 @@ class BC_Utility {
 							data-account="<?php echo esc_attr( $account_id ); ?>"
 							data-player="<?php echo esc_attr( $player_id ); ?>"
 							data-embed="default"
-							controls=""
+							controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 							data-video-id="<?php echo esc_attr( $id ); ?>"
-							width="560" height="315">
+							width="<?php echo esc_attr( $width ); ?>" height="315">
 					</video-js>
 					<script src="<?php echo esc_url( $js_src ); ?>"></script>
 				</div>
