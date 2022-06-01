@@ -841,23 +841,27 @@ class BC_Utility {
 			if ( 'pictureinpicture' === $atts['picture_in_picture'] ) :
 				?>
 
-                <!-- The picture-in-picture container. This is required! -->
-                <div class="vjs-pip-container">
-                    <!-- The player embed code -->
-                    <video-js id="myPlayerID"
-                              data-account="1752604059001"
-                              data-player="Zbggd6KGf"
-                              data-embed="default"
-                              controls=""
-                              data-video-id="5701202551001"
-                              data-playlist-id=""
-                              data-application-id=""
-                              width="560" height="315"></video-js>
-                    <script src="https://players.brightcove.net/1752604059001/Zbggd6KGf_default/index.min.js"></script>
-                </div>
-                <!-- Script for the picture-in-picture plugin -->
-                <script src="//players.brightcove.net/videojs-pip/1/videojs-pip.min.js"></script>
-
+				<!-- The picture-in-picture container. This is required! -->
+				<div class="vjs-pip-container">
+					<!-- The player embed code -->
+					<video-js id="<?php echo esc_attr( $id ); ?>"
+							data-account="<?php echo esc_attr( $account_id ); ?>"
+							data-player="<?php echo esc_attr( $player_id ); ?>"
+							data-embed="default"
+							controls=""
+							data-video-id="<?php echo esc_attr( $id ); ?>"
+							width="560" height="315">
+					</video-js>
+					<script src="<?php echo esc_url( $js_src ); ?>"></script>
+				</div>
+				<!-- Script for the picture-in-picture plugin. -->
+				<script src="//players.brightcove.net/videojs-pip/1/videojs-pip.min.js"></script>
+				<script>
+					videojs.getPlayer('<?php echo esc_attr( $id ); ?>').ready(function() {
+						var myPlayer = this;
+						myPlayer.pip();
+					});
+				</script>
 			<?php
 			else :
 				?>

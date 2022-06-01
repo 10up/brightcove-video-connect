@@ -393,6 +393,7 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
 		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array() );
 		wp_enqueue_style( 'brightcove-playlist' );
 	}
