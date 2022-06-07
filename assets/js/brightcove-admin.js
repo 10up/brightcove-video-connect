@@ -3384,9 +3384,7 @@ var VideoEditView = BrightcoveView.extend({
 		options.folders = wpbc.preload.folders;
 
 		// Due to a change in the API response, text_tracks might not be defined if the video lacks text_tracks.
-		if (undefined === options.text_tracks) {
-			options.text_tracks = [];
-		}
+		options.text_tracks = options.text_tracks || [];
 
 		this.model.set('oldFolderId', options.folder_id);
 
