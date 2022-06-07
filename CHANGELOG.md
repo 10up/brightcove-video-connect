@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.6.1] - 2022-06-07
+
+### Fixed
+- Brightcove API changes break video edit view. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#266](https://github.com/10up/brightcove-video-connect/pull/276).
+
 ## [2.6.0] - 2022-04-19
 
 ### Added
@@ -367,6 +372,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.6.1]: https://github.com/10up/brightcove-video-connect/compare/2.6.0...2.6.1
 [2.6.0]: https://github.com/10up/brightcove-video-connect/compare/2.5.2...2.6.0
 [2.5.2]: https://github.com/10up/brightcove-video-connect/compare/2.5.1...2.5.2
 [2.5.1]: https://github.com/10up/brightcove-video-connect/compare/2.5.0...2.5.1
