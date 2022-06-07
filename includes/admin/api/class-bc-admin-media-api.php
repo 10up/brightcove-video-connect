@@ -1074,12 +1074,14 @@ class BC_Admin_Media_API {
 				// Massage the text tracks
 				$result['captions'] = array();
 
-				foreach ( $result['text_tracks'] as $caption ) {
-					$result['captions'][] = array(
-						'source'   => $caption['src'],
-						'language' => $caption['srclang'],
-						'label'    => $caption['label'],
-					);
+				if ( ! empty( $result['text_tracks'] ) ) {
+					foreach ( $result['text_tracks'] as $caption ) {
+						$result['captions'][] = array(
+							'source'   => $caption['src'],
+							'language' => $caption['srclang'],
+							'label'    => $caption['label'],
+						);
+					}
 				}
 			}
 
