@@ -3,7 +3,7 @@
 	"private": true,
 	"title": "brightcove-video-connect",
 	"description": "A Brightcove plugin for WordPress.",
-	"version": "2.6.0",
+	"version": "2.6.1",
 	"homepage": "https://wordpress.org/plugins/brightcove-video-connect/",
 	"author": {
 		"name": "10up",
@@ -32,7 +32,7 @@
 		"eslint-plugin-prettier": "^3.4.0",
 		"eslint-plugin-react": "^7.24.0",
 		"eslint-plugin-react-hooks": "^1.7.0",
-		"grunt": "^1.0.4",
+		"grunt": "^1.5.3",
 		"grunt-autoprefixer": "*",
 		"grunt-contrib-clean": "*",
 		"grunt-contrib-concat": "*",
