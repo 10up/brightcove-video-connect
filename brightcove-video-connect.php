@@ -64,20 +64,18 @@ require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php';
 require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php';
 require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php';
 
+
+
+global $bc_accounts;
+
+$bc_accounts = new BC_Accounts();
+
 // Wireup actions.
 if ( is_admin() ) {
-	add_action( 'init', array( 'BC_Setup', 'action_init' ) );
-	add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
-} else {
-
-	global $bc_accounts;
-
-	$bc_accounts = new BC_Accounts();
-
-	add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
-
+    add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 }
 
+add_action( 'init', array( 'BC_Setup', 'action_init' ) );
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
