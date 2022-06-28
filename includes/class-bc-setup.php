@@ -162,6 +162,9 @@ class BC_Setup {
 						'picture_in_picture'    => array(
 							'type' => 'string',
 						),
+						'language_detection'    => array(
+							'type' => 'string',
+						),
 						'height'                => array(
 							'type' => 'string',
 						),
