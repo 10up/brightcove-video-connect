@@ -504,6 +504,8 @@ div.brightcove-uploader div.brightcove-messages .updated {
     clear: both; }
   .brightcove.media-frame-menu .attachment-detail .video-details input[type=number], .brightcove.media-frame-menu .attachment-detail .playlist-details input[type=number], .brightcove.media-frame-menu .attachment-detail .inpageexperiences-details input[type=number] {
     width: 20%; }
+  .brightcove.media-frame-menu .attachment-detail .video-details input[type=checkbox], .brightcove.media-frame-menu .attachment-detail .playlist-details input[type=checkbox], .brightcove.media-frame-menu .attachment-detail .inpageexperiences-details input[type=checkbox] {
+    margin-left: 10px; }
   .brightcove.media-frame-menu .attachment-detail .video-details textarea, .brightcove.media-frame-menu .attachment-detail .playlist-details textarea, .brightcove.media-frame-menu .attachment-detail .inpageexperiences-details textarea {
     margin-top: 10px;
     width: 100%; }

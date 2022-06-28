@@ -840,7 +840,6 @@ class BC_Utility {
 			$js_src = 'https://players.brightcove.net/' . $account_id . '/' . $player_id . '_default/index.min.js';
 			if ( 'pictureinpicture' === $atts['picture_in_picture'] ) :
 				?>
-
 				<!-- The picture-in-picture container. This is required! -->
 				<div class="vjs-pip-container">
 					<!-- The player embed code -->
@@ -867,18 +866,43 @@ class BC_Utility {
 				?>
 				<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
 					<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
-						<video
+						<video-js
+								id="<?php echo esc_attr( $id ); ?>"
 								data-video-id="<?php echo esc_attr( $id ); ?>" data-account="<?php echo esc_attr( $account_id ); ?>"
 								data-player="<?php echo esc_attr( $player_id ); ?>"
 								data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 								data-embed="default" class="video-js"
 								controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 								style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
-						</video>
+						</video-js>
 
 						<script src="<?php echo esc_url( $js_src ); ?>"></script>
 					</div>
 				</div>
+				<?php
+			endif;
+			if ( 'languagedetection' === $atts['language_detection'] ) :
+				?>
+				<script>
+					videojs.getPlayer('<?php echo esc_attr( $id ); ?>').ready(function() {
+						var myPlayer = this;
+						myPlayer.on("loadedmetadata", function() {
+							var browser_language, track_language, audioTracks;
+							browser_language = navigator.language || navigator.userLanguage; // IE <= 10
+							browser_language = browser_language.substr(0, 2);
+
+							audioTracks = myPlayer.audioTracks();
+							for (var i = 0; i < audioTracks.length; i++) {
+								track_language = audioTracks[i].language.substr(0, 2);
+								if (track_language) {
+									if (track_language === browser_language) {
+										audioTracks[i].enabled = true;
+									}
+								}
+							}
+						});
+					});
+				</script>
 				<?php
 			endif;
 		elseif ( 'iframe' === $embed ) :

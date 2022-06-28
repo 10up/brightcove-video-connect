@@ -10,7 +10,6 @@ class BC_Setup {
 			add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
 			return;
 		}
-
 		global $bc_accounts;
 
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-errors.php';
@@ -161,6 +160,9 @@ class BC_Setup {
 							'type' => 'string',
 						),
 						'picture_in_picture'    => array(
+							'type' => 'string',
+						),
+						'language_detection'    => array(
 							'type' => 'string',
 						),
 						'height'                => array(

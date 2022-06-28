@@ -18,10 +18,11 @@ var MediaDetailsView = BrightcoveView.extend({
 		'click .brightcove.back.button': 'triggerCancelPreviewMedia',
 		'click .playlist-details input[name="embed-style"]': 'togglePlaylistSizing',
 		'change #aspect-ratio': 'toggleUnits',
-		'change #pictureinpicture': 'togglePictureinpicture',
+		'change #pictureinpicture': 'toggleIframe',
+		'change #languagedetection': 'toggleIframe',
 		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]':
 			'toggleExperienceUnits',
-		'change #video-player, #autoplay, #pictureinpicture, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
+		'change #video-player, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
 			'generateShortcode',
 		'change #generate-shortcode': 'toggleShortcodeGeneration',
 	},
@@ -73,11 +74,14 @@ var MediaDetailsView = BrightcoveView.extend({
 		}
 	},
 
-	togglePictureinpicture: function (event) {
+	toggleIframe: function (event) {
 		var $iframeRadioButton = $('#embed-style-iframe'),
-			$pictureinpicture_checked = $('#pictureinpicture').is(':checked');
+			notAllowedOptions = [
+				$('#pictureinpicture').is(':checked'),
+				$('#languagedetection').is(':checked'),
+			];
 
-		if ($pictureinpicture_checked) {
+		if (notAllowedOptions.includes(true)) {
 			$iframeRadioButton.prop('checked', false);
 			$iframeRadioButton.attr('disabled', true);
 		} else {
@@ -137,6 +141,7 @@ var MediaDetailsView = BrightcoveView.extend({
 			autoplay = $('#autoplay').is(':checked') ? 'autoplay' : '',
 			playsinline = $('#playsinline').is(':checked') ? 'playsinline' : '',
 			pictureinpicture = $('#pictureinpicture').is(':checked') ? 'pictureinpicture' : '',
+			languagedetection = $('#languagedetection').is(':checked') ? 'languagedetection' : '',
 			mute = $('#mute').is(':checked') ? 'muted' : '',
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
@@ -190,6 +195,8 @@ var MediaDetailsView = BrightcoveView.extend({
 			playsinline +
 			'" picture_in_picture="' +
 			pictureinpicture +
+			'" language_detection="' +
+			languagedetection +
 			'" max_width="' +
 			maxWidth +
 			'" ' +
