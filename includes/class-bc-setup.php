@@ -6,7 +6,9 @@ class BC_Setup {
 	 * Generic bootstrap function that is hooked into the default `init` method
 	 */
 	public static function action_init() {
-		if ( is_admin() ) {
+		if ( ! is_admin() ) {
+			add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
+		} else {
 			global $bc_accounts;
 
 			require_once BRIGHTCOVE_PATH . 'includes/class-bc-errors.php';
@@ -60,7 +62,6 @@ class BC_Setup {
 				new BC_Admin_Sources();
 				new BC_Admin_Templates();
 				new BC_Admin_User_Profile();
-
 			}
 
 			new BC_Playlists();
@@ -74,8 +75,6 @@ class BC_Setup {
 			// Show admin notice only if there are not sources.
 			add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 		}
-
-		add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
 	}
 
 	/**
