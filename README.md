@@ -104,6 +104,12 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 14. Selecting a playlist to show the details on the sidebar.
 ![](/.wordpress-org/screenshot-14.png)
 
+## Audio Track Language Detection
+
+The plugin has the ability to auto determine audio track language detection if the option has been enabled, based on the user browser language.
+
+However, in order for it to work you need to make sure you have multiple audio tracks available in Brightcove Studio for the video you want to enable this option, otherwise, this feature won't work.
+
 ## Support Level
 
 **Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.

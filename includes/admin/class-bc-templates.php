@@ -789,6 +789,12 @@ class BC_Admin_Templates {
 						<div class="right-col">
 							<input type="checkbox" id="playsinline" name="playsinline">
 						</div>
+						<label for="languagedetection">
+							<?php esc_html_e( 'Audio Language Detection: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="checkbox" id="languagedetection" name="language_detection">
+						</div>
 						<label for="pictureinpicture">
 							<?php esc_html_e( 'Enable Picture in Picture: ', 'brightcove' ); ?>
 						</label>

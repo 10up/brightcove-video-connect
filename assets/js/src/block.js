@@ -42,6 +42,7 @@
 			var autoplay = props.attributes.autoplay || '';
 			var playsinline = props.attributes.playsinline || '';
 			var pictureinpicture = props.attributes.picture_in_picture || '';
+			var languageDetection = props.attributes.language_detection || '';
 			var embed = props.attributes.embed || '';
 			var mute = props.attributes.mute || '';
 			var sizing = props.attributes.sizing || 'responsive';
@@ -201,6 +202,7 @@
 					mute: '',
 					playsinline: '',
 					picture_in_picture: '',
+					languageDetection: '',
 					embed: attrs.named.embed,
 					sizing: attrs.named.sizing,
 					aspect_ratio: attrs.named.aspect_ratio,
@@ -213,6 +215,7 @@
 					setAttrs.mute = attrs.named.mute;
 					setAttrs.playsinline = attrs.named.playsinline;
 					setAttrs.picture_in_picture = attrs.named.picture_in_picture;
+					setAttrs.language_detection = attrs.named.language_detection;
 					setAttrs.padding_top = attrs.named.padding_top;
 				} else if (attrs.numeric[0] === '[bc_playlist') {
 					setAttrs.player_id = attrs.named.player_id;
@@ -482,7 +485,18 @@
 									});
 								},
 							}),
-						pictureinpicture === 'pictureinpicture'
+						el(components.CheckboxControl, {
+							label: __('Enable Language Detection', 'brightcove'),
+							checked: languageDetection,
+							onChange: function (value) {
+								props.setAttributes({
+									...props.attributes,
+									language_detection: value && 'languagedetection',
+								});
+							},
+						}),
+						languageDetection === 'languagedetection' ||
+							pictureinpicture === 'pictureinpicture'
 							? el(
 									components.Disabled,
 									{ style: { marginBottom: '24px' } },

@@ -6,6 +6,10 @@ class BC_Setup {
 	 * Generic bootstrap function that is hooked into the default `init` method
 	 */
 	public static function action_init() {
+		if ( ! is_admin() ) {
+			add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
+			return;
+		}
 		global $bc_accounts;
 
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-errors.php';
@@ -59,14 +63,12 @@ class BC_Setup {
 			new BC_Admin_Sources();
 			new BC_Admin_Templates();
 			new BC_Admin_User_Profile();
-
 		}
 
 		new BC_Playlists();
 		new BC_Videos();
 
 		add_action( 'admin_enqueue_scripts', array( 'BC_Setup', 'admin_enqueue_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
@@ -158,6 +160,9 @@ class BC_Setup {
 							'type' => 'string',
 						),
 						'picture_in_picture'    => array(
+							'type' => 'string',
+						),
+						'language_detection'    => array(
 							'type' => 'string',
 						),
 						'height'                => array(
@@ -387,13 +392,12 @@ class BC_Setup {
 	}
 
 	public static function frontend_enqueue_scripts() {
-
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
 		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array() );
 		wp_enqueue_style( 'brightcove-playlist' );
-
 	}
 
 	public static function mime_types( $mime_types ) {

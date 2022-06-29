@@ -3,7 +3,7 @@
  * Plugin Name: Brightcove Video Connect
  * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
  * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version: 2.6.1
+ * Version: 2.7.0
  * Author: 10up
  * Author URI: http://10up.com
  * License: GPLv2+
@@ -29,7 +29,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  021.0.2301  USA
  */
 
-define( 'BRIGHTCOVE_VERSION', '2.6.1' );
+define( 'BRIGHTCOVE_VERSION', '2.7.0' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
@@ -64,20 +64,18 @@ require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-api.php';
 require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-oauth.php';
 require_once BRIGHTCOVE_PATH . 'includes/api/class-bc-player-management-api.php';
 
+
+
+global $bc_accounts;
+
+$bc_accounts = new BC_Accounts();
+
 // Wireup actions.
 if ( is_admin() ) {
-	add_action( 'init', array( 'BC_Setup', 'action_init' ) );
-	add_action( 'init', array( 'BC_Setup', 'bc_check_minimum_wp_version' ) );
-} else {
-
-	global $bc_accounts;
-
-	$bc_accounts = new BC_Accounts();
-
-	add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
-
+    add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 }
 
+add_action( 'init', array( 'BC_Setup', 'action_init' ) );
 add_action( 'init', array( 'BC_Video_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Playlist_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
