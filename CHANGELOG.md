@@ -7,11 +7,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [2.7.0] - 2022-06-29
 
 ### Fixed
-- Picture in Picture not working. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#276](https://github.com/10up/brightcove-video-connect/pull/272).
+- Picture in Picture not working. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#272](https://github.com/10up/brightcove-video-connect/pull/272).
 
 ### Added
 
-- Enable audio track language detection based on browser language if video has multiple audio tracks. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#276](https://github.com/10up/brightcove-video-connect/pull/279).
+- Enable audio track language detection based on browser language if video has multiple audio tracks. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#279](https://github.com/10up/brightcove-video-connect/pull/279).
 
 ## [2.6.1] - 2022-06-07
 
