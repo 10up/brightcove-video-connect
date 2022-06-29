@@ -39,24 +39,38 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 2.7.0 =
+
+Fixed
+
+* Picture in Picture not working.
+
+Added
+
+* Enable audio track language detection based on browser language if video has multiple audio tracks.
+
 = 2.6.1 =
 
 Fixed
+
 * Brightcove API changes break video edit view.
 
 = 2.6.0 =
 
 Added
+
 * Support custom fields with multilingual metadata.
 
 = 2.5.2 =
 
 Added
+
 * Update multilingual metadata.
 
 = 2.5.1 =
 
 Added
+
 * Ability to display video URL in videos page.
 
 Fixed
@@ -77,35 +91,42 @@ Fixed
 = 2.3.1 =
 
 Fixed
+
 * Label field on video editing.
 
 = 2.3.0 =
 
 Added
+
 * Settings sidebar to the Brightcove block. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#229](https://github.com/10up/brightcove-video-connect/pull/229).
 
 Security
+
 * Bump `path-parse` from 1.0.6 to 1.0.7. Props [@dependabot](https://github.com/dependabot) via [#222](https://github.com/10up/brightcove-video-connect/pull/222).
 * Bump `tar` from 6.1.5 to 6.1.11. Props [@dependabot](https://github.com/dependabot) via [#223](https://github.com/10up/brightcove-video-connect/pull/223).
 
 = 2.2.1 =
 
 Changed
+
 * Updated the screenshots.
 
 = 2.2.0 =
 
 Breaking Changes
+
 * BC_Utility API changed: See `set_cache_item` and `delete_cache_item` in `includes/class-bc-utility.php`.
 * BC_Utility API changed: Removed `remove_deleted_players` function.
 
 Fixed
+
 * Undefined index warnings. Props [@sanketio](https://github.com/sanketio) via [#197](https://github.com/10up/brightcove-video-connect/pull/197).
 * Typo for the `$allowedtags` global used in conjunction with wp_kses. Props [@theskinnyghost](https://github.com/theskinnyghost) via [#203](https://github.com/10up/brightcove-video-connect/pull/203).
 * Performance issue related with bc_transient_keys option. Props [@Rahmon](https://github.com/Rahmon) via [#215](https://github.com/10up/brightcove-video-connect/pull/215).
 * Playlist preview in the editor. Props [@Rahmon](https://github.com/Rahmon) via [#216](https://github.com/10up/brightcove-video-connect/pull/216).
 
 Security
+
 * Bump `hosted-git-info` from 2.8.8 to 2.8.9 (props [@dependabot](https://github.com/dependabot) via [#212](https://github.com/10up/brightcove-video-connect/pull/212))
 * Bump `normalize-url` from 4.5.0 to 4.5.1 (props [@dependabot](https://github.com/dependabot) via [#213](https://github.com/10up/brightcove-video-connect/pull/213))
 
