@@ -72,7 +72,7 @@ $bc_accounts = new BC_Accounts();
 
 // Wireup actions.
 if ( is_admin() ) {
-    add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
+	add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 }
 
 add_action( 'init', array( 'BC_Setup', 'action_init' ) );

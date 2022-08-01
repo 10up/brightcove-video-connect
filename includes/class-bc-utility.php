@@ -861,7 +861,7 @@ class BC_Utility {
 						myPlayer.pip();
 					});
 				</script>
-			<?php
+				<?php
 			else :
 				?>
 				<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
