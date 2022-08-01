@@ -23,3 +23,23 @@ jobs:
       run: npm install
     - name: eslint
       run: npm run lint-js
+
+  phpcs:
+    name: PHP Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+          coverage: none
+
+      - name: composer install
+        run: composer install
+
+      - name: PHPCS check
+        run: composer run lint
