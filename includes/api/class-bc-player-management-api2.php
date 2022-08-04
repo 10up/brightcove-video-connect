@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_Player_Management_API2 class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Interface to the Brightcove Player Management APIs version 2.
@@ -19,13 +24,6 @@ class BC_Player_Management_API2 extends BC_API {
 	const BASE_URL = 'https://players.api.brightcove.com/v2/accounts/';
 
 	/**
-	 * Setup processing of Player Management API
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
 	 * List available players
 	 *
 	 * Returns a list of available players in a given account as well as
@@ -41,7 +39,7 @@ class BC_Player_Management_API2 extends BC_API {
 
 		global $bc_accounts;
 
-		if ( '' != $player_id ) {
+		if ( '' !== $player_id ) {
 			$player_id = utf8_uri_encode( sanitize_text_field( $player_id ) ) . '/embeds';
 		}
 
