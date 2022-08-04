@@ -1,7 +1,8 @@
 <?php
-/*
+/**
  * Permissions model for accessing Brightcove.
  *
+ * @package Brightcove_Video_Connect
  * SA = Super Admin
  * AD = Admin
  * ED = Editor
@@ -12,15 +13,22 @@
  * Set default Brightcove source for own Account     Y  Y  Y  Y  Y
  * View videos                                       Y  Y  Y  Y  Y
  * View playlists                                    Y  Y  Y  Y  Y
- * Insert videos into posts                          Y	Y  Y  Y  Y
+ * Insert videos into posts                          Y  Y  Y  Y  Y
  * Upload new videos                                 Y  Y  Y
  * Edit video metadata                               Y  Y  Y
  * Delete videos                                     Y  Y  Y
  * Add/Edit/Delete Brightcove sources                Y  Y
  * Set default Brightcove source for WordPress site  Y  Y
  */
+
+/**
+ * Brightcove_Permissions class.
+ */
 class BC_Permissions {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		global $wp_roles;
 		if ( ! isset( $wp_roles->roles['administrator']['capabilities']['brightcove_manipulate_accounts'] ) ) {
@@ -32,6 +40,9 @@ class BC_Permissions {
 		}
 	}
 
+	/**
+	 * Adds new capabilities to administrators to manage videos.
+	 */
 	protected function add_admin_capabilities() {
 
 		$admin_roles = array(
@@ -55,6 +66,9 @@ class BC_Permissions {
 		}
 	}
 
+	/**
+	 * Adds new capabilities to editors to manage videos.
+	 */
 	protected function add_editor_capabilities() {
 
 		$editor_roles = array(
