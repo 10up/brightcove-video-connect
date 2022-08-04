@@ -1,5 +1,13 @@
 <?php
+/**
+ * BC_Experiences_Shortcode class file.
+ *
+ * @package Brightcove Video Connect
+ */
 
+/**
+ * BC_Experiences_Shortcode class.
+ */
 class BC_Experiences_Shortcode {
 
 	/**
@@ -22,7 +30,6 @@ class BC_Experiences_Shortcode {
 	 * @return string HTML for displaying shortcode.
 	 */
 	public static function bc_experience( $atts ) {
-
 		$defaults = array(
 			'experience_id' => '',
 			'account_id'    => '',
