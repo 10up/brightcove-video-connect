@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_CMS_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Interface to the Brightcove CMS API and DI API.
@@ -25,23 +30,6 @@ class BC_CMS_API extends BC_API {
 	 * @since  1.0.0
 	 */
 	const DI_BASE_URL = 'https://ingest.api.brightcove.com/v1/accounts/';
-
-	/**
-	 * Setup processing of CMS API
-	 *
-	 * Sets up class variables allowing for processing of Brightcove CMS API functionality.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param BC_Accounts $accounts the Brightcove accounts
-	 *
-	 * @return BC_CMS_API an instance of the BC CMS API object
-	 */
-	public function __construct() {
-
-		parent::__construct();
-
-	}
 
 	/**
 	 * Creates a playlist
@@ -71,7 +59,7 @@ class BC_CMS_API extends BC_API {
 
 		$type = strtoupper( sanitize_text_field( $type ) );
 
-		if ( ! in_array( $type, $allowed_types ) ) {
+		if ( ! in_array( $type, $allowed_types, true ) ) {
 			return false;
 		}
 
@@ -108,7 +96,7 @@ class BC_CMS_API extends BC_API {
 
 		$args = array();
 
-		if ( '' != sanitize_text_field( $query ) ) {
+		if ( '' !== sanitize_text_field( $query ) ) {
 			$args['q'] = sanitize_text_field( $query );
 		}
 
@@ -179,7 +167,7 @@ class BC_CMS_API extends BC_API {
 
 		$url = self::CMS_BASE_URL . $this->get_account_id() . '/playlists';
 		if ( $query ) {
-			$url = add_query_arg( 'q', urlencode( $query ), $url );
+			$url = add_query_arg( 'q', rawurlencode( $query ), $url );
 		}
 		$results = $this->send_request( esc_url_raw( $url ) );
 
@@ -261,6 +249,7 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param  string $filter Optional filter to apply to the video count.
 	 * @return int|bool number of videos in the account or false if failure
 	 */
 	public function video_count( $filter = '' ) {
@@ -398,8 +387,7 @@ class BC_CMS_API extends BC_API {
 		$playable = true,
 		$folder_id = false
 	) {
-
-		/*
+		/**
 		 * Available fields for sort:
 		 *
 		 * name
@@ -415,30 +403,30 @@ class BC_CMS_API extends BC_API {
 		 *
 		 * Available Search Fields
 		 *
-		 * name	strings or quoted strings
-		 * text	strings or quoted strings (name, description, long_description)
-		 * tags	strings or quoted strings
-		 * reference_id	string or quoted string
-		 * state	ACTIVE, INACTIVE, DELETED, PENDING
-		 * updated_at	date range
-		 * created_at	date range
-		 * schedule.starts_at	date range
-		 * schedule.ends_at	date range
-		 * published_at	date range
-		 * complete	true or false
+		 * name strings or quoted strings
+		 * text strings or quoted strings (name, description, long_description)
+		 * tags strings or quoted strings
+		 * reference_id string or quoted string
+		 * state    ACTIVE, INACTIVE, DELETED, PENDING
+		 * updated_at   date range
+		 * created_at   date range
+		 * schedule.starts_at   date range
+		 * schedule.ends_at date range
+		 * published_at date range
+		 * complete true or false
 		 */
 
 		$args = array();
 
-		if ( 20 != absint( $limit ) ) {
+		if ( 20 !== absint( $limit ) ) {
 			$args['limit'] = absint( $limit );
 		}
 
-		if ( 0 != absint( $offset ) ) {
+		if ( 0 !== absint( $offset ) ) {
 			$args['offset'] = absint( $offset );
 		}
 
-		if ( 'updated_at' != sanitize_text_field( $sort ) ) {
+		if ( 'updated_at' !== sanitize_text_field( $sort ) ) {
 			$args['sort'] = sanitize_text_field( $sort );
 		}
 
@@ -446,7 +434,7 @@ class BC_CMS_API extends BC_API {
 			$args['playable'] = false;
 		}
 
-		if ( '' != sanitize_text_field( $query ) ) {
+		if ( '' !== sanitize_text_field( $query ) ) {
 
 			// If Post variables are being escaped, the encoded quote do not return the intended results from the API.
 			$query = stripslashes( $query );
@@ -568,8 +556,8 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @param string $video_id Video cloud ID
 	 * @param string $poster_url URL for the video poster image
-	 * @param int [  $height]   Pixel height of the image
-	 * @param int [  $width]    Pixel width of the image
+	 * @param int    $height   Pixel height of the image
+	 * @param int    $width    Pixel width of the image
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
@@ -577,7 +565,7 @@ class BC_CMS_API extends BC_API {
 		// Sanitize values
 		$height   = absint( $height );
 		$width    = absint( $width );
-		$video_id = urlencode( $video_id );
+		$video_id = rawurlencode( $video_id );
 
 		// Build out the data
 		$data              = array();
@@ -605,8 +593,8 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * @param string $video_id Video cloud ID
 	 * @param string $thumbnail_url URL for the thumbnail image
-	 * @param int [  $height]      Pixel height of the image
-	 * @param int [  $width]       Pixel width of the image
+	 * @param int    $height     Pixel height of the image
+	 * @param int    $width       Pixel width of the image
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
@@ -614,7 +602,7 @@ class BC_CMS_API extends BC_API {
 		// Sanitize values
 		$height   = absint( $height );
 		$width    = absint( $width );
-		$video_id = urlencode( $video_id );
+		$video_id = rawurlencode( $video_id );
 
 		// Build out the data
 		$data              = array();
@@ -661,10 +649,10 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends a URL of the video's caption file to the Dynamic Ingest API for processing.
 	 *
-	 * @param string   $video_id Video cloud ID
-	 * @param string   $caption_file_url URL for a WebVTT file
-	 * @param string [ $language]       ISO 639 2-letter language code for text tracks
-	 * @param string [ $label]          User-readable title
+	 * @param string $video_id Video cloud ID
+	 * @param string $caption_file_url URL for a WebVTT file
+	 * @param string $language      ISO 639 2-letter language code for text tracks
+	 * @param string $label         User-readable title
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
@@ -681,8 +669,8 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends the URLs of various video text track files to the Dynamic Ingest API for processing.
 	 *
-	 * @param string          $video_id
-	 * @param BC_Text_Track[] $text_tracks
+	 * @param string          $video_id Video id.
+	 * @param BC_Text_Track[] $text_tracks Array of text tracks to upload.
 	 *
 	 * @return string|bool The ingest request ID or false on failure
 	 */
@@ -692,7 +680,7 @@ class BC_CMS_API extends BC_API {
 		$data['callbacks']   = BC_Notification_API::callback_paths();
 		$data['text_tracks'] = array();
 		foreach ( $text_tracks as $track ) {
-			$data['text_tracks'][] = $track->toArray();
+			$data['text_tracks'][] = $track->to_array();
 		}
 
 		// Send the data
@@ -704,8 +692,8 @@ class BC_CMS_API extends BC_API {
 	 *
 	 * Sends a PATCH request to replace existing text tracks.
 	 *
-	 * @param string          $video_id
-	 * @param BC_Text_Track[] $text_tracks
+	 * @param string          $video_id The id of the video to update.
+	 * @param BC_Text_Track[] $text_tracks The text tracks to update.
 	 *
 	 * @return string|bool The request ID or false on failure.
 	 */
@@ -713,7 +701,7 @@ class BC_CMS_API extends BC_API {
 		$data                = array();
 		$data['text_tracks'] = array();
 		foreach ( $text_tracks as $track ) {
-			$data['text_tracks'][] = $track->toArrayPatch();
+			$data['text_tracks'][] = $track->to_array_patch();
 		}
 
 		return $this->send_request( esc_url_raw( self::DI_BASE_URL . $this->get_account_id() . '/videos/' . $video_id ), 'PATCH', $data );
@@ -722,7 +710,7 @@ class BC_CMS_API extends BC_API {
 	/**
 	 * Deletes the existing text tracks by sending an empty JSON text_track array
 	 *
-	 * @param $video_id
+	 * @param  string $video_id The video ID to delete text tracks for.
 	 * @return string|bool The request ID or false on failure.
 	 */
 	public function text_track_delete( $video_id ) {
@@ -746,8 +734,8 @@ class BC_CMS_API extends BC_API {
 	/**
 	 * Subscribe to Brightcove API events
 	 *
-	 * @param string $endpoint
-	 * @param array  $events
+	 * @param string $endpoint The endpoint.
+	 * @param array  $events Array of event names to subscribe to.
 	 *
 	 * @return string|bool Subscription ID on success, false on failure
 	 */
@@ -772,9 +760,7 @@ class BC_CMS_API extends BC_API {
 	/**
 	 * Unsubscribe from Brightcove API events
 	 *
-	 * @param string $subscription_id
-	 *
-	 * @return mixed|bool
+	 * @param string $subscription_id The ID of the subscription to delete.
 	 */
 	public function remove_subscription( $subscription_id ) {
 		$subscription_id = sanitize_text_field( $subscription_id );
@@ -810,28 +796,28 @@ class BC_CMS_API extends BC_API {
 	/**
 	 * Add/Remove a video from a folder.
 	 *
-	 * @param string $oldFolderId The previous folder ID assigned to video.
-	 * @param string $folderId The folder ID that the video should be in.
-	 * @param int    $videoId The video ID.
+	 * @param string $old_folder_id The previous folder ID assigned to video.
+	 * @param string $folder_id The folder ID that the video should be in.
+	 * @param int    $video_id The video ID.
 	 */
-	public function add_folder_to_video( $oldFolderId, $folderId, $videoId ) {
-		if ( '' === $folderId && '' !== $oldFolderId ) {
-			$this->remove_folder_from_video( $oldFolderId, $videoId );
+	public function add_folder_to_video( $old_folder_id, $folder_id, $video_id ) {
+		if ( '' === $folder_id && '' !== $old_folder_id ) {
+			$this->remove_folder_from_video( $old_folder_id, $video_id );
 
 			return;
 		}
-		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folderId . '/videos/' . $videoId;
+		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folder_id . '/videos/' . $video_id;
 		$this->send_request( esc_url_raw( $api_url ), 'PUT' );
 	}
 
 	/**
 	 * Remove a video from a folder.
 	 *
-	 * @param string $folderId The folder that contains the video.
-	 * @param int    $videoId The video ID.
+	 * @param string $folder_id The folder that contains the video.
+	 * @param int    $video_id The video ID.
 	 */
-	protected function remove_folder_from_video( $folderId, $videoId ) {
-		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folderId . '/videos/' . $videoId;
+	protected function remove_folder_from_video( $folder_id, $video_id ) {
+		$api_url = self::CMS_BASE_URL . $this->get_account_id() . '/folders/' . $folder_id . '/videos/' . $video_id;
 		$this->send_request( esc_url_raw( $api_url ), 'DELETE' );
 	}
 
