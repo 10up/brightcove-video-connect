@@ -1,7 +1,18 @@
 <?php
+/**
+ * BC_Admin_Menu class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Admin_Menu class
+ */
 class BC_Admin_Menu {
 
+	/**
+	 * Constructor method
+	 */
 	public function __construct() {
 			add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 			add_action( 'admin_head', array( $this, 'redirect_top_page_menu_js' ) );
@@ -31,10 +42,20 @@ class BC_Admin_Menu {
 		}
 	}
 
+	/**
+	 * Gets the playlists page URI
+	 *
+	 * @return string
+	 */
 	public static function get_playlists_page_uri_component() {
 		return 'page-brightcove-playlists';
 	}
 
+	/**
+	 * Get the URI for the video page
+	 *
+	 * @return string
+	 */
 	public static function get_videos_page_uri_component() {
 		return 'page-brightcove-videos';
 	}
@@ -45,8 +66,10 @@ class BC_Admin_Menu {
 	public function render_settings_page() {
 		/**
 		 * Fires when the setting page loads.
+		 *
+		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/settings_page' );
+		do_action( 'brightcove/admin/settings_page' ); // phpcs:ignore
 	}
 
 	/**
@@ -55,22 +78,34 @@ class BC_Admin_Menu {
 	public function render_labels_page() {
 		/**
 		 * Fires when the labels page loads.
+		 *
+		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/labels_page' );
+		do_action( 'brightcove/admin/labels_page' ); // phpcs:ignore
 	}
 
+	/**
+	 * Render the videos page
+	 */
 	public function render_videos_page() {
 		/**
 		 * Fires when the videos page loads.
+		 *
+		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/videos_page' );
+		do_action( 'brightcove/admin/videos_page' ); // phpcs:ignore
 	}
 
+	/**
+	 * Render playlists page
+	 */
 	public function render_playlists_page() {
 		/**
 		 * Fires when the playlists page loads.
+		 *
+		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/playlists_page' );
+		do_action( 'brightcove/admin/playlists_page' ); // phpcs:ignore
 	}
 
 	/**
@@ -79,8 +114,10 @@ class BC_Admin_Menu {
 	public function render_edit_source_page() {
 		/**
 		 * Fires when the edit source page loads.
+		 *
+		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/edit_source_page' );
+		do_action( 'brightcove/admin/edit_source_page' ); // phpcs:ignore
 	}
 
 	/**
@@ -89,10 +126,15 @@ class BC_Admin_Menu {
 	public function render_edit_label_page() {
 		/**
 		 * Fires when the edit label page loads.
+		 *
+		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/edit_label_page' );
+		do_action( 'brightcove/admin/edit_label_page' );// // phpcs:ignore
 	}
 
+	/**
+	 * Redirects to the top level menu.
+	 */
 	public function redirect_top_page_menu_js() {
 		global $bc_accounts;
 
@@ -102,7 +144,7 @@ class BC_Admin_Menu {
 			?>
 			<script>
 				jQuery(document).ready(function($){
-					$('#toplevel_page_brightcove a').attr( 'href', '<?php echo admin_url( 'admin.php?page=brightcove-sources' ); ?>' );
+					$('#toplevel_page_brightcove a').attr( 'href', '<?php echo esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ); ?>' );
 				});
 			</script>
 			<?php
