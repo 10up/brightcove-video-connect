@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_Experiences_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Interface to the Brightcove Experiences API.
@@ -15,19 +20,6 @@ class BC_Experiences_API extends BC_API {
 	 * @since  1.4.2
 	 */
 	const BASE_URL = 'https://experiences.api.brightcove.com/v1/accounts/';
-
-	/**
-	 * Setup processing of Experiences API
-	 *
-	 * Sets up class variables allowing for processing of Brightcove Experiences API functionality.
-	 *
-	 * @since 1.4.2
-	 */
-	public function __construct() {
-
-		parent::__construct();
-
-	}
 
 	/**
 	 * Fetches experiences from Experiences API.
@@ -64,11 +56,10 @@ class BC_Experiences_API extends BC_API {
 	 *
 	 * @since 2.4.0
 	 *
-	 * @return mixed
+	 * @param  int $account_id Account ID.
+	 * @return array|mixed|void
 	 */
 	public function get_experiences_by_account_id( $account_id ) {
-		$account_experiences = array();
-
 		if ( ! is_numeric( $account_id ) ) {
 			return [];
 		}
