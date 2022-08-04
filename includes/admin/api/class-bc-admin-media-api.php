@@ -1,37 +1,60 @@
 <?php
+/**
+ * BC_Admin_Media_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Admin_Media_API class.
+ */
 class BC_Admin_Media_API {
 
 	/**
+	 * BC_CMS_API object
+	 *
 	 * @var BC_CMS_API
 	 */
 	protected $cms_api;
 
 	/**
+	 * BC_Player_Management_API object
+	 *
 	 * @var BC_Player_Management_API
 	 */
 	protected $player_api;
 
 	/**
+	 * BC_Experiences_API object
+	 *
 	 * @var BC_Experiences_API
 	 */
 	protected $experiences_api;
 
 	/**
+	 * BC_Playlists object
+	 *
 	 * @var BC_Playlists
 	 */
 	protected $playlists;
 
 	/**
+	 * BC_Video_Upload object
+	 *
 	 * @var BC_Video_Upload
 	 */
 	protected $video_upload;
 
 	/**
+	 * BC_Videos Object
+	 *
 	 * @var BC_Videos
 	 */
 	protected $videos;
 
+	/**
+	 * Constructor method
+	 */
 	public function __construct() {
 
 		global $bc_accounts;
@@ -62,6 +85,9 @@ class BC_Admin_Media_API {
 		add_action( 'wp_ajax_bc_resolve_shortcode', array( $this, 'resolve_shortcode' ) );
 	}
 
+	/**
+	 * Sends shortcode over.
+	 */
 	public function resolve_shortcode() {
 
 		$video_id   = ( ! empty( $_POST['video_id'] ) ) ? sanitize_text_field( wp_unslash( $_POST['video_id'] ) ) : 0;
@@ -75,6 +101,9 @@ class BC_Admin_Media_API {
 		wp_send_json_success( do_shortcode( $shortcode ) );
 	}
 
+	/**
+	 * Helper function for validating Ajax requests
+	 */
 	protected function bc_helper_check_ajax() {
 
 		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX || ! isset( $_POST['nonce'] ) ) {
@@ -167,7 +196,7 @@ class BC_Admin_Media_API {
 			$fields      = $this->cms_api->video_fields();
 			$use_history = false;
 			foreach ( $fields['custom_fields'] as $item ) {
-				if ( '_change_history' == $item['id'] ) {
+				if ( '_change_history' === $item['id'] ) {
 					$use_history = true;
 					break;
 				}
@@ -187,10 +216,10 @@ class BC_Admin_Media_API {
 				$user      = wp_get_current_user();
 				$history[] = array(
 					'user' => $user->user_login,
-					'time' => date( 'Y-m-d H:i:s', time() ),
+					'time' => gmdate( 'Y-m-d H:i:s', time() ),
 				);
 
-				$custom['_change_history'] = json_encode( $history );
+				$custom['_change_history'] = wp_json_encode( $history );
 			}
 
 			$updated_data['custom_fields'] = $custom;
@@ -200,7 +229,7 @@ class BC_Admin_Media_API {
 
 		$status = false;
 
-		if ( ! in_array( $_POST['type'], array( 'playlists', 'videos' ) ) ) {
+		if ( ! in_array( $_POST['type'], array( 'playlists', 'videos' ), true ) ) {
 			wp_send_json_error( __( 'Type is not specified', 'brightcove' ) );
 		}
 
@@ -225,11 +254,11 @@ class BC_Admin_Media_API {
 			} else {
 				$status = $this->videos->update_bc_video( $updated_data );
 
-				if ( isset( $_POST['folderId'] ) && isset( $_POST['oldFolderId'] ) ) {
-					$folderId    = sanitize_text_field( $_POST['folderId'] );
-					$oldFolderId = sanitize_text_field( $_POST['oldFolderId'] );
+				if ( isset( $_POST['folder_id'] ) && isset( $_POST['oldfolder_id'] ) ) {
+					$folder_id     = sanitize_text_field( $_POST['folder_id'] );
+					$old_folder_id = sanitize_text_field( $_POST['oldfolder_id'] );
 
-					$this->cms_api->add_folder_to_video( $oldFolderId, $folderId, $updated_data['video_id'] );
+					$this->cms_api->add_folder_to_video( $old_folder_id, $folder_id, $updated_data['video_id'] );
 				}
 
 				// Maybe update poster
@@ -302,7 +331,7 @@ class BC_Admin_Media_API {
 		$id       = BC_Utility::sanitize_id( $_POST['id'] );
 
 		// Get type brightcove-playlist or brightcove-video.
-		if ( ! in_array( $type, array( 'playlists', 'videos' ) ) ) {
+		if ( ! in_array( $type, array( 'playlists', 'videos' ), true ) ) {
 			wp_send_json_error( esc_html__( 'Type is not specified!', 'brightcove' ) );
 		}
 
@@ -458,7 +487,9 @@ class BC_Admin_Media_API {
 
 		$account_ids = array_unique( $account_ids );
 
-		while ( count( $results ) <= ( $page * $posts_per_page ) ) {
+		$count_results = count( $results );
+
+		while ( $count_results <= ( $page * $posts_per_page ) ) {
 
 			if ( 0 === count( $account_ids ) ) {
 
@@ -548,7 +579,7 @@ class BC_Admin_Media_API {
 		$query     = ( isset( $_POST['search'] ) && '' !== $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : false;
 		$tag_name  = ( isset( $_POST['tagName'] ) && '' !== $_POST['tagName'] ) ? sanitize_text_field( $_POST['tagName'] ) : false;
 		$dates     = ( isset( $_POST['dates'] ) && 'all' !== $_POST['dates'] ) ? BC_Utility::sanitize_date( $_POST['dates'] ) : false;
-		$folder_id = ( isset( $_POST['folderId'] ) && '' !== $_POST['folderId'] ) ? sanitize_text_field( $_POST['folderId'] ) : false;
+		$folder_id = ( isset( $_POST['folder_id'] ) && '' !== $_POST['folder_id'] ) ? sanitize_text_field( $_POST['folder_id'] ) : false;
 		$label     = ( isset( $_POST['labelPath'] ) && '' !== $_POST['labelPath'] ) ? sanitize_text_field( $_POST['labelPath'] ) : false;
 		$state     = ( isset( $_POST['state'] ) && '' !== $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : apply_filters( 'brightcove_state_filter', false );
 
@@ -565,7 +596,7 @@ class BC_Admin_Media_API {
 
 		$type = isset( $_POST['type'] ) ? sanitize_key( $_POST['type'] ) : false;
 
-		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience', 'playlistexperience', 'inpageexperiences' ) ) ) {
+		if ( ! $type || ! in_array( $type, array( 'videos', 'playlists', 'videoexperience', 'playlistexperience', 'inpageexperiences' ), true ) ) {
 
 			wp_send_json_error( esc_html__( 'Invalid Search Type', 'brightcove' ) );
 			exit; // Type can only be videos or playlists.
@@ -742,7 +773,7 @@ class BC_Admin_Media_API {
 			if ( isset( $result['custom_fields'] ) ) {
 				foreach ( $result['custom_fields'] as $id => $value ) {
 					// Extract the change tracking item explicitly
-					if ( $id == '_change_history' ) {
+					if ( '_change_history' === $id ) {
 						$result['history'] = $value;
 						continue;
 					}
@@ -846,11 +877,11 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int    $video_id
-	 * @param string $url
-	 * @param int    $width
-	 * @param int    $height
+	 * @param string $account_hash The account hash for the account.
+	 * @param int    $video_id     The ID of the video to associate the image with.
+	 * @param string $url         The URL of the image to upload.
+	 * @param int    $width       The width of the image.
+	 * @param int    $height     The height of the image.
 	 */
 	public function ajax_poster_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -887,11 +918,11 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int    $video_id
-	 * @param string $url
-	 * @param int    $width
-	 * @param int    $height
+	 * @param string $account_hash The account hash for the account.
+	 * @param int    $video_id     The video ID.
+	 * @param string $url         The URL of the thumbnail attachment.
+	 * @param int    $width      The width of the thumbnail.
+	 * @param int    $height    The height of the thumbnail.
 	 */
 	public function ajax_thumb_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -928,8 +959,8 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int    $video_id
+	 * @param string $account_hash The account hash to which the video belongs.
+	 * @param int    $video_id     The ID of the video from which to delete captions.
 	 */
 	public function ajax_caption_delete( $account_hash, $video_id ) {
 		global $bc_accounts;
@@ -953,9 +984,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
-	 * @param int    $video_id
-	 * @param array  $raw_captions
+	 * @param string $account_hash The account hash for the account.
+	 * @param int    $video_id     The video ID
+	 * @param array  $raw_captions The raw captions data.
 	 */
 	public function ajax_caption_upload( $account_hash, $video_id, $raw_captions ) {
 		global $bc_accounts;
@@ -986,7 +1017,7 @@ class BC_Admin_Media_API {
 			$label   = isset( $caption['label'] ) ? sanitize_text_field( $caption['label'] ) : '';
 			$default = ( isset( $caption['default'] ) && 'checked' === $caption['default'] );
 
-			$source = parse_url( $caption['source'] );
+			$source = wp_parse_url( $caption['source'] );
 			if ( 0 === strpos( $source['host'], 'brightcove' ) ) {
 				// If the hostname starts with "brightcove," assume this media has already been ingested and add to old captions.
 				$old_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label, $default );
@@ -1014,8 +1045,8 @@ class BC_Admin_Media_API {
 	/**
 	 * Return a set of the most recent videos for the specified account.
 	 *
-	 * @param string $account_id
-	 * @param int    $count
+	 * @param string $account_id The account ID to retrieve videos for.
+	 * @param int    $count The number of videos to return.
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
@@ -1058,7 +1089,7 @@ class BC_Admin_Media_API {
 
 				foreach ( $result['custom_fields'] as $id => $value ) {
 					// Extract the change tracking item explicitly
-					if ( $id == '_change_history' ) {
+					if ( '_change_history' === $id ) {
 						$result['history'] = $value;
 						continue;
 					}
@@ -1098,8 +1129,8 @@ class BC_Admin_Media_API {
 	/**
 	 * When a WP heartbeat is received with an account hash, respond with the most recent 10 videos available.
 	 *
-	 * @param array $response
-	 * @param array $data
+	 * @param array $response WP heartbeat response.
+	 * @param array $data Data received from heartbeat
 	 *
 	 * @return array
 	 */
@@ -1127,7 +1158,7 @@ class BC_Admin_Media_API {
 
 		foreach ( $video_post_ids as $video_post_id ) {
 			$in_process_video_id = BC_Utility::get_sanitized_video_id( $video_post_id );
-			if ( in_array( $in_process_video_id, $video_ids ) ) {
+			if ( in_array( $in_process_video_id, $video_ids, true ) ) {
 				wp_delete_post( $video_post_id, true );
 			} else {
 				$videos[] = get_post_meta( $video_post_id, '_brightcove_video_object', true );
