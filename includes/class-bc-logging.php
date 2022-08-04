@@ -1,5 +1,13 @@
 <?php
+/**
+ * BC_Logging class file.
+ *
+ * @package Brightcove Video Connect
+ */
 
+/**
+ * BC_Logging class.
+ */
 class BC_Logging {
 
 	/**
@@ -7,9 +15,9 @@ class BC_Logging {
 	 * In the event a custom file is used, the $file param must be included as a path to the file. If it doesn't exist, is invalid or
 	 * is not writable, the method will write to the syslog instead.
 	 *
-	 * @param        $message. Cannot be binary as `error_log()` is not binary-safe.
-	 * @param string  $mode syslog|file. Default: syslog
-	 * @param bool    $file Full path to custom log file
+	 * @param string $message Cannot be binary as `error_log()` is not binary-safe.
+	 * @param string $mode syslog|file. Default: syslog
+	 * @param bool   $file Full path to custom log file
 	 *
 	 * @return bool|WP_Error
 	 */
@@ -37,16 +45,18 @@ class BC_Logging {
 
 				if ( ! is_file( $file ) ) {
 					self::determine_error_logging( $message );
+					// Translators: %s is the file.
 					return new WP_Error( 'log-destination-file-is-invalid', sprintf( __( 'The file specified, <pre>%s</pre> does not exist. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
 
 				if ( ! is_writable( $file ) ) {
 					self::determine_error_logging( $message );
 
+					// Translators: %s is the file.
 					return new WP_Error( 'log-destination-file-unwritable', sprintf( esc_html__( 'The file specified, <pre>%s</pre> is not writable byt the web server. Writing to the syslog instead.', 'brightcove' ), $file ) );
 				}
 
-				error_log( $message, 3, $file );
+				error_log( $message, 3, $file ); // phpcs:ignore
 				break;
 			case 'syslog':
 			default:
@@ -65,7 +75,7 @@ class BC_Logging {
 		if ( ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) && function_exists( 'newrelic_notice_error' ) ) {
 			newrelic_notice_error( $message );
 		} else {
-			error_log( $message );
+			error_log( $message ); // phpcs:ignore
 		}
 	}
 }
