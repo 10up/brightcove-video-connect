@@ -1,7 +1,20 @@
 <?php
+/**
+ * BC_Playlists class file.
+ *
+ * @package Brightcove Video Connect
+ */
 
+/**
+ * BC_Playlists class.
+ */
 class BC_Playlists {
 
+	/**
+	 * BC_CMS_API instance.
+	 *
+	 * @var object BC_CMS_API instance
+	 */
 	protected $cms_api;
 
 	/**
@@ -13,11 +26,12 @@ class BC_Playlists {
 	 */
 	protected $playlist_ids;
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
-
 		$this->cms_api      = new BC_CMS_API();
 		$this->playlist_ids = array();
-
 	}
 
 	/**
