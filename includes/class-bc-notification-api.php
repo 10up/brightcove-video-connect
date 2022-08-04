@@ -1,9 +1,13 @@
 <?php
+/**
+ * BC_Notification_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Pseudo-namespace for wrapping API functionality for Brightcove callbacks
  */
-
 class BC_Notification_API {
 
 	/**
@@ -55,7 +59,7 @@ class BC_Notification_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $installed_version
+	 * @param string $installed_version The version of the plugin installed
 	 */
 	public static function maybe_backport_subscriptions( $installed_version ) {
 		if ( version_compare( $installed_version, '1.2.0', '<' ) ) {
@@ -74,7 +78,7 @@ class BC_Notification_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
+	 * @param string $account_hash The hash of the account to add a subscription for
 	 */
 	public static function create_subscription( $account_hash ) {
 		global $bc_accounts;
@@ -108,7 +112,7 @@ class BC_Notification_API {
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
-	 * @param string $account_hash
+	 * @param string $account_hash the hash of the account to remove the subscription for
 	 */
 	public static function remove_subscription( $account_hash ) {
 		global $bc_accounts;
