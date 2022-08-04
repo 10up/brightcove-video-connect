@@ -1,6 +1,18 @@
 <?php
+/**
+ * BC_Admin_Settings_Page class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
+
+/**
+ * BC_Admin_Settings_Page class
+ */
 class BC_Admin_Templates {
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
 		add_action( 'admin_footer', array( $this, 'add_templates' ) );
 	}
@@ -454,7 +466,7 @@ class BC_Admin_Templates {
 		<?php /* Used by views/video-preview.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-video-preview">
 			<!-- Start of Brightcove Player -->
-			 <iframe src="//players.brightcove.net/{{data.account_id}}/default_default/index.html?videoId={{data.id}}" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+			<iframe src="//players.brightcove.net/{{data.account_id}}/default_default/index.html?videoId={{data.id}}" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
 			<!-- End of Brightcove Player -->
 		</script>
 
@@ -462,58 +474,55 @@ class BC_Admin_Templates {
 		<script type="text/html" id="tmpl-brightcove-media-modal">
 			<div class="media-modal wp-core-ui">
 				<button type="button" class="button-link media-modal-close"><span class="brightcove media-modal-icon"><span class="screen-reader-text"><?php esc_html_e( 'Close media panel', 'brightcove' ); ?></span></span></button>
-			  <div class="media-modal-content">
-				<div class="media-frame mode-select wp-core-ui" id="__wp-uploader-id-0">
-				  <div class="media-frame-title">
-					<h1>
-						<img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove', 'brightcove' ); ?>
-					</h1>
-				  </div>
-				  <div class="media-frame-router">
-					<div class="media-router">
-						<a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove in-page-experiences media-menu-item"><?php esc_html_e( 'In-Page Experiences', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove video-experience media-menu-item"><?php esc_html_e( 'Video Experience', 'brightcove' ); ?></a>
-						<a href="#" class="brightcove playlist-experience media-menu-item"><?php esc_html_e( 'Playlist Experience', 'brightcove' ); ?></a>
-					</div>
-				  </div>
-				  <div class="media-frame-content">
-				  </div>
-				  <div class="media-frame-toolbar">
-					<div class="media-toolbar">
-					  <div class="media-toolbar-secondary">
-						  <a href="#" class="button button-secondary button-large media-button brightcove back" style="display:none;"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
-						<div class="media-selection empty">
-						  <div class="selection-info">
-							<span class="count">0 <?php esc_html_e( 'selected', 'brightcove' ); ?></span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
-						  </div>
-						  <div class="selection-view">
-							<ul tabindex="-1" class="attachments" id="__attachments-view-71"></ul>
-						  </div>
+				<div class="media-modal-content">
+					<div class="media-frame mode-select wp-core-ui" id="__wp-uploader-id-0">
+						<div class="media-frame-title">
+							<h1>
+								<img class="bc-page-icon" src="<?php echo esc_url( BRIGHTCOVE_URL . 'images/menu-icon.svg' ); ?>"> <?php esc_html_e( 'Brightcove', 'brightcove' ); ?>
+							</h1>
 						</div>
-					  </div>
-					  <div class="media-toolbar-primary search-form">
-						  <a href="#" class="button button-primary button-large media-button brightcove save-sync" style="display:none;"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
-						  <a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
-					  </div>
+						<div class="media-frame-router">
+							<div class="media-router">
+								<a href="#" class="brightcove upload media-menu-item"><?php esc_html_e( 'Upload Files', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove videos media-menu-item active"><?php esc_html_e( 'Videos', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove playlists media-menu-item"><?php esc_html_e( 'Playlists', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove in-page-experiences media-menu-item"><?php esc_html_e( 'In-Page Experiences', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove video-experience media-menu-item"><?php esc_html_e( 'Video Experience', 'brightcove' ); ?></a>
+								<a href="#" class="brightcove playlist-experience media-menu-item"><?php esc_html_e( 'Playlist Experience', 'brightcove' ); ?></a>
+							</div>
+						</div>
+						<div class="media-frame-content"></div>
+						<div class="media-frame-toolbar">
+							<div class="media-toolbar">
+								<div class="media-toolbar-secondary">
+									<a href="#" class="button button-secondary button-large media-button brightcove back" style="display:none;"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+									<div class="media-selection empty">
+										<div class="selection-info">
+											<span class="count">0 <?php esc_html_e( 'selected', 'brightcove' ); ?></span> <a class="edit-selection" href="#"><?php esc_html_e( 'Edit Selection', 'brightcove' ); ?></a> <a class="clear-selection" href="#"><?php esc_html_e( 'Clear', 'brightcove' ); ?></a>
+										</div>
+										<div class="selection-view">
+											<ul tabindex="-1" class="attachments" id="__attachments-view-71"></ul>
+										</div>
+									</div>
+								</div>
+								<div class="media-toolbar-primary search-form">
+									<a href="#" class="button button-primary button-large media-button brightcove save-sync" style="display:none;"><?php esc_html_e( 'Save and Sync Changes', 'brightcove' ); ?></a>
+									<a href="#" class="button media-button button-primary button-large media-button-insert brightcove" disabled="disabled"><?php esc_html_e( 'Insert Into Post', 'brightcove' ); ?></a>
+								</div>
+							</div>
+						</div>
+						<div class="media-frame-uploader">
+							<div class="uploader-window">
+								<div class="uploader-window-content">
+									<h3><?php esc_html_e( 'Drop files to upload', 'brightcove' ); ?></h3>
+								</div>
+							</div>
+						</div>
+						<div id="html5_19jecn1m2eteuqiud64df15595_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; overflow: hidden; z-index: 0;">
+							<input id="html5_19jecn1m2eteuqiud64df15595" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple accept="">
+						</div>
 					</div>
-				  </div>
-				  <div class="media-frame-uploader">
-					<div class="uploader-window">
-					  <div class="uploader-window-content">
-						<h3>
-							<?php esc_html_e( 'Drop files to upload', 'brightcove' ); ?>
-						</h3>
-					  </div>
-					</div>
-				  </div>
-				  <div id="html5_19jecn1m2eteuqiud64df15595_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; overflow: hidden; z-index: 0;">
-					<input id="html5_19jecn1m2eteuqiud64df15595" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple accept="">
-				  </div>
 				</div>
-			  </div>
 			</div>
 			<div class="media-modal-backdrop"></div>
 		</script>
@@ -607,7 +616,7 @@ class BC_Admin_Templates {
 				<?php else : ?>
 					<div class="upload-ui">
 						<h3 class="upload-instructions drop-instructions"><?php esc_html_e( 'Drop files anywhere to upload', 'brightcove' ); ?></h3>
-						<p class="upload-instructions drop-instructions"><?php _ex( 'or', 'Uploader: Drop files here - or - Select Files', 'brightcove' ); ?></p>
+						<p class="upload-instructions drop-instructions"><?php esc_html_x( 'or', 'Uploader: Drop files here - or - Select Files', 'brightcove' ); ?></p>
 						<a href="#" id="brightcove-select-files-button" class="browser button button-hero"><?php esc_html_e( 'Select Files', 'brightcove' ); ?></a>
 					</div>
 
