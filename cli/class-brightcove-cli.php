@@ -1,4 +1,9 @@
 <?php
+/**
+ * Brightcove WP CLI commands file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Implements a set of commands to interact with the Brightcove Video Connect plugin
