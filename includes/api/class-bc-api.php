@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Interface to the Brightcove API
@@ -30,10 +35,11 @@ abstract class BC_API {
 	 */
 	private $errors;
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
-
 		$this->errors = array();
-
 	}
 
 	/**
@@ -87,6 +93,13 @@ abstract class BC_API {
 
 	}
 
+	/**
+	 * Tries to get cached item first, then falls back to API call.
+	 *
+	 * @param  string $url the url to call
+	 * @param  array  $args the arguments to pass to the API call
+	 * @return array|false|mixed|WP_Error
+	 */
 	private function cached_get( $url, $args ) {
 
 		global $bc_accounts;
@@ -108,7 +121,7 @@ abstract class BC_API {
 			}
 			$successful_response_codes = array( 200, 201, 202, 204 );
 
-			if ( in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes ) ) {
+			if ( in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes, true ) ) {
 				BC_Utility::set_cache_item( $transient_key, '', $request, $cache_time_in_seconds );
 			}
 		}
@@ -143,12 +156,12 @@ abstract class BC_API {
 			'JSON_POST',
 		); // only allow methods required by the brightcove APIs
 
-		if ( ! in_array( $method, $allowed_methods ) ) {
+		if ( ! in_array( $method, $allowed_methods, true ) ) {
 			return false;
 		}
 
 		$transient_key = false;
-		if ( $method === 'GET' ) {
+		if ( 'GET' === $method ) {
 			$hash           = substr(
 				BC_Utility::get_hash_for_object(
 					array(
@@ -204,10 +217,9 @@ abstract class BC_API {
 
 			default:
 				$args['method'] = $method;
-				$args['body']   = wp_json_encode( $data );
 
 				if ( ! empty( $data ) ) {
-					$args['body'] = json_encode( $data );
+					$args['body'] = wp_json_encode( $data );
 				}
 
 				$request = wp_remote_request( $url, $args );
@@ -248,7 +260,7 @@ abstract class BC_API {
 
 		$successful_response_codes = array( 200, 201, 202, 204 );
 
-		if ( ! in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes ) ) {
+		if ( ! in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes, true ) ) {
 			$message = esc_html__( 'An unspecified error has occurred.', 'brightcove' );
 			if ( isset( $body[0] ) && isset( $body[0]['error_code'] ) ) {
 
@@ -269,7 +281,7 @@ abstract class BC_API {
 
 			return false;
 		}
-		if ( '204' == wp_remote_retrieve_response_code( $request ) ) {
+		if ( 204 === wp_remote_retrieve_response_code( $request ) ) {
 
 			return true;
 
@@ -297,10 +309,11 @@ abstract class BC_API {
 
 	/**
 	 * Increase the http timeout for API requests
+	 *
+	 * @param  int $timeout The timeout value
+	 * @return int
 	 */
-
 	public function increase_http_timeout( $timeout ) {
-
 		$timeout += 5;
 
 		return $timeout;
@@ -319,7 +332,7 @@ abstract class BC_API {
 
 		$oauth = new BC_Oauth_API();
 
-		$token = $oauth->_request_access_token( $force_new_token );
+		$token = $oauth->request_access_token( $force_new_token );
 
 		if ( is_wp_error( $token ) ) {
 			return $token;
