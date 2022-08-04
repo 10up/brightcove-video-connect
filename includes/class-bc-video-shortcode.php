@@ -1,5 +1,13 @@
 <?php
+/**
+ * BC_Video_Shortcode class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Video_Shortcode class
+ */
 class BC_Video_Shortcode {
 
 	/**
