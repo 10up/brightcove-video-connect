@@ -309,8 +309,11 @@ class BC_Setup {
 		$params['mimeTypes'] = BC_Utility::get_all_brightcove_mimetypes();
 
 		$defaultAccount             = $bc_accounts->get_account_details_for_user();
-		$params['defaultAccount']   = $defaultAccount['hash'];
-		$params['defaultAccountId'] = $defaultAccount['account_id'];
+
+		if ( ! empty( $defaultAccount ) ) {
+			$params['defaultAccount'] = $defaultAccount;
+			$params['defaultAccountId'] = $defaultAccount['account_id'];
+		}
 
 		return $params;
 
