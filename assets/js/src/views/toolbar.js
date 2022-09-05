@@ -33,7 +33,7 @@ var ToolbarView = BrightcoveView.extend({
 			folders: wpbc.preload.folders,
 			labels: wpbc.preload.labels,
 			labelPath: this.model.get('labelPath'),
-			folderId: this.model.get('folderId'),
+			folder_id: this.model.get('folder_id'),
 			account: this.model.get('account'),
 		};
 
@@ -108,8 +108,8 @@ var ToolbarView = BrightcoveView.extend({
 	},
 
 	foldersChanged: function (event) {
-		this.model.set('oldFolderId', this.model.get('folderId'));
-		this.model.set('folderId', event.target.value);
+		this.model.set('old_folder_id', this.model.get('folder_id'));
+		this.model.set('folder_id', event.target.value);
 		wpbc.broadcast.trigger('change:folder', event.target.value);
 	},
 

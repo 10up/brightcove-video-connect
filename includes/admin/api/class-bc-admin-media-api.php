@@ -254,9 +254,9 @@ class BC_Admin_Media_API {
 			} else {
 				$status = $this->videos->update_bc_video( $updated_data );
 
-				if ( isset( $_POST['folder_id'] ) && isset( $_POST['oldfolder_id'] ) ) {
+				if ( isset( $_POST['folder_id'] ) && isset( $_POST['old_folder_id'] ) ) {
 					$folder_id     = sanitize_text_field( $_POST['folder_id'] );
-					$old_folder_id = sanitize_text_field( $_POST['oldfolder_id'] );
+					$old_folder_id = sanitize_text_field( $_POST['old_folder_id'] );
 
 					$this->cms_api->add_folder_to_video( $old_folder_id, $folder_id, $updated_data['video_id'] );
 				}

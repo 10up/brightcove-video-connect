@@ -232,8 +232,8 @@ class BC_Admin_Templates {
 						<span class="name"><?php esc_html_e( 'Folder', 'brightcove' ); ?></span>
 						<select class="brightcove-folder">
 							<option value="">None</option>
-							<# _.each(data.folders, function (folderName, folderId) { #>
-							<option value="{{ folderId }}" <# if ( data.folder_id === folderId ) { #>selected<# } #>>
+							<# _.each(data.folders, function (folderName, folder_id) { #>
+							<option value="{{ folder_id }}" <# if ( data.folder_id === folder_id ) { #>selected<# } #>>
 							{{ folderName }}
 							</option>
 							<# }); #>
@@ -1245,8 +1245,8 @@ class BC_Admin_Templates {
 					<label for="media-attachment-folders-filters" class="screen-reader-text"><?php esc_html_e( 'Filter by folder', 'brightcove' ); ?></label>
 					<select id="media-attachment-folders-filters" class="brightcove-media-folders attachment-filters">
 						<option value="all"><?php esc_html_e( 'All folders', 'brightcove' ); ?></option>
-						<# _.each(data.folders, function (folderName, folderId) { #>
-						<option value="{{ folderId }}" <# if ( data.folderId === folderId ) { #>selected<# } #>>
+						<# _.each(data.folders, function (folderName, folder_id) { #>
+						<option value="{{ folder_id }}" <# if ( data.folder_id === folder_id ) { #>selected<# } #>>
 							{{ folderName }}
 						</option>
 						<# }); #>
