@@ -1,5 +1,8 @@
 name: E2E test
 
+env:
+  NODE_VERSION: "12"
+
 on:
   push:
     branches:
@@ -19,6 +22,10 @@ jobs:
           - {name: 'WP minimum', version: 'WordPress/WordPress#5.2'}
           - {name: 'WP trunk', version: 'WordPress/WordPress#master'}
     steps:
+      - name: "Install node v${{ env.NODE_VERSION }}"
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
     - name: Checkout
       uses: actions/checkout@v3
     - name: Install dependencies
