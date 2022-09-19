@@ -19,8 +19,6 @@ jobs:
       matrix:
         core:
           - {name: 'WP latest', version: 'latest'}
-          - {name: 'WP minimum', version: 'WordPress/WordPress#5.2'}
-          - {name: 'WP trunk', version: 'WordPress/WordPress#master'}
     steps:
     - name: Install node
       uses: actions/setup-node@v3
