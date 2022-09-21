@@ -967,7 +967,7 @@ class BC_Admin_Media_API {
 	 * Return a set of the most recent videos for the specified account.
 	 *
 	 * @param string $account_id The account ID to retrieve videos for.
-	 * @param int    $count The number of videos to return.
+	 * @param int    $count      The number of videos to return.
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *
