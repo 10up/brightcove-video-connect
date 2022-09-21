@@ -800,9 +800,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @param string $account_hash The account hash for the account.
 	 * @param int    $video_id     The ID of the video to associate the image with.
-	 * @param string $url         The URL of the image to upload.
-	 * @param int    $width       The width of the image.
-	 * @param int    $height     The height of the image.
+	 * @param string $url          The URL of the image to upload.
+	 * @param int    $width        The width of the image.
+	 * @param int    $height       The height of the image.
 	 */
 	public function ajax_poster_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
