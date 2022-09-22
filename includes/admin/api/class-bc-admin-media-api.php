@@ -841,9 +841,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @param string $account_hash The account hash for the account.
 	 * @param int    $video_id     The video ID.
-	 * @param string $url         The URL of the thumbnail attachment.
-	 * @param int    $width      The width of the thumbnail.
-	 * @param int    $height    The height of the thumbnail.
+	 * @param string $url          The URL of the thumbnail attachment.
+	 * @param int    $width        The width of the thumbnail.
+	 * @param int    $height       The height of the thumbnail.
 	 */
 	public function ajax_thumb_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
