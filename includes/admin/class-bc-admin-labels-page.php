@@ -52,7 +52,7 @@ class BC_Admin_Labels_Page {
 						<tr class="form-field form-required term-name-wrap">
 							<th scope="row"><label for="name">Label</label></th>
 							<td>
-								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore ?>
+								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore WordPress.Security.NonceVerification ?>
 								<p class="description"><?php esc_html_e( 'Enter the new label name.', 'brightcove' ); ?></p>
 							</td>
 						</tr>
