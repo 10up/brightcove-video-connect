@@ -69,7 +69,8 @@ class BC_Admin_Menu {
 		 *
 		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/settings_page' ); // phpcs:ignore
+		do_action_deprecated( 'brightcove/admin/settings_page', [], '2.7.1' );
+		do_action( 'brightcove_admin_settings_page' );
 	}
 
 	/**
@@ -81,7 +82,8 @@ class BC_Admin_Menu {
 		 *
 		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/labels_page' ); // phpcs:ignore
+		do_action_deprecated( 'brightcove/admin/labels_page', [], '2.7.1' );
+		do_action( 'brightcove_admin_labels_page' );
 	}
 
 	/**
@@ -93,7 +95,8 @@ class BC_Admin_Menu {
 		 *
 		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/videos_page' ); // phpcs:ignore
+		do_action_deprecated( 'brightcove/admin/videos_page', [], '2.7.1' );
+		do_action( 'brightcove_admin_videos_page' );
 	}
 
 	/**
@@ -105,7 +108,8 @@ class BC_Admin_Menu {
 		 *
 		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/playlists_page' ); // phpcs:ignore
+		do_action_deprecated( 'brightcove/admin/playlists_page', [], '2.7.1' );
+		do_action( 'brightcove_admin_playlists_page' );
 	}
 
 	/**
@@ -117,7 +121,8 @@ class BC_Admin_Menu {
 		 *
 		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/edit_source_page' ); // phpcs:ignore
+		do_action_deprecated( 'brightcove/admin/edit_source_page', [], '2.7.1' );
+		do_action( 'brightcove_admin_edit_source_page' );
 	}
 
 	/**
@@ -129,7 +134,8 @@ class BC_Admin_Menu {
 		 *
 		 * This hook doesn't follow standard naming convention but needs to stay as it is for retro compatibility.
 		 */
-		do_action( 'brightcove/admin/edit_label_page' );// // phpcs:ignore
+		do_action_deprecated( 'brightcove/admin/edit_label_page', [], '2.7.1' );
+		do_action( 'brightcove_admin_edit_label_page' );
 	}
 
 	/**

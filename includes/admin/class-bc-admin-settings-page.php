@@ -15,7 +15,7 @@ class BC_Admin_Settings_Page {
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'admin_init_settings' ) );
-		add_action( 'brightcove/admin/settings_page', array( $this, 'render' ) );
+		add_action( 'brightcove_admin_settings_page', array( $this, 'render' ) );
 		add_action( 'admin_init', array( $this, 'delete_source' ) );
 	}
 

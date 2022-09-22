@@ -14,7 +14,7 @@ class BC_Admin_Playlists_Page {
 	 * Constructor method
 	 */
 	public function __construct() {
-		add_action( 'brightcove/admin/playlists_page', array( $this, 'render' ) );
+		add_action( 'brightcove_admin_playlists_page', array( $this, 'render' ) );
 		add_action( 'admin_notices', array( $this, 'validate_players' ) );
 	}
 

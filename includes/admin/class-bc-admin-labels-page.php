@@ -27,8 +27,8 @@ class BC_Admin_Labels_Page {
 	public function __construct() {
 		$this->bc_labels = new BC_Labels();
 
-		add_action( 'brightcove/admin/labels_page', array( $this, 'render_labels_page' ) );
-		add_action( 'brightcove/admin/edit_label_page', array( $this, 'render_edit_label_page' ) );
+		add_action( 'brightcove_admin_labels_page', array( $this, 'render_labels_page' ) );
+		add_action( 'brightcove_admin_edit_label_page', array( $this, 'render_edit_label_page' ) );
 	}
 
 	/**
