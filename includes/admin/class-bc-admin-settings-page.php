@@ -93,7 +93,7 @@ class BC_Admin_Settings_Page {
 				</thead>
 				<tbody>
 				<?php
-				echo $this->render_source_rows() // phpcs:ignore
+				echo $this->render_source_rows();
 				?>
 				</tbody>
 			</table>
