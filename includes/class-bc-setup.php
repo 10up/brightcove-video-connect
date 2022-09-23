@@ -531,49 +531,6 @@ class BC_Setup {
 	}
 
 	/**
-	 * Check if WordPress meets minimum version requirement.
-	 */
-	public static function bc_check_minimum_wp_version() {
-
-		if ( version_compare( get_bloginfo( 'version' ), '4.2', '<' ) ) {
-
-			if ( current_user_can( 'manage_options' ) ) {
-
-				add_action( 'admin_init', 'bc_plugin_deactivate' );
-				add_action( 'admin_notices', 'bc_plugin_incompatible_admin_notice' );
-
-				/**
-				 * Deactivate the plugin.
-				 */
-				function bc_plugin_deactivate() {
-					deactivate_plugins( BRIGHTCOVE_BASENAME );
-				}
-
-				/**
-				 * Display a notice to the admin if the plugin is incompatible with the current WordPress version.
-				 */
-				function bc_plugin_incompatible_admin_notice() {
-					$message = sprintf(
-						'<div class="error"><p><strong>%1$s</strong>%2$s<strong>%3$s</strong>%4$s %5$s %6$s<strong>4.2</strong></p></div>',
-						esc_html__( 'Brightcove Video Cloud Enhanced', 'brightcove' ),
-						esc_html__( 'has been', 'brightcove' ),
-						esc_html__( 'deactivated', 'brightcove' ),
-						esc_html__( 'because it\'s incompatibale with WordPress version', 'brightcove' ),
-						esc_html( get_bloginfo( 'version' ) ),
-						esc_html__( 'The minimum compatible WordPress version is ', 'brightcove' )
-					);
-
-					echo wp_kses_post( $message );
-
-					if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
-						unset( $_GET['activate'] ); // phpcs:ignore
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * Hijack requests for potential callback processing.
 	 *
 	 * @param \WP_Query $query Main query instance.
