@@ -392,6 +392,12 @@ class BC_Setup {
 	}
 
 	public static function frontend_enqueue_scripts() {
+
+		// Allow plugins and themes to bypass enqueing JS/CSS
+		if ( ! apply_filters( 'brightcove_experience_frontend_enqueue_scripts', true ) ) {
+			return;
+		}
+
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
