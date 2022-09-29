@@ -36,6 +36,7 @@ Yes, it will work whether it is public or not however features requiring a call-
 * `brightcove_account_actions` - Filter the available actions for each source on the Brightcove admin settings page.
 * `brightcove_api_callbacks` - Filter the callback URLs passed for Dynamic Ingest requests.
 * `brightcove_proxy_cache_time_in_seconds` - Filter the length of time to cache proxied remote calls to the Brightcove API.
+* `brightcove_experience_frontend_enqueue_scripts` - Allow bypassing of enqueing frontend scripts if they're not needed (true/false).
 
 ##### Will this work on multisite?
 Yes it will.
