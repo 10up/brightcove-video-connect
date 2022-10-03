@@ -141,6 +141,20 @@ class BC_Oauth_API {
 	}
 
 	/**
+	 * Backwards compat method for request_access_token()
+	 *
+	 * @param false $force_new_token whether or not to obtain a new OAuth token
+	 * @param bool $retry            true to retry on failure or false
+     *
+	 * @return false|string|WP_Error
+	 */
+	public function _request_access_token( $force_new_token = false, $retry = true ) {
+		_doing_it_wrong( __METHOD__, 'This function was moved to request_access_token()', 'Brightcove Video Connect 2.8.0' );
+
+		return $this->request_access_token( $force_new_token, $retry );
+	}
+
+	/**
 	 * Checks if the account credentials are valid.
 	 *
 	 * @return bool true if valid, false if not
