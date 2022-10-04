@@ -27,8 +27,8 @@ class BC_Admin_Labels_Page {
 	public function __construct() {
 		$this->bc_labels = new BC_Labels();
 
-		add_action( 'brightcove/admin/labels_page', array( $this, 'render_labels_page' ) );
-		add_action( 'brightcove/admin/edit_label_page', array( $this, 'render_edit_label_page' ) );
+		add_action( 'brightcove_admin_labels_page', array( $this, 'render_labels_page' ) );
+		add_action( 'brightcove_admin_edit_label_page', array( $this, 'render_edit_label_page' ) );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class BC_Admin_Labels_Page {
 						<tr class="form-field form-required term-name-wrap">
 							<th scope="row"><label for="name">Label</label></th>
 							<td>
-								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore ?>
+								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore WordPress.Security.NonceVerification ?>
 								<p class="description"><?php esc_html_e( 'Enter the new label name.', 'brightcove' ); ?></p>
 							</td>
 						</tr>

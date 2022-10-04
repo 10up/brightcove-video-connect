@@ -14,7 +14,7 @@ class BC_Admin_Videos_Page {
 	 * Constructor method.
 	 */
 	public function __construct() {
-		add_action( 'brightcove/admin/videos_page', array( $this, 'render' ) );
+		add_action( 'brightcove_admin_videos_page', array( $this, 'render' ) );
 		add_action( 'current_screen', array( $this, 'verify_source_configuration' ) );
 	}
 

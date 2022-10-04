@@ -454,85 +454,6 @@ class BC_Admin_Media_API {
 	}
 
 	/**
-	 * Fetches a list of media objects
-	 *
-	 * Fetches a list of media objects from the Brightcove api.
-	 *
-	 * @since 1.0
-	 *
-	 * @param string $type The type of object to fetch.
-	 * @param int    $posts_per_page The number of posts to fetch.
-	 * @param int    $page The current page (for paged queries).
-	 * @param string $query_string Extra query parameters to use for listing.
-	 * @param string $sort_order The field to sort by.
-	 *
-	 * @return array An array of media items.
-	 */
-	public function fetch_all( $type, $posts_per_page = 100, $page = 1, $query_string = '', $sort_order = 'updated_at' ) {
-
-		global $bc_accounts;
-
-		$request_identifier = "{$type}-{$posts_per_page}-{$query_string}-{$sort_order}";
-		$transient_key      = BC_Utility::generate_transient_key( '_brightcove_req_all_', BC_Utility::get_hash_for_object( $request_identifier ) );
-		$results            = BC_Utility::get_cache_item( $transient_key );
-		$results            = is_array( $results ) ? $results : array();
-
-		$initial_page = 1;
-		$accounts     = $bc_accounts->get_sanitized_all_accounts();
-		$account_ids  = array();
-
-		foreach ( $accounts as $account ) {
-			$account_ids[] = $account['account_id'];
-		}
-
-		$account_ids = array_unique( $account_ids );
-
-		$count_results = count( $results );
-
-		while ( $count_results <= ( $page * $posts_per_page ) ) {
-
-			if ( 0 === count( $account_ids ) ) {
-
-				// No more vids to fetch.
-				break;
-
-			}
-
-			foreach ( $account_ids as $key => $account_id ) {
-
-				$bc_accounts->set_current_account_by_id( $account_id );
-				$account_results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $initial_page - 1 ), $query_string, sanitize_text_field( $sort_order ) );
-
-				// Not enough account results returned, so we assume there are no more results to fetch.
-				if ( count( $account_results ) < $posts_per_page ) {
-					unset( $account_ids[ $key ] );
-				}
-
-				if ( is_array( $account_results ) && count( $account_results ) > 0 ) {
-
-					$results = array_merge( $results, $account_results );
-
-				} else {
-
-					unset( $account_ids[ $key ] );
-
-				}
-			}
-
-			$initial_page ++;
-
-		}
-
-		BC_Utility::set_cache_item( $transient_key, 'video_list', $results, 600 ); // High cache time due to high expense of fetching the data.
-		$results = array_slice( $results, $posts_per_page * ( $page - 1 ), $posts_per_page );
-
-		$bc_accounts->restore_default_account();
-
-		return $results;
-
-	}
-
-	/**
 	 * Retrieves videos and playlists
 	 *
 	 * Handles the query and distributes to the proper part of the CMS API.
@@ -879,9 +800,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @param string $account_hash The account hash for the account.
 	 * @param int    $video_id     The ID of the video to associate the image with.
-	 * @param string $url         The URL of the image to upload.
-	 * @param int    $width       The width of the image.
-	 * @param int    $height     The height of the image.
+	 * @param string $url          The URL of the image to upload.
+	 * @param int    $width        The width of the image.
+	 * @param int    $height       The height of the image.
 	 */
 	public function ajax_poster_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -920,9 +841,9 @@ class BC_Admin_Media_API {
 	 *
 	 * @param string $account_hash The account hash for the account.
 	 * @param int    $video_id     The video ID.
-	 * @param string $url         The URL of the thumbnail attachment.
-	 * @param int    $width      The width of the thumbnail.
-	 * @param int    $height    The height of the thumbnail.
+	 * @param string $url          The URL of the thumbnail attachment.
+	 * @param int    $width        The width of the thumbnail.
+	 * @param int    $height       The height of the thumbnail.
 	 */
 	public function ajax_thumb_upload( $account_hash, $video_id, $url, $width, $height ) {
 		global $bc_accounts;
@@ -1046,7 +967,7 @@ class BC_Admin_Media_API {
 	 * Return a set of the most recent videos for the specified account.
 	 *
 	 * @param string $account_id The account ID to retrieve videos for.
-	 * @param int    $count The number of videos to return.
+	 * @param int    $count      The number of videos to return.
 	 *
 	 * @global BC_Accounts $bc_accounts
 	 *

@@ -24,7 +24,7 @@ class BC_Admin_Sources {
 
 		$this->notices = array();
 
-		add_action( 'brightcove/admin/edit_source_page', array( $this, 'render' ) );
+		add_action( 'brightcove_admin_edit_source_page', array( $this, 'render' ) );
 		add_action( 'admin_init', array( $this, 'save_account' ), 1 ); // Avoid a race condition where the account doesn't get saved properly.
 		add_action( 'admin_notices', array( $this, 'admin_notice_handler' ) );
 

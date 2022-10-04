@@ -403,17 +403,17 @@ class BC_CMS_API extends BC_API {
 		 *
 		 * Available Search Fields
 		 *
-		 * name strings or quoted strings
-		 * text strings or quoted strings (name, description, long_description)
-		 * tags strings or quoted strings
-		 * reference_id string or quoted string
-		 * state    ACTIVE, INACTIVE, DELETED, PENDING
-		 * updated_at   date range
-		 * created_at   date range
-		 * schedule.starts_at   date range
-		 * schedule.ends_at date range
-		 * published_at date range
-		 * complete true or false
+		 * name               strings or quoted strings
+		 * text               strings or quoted strings (name, description, long_description)
+		 * tags               strings or quoted strings
+		 * reference_id       string or quoted string
+		 * state              ACTIVE, INACTIVE, DELETED, PENDING
+		 * updated_at         date range
+		 * created_at         date range
+		 * schedule.starts_at date range
+		 * schedule.ends_at   date range
+		 * published_at       date range
+		 * complete           true or false
 		 */
 
 		$args = array();
