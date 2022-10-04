@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Uninstall Brightcove
  *

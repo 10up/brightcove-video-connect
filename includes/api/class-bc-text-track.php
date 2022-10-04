@@ -1,52 +1,68 @@
 <?php
+/**
+ * BC_Text_Track class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Represent an individual text track (i.e. caption track) for a video
  */
-
 class BC_Text_Track {
 	/**
-	 * @var string URL for a WebVTT file
+	 * URL for a WebVTT file
+	 *
+	 * @var string
 	 */
 	protected $url;
 
 	/**
-	 * @var string ISO 639 2-letter language code for the text tracks
+	 * ISO 639 2-letter language code for the text tracks
+	 *
+	 * @var string
 	 */
-	protected $srcLang;
+	protected $src_lang;
 
 	/**
-	 * @var string How the VTT file is meant to be used
+	 * How the VTT file is meant to be used
+	 *
+	 * @var string
 	 */
 	protected $kind;
 
 	/**
-	 * @var string Human-readable title
+	 * Human-readable title
+	 *
+	 * @var string
 	 */
 	protected $label;
 
 	/**
-	 * @var bool Set the default language for captions/subtitles
+	 * Default language for captions/subtitles
+	 *
+	 * @var bool
 	 */
 	protected $default;
 
 	/**
-	 * @var string Set the default Mime Type for captions
+	 * Mime type for the text track
+	 *
+	 * @var string
 	 */
-	protected $mimeType = 'text/webvtt';
+	protected $mime_type = 'text/webvtt';
 
 	/**
 	 * Build up the object as needed.
 	 *
-	 * @param string   $url
-	 * @param string   $language
-	 * @param string [ $kind]
-	 * @param string [ $label]
-	 * @param bool   [ $default]
+	 * @param string $url URL for a WebVTT file
+	 * @param string $language ISO 639 2-letter language code for the text tracks
+	 * @param string $kind How the VTT file is meant to be used
+	 * @param string $label Human-readable title
+	 * @param bool   $default  Set the default language for captions/subtitles
 	 */
 	public function __construct( $url, $language = 'en-US', $kind = 'captions', $label = '', $default = false ) {
-		$this->url     = esc_url_raw( $url );
-		$this->srcLang = sanitize_text_field( $language );
+		$this->url      = esc_url_raw( $url );
+		$this->src_lang = sanitize_text_field( $language );
 		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ), true ) ) {
 			$this->kind = 'captions';
 		} else {
@@ -61,12 +77,12 @@ class BC_Text_Track {
 	 *
 	 * @return array
 	 */
-	public function toArray() {
+	public function to_array() {
 		$data = array(
-			'url'     => $this->url,
-			'srclang' => $this->srcLang,
-			'kind'    => $this->kind,
-			'default' => $this->default,
+			'url'      => $this->url,
+			'src_lang' => $this->src_lang,
+			'kind'     => $this->kind,
+			'default'  => $this->default,
 		);
 
 		if ( ! empty( $this->label ) ) {
@@ -81,13 +97,13 @@ class BC_Text_Track {
 	 *
 	 * @return array Data to submit.
 	 */
-	public function toArrayPatch() {
+	public function to_array_patch() {
 		$data = array(
 			'src'       => $this->url,
-			'srclang'   => $this->srcLang,
+			'src_lang'  => $this->src_lang,
 			'kind'      => $this->kind,
 			'default'   => $this->default,
-			'mime_type' => $this->mimeType,
+			'mime_type' => $this->mime_type,
 		);
 
 		if ( ! empty( $this->label ) ) {

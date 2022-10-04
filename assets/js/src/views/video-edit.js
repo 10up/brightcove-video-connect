@@ -409,7 +409,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('width', this.$el.find('.brightcove-width').val());
 		this.model.set('poster', this.$el.find('.brightcove-poster').val());
 		this.model.set('thumbnail', this.$el.find('.brightcove-thumbnail').val());
-		this.model.set('folderId', this.$el.find('.brightcove-folder').val());
+		this.model.set('folder_id', this.$el.find('.brightcove-folder').val());
 
 		const isVariant = this.$el.find('.brightcove-variant').val();
 
@@ -585,7 +585,7 @@ var VideoEditView = BrightcoveView.extend({
 		// Due to a change in the API response, text_tracks might not be defined if the video lacks text_tracks.
 		options.text_tracks = options.text_tracks || [];
 
-		this.model.set('oldFolderId', options.folder_id);
+		this.model.set('old_folder_id', options.folder_id);
 
 		// Render the model into the template
 		this.$el.html(this.template(options));

@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_Accounts class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Class BC_Accounts contains all account processing operations.
@@ -18,7 +23,18 @@
  */
 class BC_Accounts {
 
+	/**
+	 * Account option key
+	 *
+	 * @var string
+	 */
 	protected $options_key = '_brightcove_accounts';
+
+	/**
+	 * Current account
+	 *
+	 * @var array|false
+	 */
 	protected $current_account;
 
 	/**
@@ -29,12 +45,19 @@ class BC_Accounts {
 	 */
 	protected $original_account;
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
-
 		$this->original_account = $this->get_account_details_for_user();
 		$this->current_account  = $this->original_account;
 	}
 
+	/**
+	 * Get all the account ids
+	 *
+	 * @return array
+	 */
 	public function get_all_accounts_id() {
 		$all_accounts = $this->get_all_accounts();
 		$account_ids  = array();
@@ -45,31 +68,61 @@ class BC_Accounts {
 		return $account_ids;
 	}
 
+	/**
+	 * Get account id
+	 *
+	 * @return false|mixed
+	 */
 	public function get_account_id() {
 
 		return $this->current_account ? $this->current_account['account_id'] : false;
 	}
 
+	/**
+	 * Get client id
+	 *
+	 * @return false|mixed
+	 */
 	public function get_client_id() {
 
 		return $this->current_account ? $this->current_account['client_id'] : false;
 	}
 
+	/**
+	 * Retrieves client secret.
+	 *
+	 * @return false|mixed
+	 */
 	public function get_client_secret() {
-
 		return $this->current_account ? $this->current_account['client_secret'] : false;
 	}
 
+	/**
+	 * Get the account name.
+	 *
+	 * @return false|mixed
+	 */
 	public function get_account_name() {
 
 		return $this->current_account ? $this->current_account['account_name'] : false;
 	}
 
+	/**
+	 * Get the account hash.
+	 *
+	 * @return false|mixed
+	 */
 	public function get_account_hash() {
 
 		return $this->current_account ? $this->current_account['hash'] : false;
 	}
 
+	/**
+	 * Get the sync type
+	 *
+	 * @param string|int $account_id The account ID to get the sync type for. If not provided, the current account is used.
+	 * @return false|mixed|void
+	 */
 	public function get_sync_type( $account_id ) {
 
 		$option_key_sync_type = '_brightcove_sync_type_' . BC_Utility::sanitize_id( $account_id );
@@ -77,6 +130,14 @@ class BC_Accounts {
 		return get_option( $option_key_sync_type, 'full' );
 	}
 
+	/**
+	 * Set the sync type for an account
+	 *
+	 * @param int|string $account_id The account ID
+	 * @param string     $type The sync type to set
+	 * @param int        $hours The number of hours to sync
+	 * @return bool
+	 */
 	public function set_sync_type( $account_id, $type, $hours = 0 ) {
 
 		$option_key_sync_type = '_brightcove_sync_type_' . BC_Utility::sanitize_id( $account_id );
@@ -90,6 +151,17 @@ class BC_Accounts {
 		return update_option( $option_key_sync_type, $sync_val );
 	}
 
+	/**
+	 * Add an account.
+	 *
+	 * @param int|string $account_id The account ID.
+	 * @param int        $client_id The client ID.
+	 * @param string     $client_secret The client secret.
+	 * @param string     $account_name The account name.
+	 * @param string     $set_default Whether to set this account as the default.
+	 * @param bool       $allow_update Whether to allow updates to the account.
+	 * @return bool|WP_Error
+	 */
 	public function add_account( $account_id, $client_id, $client_secret, $account_name = '', $set_default = '', $allow_update = true ) {
 
 		if ( empty( $account_name ) ) {
@@ -168,6 +240,12 @@ class BC_Accounts {
 
 	}
 
+	/**
+	 * Delete an account
+	 *
+	 * @param string $hash The hash of the account to delete
+	 * @return bool|WP_Error
+	 */
 	public function delete_account( $hash ) {
 
 		if ( ! self::get_account_by_hash( $hash ) ) {
@@ -195,7 +273,7 @@ class BC_Accounts {
 
 		unset( $all_accounts[ $hash ] );
 
-		if ( $hash === get_option( '_brightcove_default_account' ) ) {
+		if ( get_option( '_brightcove_default_account' ) === $hash ) {
 
 			if ( ! empty( $all_accounts ) ) {
 
@@ -222,7 +300,9 @@ class BC_Accounts {
 	}
 
 	/**
-	 * @param $hash
+	 * Get account by hash
+	 *
+	 * @param string $hash The hash of the account to get.
 	 *
 	 * @return false | array keys: 'account_id', 'account_name', 'client_id', 'client_secret'
 	 */
@@ -230,7 +310,7 @@ class BC_Accounts {
 
 		$all_accounts = $this->get_all_accounts();
 
-		if ( is_array( $all_accounts ) && is_string( $hash ) && $hash !== '' && isset( $all_accounts[ $hash ] ) ) {
+		if ( is_array( $all_accounts ) && is_string( $hash ) && '' !== $hash && isset( $all_accounts[ $hash ] ) ) {
 			return $all_accounts[ $hash ];
 		}
 
@@ -238,9 +318,11 @@ class BC_Accounts {
 	}
 
 	/**
+	 * Get account details
+	 *
 	 * @param bool $user_id (default is current ID)
 	 *
-	 * @return $account if exists or false if no accounts or permission denied.
+	 * @return array $account if exists or false if no accounts or permission denied.
 	 */
 	public function get_account_details_for_user( $user_id = false ) {
 
@@ -271,6 +353,13 @@ class BC_Accounts {
 		return current( $accounts );
 	}
 
+	/**
+	 * Set account details for default account
+	 *
+	 * @param string   $hash hash of account to set as default
+	 * @param int|bool $user_id (default is current ID)
+	 * @return false|void
+	 */
 	public function set_account_details_for_user( $hash, $user_id = false ) {
 
 		if ( ! $user_id ) {
@@ -315,6 +404,12 @@ class BC_Accounts {
 
 	}
 
+	/**
+	 * Set the current account to the default account for the site.
+	 *
+	 * @param int $account_id the account ID to set as the default.
+	 * @return array|bool
+	 */
 	public function set_current_account_by_id( $account_id ) {
 
 		$accounts = $this->get_all_accounts();
@@ -353,6 +448,12 @@ class BC_Accounts {
 
 	}
 
+	/**
+	 * Set the current account to the default account.
+	 *
+	 * @param string $hash The account hash
+	 * @return false|void
+	 */
 	public function set_account_details_for_site( $hash ) {
 
 		if ( ! current_user_can( 'brightcove_set_site_default_account' ) ) {
@@ -364,6 +465,11 @@ class BC_Accounts {
 		}
 	}
 
+	/**
+	 * Get the current account
+	 *
+	 * @return array|false
+	 */
 	public function get_account_details_for_site() {
 
 		$account = $this->get_account_by_hash( get_option( '_brightcove_default_account' ) );
@@ -375,11 +481,21 @@ class BC_Accounts {
 
 	}
 
+	/**
+	 * Get all the accounts
+	 *
+	 * @return false|mixed|void
+	 */
 	protected function get_all_accounts() {
 
 		return get_option( $this->options_key, array() );
 	}
 
+	/**
+	 * Get sanitized accounts
+	 *
+	 * @return false|mixed|void
+	 */
 	public function get_sanitized_all_accounts() {
 
 		$accounts = $this->get_all_accounts();
@@ -394,17 +510,23 @@ class BC_Accounts {
 		return $accounts;
 	}
 
+	/**
+	 * Update the account details for a given account hash.
+	 *
+	 * @param string $account The account hash
+	 * @return false|mixed|string
+	 */
 	public function make_account_change( $account ) {
 
 		$attributes = array( 'account_id', 'account_name', 'client_id', 'client_secret', 'set_default', 'operation' );
 
 		foreach ( $attributes as $key ) {
-			if ( ! is_string( $account[ $key ] ) && $account['operation'] !== 'update' ) {
+			if ( ! is_string( $account[ $key ] ) && 'update' !== $account['operation'] ) {
 				return false;
 			}
 		}
 
-		if ( isset( $account['account_hash'] ) && $account['account_hash'] !== '' ) {
+		if ( isset( $account['account_hash'] ) && '' !== $account['account_hash'] ) {
 			$hash = $account['account_hash'];
 		} else {
 			$hash = BC_Utility::get_hash_for_account( $account );
@@ -416,7 +538,7 @@ class BC_Accounts {
 
 		$operation = $account['operation'];
 
-		if ( $operation === 'delete' ) {
+		if ( 'delete' === $operation ) {
 			if ( isset( $existing_accounts[ $hash ] ) ) {
 				unset( $existing_accounts[ $hash ] );
 
@@ -443,7 +565,7 @@ class BC_Accounts {
 				}
 				$operation = $account['operation'];
 				unset( $account['operation'] ); // Remove the operation from stored value
-				if ( $operation !== 'update' ) {
+				if ( 'update' !== $operation ) {
 					$existing_accounts[ $hash ] = $account; // Add / update the account.
 
 					/**
@@ -524,6 +646,16 @@ class BC_Accounts {
 		return $permission_issues;
 	}
 
+	/**
+	 * Checks if account is valid
+	 *
+	 * @param int    $account_id Account ID.
+	 * @param int    $client_id Client ID.
+	 * @param string $client_secret Client secret.
+	 * @param string $account_name Account name.
+	 * @param bool   $check_access Whether to check access.
+	 * @return array|bool
+	 */
 	protected function is_valid_account( $account_id, $client_id, $client_secret, $account_name, $check_access = true ) {
 
 		// Save current account as $old_account.

@@ -1,19 +1,36 @@
 <?php
+/**
+ * BC_Admin_User_Profile class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Admin_User_Profile class
+ */
 class BC_Admin_User_Profile {
-
+	/**
+	 * Constructor method
+	 */
 	public function __construct() {
-
 		add_action( 'edit_user_profile', array( $this, 'brightcove_profile_ui' ) );
 		add_action( 'show_user_profile', array( $this, 'brightcove_profile_ui' ) );
 		add_action( 'admin_init', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_init', array( $this, 'update_profile' ) );
 	}
 
+	/**
+	 * Enqueue styles
+	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'brightcove-video-connect' );
 	}
 
+	/**
+	 * User interface for the Brightcove profile.
+	 *
+	 * @param object $user the user object
+	 */
 	public function brightcove_profile_ui( $user ) {
 
 		global $bc_accounts;
@@ -45,6 +62,11 @@ class BC_Admin_User_Profile {
 		wp_nonce_field( 'bc_profile_nonce', '_bc_profile_nonce' );
 	}
 
+	/**
+	 * Update user profile
+	 *
+	 * @return bool
+	 */
 	public function update_profile() {
 		global $bc_accounts;
 

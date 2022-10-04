@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_Oauth_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Brightcove oAuth 2.0 API
@@ -6,16 +11,42 @@
  * Uses the Brightcove oAuth implementation to secure an access token for API requests.
  */
 class BC_Oauth_API {
-
+	/**
+	 * The Brightcove oAuth endpoint.
+	 */
 	const ENDPOINT_BASE = 'https://oauth.brightcove.com/v3';
 
+	/**
+	 * Transient name
+	 *
+	 * @var string
+	 */
 	protected $transient_name;
 
-	protected $_client_id;
-	protected $_client_secret;
-	protected $_access_token;
-	protected $_http_headers;
+	/**
+	 * Client id
+	 *
+	 * @var string
+	 */
+	protected $client_id;
 
+	/**
+	 * Client secret
+	 *
+	 * @var string
+	 */
+	protected $client_secret;
+
+	/**
+	 * http headers
+	 *
+	 * @var array
+	 */
+	protected $http_headers;
+
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
 
 		global $bc_accounts;
@@ -28,17 +59,16 @@ class BC_Oauth_API {
 	/**
 	 * Sets keys and headers to be used in oAuth calls
 	 *
-	 * @param $client_id
-	 * @param $client_secret
+	 * @param string $client_id Client ID
+	 * @param string $client_secret Client Secret
 	 */
 	public function set_account_credentials( $client_id, $client_secret ) {
-
-		$this->_client_id     = $client_id;
-		$this->_client_secret = $client_secret;
-		$this->_http_headers  = array(
+		$this->client_id     = $client_id;
+		$this->client_secret = $client_secret;
+		$this->http_headers  = array(
 			'headers' => array(
 				'Content-type'  => 'application/json',
-				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_client_id . ':' . $this->_client_secret ) ),
+				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->client_id . ':' . $this->client_secret ) ), // phpcs:ignore
 			),
 		);
 
@@ -61,7 +91,7 @@ class BC_Oauth_API {
 	 *
 	 * @return string|WP_Error
 	 */
-	public function _request_access_token( $force_new_token = false, $retry = true ) {
+	public function request_access_token( $force_new_token = false, $retry = true ) {
 
 		$transient_name = $this->transient_name;
 
@@ -71,13 +101,14 @@ class BC_Oauth_API {
 
 			$endpoint = esc_url_raw( self::ENDPOINT_BASE . '/access_token?grant_type=client_credentials' );
 
-			$request = wp_remote_post( $endpoint, $this->_http_headers );
+			$request = wp_remote_post( $endpoint, $this->http_headers );
 
-			if ( '400' == wp_remote_retrieve_response_code( $request ) ) {
+			if ( 400 === wp_remote_retrieve_response_code( $request ) ) {
 
 				// Just in case
 				BC_Utility::delete_cache_item( $transient_name );
 
+				// translators: %1$s: client_id, %2$s: client_secret
 				$oauth_error = new WP_Error( 'oauth_access_token_failure', sprintf( __( 'There is a problem with your Brightcove %1$s or %2$s', 'brightcove' ), '<code>client_id</code>', '<code>client_secret</code>' ) );
 
 				BC_Logging::log( sprintf( 'BC OAUTH ERROR: %s', $oauth_error->get_error_message() ) );
@@ -100,7 +131,7 @@ class BC_Oauth_API {
 					return new WP_Error( 'oauth_access_token_response_failure', sprintf( esc_html__( 'oAuth API did not return us an access token', 'brightcove' ) ) );
 				}
 
-				return $this->_request_access_token( $force_new_token, false );
+				return $this->request_access_token( $force_new_token, false );
 
 			}
 		}
@@ -109,9 +140,28 @@ class BC_Oauth_API {
 
 	}
 
+	/**
+	 * Backwards compat method for request_access_token()
+	 *
+	 * @param false $force_new_token whether or not to obtain a new OAuth token
+	 * @param bool  $retry            true to retry on failure or false
+	 *
+	 * @return false|string|WP_Error
+	 */
+	public function _request_access_token( $force_new_token = false, $retry = true ) { // phpcs:ignore PSR2.Methods.MethodDeclaration
+		_doing_it_wrong( __METHOD__, 'This function was moved to request_access_token()', 'Brightcove Video Connect 2.8.0' );
+
+		return $this->request_access_token( $force_new_token, $retry );
+	}
+
+	/**
+	 * Checks if the account credentials are valid.
+	 *
+	 * @return bool true if valid, false if not
+	 */
 	public function is_valid_account_credentials() {
 
-		$token = $this->_request_access_token();
+		$token = $this->request_access_token();
 
 		if ( is_wp_error( $token ) || false === $token ) {
 			return false;

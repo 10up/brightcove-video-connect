@@ -1,5 +1,11 @@
 <?php
 /**
+ * BC_Labels class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
+
+/**
  * The BC labels class
  *
  * Class BC_Labels
@@ -30,7 +36,7 @@ class BC_Labels {
 	 * Displays a variety of notices for adding and editing labels
 	 */
 	public function notices() {
-		if ( isset( $_GET['add_label'] ) && 1 === (int) $_GET['add_label'] ) {
+		if ( isset( $_GET['add_label'] ) && 1 === (int) $_GET['add_label'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -41,7 +47,7 @@ class BC_Labels {
 			);
 		}
 
-		if ( isset( $_GET['refresh_labels'] ) && 1 === (int) $_GET['refresh_labels'] ) {
+		if ( isset( $_GET['refresh_labels'] ) && 1 === (int) $_GET['refresh_labels'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -52,7 +58,7 @@ class BC_Labels {
 			);
 		}
 
-		if ( isset( $_GET['label_deleted'] ) && 1 === (int) $_GET['label_deleted'] ) {
+		if ( isset( $_GET['label_deleted'] ) && 1 === (int) $_GET['label_deleted'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -63,7 +69,7 @@ class BC_Labels {
 			);
 		}
 
-		if ( isset( $_GET['label_updated'] ) && 1 === (int) $_GET['label_updated'] ) {
+		if ( isset( $_GET['label_updated'] ) && 1 === (int) $_GET['label_updated'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			BC_Utility::admin_notice_messages(
 				array(
 					array(
@@ -148,7 +154,7 @@ class BC_Labels {
 				$labels[] = sanitize_text_field( $label );
 			}
 			$this->cms_api->delete_label( $labels );
-			wp_redirect( admin_url( 'admin.php?page=brightcove-labels&label_deleted=1&refresh_labels=1' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=brightcove-labels&label_deleted=1&refresh_labels=1' ) );
 			exit;
 		}
 	}

@@ -9,6 +9,8 @@
  * License: GPLv2+
  * Text Domain: brightcove
  * Domain Path: /languages
+ *
+ * @package Brightcove_Video_Connect
  */
 
 /**
@@ -72,7 +74,7 @@ $bc_accounts = new BC_Accounts();
 
 // Wireup actions.
 if ( is_admin() ) {
-    add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
+	add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 }
 
 add_action( 'init', array( 'BC_Setup', 'action_init' ) );
@@ -82,8 +84,6 @@ add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_In_Page_Experience_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
-
-// add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) ); // @TODO Verify API as errors don't seem to match the documentation
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 

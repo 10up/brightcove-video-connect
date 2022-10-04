@@ -1,12 +1,39 @@
 <?php
+/**
+ * BC_Videos class file.
+ *
+ * @package Brightcove Video Connect
+ */
 
+/**
+ * BC_Videos class.
+ */
 class BC_Videos {
 
+	/**
+	 * Custom post type name.
+	 *
+	 * @var string
+	 */
 	public $video_cpt = 'bc-in-process-video';
 
+	/**
+	 * BC_CMS_API instance.
+	 *
+	 * @var BC_CMS_API
+	 */
 	protected $cms_api;
+
+	/**
+	 * BC_Tags instance.
+	 *
+	 * @var BC_Tags
+	 */
 	protected $tags;
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
 		$this->cms_api = new BC_CMS_API();
 		$this->tags    = new BC_Tags();
@@ -115,7 +142,7 @@ class BC_Videos {
 	 * In the event video object data is stale in WordPress, or a video has never been generated,
 	 * create/update WP data store with Brightcove data.
 	 *
-	 * @param      $video
+	 * @param array $video Video details.
 	 * @param bool  $add_only True denotes that we know the object is not in our library and we are adding it first time to the library. This is to improve the initial sync.
 	 *
 	 * @return bool|WP_Error
@@ -179,6 +206,7 @@ class BC_Videos {
 
 		}
 
+		// Translators: #%d is the video ID.
 		BC_Logging::log( sprintf( esc_html__( 'BC WordPress: Video with ID #%d has been created', 'brightcove' ), $post_id ) );
 
 		if ( ! empty( $video['tags'] ) ) {
@@ -220,9 +248,9 @@ class BC_Videos {
 	/**
 	 * Accepts a video ID and checks to see if there is a record in WordPress. Returns the post object on success and false on failure.
 	 *
-	 * @param $video_id
+	 * @param int $video_id The video ID.
 	 *
-	 * @return bool|WP_Post
+	 * @return bool|WP_Post False on failure, WP_Post on success.
 	 */
 	public function get_video_by_id( $video_id ) {
 
@@ -245,6 +273,12 @@ class BC_Videos {
 		return end( $existing_video->posts );
 	}
 
+	/**
+	 * Get the hash for a video by ID
+	 *
+	 * @param  int $video_id The video ID.
+	 * @return false|mixed   The hash on success, false on failure.
+	 */
 	public function get_video_hash_by_id( $video_id ) {
 		$video = $this->get_video_by_id( $video_id );
 

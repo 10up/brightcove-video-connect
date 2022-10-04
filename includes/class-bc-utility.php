@@ -1,11 +1,19 @@
 <?php
+/**
+ * BC_Utility class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * Utility functions for the Brightcove Video Connect plugin.
+ */
 class BC_Utility {
 
 	/**
 	 * Returns a string of the video ID
 	 *
-	 * @param $video_id string containing a video id
+	 * @param string|int $video_id containing a video id
 	 *
 	 * @return string containing video id prefixed by ID_
 	 */
@@ -14,6 +22,12 @@ class BC_Utility {
 		return 'ID_' . self::sanitize_id( $video_id );
 	}
 
+	/**
+	 * Gets a sanitized video ID
+	 *
+	 * @param int $post_id Post ID
+	 * @return array|mixed|string|string[]
+	 */
 	public static function get_sanitized_video_id( $post_id ) {
 
 		$meta_value = get_post_meta( $post_id, '_brightcove_video_id', true );
@@ -21,6 +35,12 @@ class BC_Utility {
 		return str_replace( 'ID_', '', $meta_value );
 	}
 
+	/**
+	 * Gets a client secret sanitized
+	 *
+	 * @param string $client_secret the client secret
+	 * @return array|string|string[]|null
+	 */
 	public static function get_sanitized_client_secret( $client_secret ) {
 
 		return is_string( $client_secret ) ? preg_replace( '/[^a-z0-9_-]/i', '', $client_secret ) : '';
@@ -45,7 +65,7 @@ class BC_Utility {
 	 *
 	 * Allow for id's in the format ref: and if not in this format, make sure we don't allow any other than numeric.
 	 *
-	 * @param $numeric_string
+	 * @param int|string $id ID to sanitize.
 	 *
 	 * @return string containing integers only
 	 */
@@ -58,7 +78,9 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param $date_string
+	 * Sanitizes a date
+	 *
+	 * @param string $date_string A date.
 	 *
 	 * @return string containing integers only
 	 */
@@ -71,7 +93,7 @@ class BC_Utility {
 	 * Removes a pending ingestion request (anything over 1 hour old) and any
 	 * $video_id that has been supplied.
 	 *
-	 * @param null $video_id
+	 * @param null|int $video_id the video id.
 	 *
 	 * @return bool true
 	 */
@@ -104,7 +126,9 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param $account array containing an account id, client id and client secret
+	 * Gets hash for current account
+	 *
+	 * @param array $account Containing an account id, client id and client secret
 	 *
 	 * @return string hash for the account
 	 */
@@ -129,8 +153,8 @@ class BC_Utility {
 	/**
 	 * Add pending video ID and uploaded filename to the _brightcove_pending_videos option
 	 *
-	 * @param        $video_id
-	 * @param string   $filename
+	 * @param int    $video_id The video ID
+	 * @param string $filename The filename of the video
 	 *
 	 * @return boolean status of update_option
 	 */
@@ -150,7 +174,7 @@ class BC_Utility {
 	/**
 	 * Returns a hash for an object. Lets us know if data is stale
 	 *
-	 * @param $obj
+	 * @param object $object to hash
 	 *
 	 * @return string containing hash
 	 */
@@ -162,8 +186,11 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param $type playlist|video
-	 * @param $data sorted playlists|videos associative array
+	 * Stores hash in an option for the account.
+	 *
+	 * @param string $type playlist|video
+	 * @param object $data sorted playlists|videos associative array
+	 * @param int    $account_id The account ID.
 	 *
 	 * @return bool true if option value has changed, false on failure/no change
 	 */
@@ -176,7 +203,9 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param $player_id
+	 * Gets video player key
+	 *
+	 * @param int|string $player_id the player id
 	 *
 	 * @return string option key name in the form of _bc_player_{$player_id}_{$account_id}
 	 */
@@ -190,8 +219,11 @@ class BC_Utility {
 	}
 
 	/**
+	 * Checks if the existing hash changed.
+	 *
 	 * @param string $type playlists|video|players
 	 * @param array  $data sorted playlists|videos|players associative array
+	 * @param int    $account_id The account id
 	 *
 	 * @return bool if stored hash matches calculated hash.
 	 */
@@ -205,6 +237,11 @@ class BC_Utility {
 
 	}
 
+	/**
+	 * Removes all media objects from an account
+	 *
+	 * @param int $account_id the account id
+	 */
 	public static function remove_all_media_objects_for_account_id( $account_id ) {
 
 		// Delete account players
@@ -222,7 +259,7 @@ class BC_Utility {
 	/**
 	 * Sorts arrays, leaves objects as is.
 	 *
-	 * @param $object
+	 * @param object $object to be sorted
 	 *
 	 * @return array|bool
 	 */
@@ -241,19 +278,27 @@ class BC_Utility {
 	}
 
 	/**
-	 * @param $player_id
+	 * Sanitizes player id
+	 *
+	 * @param int|string $player_id the player id
 	 *
 	 * @return string containing sanitized player_id
 	 */
 	public static function sanitize_player_id( $player_id ) {
 
-		if ( $player_id === 'default' ) {
+		if ( 'default' === $player_id ) {
 			return 'default';
 		}
 
 		return is_string( $player_id ) ? preg_replace( '/[^0-9a-zA-Z-]/', '', $player_id ) : '';
 	}
 
+	/**
+	 * Recursively sanitizes an array of payloads.
+	 *
+	 * @param array $args array of payload items.
+	 * @return mixed
+	 */
 	public static function sanitize_payload_args_recursive( $args ) {
 
 		foreach ( $args as $index => $value ) {
@@ -272,6 +317,12 @@ class BC_Utility {
 		return $args;
 	}
 
+	/**
+	 * Sanitize a payload item
+	 *
+	 * @param array|string $item item to sanitize
+	 * @return mixed|string
+	 */
 	public static function sanitize_payload_item( $item ) {
 
 		if ( is_array( $item ) ) {
@@ -281,16 +332,30 @@ class BC_Utility {
 		return utf8_uri_encode( sanitize_text_field( $item ) );
 	}
 
+	/**
+	 * Sorts accounts alphabetically.
+	 *
+	 * @param string $account_a account A
+	 * @param string $account_b account B
+	 * @return int
+	 */
 	public static function sort_accounts_alphabetically( $account_a, $account_b ) {
 
 		return strnatcmp( $account_a['account_name'], $account_b['account_name'] );
 	}
 
-	// Function for storing YYYY-MM for all videos in library
-	// If we already have values for a particular $account_id, we add to them.
+	/**
+	 * Function for storing YYYY-MM for all videos in library
+	 * If we already have values for a particular $account_id, we add to them.
+	 *
+	 * @param string $type playlist|video
+	 * @param array  $media_dates the media dates.
+	 * @param int    $account_id account id
+	 * @return bool|void
+	 */
 	public static function set_video_playlist_dates( $type, $media_dates, $account_id ) {
 
-		if ( ! in_array( $type, array( 'videos', 'playlists' ) ) || ! $account_id || ! is_array( $media_dates ) ) {
+		if ( ! in_array( $type, array( 'videos', 'playlists' ), true ) || ! $account_id || ! is_array( $media_dates ) ) {
 			return false;
 		}
 		$all_dates = self::get_video_playlist_dates( $type );
@@ -302,7 +367,7 @@ class BC_Utility {
 			$all_dates[ $id ] = array_unique( array_merge( $all_dates[ $id ], $media_dates ) );
 
 			// If the count hasn't changed then we don't have to set the new dates since they're already reflected.
-			if ( $date_count === count( $all_dates[ $id ] ) ) {
+			if ( count( $all_dates[ $id ] === $date_count ) ) {
 				return true;
 			}
 		} else {
@@ -317,9 +382,16 @@ class BC_Utility {
 		update_option( $key, $all_dates );
 	}
 
+	/**
+	 * Gets video playlist dates.
+	 *
+	 * @param string   $type videos|playlists
+	 * @param bool|int $account_id Account id
+	 * @return array|false|mixed|void
+	 */
 	public static function get_video_playlist_dates( $type, $account_id = false ) {
 
-		if ( ! in_array( $type, array( 'videos', 'playlists' ) ) ) {
+		if ( ! in_array( $type, array( 'videos', 'playlists' ), true ) ) {
 			return false;
 		}
 
@@ -341,11 +413,17 @@ class BC_Utility {
 		return array();
 	}
 
+	/**
+	 * Gets video playlist dates to display
+	 *
+	 * @param string $type the type videos or playlists.
+	 * @return array|false|mixed|void
+	 */
 	public static function get_video_playlist_dates_for_display( $type ) {
 
 		$all_dates = self::get_video_playlist_dates( $type );
 		foreach ( $all_dates as $id => $dates_for_id ) {
-			$new_id         = $id === 'all' ? 'all' : self::get_sanitized_video_id( $id ); // Strip ID_
+			$new_id         = 'all' === $id ? 'all' : self::get_sanitized_video_id( $id ); // Strip ID_
 			$labelled_dates = array();
 			foreach ( $dates_for_id as $yyyy_mm ) {
 				$date_object      = new DateTime( $yyyy_mm . '-01' );
@@ -361,8 +439,12 @@ class BC_Utility {
 		return $all_dates;
 	}
 
+	/**
+	 * Retrieves all allowed mimetypes.
+	 *
+	 * @return string[]
+	 */
 	public static function get_all_brightcove_mimetypes() {
-
 		return array(
 			'ogx'   => 'application/ogg',
 			'ogv'   => 'video/ogg',
@@ -395,14 +477,14 @@ class BC_Utility {
 	/**
 	 * Used for removing all removed objects from a Brightcove sync
 	 *
-	 * @param $id         post id
-	 * @param $account_id account id that the video/playlist ID is associated with
+	 * @param int $id         post id
+	 * @param int $account_id account id that the video/playlist ID is associated with
 	 *
 	 * @return mixed
 	 */
 	public static function remove_object( $id, $account_id ) {
 
-		if ( $account_id !== get_post_meta( $id, '_brightcove_account_id', true ) ) {
+		if ( get_post_meta( $id, '_brightcove_account_id', true ) !== $account_id ) {
 			// We've switched accounts, don't delete any of the posts, set them to private.
 			$update = array(
 				'ID'          => $id,
@@ -415,6 +497,12 @@ class BC_Utility {
 		}
 	}
 
+	/**
+	 * Displays admin notices for the plugin.
+	 *
+	 * @param array $notices array of notices to display
+	 * @return false|void
+	 */
 	public static function admin_notice_messages( $notices ) {
 
 		global $allowedtags;
@@ -430,9 +518,15 @@ class BC_Utility {
 			$html .= '</div>';
 		}
 
-		echo $html;
+		echo $html; // phpcs:ignore
 	}
 
+	/**
+	 * Add settings to plugin action links.
+	 *
+	 * @param array $links array of links
+	 * @return array
+	 */
 	public static function bc_plugin_action_links( $links ) {
 
 		$bc_settings_page = array(
@@ -445,9 +539,9 @@ class BC_Utility {
 	/**
 	 * Wrapper utility method for using WordPress.com get_user_attribute() when available. Falls back to get_user_meta()
 	 *
-	 * @param           $user_id
-	 * @param           $meta_key
-	 * @param bool|true $single
+	 * @param int       $user_id User ID
+	 * @param string    $meta_key Meta key
+	 * @param bool|true $single whether to return a single value or an array
 	 *
 	 * @return mixed
 	 */
@@ -465,9 +559,9 @@ class BC_Utility {
 	/**
 	 * Wrapper utility to for using WordPress.com update_user_attribute() when available. Falls back to update_user_meta()
 	 *
-	 * @param $user_id
-	 * @param $meta_key
-	 * @param $meta_value
+	 * @param int    $user_id User ID
+	 * @param string $meta_key Meta key
+	 * @param string $meta_value Meta value
 	 *
 	 * @return mixed
 	 */
@@ -485,9 +579,9 @@ class BC_Utility {
 	/**
 	 * Wrapper utility for using WordPress.com delete_user_attribute() when available. Falls back to delete_user_meta()
 	 *
-	 * @param $user_id
-	 * @param $meta_key
-	 * @param $meta_value
+	 * @param int    $user_id User ID
+	 * @param string $meta_key Meta key
+	 * @param string $meta_value Meta value
 	 *
 	 * @return mixed
 	 */
@@ -502,12 +596,18 @@ class BC_Utility {
 		return $result;
 	}
 
+	/**
+	 * Activates the plugin.
+	 */
 	public static function activate() {
 
 		update_option( '_brightcove_plugin_activated', true, 'no' );
 		flush_rewrite_rules();
 	}
 
+	/**
+	 * Deactivate plugin method
+	 */
 	public static function deactivate() {
 
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-accounts.php';
@@ -533,6 +633,11 @@ class BC_Utility {
 		delete_option( '_brightcove_plugin_activated' );
 	}
 
+	/**
+	 * Uninstall method. Deletes options, meta key and post types.
+	 *
+	 * @return false|void
+	 */
 	public static function uninstall_plugin() {
 
 		if ( ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV ) && ( ! defined( 'WP_CLI' ) || ! WP_CLI ) ) {
@@ -704,6 +809,12 @@ class BC_Utility {
 
 	}
 
+	/**
+	 * Get the request transient key for a specific account ID.
+	 *
+	 * @param  int $account_id The account ID.
+	 * @return array|false
+	 */
 	public static function get_requests_transient_key( $account_id ) {
 
 		$keys = array();
@@ -765,9 +876,9 @@ class BC_Utility {
 			$js_src = 'https://players.brightcove.net/' . $account_id . '/experience_' . $experience_id . '/live.js';
 			?>
 			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
-				<?php echo $js_attr; // XSS ok. ?> data-usage="cms:WordPress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
+				<?php echo $js_attr; // phpcs:ignore ?> data-usage="cms:WordPress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
 			</div>
-			<script src="<?php echo esc_url( $js_src ); ?>"></script>
+			<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
 			<?php
 		else :
 			$iframe_src = 'https://players.brightcove.net/' . $account_id . '/experience_' . $experience_id . '/index.html?cms:WordPress:' . $wp_version . ':' . BRIGHTCOVE_VERSION . ':experienceiframe&' . $url_attr;
@@ -851,17 +962,17 @@ class BC_Utility {
 							data-video-id="<?php echo esc_attr( $id ); ?>"
 							width="<?php echo esc_attr( $width ); ?>" height="315">
 					</video-js>
-					<script src="<?php echo esc_url( $js_src ); ?>"></script>
+					<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
 				</div>
 				<!-- Script for the picture-in-picture plugin. -->
-				<script src="//players.brightcove.net/videojs-pip/1/videojs-pip.min.js"></script>
+				<script src="//players.brightcove.net/videojs-pip/1/videojs-pip.min.js"></script> <?php // phpcs:ignore ?>
 				<script>
 					videojs.getPlayer('<?php echo esc_attr( $id ); ?>').ready(function() {
 						var myPlayer = this;
 						myPlayer.pip();
 					});
 				</script>
-			<?php
+				<?php
 			else :
 				?>
 				<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
@@ -876,7 +987,7 @@ class BC_Utility {
 								style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 						</video-js>
 
-						<script src="<?php echo esc_url( $js_src ); ?>"></script>
+						<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
 					</div>
 				</div>
 				<?php
@@ -1041,7 +1152,7 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
+				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script> <?php // phpcs:ignore ?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>
@@ -1096,7 +1207,7 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script>
+				<script src="//players.brightcove.net/<?php echo esc_attr( $account_id ); ?>/<?php echo esc_attr( $player_id ); ?>_default/index.min.js"></script> <?php // phpcs:ignore ?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>
@@ -1137,9 +1248,9 @@ class BC_Utility {
 				'playlist',
 				$id,
 				esc_attr( self::get_usage_data() ) . 'iframe',
-				( '0' === $width ) ? '100%' : $width . 'px',
-				( '0' === $height ) ? '100%' : $height . 'px',
-				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : ''
+				( '0' === $width ) ? '100%' : esc_attr( $width ) . 'px', // phpcs:ignore
+				( '0' === $height ) ? '100%' : esc_attr( $height ) . 'px', // phpcs:ignore
+				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : '' // phpcs:ignore
 			);
 			?>
 
@@ -1376,8 +1487,8 @@ class BC_Utility {
 	/**
 	 * Compares player update date. Used for sorting purposes.
 	 *
-	 * @param $player1 @var wpbc object player data
-	 * @param $player2 @var wpbc object player data
+	 * @param array $player1 wpbc object player data
+	 * @param array $player2 wpbc object player data
 	 *
 	 * @return int
 	 */

@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_Player_Management_API class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
 /**
  * Interface to the Brightcove Player Management and Embed APIs
@@ -21,26 +26,11 @@ class BC_Player_Management_API extends BC_API {
 	const BASE_URL = 'https://players.api.brightcove.com/v1/accounts/';
 
 	/**
-	 * Setup processing of Player Management API
-	 *
-	 * Sets up class variables allowing for processing of Brightcove Player Management API functionality.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return BC_Player_Management_API an instance of the BC Player Management API object
-	 */
-	public function __construct() {
-
-		parent::__construct();
-
-	}
-
-	/**
 	 * Publishes a Player and returns an embed
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param $player_id The id of the requested player
+	 * @param  string $player_id id of the requested player
 	 *
 	 * @return bool|mixed Returns a JSON string or false, in the case of failure
 	 */
@@ -76,9 +66,6 @@ class BC_Player_Management_API extends BC_API {
 		return $this->send_request( $url );
 	}
 
-	public function player_delete() {
-	}
-
 	/**
 	 * Retrieve configuration of specific player.
 	 *
@@ -97,7 +84,7 @@ class BC_Player_Management_API extends BC_API {
 
 		$player_id = sanitize_title_with_dashes( $player_id );
 
-		if ( in_array( $branch, array( 'master', 'preview' ) ) ) {
+		if ( in_array( $branch, array( 'master', 'preview' ), true ) ) {
 			$url = esc_url_raw( self::BASE_URL . $bc_accounts->get_account_id() . '/players/' . $player_id . '/configuration/' . $branch );
 		} else {
 			$url = esc_url_raw( self::BASE_URL . $bc_accounts->get_account_id() . '/players/' . $player_id . '/configuration' );
@@ -123,7 +110,7 @@ class BC_Player_Management_API extends BC_API {
 
 		global $bc_accounts;
 
-		if ( '' != $player_id ) {
+		if ( '' !== $player_id ) {
 			$player_id = utf8_uri_encode( sanitize_text_field( $player_id ) ) . '/embeds';
 		}
 
@@ -225,7 +212,6 @@ class BC_Player_Management_API extends BC_API {
 
 		if ( is_array( $media ) ) {
 			$data->media = new stdClass();
-			// $data->media = (object) $media;
 			foreach ( $media as $key => $val ) {
 				$data->media->key = is_array( $val ) ? (object) $val : $val;
 			}

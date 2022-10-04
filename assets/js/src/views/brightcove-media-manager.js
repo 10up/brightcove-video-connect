@@ -119,8 +119,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 
 		this.listenTo(wpbc.broadcast, 'change:folder', function (folder) {
 			this.clearPreview();
-			this.model.set('oldFolderId', this.model.get('folderId'));
-			this.model.set('folderId', folder);
+			this.model.set('old_folder_id', this.model.get('folder_id'));
+			this.model.set('folder_id', folder);
 		});
 
 		this.listenTo(wpbc.broadcast, 'change:label', function (labelPath) {

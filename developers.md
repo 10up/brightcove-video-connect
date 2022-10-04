@@ -23,10 +23,10 @@ While the plugin itself will function on a local or firewalled machine, some ope
 
 The brightcove plugin uses these hooks internally when rendering out plugin pages. Developers can add content via these hooks, augmenting the existing admin pages.
 
- * `brightcove/admin/settings_page`: Fires when the setting page loads.
- * `brightcove/admin/videos_page`: Fires when the videos page loads.
- * `brightcove/admin/playlists_page`: Fires when the playlist page loads.
- * `brightcove/admin/edit_source_page`: Fires when the edit source page loads.
+ * `brightcove_admin_settings_page`: Fires when the setting page loads.
+ * `brightcove_admin_videos_page`: Fires when the videos page loads.
+ * `brightcove_admin_playlists_page`: Fires when the playlist page loads.
+ * `brightcove_admin_edit_source_page`: Fires when the edit source page loads.
 
 ## JavaScript architecture
 
