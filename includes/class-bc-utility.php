@@ -928,19 +928,20 @@ class BC_Utility {
 	 * @return string The HTML code for the player
 	 */
 	public static function get_video_player( $atts ) {
-		$account_id  = self::sanitize_id( $atts['account_id'] );
-		$player_id   = self::sanitize_player_id( $atts['player_id'] );
-		$id          = self::sanitize_id( $atts['video_id'] );
-		$height      = sanitize_text_field( $atts['height'] );
-		$width       = sanitize_text_field( $atts['width'] );
-		$sizing      = sanitize_text_field( $atts['sizing'] );
-		$min_width   = sanitize_text_field( $atts['min_width'] );
-		$max_width   = sanitize_text_field( $atts['max_width'] );
-		$padding_top = sanitize_text_field( $atts['padding_top'] );
-		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
-		$mute        = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
-		$embed       = sanitize_text_field( $atts['embed'] );
-		$playsinline = ( 'playsinline' === $atts['playsinline'] ) ? 'playsinline' : '';
+		$account_id     = self::sanitize_id( $atts['account_id'] );
+		$player_id      = self::sanitize_player_id( $atts['player_id'] );
+		$id             = self::sanitize_id( $atts['video_id'] );
+		$height         = sanitize_text_field( $atts['height'] );
+		$width          = sanitize_text_field( $atts['width'] );
+		$sizing         = sanitize_text_field( $atts['sizing'] );
+		$min_width      = sanitize_text_field( $atts['min_width'] );
+		$max_width      = sanitize_text_field( $atts['max_width'] );
+		$padding_top    = sanitize_text_field( $atts['padding_top'] );
+		$autoplay       = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
+		$mute           = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
+		$embed          = sanitize_text_field( $atts['embed'] );
+		$playsinline    = ( 'playsinline' === $atts['playsinline'] ) ? 'playsinline' : '';
+		$application_id = sanitize_text_field( $atts['application_id'] );
 
 		ob_start();
 		?>
@@ -960,6 +961,7 @@ class BC_Utility {
 							data-embed="default"
 							controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 							data-video-id="<?php echo esc_attr( $id ); ?>"
+							data-application-id="<?php echo esc_attr( $application_id ); ?>"
 							width="<?php echo esc_attr( $width ); ?>" height="315">
 					</video-js>
 					<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
@@ -983,6 +985,7 @@ class BC_Utility {
 								data-player="<?php echo esc_attr( $player_id ); ?>"
 								data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
 								data-embed="default" class="video-js"
+								data-application-id="<?php echo esc_attr( $application_id ); ?>"
 								controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 								style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
 						</video-js>

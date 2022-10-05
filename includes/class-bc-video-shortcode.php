@@ -45,6 +45,7 @@ class BC_Video_Shortcode {
 			'height'             => 0,
 			'width'              => 0,
 			'playsinline'        => '',
+			'application_id'     => '',
 			'picture_in_picture' => '',
 			'language_detection' => '',
 		);
