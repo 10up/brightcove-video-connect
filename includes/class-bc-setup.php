@@ -174,6 +174,9 @@ class BC_Setup {
 						'language_detection'    => array(
 							'type' => 'string',
 						),
+						'application_id'    => array(
+							'type' => 'string',
+						),
 						'height'                => array(
 							'type' => 'string',
 						),
