@@ -778,6 +778,13 @@ class BC_Admin_Templates {
 							<# }); #>
 						</select>
 
+						<label for="applicationid">
+							<?php esc_html_e( 'Application Id: ', 'brightcove' ); ?>
+						</label>
+						<div class="right-col">
+							<input type="text" id="applicationid" name="applicationid">
+						</div>
+
 						<label for="autoplay">
 							<?php esc_html_e( 'Autoplay: ', 'brightcove' ); ?>
 						</label>

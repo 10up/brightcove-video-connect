@@ -22,7 +22,7 @@ var MediaDetailsView = BrightcoveView.extend({
 		'change #languagedetection': 'toggleIframe',
 		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]':
 			'toggleExperienceUnits',
-		'change #video-player, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
+		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
 			'generateShortcode',
 		'change #generate-shortcode': 'toggleShortcodeGeneration',
 	},
@@ -142,6 +142,7 @@ var MediaDetailsView = BrightcoveView.extend({
 			playsinline = $('#playsinline').is(':checked') ? 'playsinline' : '',
 			pictureinpicture = $('#pictureinpicture').is(':checked') ? 'pictureinpicture' : '',
 			languagedetection = $('#languagedetection').is(':checked') ? 'languagedetection' : '',
+			applicationId = $('#applicationid').val(),
 			mute = $('#mute').is(':checked') ? 'muted' : '',
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
@@ -197,6 +198,8 @@ var MediaDetailsView = BrightcoveView.extend({
 			pictureinpicture +
 			'" language_detection="' +
 			languagedetection +
+			'" application_id="' +
+			applicationId +
 			'" max_width="' +
 			maxWidth +
 			'" ' +
