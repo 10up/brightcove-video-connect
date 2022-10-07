@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.8.0] - 2022-10-10
+
+### Deprecated
+- BC_Oauth_API::Method _request_access_token() in favor of BC_Oauth_API::request_access_token()
+- Action brightcove/admin/settings_page in favor of brightcove_admin_settings_page
+- Action brightcove/admin/videos_page in favor of brightcove_admin_videos_page
+- Action brightcove/admin/playlists_page in favor of brightcove_admin_playlists_page
+- Action brightcove/admin/edit_source_page in favor of brightcove_admin_edit_source_page
+- Action brightcove/admin/labels_page in favor of brightcove_admin_labels_page
+- Action brightcove/admin/edit_label_page in favor of brightcove_admin_edit_label_page
+
+### Added
+- Ability to add Application ID parameter to video player. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#295](https://github.com/10up/brightcove-video-connect/pull/295).
+- Initial E2E tests. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#288](https://github.com/10up/brightcove-video-connect/pull/288).
+
+### Fixed
+- PHPCS Fixes. Props [@oscarssanchez](https://github.com/oscarssanchez), and [@felipeelia](https://github.com/felipeelia), via [#286](https://github.com/10up/brightcove-video-connect/pull/286).
+
 ## [2.7.0] - 2022-06-29
 
 ### Fixed
@@ -381,6 +399,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.0]: https://github.com/10up/brightcove-video-connect/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/10up/brightcove-video-connect/compare/2.6.1...2.7.0
 [2.6.1]: https://github.com/10up/brightcove-video-connect/compare/2.6.0...2.6.1
 [2.6.0]: https://github.com/10up/brightcove-video-connect/compare/2.5.2...2.6.0
