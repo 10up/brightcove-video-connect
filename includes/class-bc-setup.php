@@ -16,6 +16,10 @@ class BC_Setup {
 	public static function action_init() {
 		global $bc_accounts;
 
+		if ( ! is_admin() ) {
+			add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
+		}
+
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-errors.php';
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-logging.php';
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
