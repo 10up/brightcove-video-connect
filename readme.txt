@@ -39,7 +39,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
-= 2.7.0 =
+= 2.8.0 =
 
 Deprecated
 
