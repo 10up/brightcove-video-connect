@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.8.0] - 2022-10-10
+## [2.8.0] - 2022-10-17
 
 ### Deprecated
 - BC_Oauth_API::Method _request_access_token() in favor of BC_Oauth_API::request_access_token()
