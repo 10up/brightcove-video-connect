@@ -44,7 +44,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 Deprecated
 
 * BC_Oauth_API::Method _request_access_token() in favor of BC_Oauth_API::request_access_token()
-*Action brightcove/admin/settings_page in favor of brightcove_admin_settings_page
+* Action brightcove/admin/settings_page in favor of brightcove_admin_settings_page
 * Action brightcove/admin/videos_page in favor of brightcove_admin_videos_page
 * Action brightcove/admin/playlists_page in favor of brightcove_admin_playlists_page
 * Action brightcove/admin/edit_source_page in favor of brightcove_admin_edit_source_page
@@ -58,7 +58,6 @@ Fixed
 Added
 
 * Ability to add Application ID parameter to video player.
-
 * Enable audio track language detection based on browser language if video has multiple audio tracks.
 
 = 2.7.0 =
