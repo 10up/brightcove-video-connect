@@ -14,11 +14,11 @@ class BC_Setup {
 	 * Generic bootstrap function that is hooked into the default `init` method
 	 */
 	public static function action_init() {
+		global $bc_accounts;
+
 		if ( ! is_admin() ) {
 			add_action( 'wp_enqueue_scripts', array( 'BC_Setup', 'frontend_enqueue_scripts' ) );
-			return;
 		}
-		global $bc_accounts;
 
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-errors.php';
 		require_once BRIGHTCOVE_PATH . 'includes/class-bc-logging.php';
