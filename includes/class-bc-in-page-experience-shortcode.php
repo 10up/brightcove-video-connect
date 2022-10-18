@@ -1,4 +1,9 @@
 <?php
+/**
+ * BC_In_Page_Experience_Shortcode file.
+ *
+ * @package Brightcove Video Connect
+ */
 
 /**
  * BC_In_Page_Experience_Shortcode Class
@@ -59,7 +64,7 @@ class BC_In_Page_Experience_Shortcode {
 			<!-- Start of Brightcove In-Page Experience Player -->
 			<?php if ( $is_in_page_embed ) : ?>
 				<div data-experience="<?php echo esc_attr( $atts['in_page_experience_id'] ); ?>"></div>
-				<script src="<?php echo esc_url( $published_url ); ?>"></script>
+				<script src="<?php echo esc_url( $published_url ); // phpcs:ignore ?>"></script>
 			<?php else : ?>
 				<iframe 
 				src="<?php echo esc_url( $published_url ); ?>" 

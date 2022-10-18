@@ -1,9 +1,19 @@
 <?php
+/**
+ * BC_Playlist_Shortcode class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Playlist_Shortcode class.
+ */
 class BC_Playlist_Shortcode {
 
+	/**
+	 * Adds the Brightcove Playlist shortcode.
+	 */
 	public static function shortcode() {
-
 		add_shortcode( 'bc_playlist', array( 'BC_Playlist_Shortcode', 'bc_playlist' ) );
 	}
 

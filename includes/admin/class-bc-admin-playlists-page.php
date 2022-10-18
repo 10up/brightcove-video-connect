@@ -1,10 +1,20 @@
 <?php
+/**
+ * BC_Admin_Playlists_Page class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Admin_Playlists_Page class
+ */
 class BC_Admin_Playlists_Page {
 
+	/**
+	 * Constructor method
+	 */
 	public function __construct() {
-
-		add_action( 'brightcove/admin/playlists_page', array( $this, 'render' ) );
+		add_action( 'brightcove_admin_playlists_page', array( $this, 'render' ) );
 		add_action( 'admin_notices', array( $this, 'validate_players' ) );
 	}
 
@@ -13,7 +23,7 @@ class BC_Admin_Playlists_Page {
 	 */
 	public function render() {
 
-		/*
+		/**
 		 * This is all handled by the Backbone app,
 		 * refer to app.js->load() for the hook into
 		 * the Backbone app for playlist-media.
@@ -36,7 +46,7 @@ class BC_Admin_Playlists_Page {
 		global $pagenow, $plugin_page;
 
 		// only on admin.php?page=page-brightcove-playlists
-		if ( $pagenow != 'admin.php' || $plugin_page != 'page-brightcove-playlists' ) {
+		if ( 'admin.php' !== $pagenow || 'page-brightcove-playlists' !== $plugin_page ) {
 			return;
 		}
 

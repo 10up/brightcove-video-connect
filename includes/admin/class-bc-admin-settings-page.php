@@ -1,10 +1,21 @@
 <?php
+/**
+ * BC_Admin_Settings_Page class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Admin_Settings_Page class
+ */
 class BC_Admin_Settings_Page {
 
+	/**
+	 * Constructor method.
+	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'admin_init_settings' ) );
-		add_action( 'brightcove/admin/settings_page', array( $this, 'render' ) );
+		add_action( 'brightcove_admin_settings_page', array( $this, 'render' ) );
 		add_action( 'admin_init', array( $this, 'delete_source' ) );
 	}
 
@@ -15,6 +26,11 @@ class BC_Admin_Settings_Page {
 		register_setting( 'bc_default_player_settings', 'bc_default_player_width', 'intval' );
 	}
 
+	/**
+	 * Delete a Brightcove source
+	 *
+	 * @return bool
+	 */
 	public function delete_source() {
 
 		global $bc_accounts;
@@ -77,7 +93,7 @@ class BC_Admin_Settings_Page {
 				</thead>
 				<tbody>
 				<?php
-				echo $this->render_source_rows();
+				echo $this->render_source_rows(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</tbody>
 			</table>
@@ -126,7 +142,7 @@ class BC_Admin_Settings_Page {
 	/**
 	 * Creates a filterable list of actions that can be performed on each source. By default, the only action link is an edit link
 	 *
-	 * @param $source_id
+	 * @param string $hash The hash of the source
 	 *
 	 * @return string
 	 */
@@ -196,7 +212,8 @@ class BC_Admin_Settings_Page {
 	/**
 	 * Renders a row in the the source table and populates with relevant information about that particular source
 	 *
-	 * @param $source object
+	 * @param string $hash The hash of the source
+	 * @param object $source The source object
 	 *
 	 * @return string
 	 */

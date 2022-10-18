@@ -1,5 +1,13 @@
 <?php
+/**
+ * BC_Errors class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Errors class
+ */
 class BC_Errors {
 
 	/**
@@ -61,7 +69,7 @@ class BC_Errors {
 			$html .= '</div>';
 		}
 
-		echo $html;
+		echo $html; // phpcs:ignore
 	}
 
 }

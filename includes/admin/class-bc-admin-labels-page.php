@@ -1,10 +1,22 @@
 <?php
 /**
+ * BC_Admin_Labels_Page class.
+ *
+ * @package Brightcove_Video_Connect
+ */
+
+/**
  * The Labels Page class.
  *
  * Class BC_Admin_Labels_Page
  */
 class BC_Admin_Labels_Page {
+
+	/**
+	 * BC_Labels object
+	 *
+	 * @var BC_Labels
+	 */
 	protected $bc_labels;
 
 	/**
@@ -15,8 +27,8 @@ class BC_Admin_Labels_Page {
 	public function __construct() {
 		$this->bc_labels = new BC_Labels();
 
-		add_action( 'brightcove/admin/labels_page', array( $this, 'render_labels_page' ) );
-		add_action( 'brightcove/admin/edit_label_page', array( $this, 'render_edit_label_page' ) );
+		add_action( 'brightcove_admin_labels_page', array( $this, 'render_labels_page' ) );
+		add_action( 'brightcove_admin_edit_label_page', array( $this, 'render_edit_label_page' ) );
 	}
 
 	/**
@@ -34,13 +46,13 @@ class BC_Admin_Labels_Page {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="validate">
 				<?php wp_nonce_field( 'brightcove-edit-label', 'brightcove-edit-label-nonce' ); ?>
 				<input type="hidden" name="action" value="brightcove-edit-label">
-				<input type="hidden" name="label-path" value="<?php echo ! empty( $_GET['update_label'] ) ? esc_attr( $_GET['update_label'] ) : ''; ?>">
+				<input type="hidden" name="label-path" value="<?php echo ! empty( $_GET['update_label'] ) ? esc_attr( $_GET['update_label'] ) : ''; // phpcs:ignore ?>">
 				<table class="form-table">
 					<tbody>
 						<tr class="form-field form-required term-name-wrap">
 							<th scope="row"><label for="name">Label</label></th>
 							<td>
-								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true">
+								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( end( array_filter( explode( '/', $_GET['update_label'] ) ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore WordPress.Security.NonceVerification ?>
 								<p class="description"><?php esc_html_e( 'Enter the new label name.', 'brightcove' ); ?></p>
 							</td>
 						</tr>
@@ -58,7 +70,7 @@ class BC_Admin_Labels_Page {
 	 * Generates an HTML table with all configured sources
 	 */
 	public function render_labels_page() {
-		$maybe_refresh = isset( $_GET['refresh_labels'] ) ? (bool) $_GET['refresh_labels'] : false;
+		$maybe_refresh = isset( $_GET['refresh_labels'] ) && (bool) $_GET['refresh_labels']; // phpcs:ignore
 		$labels        = $this->bc_labels->fetch_all( $maybe_refresh );
 		?>
 		<div class="wrap">

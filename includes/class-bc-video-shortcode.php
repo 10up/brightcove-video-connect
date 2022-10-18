@@ -1,5 +1,13 @@
 <?php
+/**
+ * BC_Video_Shortcode class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Video_Shortcode class
+ */
 class BC_Video_Shortcode {
 
 	/**
@@ -37,8 +45,9 @@ class BC_Video_Shortcode {
 			'height'             => 0,
 			'width'              => 0,
 			'playsinline'        => '',
+			'application_id'     => '',
 			'picture_in_picture' => '',
-			'language_detection' => ''
+			'language_detection' => '',
 		);
 
 		$atts = shortcode_atts( $defaults, $atts, 'bc_video' );

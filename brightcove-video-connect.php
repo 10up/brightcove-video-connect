@@ -3,12 +3,14 @@
  * Plugin Name: Brightcove Video Connect
  * Plugin URI: https://wordpress.org/plugins/brightcove-video-connect/
  * Description: A Brightcove™ Connector for WordPress that leverages enhanced APIs and Brightcove™ Capabilities
- * Version: 2.7.0
+ * Version: 2.8.0
  * Author: 10up
  * Author URI: http://10up.com
  * License: GPLv2+
  * Text Domain: brightcove
  * Domain Path: /languages
+ *
+ * @package Brightcove_Video_Connect
  */
 
 /**
@@ -29,7 +31,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  021.0.2301  USA
  */
 
-define( 'BRIGHTCOVE_VERSION', '2.7.0' );
+define( 'BRIGHTCOVE_VERSION', '2.8.0' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
 define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
@@ -72,7 +74,7 @@ $bc_accounts = new BC_Accounts();
 
 // Wireup actions.
 if ( is_admin() ) {
-    add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
+	add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
 }
 
 add_action( 'init', array( 'BC_Setup', 'action_init' ) );
@@ -82,8 +84,6 @@ add_action( 'init', array( 'BC_Experiences_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_In_Page_Experience_Shortcode', 'shortcode' ), 11 );
 add_action( 'init', array( 'BC_Setup', 'action_init_all' ), 9 ); // Ensures the menu is loaded on all pages.
 add_action( 'init', array( 'BC_Notification_API', 'setup' ), 9 );
-
-// add_action( 'brightcove_upgrade', array( 'BC_Notification_API', 'maybe_backport_subscriptions' ) ); // @TODO Verify API as errors don't seem to match the documentation
 
 if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
 

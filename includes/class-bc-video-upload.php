@@ -1,14 +1,38 @@
 <?php
+/**
+ * BC_Video_Upload class file.
+ *
+ * @package Brightcove_Video_Connect
+ */
 
+/**
+ * BC_Video_Upload class.
+ */
 class BC_Video_Upload {
 
+	/**
+	 * BC_CMS_API object
+	 *
+	 * @var object
+	 */
 	protected $cms_api;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param object $cms_api BC_CMS_API object.
+	 */
 	public function __construct( $cms_api ) {
 
 		$this->cms_api = $cms_api;
 	}
 
+	/**
+	 * Process the uploaded video tags.
+	 *
+	 * @param  string $tags_string  Tags string.
+	 * @return array|false Array of tags or false if no tags.
+	 */
 	public function process_tags( $tags_string ) {
 
 		if ( '' === $tags_string || ! is_string( $tags_string ) ) {
@@ -23,10 +47,10 @@ class BC_Video_Upload {
 	 * Take an uploaded file, and a supplied name and create a video ID and
 	 * ingestion request for them.
 	 *
-	 * @param $files
-	 * @param $account_hash
-	 * @param $tags
-	 * @param $name
+	 * @param array        $files         Array of files to upload.
+	 * @param string       $account_hash  Account hash.
+	 * @param string|array $tags          Tags that apply to the video.
+	 * @param string       $name          Name of the video.
 	 *
 	 * @return array|WP_Error
 	 */
@@ -61,11 +85,11 @@ class BC_Video_Upload {
 			$uploaded = wp_handle_upload( $files['file'], array( 'test_form' => false ) );
 
 			if ( isset( $uploaded['error'] ) ) {
+				$error_message = $uploaded['error'];
+				// translators: %s is the error message.
+				BC_Logging::log( sprintf( __( 'VIDEO UPLOAD ERROR: %s', 'brightcove' ), esc_html( $uploaded['error'] ) ) );
 
-				$error_message = esc_html__( $uploaded['error'], 'brightcove' );
-				BC_Logging::log( sprintf( 'VIDEO UPLOAD ERROR: %s', $error_message ) );
-
-				return new WP_Error( 'video_upload_error', $error_message );
+				return new WP_Error( 'video_upload_error', esc_html( $error_message ) );
 
 			} else {
 
@@ -113,6 +137,9 @@ class BC_Video_Upload {
 
 	}
 
+	/**
+	 * Updates the meta data for a video.
+	 */
 	public static function update_video_meta() {
 
 		if ( ! wp_verify_nonce( $_POST['nonce'], '_bc_ajax_search_nonce' ) ) {
@@ -162,11 +189,16 @@ class BC_Video_Upload {
 
 	}
 
-	// Checks if file type is video and whether it's supported by WordPress.
+	/**
+	 * Checks if file type is video and whether it's supported by WordPress
+	 *
+	 * @param  array $file_data File data.
+	 * @return bool Whether file is supported or not.
+	 */
 	public function check_allowed_file( $file_data ) {
 
 		$bc_allowed_types = BC_Utility::get_all_brightcove_mimetypes();
-		$allowed_ext      = array_search( $file_data['type'], $bc_allowed_types );
+		$allowed_ext      = array_search( $file_data['type'], $bc_allowed_types ); // phpcs:ignore
 
 		if ( false === $allowed_ext ) {
 			return false;

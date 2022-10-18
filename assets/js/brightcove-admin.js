@@ -62,8 +62,8 @@ var MediaModel = Backbone.Model.extend({
 				name: this.get('name'),
 				nonce: wpbc.preload.nonce,
 				tags: this.get('tags'),
-				oldFolderId: this.get('oldFolderId'),
-				folderId: this.get('folderId'),
+				old_folder_id: this.get('old_folder_id'),
+				folder_id: this.get('folder_id'),
 				type: this.get('mediaType'),
 				custom_fields: this.get('custom_fields'),
 				history: this.get('_change_history'),
@@ -298,8 +298,8 @@ var MediaCollection = Backbone.Collection.extend({
 		this.searchTerm = options.searchTerm || '';
 		this.dates = options.dates || 'all';
 		this.tag = options.tag || '';
-		this.folderId = options.folderId || '';
-		this.oldFolderId = options.oldFolderId || '';
+		this.folder_id = options.folder_id || '';
+		this.old_folder_id = options.old_folder_id || '';
 		this.labelPath = options.labelPath || '';
 		this.oldLabelPath = options.oldLabelPath || '';
 
@@ -333,14 +333,14 @@ var MediaCollection = Backbone.Collection.extend({
 			this.fetch();
 		});
 
-		this.listenTo(wpbc.broadcast, 'change:folder', function (folderId) {
-			this.oldFolderId = this.folderId;
+		this.listenTo(wpbc.broadcast, 'change:folder', function (folder_id) {
+			this.old_folder_id = this.folder_id;
 
-			if (folderId === 'all') {
-				folderId = '';
+			if (folder_id === 'all') {
+				folder_id = '';
 			}
 
-			this.folderId = folderId;
+			this.folder_id = folder_id;
 			this.fetch();
 		});
 
@@ -437,8 +437,8 @@ var MediaCollection = Backbone.Collection.extend({
 				labels: this.labels,
 				labelPath: this.labelPath,
 				oldLabelPath: this.oldLabelPath,
-				oldFolderId: this.oldFolderId,
-				folderId: this.folderId,
+				old_folder_id: this.old_folder_id,
+				folder_id: this.folder_id,
 				state: this.state,
 				oldState: this.oldState,
 				tagName: wpbc.preload.tags[this.tag],
@@ -453,7 +453,7 @@ var MediaCollection = Backbone.Collection.extend({
 				'search',
 				'tags',
 				'type',
-				'folderId',
+				'folder_id',
 				'tagName',
 				'state',
 			);
@@ -851,7 +851,7 @@ var ToolbarView = BrightcoveView.extend({
 			folders: wpbc.preload.folders,
 			labels: wpbc.preload.labels,
 			labelPath: this.model.get('labelPath'),
-			folderId: this.model.get('folderId'),
+			folder_id: this.model.get('folder_id'),
 			account: this.model.get('account'),
 		};
 
@@ -926,8 +926,8 @@ var ToolbarView = BrightcoveView.extend({
 	},
 
 	foldersChanged: function (event) {
-		this.model.set('oldFolderId', this.model.get('folderId'));
-		this.model.set('folderId', event.target.value);
+		this.model.set('old_folder_id', this.model.get('folder_id'));
+		this.model.set('folder_id', event.target.value);
 		wpbc.broadcast.trigger('change:folder', event.target.value);
 	},
 
@@ -1207,8 +1207,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 
 		this.listenTo(wpbc.broadcast, 'change:folder', function (folder) {
 			this.clearPreview();
-			this.model.set('oldFolderId', this.model.get('folderId'));
-			this.model.set('folderId', folder);
+			this.model.set('old_folder_id', this.model.get('folder_id'));
+			this.model.set('folder_id', folder);
 		});
 
 		this.listenTo(wpbc.broadcast, 'change:label', function (labelPath) {
@@ -1760,7 +1760,7 @@ var MediaDetailsView = BrightcoveView.extend({
 		'change #languagedetection': 'toggleIframe',
 		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]':
 			'toggleExperienceUnits',
-		'change #video-player, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
+		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
 			'generateShortcode',
 		'change #generate-shortcode': 'toggleShortcodeGeneration',
 	},
@@ -1880,6 +1880,7 @@ var MediaDetailsView = BrightcoveView.extend({
 			playsinline = $('#playsinline').is(':checked') ? 'playsinline' : '',
 			pictureinpicture = $('#pictureinpicture').is(':checked') ? 'pictureinpicture' : '',
 			languagedetection = $('#languagedetection').is(':checked') ? 'languagedetection' : '',
+			applicationId = $('#applicationid').val(),
 			mute = $('#mute').is(':checked') ? 'muted' : '',
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
@@ -1935,6 +1936,8 @@ var MediaDetailsView = BrightcoveView.extend({
 			pictureinpicture +
 			'" language_detection="' +
 			languagedetection +
+			'" application_id="' +
+			applicationId +
 			'" max_width="' +
 			maxWidth +
 			'" ' +
@@ -3217,7 +3220,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('width', this.$el.find('.brightcove-width').val());
 		this.model.set('poster', this.$el.find('.brightcove-poster').val());
 		this.model.set('thumbnail', this.$el.find('.brightcove-thumbnail').val());
-		this.model.set('folderId', this.$el.find('.brightcove-folder').val());
+		this.model.set('folder_id', this.$el.find('.brightcove-folder').val());
 
 		const isVariant = this.$el.find('.brightcove-variant').val();
 
@@ -3393,7 +3396,7 @@ var VideoEditView = BrightcoveView.extend({
 		// Due to a change in the API response, text_tracks might not be defined if the video lacks text_tracks.
 		options.text_tracks = options.text_tracks || [];
 
-		this.model.set('oldFolderId', options.folder_id);
+		this.model.set('old_folder_id', options.folder_id);
 
 		// Render the model into the template
 		this.$el.html(this.template(options));

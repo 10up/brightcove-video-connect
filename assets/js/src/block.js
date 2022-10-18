@@ -43,6 +43,7 @@
 			var playsinline = props.attributes.playsinline || '';
 			var pictureinpicture = props.attributes.picture_in_picture || '';
 			var languageDetection = props.attributes.language_detection || '';
+			var applicationId = props.attributes.application_id || '';
 			var embed = props.attributes.embed || '';
 			var mute = props.attributes.mute || '';
 			var sizing = props.attributes.sizing || 'responsive';
@@ -215,6 +216,7 @@
 					setAttrs.mute = attrs.named.mute;
 					setAttrs.playsinline = attrs.named.playsinline;
 					setAttrs.picture_in_picture = attrs.named.picture_in_picture;
+					setAttrs.application_id = attrs.named.application_id;
 					setAttrs.language_detection = attrs.named.language_detection;
 					setAttrs.padding_top = attrs.named.padding_top;
 				} else if (attrs.numeric[0] === '[bc_playlist') {
@@ -437,6 +439,18 @@
 									props.setAttributes({
 										...props.attributes,
 										player_id: value,
+									});
+								},
+							}),
+						!isExperience &&
+							el(components.TextControl, {
+								label: __('Application Id:', 'brightcove'),
+								type: 'string',
+								value: applicationId,
+								onChange: function (value) {
+									props.setAttributes({
+										...props.attributes,
+										application_id: value,
 									});
 								},
 							}),

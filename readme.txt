@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 5.8
-Stable tag: 2.7.0
+Tested up to: 6.0
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,27 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 14. Selecting a playlist to show the details on the sidebar.
 
 == Changelog ==
+
+= 2.8.0 =
+
+Deprecated
+
+* BC_Oauth_API::Method _request_access_token() in favor of BC_Oauth_API::request_access_token()
+* Action brightcove/admin/settings_page in favor of brightcove_admin_settings_page
+* Action brightcove/admin/videos_page in favor of brightcove_admin_videos_page
+* Action brightcove/admin/playlists_page in favor of brightcove_admin_playlists_page
+* Action brightcove/admin/edit_source_page in favor of brightcove_admin_edit_source_page
+* Action brightcove/admin/labels_page in favor of brightcove_admin_labels_page
+* Action brightcove/admin/edit_label_page in favor of brightcove_admin_edit_label_page
+
+Fixed
+
+* PHPCS Fixes.
+
+Added
+
+* Ability to add Application ID parameter to video player.
+* Enable audio track language detection based on browser language if video has multiple audio tracks.
 
 = 2.7.0 =
 
