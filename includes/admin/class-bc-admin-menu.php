@@ -37,7 +37,7 @@ class BC_Admin_Menu {
 			add_submenu_page( null, esc_html__( 'Edit Label', 'brightcove' ), esc_html__( 'Edit Label', 'brightcove' ), 'manage_options', 'page-brightcove-edit-label', array( $this, 'render_edit_label_page' ) );
 
 			// Removes the Brightcove Submenu from the menu that WP automatically provides when registering a top level page
-			if( is_array( $submenu['brightcove'] ) ) {
+			if ( is_array( $submenu['brightcove'] ) ) {
 				array_shift( $submenu['brightcove'] );
 			}
 
