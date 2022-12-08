@@ -41,6 +41,10 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 = 2.8.0 =
 
+* Fixed fatal error when Brightcove menu is null.
+
+= 2.8.0 =
+
 Deprecated
 
 * BC_Oauth_API::Method _request_access_token() in favor of BC_Oauth_API::request_access_token()
