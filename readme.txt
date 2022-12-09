@@ -5,7 +5,7 @@ Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
 Tested up to: 6.0
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
-= 2.8.0 =
+= 2.8.1 =
 
 * Fixed fatal error when Brightcove menu is null.
 
