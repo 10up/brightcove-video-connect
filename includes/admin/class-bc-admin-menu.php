@@ -22,8 +22,6 @@ class BC_Admin_Menu {
 	 * Generates the Brightcove Menus and non-menu admin pages
 	 */
 	public function register_admin_menu() {
-		global $submenu;
-
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
 			add_menu_page( esc_html__( 'Brightcove', 'brightcove' ), esc_html__( 'Brightcove', 'brightcove' ), 'edit_posts', 'brightcove', array( $this, 'render_settings_page' ), plugins_url( 'images/sidebar-icon.svg', dirname( __DIR__ ) ), 50 );
@@ -36,9 +34,7 @@ class BC_Admin_Menu {
 			add_submenu_page( null, esc_html__( 'Add Source', 'brightcove' ), esc_html__( 'Add Source', 'brightcove' ), 'manage_options', 'page-brightcove-edit-source', array( $this, 'render_edit_source_page' ) );
 			add_submenu_page( null, esc_html__( 'Edit Label', 'brightcove' ), esc_html__( 'Edit Label', 'brightcove' ), 'manage_options', 'page-brightcove-edit-label', array( $this, 'render_edit_label_page' ) );
 
-			// Removes the Brightcove Submenu from the menu that WP automatically provides when registering a top level page
-			array_shift( $submenu['brightcove'] );
-
+			remove_submenu_page( 'brightcove', 'brightcove' );
 		}
 	}
 
