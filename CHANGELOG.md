@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.8.1] - 2022-12-08
+## [2.8.1] - 2022-12-13
 
 ### Fixed
 - Fixes fatal error when Brightcove submenu item is null. Props [@phpbits](https://github.com/phpbits) and [@oscarssanchez](https://github.com/oscarssanchez) via [#300](https://github.com/10up/brightcove-video-connect/pull/300)
