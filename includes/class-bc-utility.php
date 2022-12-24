@@ -513,7 +513,9 @@ class BC_Utility {
 
 		$html = '';
 		foreach ( $notices as $notice ) {
-			$html .= sprintf( '<div class="%1$s brightcove-settings-%1$s notice is-dismissible">', esc_attr( $notice['type'] ) );
+			$html .= sprintf( '<div class="%1$s brightcove-settings-%1$s notice is-dismissible %2$s">',
+				esc_attr( $notice['type'] ),
+				empty( $notice['identifier'] ) ? '' : esc_attr( $notice['identifier'] ) );
 			$html .= sprintf( '<p>%s</p>', wp_kses( $notice['message'], $allowedtags ) );
 			$html .= '</div>';
 		}

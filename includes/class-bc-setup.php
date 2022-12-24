@@ -501,13 +501,14 @@ class BC_Setup {
 		) {
 
 			$notices[] = array(
-				'message' => sprintf(
+				'message'    => sprintf(
 					'%s <a href="%s"><strong>%s</strong></a>',
 					esc_html__( 'Please configure Brightcove settings from', 'brightcove' ),
 					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
 					esc_html__( 'here', 'brightcove' )
 				),
-				'type'    => 'updated',
+				'type'       => 'updated',
+				'identifier' => 'configure-brightcove',
 			);
 
 		}
