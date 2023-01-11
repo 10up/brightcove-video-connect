@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.8.1] - 2022-12-13
+
+### Fixed
+- Fixes fatal error when Brightcove submenu item is null. Props [@phpbits](https://github.com/phpbits) and [@oscarssanchez](https://github.com/oscarssanchez) via [#300](https://github.com/10up/brightcove-video-connect/pull/300)
+
 ## [2.8.0] - 2022-10-17
 
 ### Deprecated
@@ -399,6 +404,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.1]: https://github.com/10up/brightcove-video-connect/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/10up/brightcove-video-connect/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/10up/brightcove-video-connect/compare/2.6.1...2.7.0
 [2.6.1]: https://github.com/10up/brightcove-video-connect/compare/2.6.0...2.6.1
