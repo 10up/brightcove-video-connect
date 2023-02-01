@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('visitAdminPage', (page = 'index.php') => {
+    cy.login();
+    if (page.includes('http')) {
+        cy.visit(page);
+    } else {
+        cy.visit(`/wp-admin/${page.replace(/^\/|\/$/g, '')}`);
+    }
+});
+
+Cypress.Commands.add('deleteBrightcoveOptions', () => {
+	cy.wpCliEval(`delete_option( '_brightcove_plugin_activated' );`);
+	cy.wpCliEval(`delete_option( '_brightcove_default_account' );`);
+	cy.wpCliEval(`delete_option( '_brightcove_pending_videos' );`);
+	cy.wpCliEval(`delete_option( '_brightcove_tags' );`);
+	cy.wpCliEval(`delete_option( '_brightcove_accounts' );`);
+});

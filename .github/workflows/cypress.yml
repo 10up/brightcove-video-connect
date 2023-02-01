@@ -39,4 +39,5 @@ jobs:
     - name: Set up WP environment
       run: npm run env:start
     - name: Test
+      run: export BRIGHTCOVE_ACCOUNT_ID=${{ secrets.BRIGHTCOVE_ACCOUNT_ID }} && export BRIGHTCOVE_CLIENT_ID=${{ secrets.BRIGHTCOVE_CLIENT_ID }} && export BRIGHTCOVE_CLIENT_SECRET=${{ secrets.BRIGHTCOVE_CLIENT_SECRET }}
       run: npm run cypress:run

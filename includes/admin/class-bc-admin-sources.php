@@ -183,7 +183,8 @@ class BC_Admin_Sources {
 				admin_url( 'admin.php?page=brightcove-sources' ),
 				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
-			'type'    => 'updated',
+			'type'       => 'updated',
+			'identifier' => 'successfully-configured-brightcove'
 		);
 
 		BC_Utility::delete_cache_item( '*' );
