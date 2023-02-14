@@ -1,4 +1,4 @@
-describe("WP Admin general Tests", () => {
+describe("Plugin Setup Tests", () => {
   before(() => {
     cy.login();
     // We start fresh before running our tests.
