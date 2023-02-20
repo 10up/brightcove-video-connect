@@ -34,7 +34,5 @@ Cypress.Commands.add('visitAdminPage', (page = 'index.php') => {
 });
 
 Cypress.Commands.add('deleteBrightcoveOptions', () => {
-	cy.wpCliEval(
-		`delete_option( '_brightcove_plugin_activated _brightcove_default_account _brightcove_pending_videos _brightcove_tags _brightcove_accounts' );`,
-	);
+    cy.wpCli( `option delete _brightcove_plugin_activated _brightcove_default_account _brightcove_pending_videos _brightcove_tags _brightcove_accounts` );
 });
