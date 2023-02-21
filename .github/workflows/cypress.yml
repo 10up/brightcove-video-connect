@@ -27,7 +27,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Install dependencies
-      run: npm install
+      run: npm ci
     - name: Composer (optional)
       run: composer install
       continue-on-error: true
@@ -40,3 +40,7 @@ jobs:
       run: npm run env:start
     - name: Test
       run: npm run cypress:run
+      env:
+        BRIGHTCOVE_ACCOUNT_ID: ${{ secrets.BRIGHTCOVE_ACCOUNT_ID }}
+        BRIGHTCOVE_CLIENT_ID: ${{ secrets.BRIGHTCOVE_CLIENT_ID }}
+        BRIGHTCOVE_CLIENT_SECRET: ${{ secrets.BRIGHTCOVE_CLIENT_SECRET }}

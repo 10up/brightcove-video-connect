@@ -174,7 +174,7 @@ class BC_Admin_Sources {
 		BC_Utility::delete_cache_item( 'brightcove_sync_videos' );
 
 		$this->notices[] = array(
-			'message' => sprintf(
+			'message'    => sprintf(
 				'%s <a href="%s">%s</a> %s <a href="%s">%s</a>.',
 				esc_html__( 'Congratulations! Your credentials have been authenticated. You can now ', 'brightcove' ),
 				admin_url( 'admin.php?page=page-brightcove-videos' ),
@@ -183,7 +183,8 @@ class BC_Admin_Sources {
 				admin_url( 'admin.php?page=brightcove-sources' ),
 				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
-			'type'    => 'updated',
+			'type'       => 'updated',
+			'identifier' => 'successfully-configured-brightcove',
 		);
 
 		BC_Utility::delete_cache_item( '*' );
