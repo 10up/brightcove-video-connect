@@ -1167,7 +1167,7 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="<?php esc_url( $src ); ?> "?>
+				<script src="<?php echo esc_url( $src ); ?>"?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>
