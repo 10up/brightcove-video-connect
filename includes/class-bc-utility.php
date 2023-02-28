@@ -1024,6 +1024,10 @@ class BC_Utility {
 				<?php
 			endif;
 		elseif ( 'iframe' === $embed ) :
+
+			if ( ! empty( $playsinline ) ) {
+				$playsinline = '&' . $playsinline;
+			}
 			if ( ! empty( $autoplay ) ) {
 				$autoplay = '&' . $autoplay;
 			}
@@ -1033,7 +1037,7 @@ class BC_Utility {
 
 			$iframe_src = self::build_brightcove_src(
 					$account_id,
-					'/' . $player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $autoplay . $mute );
+					'/' . $player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute );
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
@@ -1226,6 +1230,10 @@ class BC_Utility {
 			</div>
 		<?php elseif ( 'iframe' === $embed ) : ?>
 			<?php
+
+			if ( ! empty( $playsinline ) ) {
+				$playsinline = '&' . $playsinline;
+			}
 			if ( ! empty( $autoplay ) ) {
 				$autoplay = '&' . $autoplay;
 			}
@@ -1233,7 +1241,7 @@ class BC_Utility {
 				$mute = '&' . $mute;
 			}
 
-			$iframesrc = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.html?playlistId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $autoplay . $mute );
+			$iframesrc = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.html?playlistId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute );
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
