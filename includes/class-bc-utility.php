@@ -1036,8 +1036,9 @@ class BC_Utility {
 			}
 
 			$iframe_src = self::build_brightcove_src(
-					$account_id,
-					'/' . $player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute );
+				$account_id,
+				'/' . $player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute
+			);
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
@@ -1114,7 +1115,7 @@ class BC_Utility {
 		<!-- Start of Brightcove Player -->
 
 		<?php if ( 'in-page-vertical' === $embed ) : ?>
-        <?php $src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' ); ?>
+			<?php $src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' ); ?>
 			<style type="text/css">
 				.video-js {
 					width: <?php echo esc_attr( $width ); ?>;
@@ -1167,14 +1168,14 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="<?php echo esc_url( $src ); ?>"?>
+				<script src="<?php echo esc_url( $src ); ?>"><?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>
 			</div>
 
 		<?php elseif ( 'in-page-horizontal' === $embed ) : ?>
-		<?php $src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' ); ?>
+			<?php $src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' ); ?>
 			<style type="text/css">
 				.video-js {
 					width: <?php echo esc_attr( $width ); ?>;
@@ -1223,7 +1224,7 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="<?php echo esc_url( $src ); ?>"></script>
+				<script src="<?php echo esc_url( $src ); ?>"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>
@@ -1265,7 +1266,7 @@ class BC_Utility {
 			$src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.html?playlistId= /&' . $id . '&' . self::get_usage_data() . 'iframe' );
 			printf(
 				'<iframe src="%s" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" style="width: %s; height: %s;%s"></iframe>',
-                esc_url( $src ),
+				esc_url( $src ),
 				( '0' === $width ) ? '100%' : esc_attr( $width ) . 'px', // phpcs:ignore
 				( '0' === $height ) ? '100%' : esc_attr( $height ) . 'px', // phpcs:ignore
 				( '0' === $width && '0' === $height ) ? 'position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;' : '' // phpcs:ignore
@@ -1517,8 +1518,8 @@ class BC_Utility {
 	/**
 	 * Builds a URL based on a common player src.
 	 *
-	 * @param $account_id
-	 * @param $extra_params
+	 * @param int    $account_id The brightcove account id.
+	 * @param string $extra_params Extra params to append.
 	 * @return string
 	 */
 	public static function build_brightcove_src( $account_id, $extra_params = '' ) {
