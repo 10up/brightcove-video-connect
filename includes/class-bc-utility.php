@@ -877,7 +877,7 @@ class BC_Utility {
 
 		<?php
 		if ( 'javascript' === $embed ) :
-			$js_src = self::build_brightcove_src( $account_id, '/experience_' . $experience_id . '/live.js' );
+			$js_src = self::build_brightcove_src( $account_id, 'experience_' . $experience_id . '/live.js' );
 			?>
 			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
 				<?php echo $js_attr; // phpcs:ignore ?> data-usage="cms:WordPress:<?php echo esc_attr( $wp_version ); ?>:<?php echo esc_attr( BRIGHTCOVE_VERSION ); ?>:experiencejavascript" style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?> max-width: <?php echo esc_attr( $max_width ); ?>; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
@@ -885,7 +885,7 @@ class BC_Utility {
 			<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
 			<?php
 		else :
-			$iframe_src = self::build_brightcove_src( $account_id, '/experience_' . $experience_id . '/index.html?cms:WordPress:' . $wp_version . ':' . BRIGHTCOVE_VERSION . ':experienceiframe&' . $url_attr );
+			$iframe_src = self::build_brightcove_src( $account_id, 'experience_' . $experience_id . '/index.html?cms:WordPress:' . $wp_version . ':' . BRIGHTCOVE_VERSION . ':experienceiframe&' . $url_attr );
 			?>
 
 			<div style="display: block; position: relative; width: <?php echo esc_attr( $width ); ?>; height: <?php echo esc_attr( $height ); ?>;">
@@ -953,7 +953,7 @@ class BC_Utility {
 		<?php
 
 		if ( 'in-page' === $embed ) :
-			$js_src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' );
+			$js_src = self::build_brightcove_src( $account_id, $player_id . '_default/index.min.js' );
 			if ( 'pictureinpicture' === $atts['picture_in_picture'] ) :
 				?>
 				<!-- The picture-in-picture container. This is required! -->
@@ -1037,7 +1037,7 @@ class BC_Utility {
 
 			$iframe_src = self::build_brightcove_src(
 				$account_id,
-				'/' . $player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute
+				$player_id . '_default/index.html?videoId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute
 			);
 			?>
 
@@ -1115,7 +1115,7 @@ class BC_Utility {
 		<!-- Start of Brightcove Player -->
 
 		<?php if ( 'in-page-vertical' === $embed ) : ?>
-			<?php $src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' ); ?>
+			<?php $src = self::build_brightcove_src( $account_id, $player_id . '_default/index.min.js' ); ?>
 			<style type="text/css">
 				.video-js {
 					width: <?php echo esc_attr( $width ); ?>;
@@ -1175,7 +1175,7 @@ class BC_Utility {
 			</div>
 
 		<?php elseif ( 'in-page-horizontal' === $embed ) : ?>
-			<?php $src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.min.js' ); ?>
+			<?php $src = self::build_brightcove_src( $account_id, $player_id . '_default/index.min.js' ); ?>
 			<style type="text/css">
 				.video-js {
 					width: <?php echo esc_attr( $width ); ?>;
@@ -1242,7 +1242,7 @@ class BC_Utility {
 				$mute = '&' . $mute;
 			}
 
-			$iframesrc = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.html?playlistId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute );
+			$iframesrc = self::build_brightcove_src( $account_id, $player_id . '_default/index.html?playlistId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute );
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
@@ -1263,7 +1263,7 @@ class BC_Utility {
 			<?php endif; ?>
 
 			<?php
-			$src = self::build_brightcove_src( $account_id, '/' . $player_id . '_default/index.html?playlistId= /&' . $id . '&' . self::get_usage_data() . 'iframe' );
+			$src = self::build_brightcove_src( $account_id, $player_id . '_default/index.html?playlistId= /&' . $id . '&' . self::get_usage_data() . 'iframe' );
 			printf(
 				'<iframe src="%s" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" style="width: %s; height: %s;%s"></iframe>',
 				esc_url( $src ),
@@ -1523,6 +1523,6 @@ class BC_Utility {
 	 * @return string
 	 */
 	public static function build_brightcove_src( $account_id, $extra_params = '' ) {
-		return 'https://players.brightcove.net/' . $account_id . $extra_params;
+		return 'https://players.brightcove.net/' . trailingslashit( $account_id ) . $extra_params;
 	}
 }
