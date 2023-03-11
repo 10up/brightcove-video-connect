@@ -1028,11 +1028,11 @@ class BC_Utility {
 			if ( ! empty( $playsinline ) ) {
 				$playsinline = '&' . $playsinline;
 			}
-			if ( ! empty( $autoplay ) ) {
-				$autoplay = '&' . $autoplay;
-			}
 			if ( ! empty( $mute ) ) {
 				$mute = '&' . $mute;
+			}
+			if ( ! empty( $autoplay ) ) {
+				$autoplay = '&' . $autoplay;
 			}
 
 			$iframe_src = self::build_brightcove_src(
@@ -1235,11 +1235,11 @@ class BC_Utility {
 			if ( ! empty( $playsinline ) ) {
 				$playsinline = '&' . $playsinline;
 			}
-			if ( ! empty( $autoplay ) ) {
-				$autoplay = '&' . $autoplay;
-			}
 			if ( ! empty( $mute ) ) {
 				$mute = '&' . $mute;
+			}
+			if ( ! empty( $autoplay ) ) {
+				$autoplay = '&' . $autoplay;
 			}
 
 			$iframesrc = self::build_brightcove_src( $account_id, $player_id . '_default/index.html?playlistId=' . $id . '&usage=' . self::get_usage_data() . 'iframe' . $playsinline . $autoplay . $mute );
