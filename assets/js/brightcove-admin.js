@@ -1889,16 +1889,15 @@ var MediaDetailsView = BrightcoveView.extend({
 	},
 
 	generateVideoShortcode: function () {
-		console.log('shortcode');
 		var videoId = this.model.get('id').replace(/\D/g, ''),
 			accountId = this.model.get('account_id').replace(/\D/g, ''),
 			playerId = $('#video-player').val(),
 			autoplay = $('#autoplay').is(':checked') ? 'autoplay' : '',
 			playsinline = $('#playsinline').is(':checked') || autoplay !== '' ? 'playsinline' : '',
+			mute = $('#mute').is(':checked') || autoplay !== '' ? 'muted' : '',
 			pictureinpicture = $('#pictureinpicture').is(':checked') ? 'pictureinpicture' : '',
 			languagedetection = $('#languagedetection').is(':checked') ? 'languagedetection' : '',
 			applicationId = $('#applicationid').val(),
-			mute = $('#mute').is(':checked') || autoplay !== '' ? 'muted' : '',
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
 			aspectRatio = $('#aspect-ratio').val(),
@@ -2038,8 +2037,8 @@ var MediaDetailsView = BrightcoveView.extend({
 			accountId = this.model.get('account_id').replace(/\D/g, ''),
 			playerId = $('#video-player').val() || 'default',
 			autoplay = $('#autoplay').is(':checked') ? 'autoplay' : '',
-			playsinline = $('#playsinline').is(':checked') ? 'playsinline' : '',
-			mute = $('#mute').is(':checked') ? 'muted' : '',
+			playsinline = $('#playsinline').is(':checked') || autoplay !== '' ? 'playsinline' : '',
+			mute = $('#mute').is(':checked') || autoplay !== '' ? 'muted' : '',
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
 			aspectRatio = $('#aspect-ratio').val(),

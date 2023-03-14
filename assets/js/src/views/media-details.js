@@ -151,7 +151,6 @@ var MediaDetailsView = BrightcoveView.extend({
 	},
 
 	generateVideoShortcode: function () {
-		console.log('shortcode');
 		var videoId = this.model.get('id').replace(/\D/g, ''),
 			accountId = this.model.get('account_id').replace(/\D/g, ''),
 			playerId = $('#video-player').val(),
