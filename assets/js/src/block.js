@@ -393,34 +393,6 @@
 				},
 			});
 
-			/**
-			 * Checkbox Component that depends on the value of another checkbox.
-			 *
-			 * @param translatableLabel
-			 * @param checkedValue
-			 * @param dependendCheckedValue
-			 * @param checkedAttribute
-			 * @returns {*}
-			 */
-			const dependentCheckboxControl = (
-				translatableLabel,
-				checkedValue,
-				dependendCheckedValue,
-				checkedAttribute,
-				propAttribute,
-			) => {
-				return el(components.CheckboxControl, {
-					label: translatableLabel,
-					checked: checkedValue !== '' || dependendCheckedValue !== '',
-					onChange: function (value) {
-						props.setAttributes({
-							...props.attributes,
-							[propAttribute]: value && checkedAttribute,
-						});
-					},
-				});
-			};
-
 			const muteField = el(components.CheckboxControl, {
 				label: __('Mute', 'brightcove'),
 				checked: mute !== '' || autoplay !== '',
