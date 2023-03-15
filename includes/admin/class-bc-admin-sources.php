@@ -276,7 +276,7 @@ class BC_Admin_Sources {
 					<br>
 					<?php
 					echo sprintf(
-						'%s <a target="_blank" href="https://support.brightcove.com/managing-api-authentication-credentials">%s</a>.',
+						'%s <a target="_blank" href="https://apis.support.brightcove.com/general/managing-api-authentication-credentials.html">%s</a>.',
 						esc_html__( 'For more details on the different API permissions or settings below, please check out our documentation at', 'brightcove' ),
 						esc_html__( 'Managing API Authentication Credentials', 'brightcove' )
 					);

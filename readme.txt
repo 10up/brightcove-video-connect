@@ -36,6 +36,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 12. Previewing a video.
 13. Showing a sample post with a video added.
 14. Selecting a playlist to show the details on the sidebar.
+15. Brightcove Block and Block Settings.
 
 == Changelog ==
 

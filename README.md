@@ -104,6 +104,9 @@ http://httpd.apache.org/docs/current/mod/core.html#limitrequestbody (LimitReques
 14. Selecting a playlist to show the details on the sidebar.
 ![](/.wordpress-org/screenshot-14.png)
 
+15. Brightcove Block and Block Settings.
+![](/.wordpress-org/screenshot-15.png)
+
 ## Audio Track Language Detection
 
 The plugin has the ability to auto determine audio track language detection if the option has been enabled, based on the user browser language.
