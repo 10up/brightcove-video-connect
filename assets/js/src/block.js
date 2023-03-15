@@ -393,6 +393,56 @@
 				},
 			});
 
+			/**
+			 * Checkbox Component that depends on the value of another checkbox.
+			 *
+			 * @param translatableLabel
+			 * @param checkedValue
+			 * @param dependendCheckedValue
+			 * @param checkedAttribute
+			 * @returns {*}
+			 */
+			const dependentCheckboxControl = (
+				translatableLabel,
+				checkedValue,
+				dependendCheckedValue,
+				checkedAttribute,
+				propAttribute,
+			) => {
+				return el(components.CheckboxControl, {
+					label: translatableLabel,
+					checked: checkedValue !== '' || dependendCheckedValue !== '',
+					onChange: function (value) {
+						props.setAttributes({
+							...props.attributes,
+							[propAttribute]: value && checkedAttribute,
+						});
+					},
+				});
+			};
+
+			const muteField = el(components.CheckboxControl, {
+				label: __('Mute', 'brightcove'),
+				checked: mute !== '' || autoplay !== '',
+				onChange: function (value) {
+					props.setAttributes({
+						...props.attributes,
+						mute: value && 'muted',
+					});
+				},
+			});
+
+			const playsinlineField = el(components.CheckboxControl, {
+				label: __('Plays in line', 'brightcove'),
+				checked: playsinline !== '' || autoplay !== '',
+				onChange: function (value) {
+					props.setAttributes({
+						...props.attributes,
+						playsinline: value && 'playsinline',
+					});
+				},
+			});
+
 			const embedStyleField = el(components.RadioControl, {
 				label: __('Embed Style', 'brightcove'),
 				selected: embed,
@@ -462,31 +512,25 @@
 									props.setAttributes({
 										...props.attributes,
 										autoplay: value && 'autoplay',
-									});
-								},
-							}),
-						!isExperience &&
-							el(components.CheckboxControl, {
-								label: __('Mute', 'brightcove'),
-								checked: mute,
-								onChange: function (value) {
-									props.setAttributes({
-										...props.attributes,
 										mute: value && 'muted',
-									});
-								},
-							}),
-						!isExperience &&
-							el(components.CheckboxControl, {
-								label: __('Plays in line', 'brightcove'),
-								checked: playsinline,
-								onChange: function (value) {
-									props.setAttributes({
-										...props.attributes,
 										playsinline: value && 'playsinline',
 									});
 								},
 							}),
+						!isExperience && autoplay === 'autoplay'
+							? el(
+									components.Disabled,
+									{ style: { marginBottom: '24px' } },
+									muteField,
+							  )
+							: muteField,
+						!isExperience && autoplay === 'autoplay'
+							? el(
+									components.Disabled,
+									{ style: { marginBottom: '24px' } },
+									playsinlineField,
+							  )
+							: playsinlineField,
 						!playlistId &&
 							!isExperience &&
 							el(components.CheckboxControl, {
