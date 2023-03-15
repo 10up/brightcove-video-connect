@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 6.0
-Stable tag: 2.8.1
+Tested up to: 6.1.1
+Stable tag: 2.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,12 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 15. Brightcove Block and Block Settings.
 
 == Changelog ==
+
+= 2.8.2 =
+
+* Fixed plays in line not working with iFrame elements.
+* Fixed autplay not working with Brightcove Player 7.
+* Fixed link to authentication API docs.
 
 = 2.8.1 =
 

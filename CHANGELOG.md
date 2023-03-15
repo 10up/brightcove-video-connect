@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.8.2] - 2022-03-16
+
+### Fixed
+- Fixed plays in line not working with iFrame elements. Props [@oscarssanchez](https://github.com/oscarssanchez) and [@felipeelia](https://github.com/felipeelia), via [#313](https://github.com/10up/brightcove-video-connect/pull/313).
+- Fixed autplay not working with Brightcove Player 7. Props [@oscarssanchez](https://github.com/oscarssanchez) and [@felipeelia](https://github.com/felipeelia), via [#314](https://github.com/10up/brightcove-video-connect/pull/314).
+- Fixed link to authentication API docs. Props [@oscarssanchez](https://github.com/oscarssanchez) and [@felipeelia](https://github.com/felipeelia), via [#315](https://github.com/10up/brightcove-video-connect/pull/315).
+
 ## [2.8.1] - 2022-12-13
 
 ### Fixed
@@ -404,6 +411,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.2]: https://github.com/10up/brightcove-video-connect/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/10up/brightcove-video-connect/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/10up/brightcove-video-connect/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/10up/brightcove-video-connect/compare/2.6.1...2.7.0
