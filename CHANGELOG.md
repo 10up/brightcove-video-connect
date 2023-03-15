@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.8.2] - 2022-03-14
+## [2.8.2] - 2022-03-16
 
 ### Fixed
 - Fixed plays in line not working with iFrame elements. Props [@oscarssanchez](https://github.com/oscarssanchez) and [@felipeelia](https://github.com/felipeelia), via [#313](https://github.com/10up/brightcove-video-connect/pull/313).

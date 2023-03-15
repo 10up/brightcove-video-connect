@@ -46,8 +46,6 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 * Fixed autplay not working with Brightcove Player 7.
 * Fixed link to authentication API docs.
 
-* Fixed fatal error when Brightcove menu is null.
-
 = 2.8.1 =
 
 * Fixed fatal error when Brightcove menu is null.
