@@ -174,7 +174,7 @@ class BC_Admin_Sources {
 		BC_Utility::delete_cache_item( 'brightcove_sync_videos' );
 
 		$this->notices[] = array(
-			'message' => sprintf(
+			'message'    => sprintf(
 				'%s <a href="%s">%s</a> %s <a href="%s">%s</a>.',
 				esc_html__( 'Congratulations! Your credentials have been authenticated. You can now ', 'brightcove' ),
 				admin_url( 'admin.php?page=page-brightcove-videos' ),
@@ -183,7 +183,8 @@ class BC_Admin_Sources {
 				admin_url( 'admin.php?page=brightcove-sources' ),
 				esc_html__( 'add another Brightcove account', 'brightcove' )
 			),
-			'type'    => 'updated',
+			'type'       => 'updated',
+			'identifier' => 'successfully-configured-brightcove',
 		);
 
 		BC_Utility::delete_cache_item( '*' );
@@ -275,7 +276,7 @@ class BC_Admin_Sources {
 					<br>
 					<?php
 					echo sprintf(
-						'%s <a target="_blank" href="https://support.brightcove.com/managing-api-authentication-credentials">%s</a>.',
+						'%s <a target="_blank" href="https://apis.support.brightcove.com/general/managing-api-authentication-credentials.html">%s</a>.',
 						esc_html__( 'For more details on the different API permissions or settings below, please check out our documentation at', 'brightcove' ),
 						esc_html__( 'Managing API Authentication Credentials', 'brightcove' )
 					);

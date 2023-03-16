@@ -3,7 +3,7 @@
   "private": true,
   "title": "brightcove-video-connect",
   "description": "A Brightcove plugin for WordPress.",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "homepage": "https://wordpress.org/plugins/brightcove-video-connect/",
   "author": {
     "name": "10up",
@@ -17,7 +17,8 @@
     "lint-php": "composer run lint",
     "lint-php:fix": "composer run lint-fix",
     "cypress:open": "cypress open --config-file tests/cypress/config.js --e2e --browser chrome",
-    "cypress:run": "cypress run --config-file tests/cypress/config.js",
+    "cypress:run": "cypress run --config-file tests/cypress/config.js --env brightcoveAccountId=$BRIGHTCOVE_ACCOUNT_ID,brightcoveClientId=$BRIGHTCOVE_CLIENT_ID,brightcoveClientSecret=$BRIGHTCOVE_CLIENT_SECRET",
+    "cypress:run-local": "cypress run --config-file tests/cypress/config.js",
     "env": "wp-env",
     "env:start": "wp-env start",
     "env:stop": "wp-env stop",

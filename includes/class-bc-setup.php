@@ -174,7 +174,7 @@ class BC_Setup {
 						'language_detection'    => array(
 							'type' => 'string',
 						),
-						'application_id'    => array(
+						'application_id'        => array(
 							'type' => 'string',
 						),
 						'height'                => array(
@@ -371,7 +371,7 @@ class BC_Setup {
 			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
 			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
 			'str_apifailure' => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
-			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ),
+			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 		);
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js', array(), BRIGHTCOVE_VERSION, false );
@@ -501,13 +501,14 @@ class BC_Setup {
 		) {
 
 			$notices[] = array(
-				'message' => sprintf(
+				'message'    => sprintf(
 					'%s <a href="%s"><strong>%s</strong></a>',
 					esc_html__( 'Please configure Brightcove settings from', 'brightcove' ),
 					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
 					esc_html__( 'here', 'brightcove' )
 				),
-				'type'    => 'updated',
+				'type'       => 'updated',
+				'identifier' => 'configure-brightcove',
 			);
 
 		}

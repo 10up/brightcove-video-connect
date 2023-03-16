@@ -19,8 +19,8 @@
 		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"scripts": {
-		"lint": "phpcs .",
-		"lint-fix": "phpcbf ."
+		"lint": "phpcs brightcove-video-connect.php includes uninstall.php",
+		"lint-fix": "phpcbf brightcove-video-connect.php includes uninstall.php"
 	},
 	"config": {
 		"allow-plugins": {
