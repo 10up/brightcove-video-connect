@@ -860,12 +860,12 @@ class BC_Utility {
 
 		$video_ids   = '';
 		$playlist_id = '';
-		if ( isset( $atts['video_ids'] ) ) {
+		if ( ! empty( $atts['video_ids'] ) ) {
 			$video_ids = sanitize_text_field( $atts['video_ids'] );
 			$js_attr   = 'data-video-ids="' . esc_attr( $video_ids ) . '"';
 			$url_attr  = 'videoIds=' . esc_attr( $video_ids );
 		} else {
-			$atts['playlist_id'] = isset( $atts['playlist_id'] ) ? $atts['playlist_id'] : '';
+			$atts['playlist_id'] = ! empty( $atts['playlist_id'] ) ? $atts['playlist_id'] : '';
 			$playlist_id         = sanitize_text_field( $atts['playlist_id'] );
 			$js_attr             = 'data-playlist-id="' . esc_attr( $playlist_id ) . '"';
 			$url_attr            = 'playlistId=' . esc_attr( $playlist_id );
