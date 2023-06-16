@@ -444,7 +444,6 @@
 				},
 			});
 
-
 			return [
 				userPermission ? controls : '',
 				el('iframe', {
