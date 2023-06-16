@@ -876,7 +876,7 @@ class BC_Utility {
 		<!-- Start of Brightcove Experience Player -->
 
 		<?php
-		if ( 'javascript' === $embed ) :
+		if ( 'in-page' === $embed ) :
 			$js_src = self::build_brightcove_src( $account_id, 'experience_' . $experience_id . '/live.js' );
 			?>
 			<div data-experience="<?php echo esc_attr( $experience_id ); ?>"
