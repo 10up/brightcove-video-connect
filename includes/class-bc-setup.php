@@ -48,7 +48,7 @@ class BC_Setup {
 		// Preload Errors Class First.
 		new BC_Errors();
 
-		$bc_accounts = new BC_Accounts();
+		$bc_accounts = ! get_option( '_brightcove_accounts' ) ? new BC_Accounts() : false;
 
 		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
@@ -334,8 +334,8 @@ class BC_Setup {
 		$params['mimeTypes'] = BC_Utility::get_all_brightcove_mimetypes();
 
 		$default_account            = $bc_accounts->get_account_details_for_user();
-		$params['defaultAccount']   = $default_account['hash'];
-		$params['defaultAccountId'] = $default_account['account_id'];
+		$params['defaultAccount']   = ! empty ( $default_account['hash'] ) ? $default_account['hash'] : '';
+		$params['defaultAccountId'] = ! empty ( $default_account['account_id'] ) ? $default_account['account_id'] : '';
 
 		return $params;
 
