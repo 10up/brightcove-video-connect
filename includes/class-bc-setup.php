@@ -53,9 +53,9 @@ class BC_Setup {
 		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
 			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-settings-page.php';
-            require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php';
+			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php';
 			new BC_Admin_Settings_Page();
-            new BC_Admin_Sources();
+			new BC_Admin_Sources();
 
 			if ( get_option( '_brightcove_accounts' ) ) {
 				require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-labels-page.php';
@@ -344,78 +344,78 @@ class BC_Setup {
 
 	}
 
-    /**
-     *
-     *
-     * @return void
-     */
-    public static function brightcove_enqueue_assets() {
-        global $wp_version;
+	/**
+	 *
+	 *
+	 * @return void
+	 */
+	public static function brightcove_enqueue_assets() {
+		global $wp_version;
 
-        $suffix = BC_Utility::get_suffix();
+		$suffix = BC_Utility::get_suffix();
 
-        $player_api = new BC_Player_Management_API2();
-        $players    = $player_api->get_all_players();
+		$player_api = new BC_Player_Management_API2();
+		$players    = $player_api->get_all_players();
 
-        $experiences_api = new BC_Experiences_API();
-        $experiences     = $experiences_api->get_experiences();
+		$experiences_api = new BC_Experiences_API();
+		$experiences     = $experiences_api->get_experiences();
 
-        $js_variable = array(
-            'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
-            'preload'        => self::preload_params(),
-            'wp_version'     => $wp_version,
-            'languages'      => BC_Utility::languages(),
-            'players'        => $players,
-            'experiences'    => $experiences,
-            'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
-            'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
-            'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
-            'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),
-            'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
-            'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
-            'str_apifailure' => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
-            'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
-        );
+		$js_variable = array(
+			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
+			'preload'        => self::preload_params(),
+			'wp_version'     => $wp_version,
+			'languages'      => BC_Utility::languages(),
+			'players'        => $players,
+			'experiences'    => $experiences,
+			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
+			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
+			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
+			'str_addremote'  => esc_html__( 'Add another remote file', 'brightcove' ),
+			'str_selectfile' => esc_html__( 'Select File', 'brightcove' ),
+			'str_useremote'  => esc_html__( 'Use a remote file instead', 'brightcove' ),
+			'str_apifailure' => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
+			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
+		);
 
-        wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js', array(), BRIGHTCOVE_VERSION, false );
+		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js', array(), BRIGHTCOVE_VERSION, false );
 
-        wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ), BRIGHTCOVE_VERSION, true );
-        wp_localize_script(
-            'tinymce_preview',
-            'bctiny',
-            array(
-                'wp_version' => $wp_version,
-            )
-        );
+		wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ), BRIGHTCOVE_VERSION, true );
+		wp_localize_script(
+			'tinymce_preview',
+			'bctiny',
+			array(
+				'wp_version' => $wp_version,
+			)
+		);
 
-        $dependencies = array(
-            'jquery-ui-autocomplete',
-            'jquery',
-            'backbone',
-            'wp-backbone',
-            'media',
-            'media-editor',
-            'media-grid',
-            'media-models',
-            'media-upload',
-            'media-views',
-            'plupload-all',
-            'brightcove',
-            'wp-mediaelement',
-            'tinymce_preview',
-            'jquery-ui-datepicker',
-        );
+		$dependencies = array(
+			'jquery-ui-autocomplete',
+			'jquery',
+			'backbone',
+			'wp-backbone',
+			'media',
+			'media-editor',
+			'media-grid',
+			'media-models',
+			'media-upload',
+			'media-views',
+			'plupload-all',
+			'brightcove',
+			'wp-mediaelement',
+			'tinymce_preview',
+			'jquery-ui-datepicker',
+		);
 
-        wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION, true );
-        wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
-        wp_enqueue_script( 'brightcove-admin' );
+		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION, true );
+		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
+		wp_enqueue_script( 'brightcove-admin' );
 
-        if ( isset( $GLOBALS['post_ID'] ) ) {
-            wp_enqueue_media( array( 'post' => $GLOBALS['post_ID'] ) );
-        } else {
-            wp_enqueue_media();
-        }
-    }
+		if ( isset( $GLOBALS['post_ID'] ) ) {
+			wp_enqueue_media( array( 'post' => $GLOBALS['post_ID'] ) );
+		} else {
+			wp_enqueue_media();
+		}
+	}
 
 	/**
 	 * Enqueue the admin scripts and styles.
