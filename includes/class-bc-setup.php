@@ -345,7 +345,7 @@ class BC_Setup {
 	}
 
 	/**
-	 *
+	 * Enqueue brightcove functionality dependent assets.
 	 *
 	 * @return void
 	 */
