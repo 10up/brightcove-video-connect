@@ -1525,4 +1525,13 @@ class BC_Utility {
 	public static function build_brightcove_src( $account_id, $extra_params = '' ) {
 		return 'https://players.brightcove.net/' . trailingslashit( $account_id ) . $extra_params;
 	}
+
+	/**
+	 * Utility function to get suffix for assets. For development purposes.
+	 *
+	 * @return string
+	 */
+	public static function get_suffix() {
+		return ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	}
 }
