@@ -52,7 +52,6 @@ function brightcove_activate() {
  * Uninstall routines should be in uninstall.php
  */
 function brightcove_deactivate() {
-
 	BC_Utility::deactivate();
 }
 

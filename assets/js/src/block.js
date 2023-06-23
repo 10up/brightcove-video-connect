@@ -356,24 +356,63 @@
 						},
 					];
 				}, []);
+			const muteField = (autoplay) => {
+				const field = el(components.CheckboxControl, {
+					label: __('Mute', 'brightcove'),
+					checked: mute !== '' || autoplay !== '',
+					onChange: function (value) {
+						props.setAttributes({
+							...props.attributes,
+							mute: value && 'muted',
+						});
+					},
+				});
+
+				if (autoplay === 'autoplay') {
+					return el(components.Disabled, { style: { marginBottom: '24px' } }, field);
+				}
+				return field;
+			};
+
+			const playsinlineField = (autoplay) => {
+				const field = el(components.CheckboxControl, {
+					label: __('Plays in line', 'brightcove'),
+					checked: playsinline !== '' || autoplay !== '',
+					onChange: function (value) {
+						props.setAttributes({
+							...props.attributes,
+							playsinline: value && 'playsinline',
+						});
+					},
+				});
+
+				if (autoplay === 'autoplay') {
+					return el(components.Disabled, { style: { marginBottom: '24px' } }, field);
+				}
+				return field;
+			};
+
+			const isExperience = inPageExperienceId || experienceId;
 
 			let embedStyleOptions = [{ label: __('iFrame', 'brightcove'), value: 'iframe' }];
-			embedStyleOptions = playlistId
-				? [
-						...embedStyleOptions,
-						{
-							label: __('JavaScript Horizontal', 'brightcove'),
-							value: 'in-page-horizontal',
-						},
-						{
-							label: __('JavaScript Vertical', 'brightcove'),
-							value: 'in-page-vertical',
-						},
-				  ]
-				: [
-						{ label: __('JavaScript', 'brightcove'), value: 'in-page' },
-						...embedStyleOptions,
-				  ];
+
+			embedStyleOptions =
+				playlistId && !isExperience
+					? [
+							...embedStyleOptions,
+							{
+								label: __('JavaScript Horizontal', 'brightcove'),
+								value: 'in-page-horizontal',
+							},
+							{
+								label: __('JavaScript Vertical', 'brightcove'),
+								value: 'in-page-vertical',
+							},
+					  ]
+					: [
+							{ label: __('JavaScript', 'brightcove'), value: 'in-page' },
+							...embedStyleOptions,
+					  ];
 
 			const sizingField = el(components.RadioControl, {
 				label: __('Sizing', 'brightcove'),
@@ -393,28 +432,6 @@
 				},
 			});
 
-			const muteField = el(components.CheckboxControl, {
-				label: __('Mute', 'brightcove'),
-				checked: mute !== '' || autoplay !== '',
-				onChange: function (value) {
-					props.setAttributes({
-						...props.attributes,
-						mute: value && 'muted',
-					});
-				},
-			});
-
-			const playsinlineField = el(components.CheckboxControl, {
-				label: __('Plays in line', 'brightcove'),
-				checked: playsinline !== '' || autoplay !== '',
-				onChange: function (value) {
-					props.setAttributes({
-						...props.attributes,
-						playsinline: value && 'playsinline',
-					});
-				},
-			});
-
 			const embedStyleField = el(components.RadioControl, {
 				label: __('Embed Style', 'brightcove'),
 				selected: embed,
@@ -426,8 +443,6 @@
 					});
 				},
 			});
-
-			const isExperience = inPageExperienceId || experienceId;
 
 			return [
 				userPermission ? controls : '',
@@ -489,20 +504,8 @@
 									});
 								},
 							}),
-						!isExperience && autoplay === 'autoplay'
-							? el(
-									components.Disabled,
-									{ style: { marginBottom: '24px' } },
-									muteField,
-							  )
-							: muteField,
-						!isExperience && autoplay === 'autoplay'
-							? el(
-									components.Disabled,
-									{ style: { marginBottom: '24px' } },
-									playsinlineField,
-							  )
-							: playsinlineField,
+						!isExperience && muteField(autoplay),
+						!isExperience && playsinlineField(autoplay),
 						!playlistId &&
 							!isExperience &&
 							el(components.CheckboxControl, {
@@ -515,16 +518,17 @@
 									});
 								},
 							}),
-						el(components.CheckboxControl, {
-							label: __('Enable Language Detection', 'brightcove'),
-							checked: languageDetection,
-							onChange: function (value) {
-								props.setAttributes({
-									...props.attributes,
-									language_detection: value && 'languagedetection',
-								});
-							},
-						}),
+						!isExperience &&
+							el(components.CheckboxControl, {
+								label: __('Enable Language Detection', 'brightcove'),
+								checked: languageDetection,
+								onChange: function (value) {
+									props.setAttributes({
+										...props.attributes,
+										language_detection: value && 'languagedetection',
+									});
+								},
+							}),
 						languageDetection === 'languagedetection' ||
 							pictureinpicture === 'pictureinpicture'
 							? el(

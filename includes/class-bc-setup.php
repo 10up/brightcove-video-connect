@@ -52,25 +52,28 @@ class BC_Setup {
 
 		// Load Administrative Resources.
 		if ( BC_Utility::current_user_can_brightcove() ) {
-
-			require_once BRIGHTCOVE_PATH . 'includes/admin/api/class-bc-admin-media-api.php';
 			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-settings-page.php';
-			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-labels-page.php';
-			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-playlists-page.php';
-			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-videos-page.php';
 			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-sources.php';
-			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-user-profile.php';
-			require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-templates.php';
-
-			// Load Brightcove API resources.
-			new BC_Admin_Media_API();
 			new BC_Admin_Settings_Page();
-			new BC_Admin_Labels_Page();
-			new BC_Admin_Playlists_Page();
-			new BC_Admin_Videos_Page();
 			new BC_Admin_Sources();
-			new BC_Admin_Templates();
-			new BC_Admin_User_Profile();
+
+			if ( get_option( '_brightcove_accounts' ) ) {
+				require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-labels-page.php';
+				require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-playlists-page.php';
+				require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-videos-page.php';
+
+				require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-admin-user-profile.php';
+				require_once BRIGHTCOVE_PATH . 'includes/admin/class-bc-templates.php';
+				require_once BRIGHTCOVE_PATH . 'includes/admin/api/class-bc-admin-media-api.php';
+				add_action( 'admin_enqueue_scripts', array( 'BC_Setup', 'brightcove_enqueue_assets' ) );
+				// Load Brightcove API resources.
+				new BC_Admin_Media_API();
+				new BC_Admin_Labels_Page();
+				new BC_Admin_Playlists_Page();
+				new BC_Admin_Videos_Page();
+				new BC_Admin_Templates();
+				new BC_Admin_User_Profile();
+			}
 		}
 
 		new BC_Playlists();
@@ -334,22 +337,22 @@ class BC_Setup {
 		$params['mimeTypes'] = BC_Utility::get_all_brightcove_mimetypes();
 
 		$default_account            = $bc_accounts->get_account_details_for_user();
-		$params['defaultAccount']   = $default_account['hash'];
-		$params['defaultAccountId'] = $default_account['account_id'];
+		$params['defaultAccount']   = ! empty( $default_account['hash'] ) ? $default_account['hash'] : '';
+		$params['defaultAccountId'] = ! empty( $default_account['account_id'] ) ? $default_account['account_id'] : '';
 
 		return $params;
 
 	}
 
 	/**
-	 * Enqueue the admin scripts and styles.
+	 * Enqueue brightcove functionality dependent assets.
+	 *
+	 * @return void
 	 */
-	public static function admin_enqueue_scripts() {
-
+	public static function brightcove_enqueue_assets() {
 		global $wp_version;
 
-		// Use minified libraries if SCRIPT_DEBUG is turned off.
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$suffix = BC_Utility::get_suffix();
 
 		$player_api = new BC_Player_Management_API2();
 		$players    = $player_api->get_all_players();
@@ -412,6 +415,14 @@ class BC_Setup {
 		} else {
 			wp_enqueue_media();
 		}
+	}
+
+	/**
+	 * Enqueue the admin scripts and styles.
+	 */
+	public static function admin_enqueue_scripts() {
+		// Use minified libraries if SCRIPT_DEBUG is turned off.
+		$suffix = BC_Utility::get_suffix();
 
 		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'brightcove-video-connect' );
@@ -424,7 +435,7 @@ class BC_Setup {
 	 */
 	public static function frontend_enqueue_scripts() {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$suffix = BC_Utility::get_suffix();
 
 		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
 		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array(), BRIGHTCOVE_VERSION );
