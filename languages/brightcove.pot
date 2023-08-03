@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brightcove Video Connect 2.8.2\n"
+"Project-Id-Version: Brightcove Video Connect 2.8.3\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/brightcove-video-connect\n"
-"POT-Creation-Date: 2023-03-15 17:31:45+00:00\n"
+"POT-Creation-Date: 2023-08-03 16:23:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,119 +14,157 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:63
 #: includes/admin/api/class-bc-admin-media-api.php:63
 msgid "You do not have permission to use this Brightcove Account"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:110
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:116
 #: includes/admin/api/class-bc-admin-media-api.php:110
 #: includes/admin/api/class-bc-admin-media-api.php:116
 msgid "Invalid Request"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:233
 #: includes/admin/api/class-bc-admin-media-api.php:233
 msgid "Type is not specified"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:239
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:358
 #: includes/admin/api/class-bc-admin-media-api.php:239
 #: includes/admin/api/class-bc-admin-media-api.php:358
 msgid "No such account exists"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:300
 #: includes/admin/api/class-bc-admin-media-api.php:300
 msgid "Successfully updated "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:304
 #: includes/admin/api/class-bc-admin-media-api.php:304
 msgid "Failed to sync with WordPress!"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:308
 #: includes/admin/api/class-bc-admin-media-api.php:308
 msgid "Failed to update "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:335
 #: includes/admin/api/class-bc-admin-media-api.php:335
 msgid "Type is not specified!"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:351
 #: includes/admin/api/class-bc-admin-media-api.php:351
 msgid "Wrong type is specified!"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:374
 #: includes/admin/api/class-bc-admin-media-api.php:374
 msgid "Unable to remove video from Brightcove!"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:378
 #: includes/admin/api/class-bc-admin-media-api.php:378
 msgid "Successfully deleted your video."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:388
 #: includes/admin/api/class-bc-admin-media-api.php:388
 msgid "Unable to remove playlist from Brightcove!"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:392
 #: includes/admin/api/class-bc-admin-media-api.php:392
 msgid "Successfully deleted your playlist."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/api/class-bc-admin-media-api.php:522
 #: includes/admin/api/class-bc-admin-media-api.php:522
 msgid "Invalid Search Type"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:43
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:35
 #: includes/admin/class-bc-admin-labels-page.php:43
 #: includes/admin/class-bc-admin-menu.php:35
 msgid "Edit Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:56
 #: includes/admin/class-bc-admin-labels-page.php:56
 msgid "Enter the new label name."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:79
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:31
 #: includes/admin/class-bc-admin-labels-page.php:79
 #: includes/admin/class-bc-admin-menu.php:31
 msgid "Brightcove Labels"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:88
 #: includes/admin/class-bc-admin-labels-page.php:88
 msgid "Add New Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:93
 #: includes/admin/class-bc-admin-labels-page.php:93
 msgid "Label Name"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:95
 #: includes/admin/class-bc-admin-labels-page.php:95
 msgid "The name of the label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:98
 #: includes/admin/class-bc-admin-labels-page.php:98
 msgid "Parent Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:100
 #: includes/admin/class-bc-admin-labels-page.php:100
 msgid ""
 "Type the hierarchy you want your label to have. Example "
 "\"/animals/mammals/\" Leave blank if you do not wish to add a hierarchy."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:120
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:169
 #: includes/admin/class-bc-admin-labels-page.php:120
 #: includes/admin/class-bc-admin-labels-page.php:169
 msgid "Select bulk action"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:122
 #: includes/admin/class-bc-admin-labels-page.php:122
 msgid "Bulk actions"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:123
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:425
 #: includes/admin/class-bc-admin-labels-page.php:123
 #: includes/admin/class-bc-templates.php:425
 msgid "Delete"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:131
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:162
 #: includes/admin/class-bc-admin-labels-page.php:131
 #: includes/admin/class-bc-admin-labels-page.php:162
 msgid "Select All"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:131
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:163
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:137
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:581
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1362
 #: includes/admin/class-bc-admin-labels-page.php:131
 #: includes/admin/class-bc-admin-labels-page.php:163
 #: includes/admin/class-bc-templates.php:137
@@ -135,6 +173,11 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-labels-page.php:151
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:688
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:730
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:733
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1052
 #: includes/admin/class-bc-admin-labels-page.php:151
 #: includes/admin/class-bc-templates.php:688
 #: includes/admin/class-bc-templates.php:730
@@ -143,16 +186,24 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:27
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:481
 #: includes/admin/class-bc-admin-menu.php:27
 #: includes/admin/class-bc-templates.php:481
 msgid "Brightcove"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:28
+#: brightcove-video-connect/includes/admin/class-bc-admin-videos-page.php:35
 #: includes/admin/class-bc-admin-menu.php:28
 #: includes/admin/class-bc-admin-videos-page.php:35
 msgid "Brightcove Videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:28
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:487
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:673
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1041
 #: includes/admin/class-bc-admin-menu.php:28
 #: includes/admin/class-bc-templates.php:487
 #: includes/admin/class-bc-templates.php:673
@@ -160,34 +211,47 @@ msgstr ""
 msgid "Videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:29
+#: brightcove-video-connect/includes/admin/class-bc-admin-playlists-page.php:34
 #: includes/admin/class-bc-admin-menu.php:29
 #: includes/admin/class-bc-admin-playlists-page.php:34
 msgid "Brightcove Playlists"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:29
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:488
 #: includes/admin/class-bc-admin-menu.php:29
 #: includes/admin/class-bc-templates.php:488
 msgid "Playlists"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:30
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:81
 #: includes/admin/class-bc-admin-menu.php:30
 #: includes/admin/class-bc-admin-settings-page.php:81
 msgid "Brightcove Settings"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:30
+#: brightcove-video-connect/includes/class-bc-utility.php:537
 #: includes/admin/class-bc-admin-menu.php:30 includes/class-bc-utility.php:537
 msgid "Settings"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:31
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:247
 #: includes/admin/class-bc-admin-menu.php:31
 #: includes/admin/class-bc-templates.php:247
 msgid "Labels"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-menu.php:34
 #: includes/admin/class-bc-admin-menu.php:34
 msgid "Add Source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-playlists-page.php:59
+#: brightcove-video-connect/includes/class-bc-utility.php:1106
 #: includes/admin/class-bc-admin-playlists-page.php:59
 #: includes/class-bc-utility.php:1106
 msgid ""
@@ -197,211 +261,277 @@ msgid ""
 "Playlist\" enabled."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:61
 #: includes/admin/class-bc-admin-settings-page.php:61
 msgid "Source Deleted"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:84
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:113
 #: includes/admin/class-bc-admin-settings-page.php:84
 #: includes/admin/class-bc-admin-settings-page.php:113
 msgid "Sources"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:89
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:254
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:362
 #: includes/admin/class-bc-admin-settings-page.php:89
 #: includes/admin/class-bc-admin-sources.php:254
 #: includes/admin/class-bc-admin-sources.php:362
 msgid "Source Name"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:90
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:288
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:373
 #: includes/admin/class-bc-admin-settings-page.php:90
 #: includes/admin/class-bc-admin-sources.php:288
 #: includes/admin/class-bc-admin-sources.php:373
 msgid "Account ID"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:91
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:295
 #: includes/admin/class-bc-admin-settings-page.php:91
 #: includes/admin/class-bc-admin-sources.php:295
 msgid "Client ID"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:102
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:248
 #: includes/admin/class-bc-admin-settings-page.php:102
 #: includes/admin/class-bc-admin-sources.php:248
 msgid "Add Brightcove Account"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:110
 #: includes/admin/class-bc-admin-settings-page.php:110
 msgid "Players Default Settings"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:123
 #: includes/admin/class-bc-admin-settings-page.php:123
 msgid "Player Width"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:133
 #: includes/admin/class-bc-admin-settings-page.php:133
 msgid "Save settings"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:154
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:356
 #: includes/admin/class-bc-admin-settings-page.php:154
 #: includes/admin/class-bc-admin-sources.php:356
 msgid "Edit Source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:160
 #: includes/admin/class-bc-admin-settings-page.php:160
 msgid "Delete Source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:161
 #: includes/admin/class-bc-admin-settings-page.php:161
 msgid ""
 "By deleting this source, WordPress will no longer have access to associated "
 "videos and playlists. Your content remains in Brightcove."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:223
 #: includes/admin/class-bc-admin-settings-page.php:223
 msgid "Default"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-settings-page.php:250
 #: includes/admin/class-bc-admin-settings-page.php:250
 msgid "There are no sources defined. Add one below"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:47
 #: includes/admin/class-bc-admin-sources.php:47
 msgid "This account could not be found"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:85
 #: includes/admin/class-bc-admin-sources.php:85
 msgid "You do not have permission to manage this account."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:137
 #: includes/admin/class-bc-admin-sources.php:137
 msgid "The Brightcove credentials provided already exist."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:152
 #: includes/admin/class-bc-admin-sources.php:152
 msgid "We could not authenticate your credentials with Brightcove"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:179
 #: includes/admin/class-bc-admin-sources.php:179
 msgid "Congratulations! Your credentials have been authenticated. You can now "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:181
 #: includes/admin/class-bc-admin-sources.php:181
 msgid "add videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:182
 #: includes/admin/class-bc-admin-sources.php:182
 msgid "or"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:184
 #: includes/admin/class-bc-admin-sources.php:184
 msgid "add another Brightcove account"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:257
 #: includes/admin/class-bc-admin-sources.php:257
 msgid "My Brightcove Account Name"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:260
 #: includes/admin/class-bc-admin-sources.php:260
 msgid "This is how the source will be identified in WordPress"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:266
 #: includes/admin/class-bc-admin-sources.php:266
 msgid "Credentials"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:271
 #: includes/admin/class-bc-admin-sources.php:271
 msgid "The following information can be found by logging into your"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:272
 #: includes/admin/class-bc-admin-sources.php:272
 msgid "Video Cloud Studio"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:273
 #: includes/admin/class-bc-admin-sources.php:273
 msgid "account"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:280
 #: includes/admin/class-bc-admin-sources.php:280
 msgid ""
 "For more details on the different API permissions or settings below, please "
 "check out our documentation at"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:281
 #: includes/admin/class-bc-admin-sources.php:281
 msgid "Managing API Authentication Credentials"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:299
 #: includes/admin/class-bc-admin-sources.php:299
 msgid "A unique identifier for a client generated by Brightcove"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:303
 #: includes/admin/class-bc-admin-sources.php:303
 msgid "Client Secret"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:307
 #: includes/admin/class-bc-admin-sources.php:307
 msgid ""
 "A unique identifier generated by Brightcove, used with a client id. Serves "
 "as a password to authenticate a client"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:312
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:382
+#: brightcove-video-connect/includes/admin/class-bc-admin-user-profile.php:49
 #: includes/admin/class-bc-admin-sources.php:312
 #: includes/admin/class-bc-admin-sources.php:382
 #: includes/admin/class-bc-admin-user-profile.php:49
 msgid "Default Source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:322
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:391
 #: includes/admin/class-bc-admin-sources.php:322
 #: includes/admin/class-bc-admin-sources.php:391
 msgid "Make this the default source for new users"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:335
 #: includes/admin/class-bc-admin-sources.php:335
 msgid "Check Credentials"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-sources.php:404
 #: includes/admin/class-bc-admin-sources.php:404
 msgid "Save Changes"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-user-profile.php:46
 #: includes/admin/class-bc-admin-user-profile.php:46
 msgid "Brightcove Preferences"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-user-profile.php:88
 #: includes/admin/class-bc-admin-user-profile.php:88
 msgid "The specified Source does not exist."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-admin-videos-page.php:36
 #: includes/admin/class-bc-admin-videos-page.php:36
 msgid "Add New"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:49
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:77
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:716
 #: includes/admin/class-bc-templates.php:49
 #: includes/admin/class-bc-templates.php:77
 #: includes/admin/class-bc-templates.php:716
 msgid "Processing..."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:59
 #: includes/admin/class-bc-templates.php:59
 msgid "Move up"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:60
 #: includes/admin/class-bc-templates.php:60
 msgid "Move Down"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:61
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:293
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:316
 #: includes/admin/class-bc-templates.php:61
 #: includes/admin/class-bc-templates.php:293
 #: includes/admin/class-bc-templates.php:316
 msgid "Remove"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:86
 #: includes/admin/class-bc-templates.php:86
 msgid "Add to playlist"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:96
 #: includes/admin/class-bc-templates.php:96
 msgid "Playlist Name"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:98
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:436
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:498
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:727
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1386
 #: includes/admin/class-bc-templates.php:98
 #: includes/admin/class-bc-templates.php:436
 #: includes/admin/class-bc-templates.php:498
@@ -410,320 +540,429 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:104
 #: includes/admin/class-bc-templates.php:104
 msgid "Playlist videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:109
 #: includes/admin/class-bc-templates.php:109
 msgid "Video search"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:119
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1351
 #: includes/admin/class-bc-templates.php:119
 #: includes/admin/class-bc-templates.php:1351
 msgid "Variant"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:130
 #: includes/admin/class-bc-templates.php:130
 msgid "State"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:132
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1265
 #: includes/admin/class-bc-templates.php:132
 #: includes/admin/class-bc-templates.php:1265
 msgid "Active"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:133
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1266
 #: includes/admin/class-bc-templates.php:133
 #: includes/admin/class-bc-templates.php:1266
 msgid "Inactive"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:139
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1364
 #: includes/admin/class-bc-templates.php:139
 #: includes/admin/class-bc-templates.php:1364
 msgid "The name is limited to 255 characters."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:142
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1367
 #: includes/admin/class-bc-templates.php:142
 #: includes/admin/class-bc-templates.php:1367
 msgid "Description"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:144
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1369
 #: includes/admin/class-bc-templates.php:144
 #: includes/admin/class-bc-templates.php:1369
 msgid "The description is limited to 250 characters."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:147
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1372
 #: includes/admin/class-bc-templates.php:147
 #: includes/admin/class-bc-templates.php:1372
 msgid "Long Description"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:149
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1374
 #: includes/admin/class-bc-templates.php:149
 #: includes/admin/class-bc-templates.php:1374
 msgid "The long description is limited to 5,000 characters."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:152
 #: includes/admin/class-bc-templates.php:152
 msgid "Scheduled Start date (GMT)"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:178
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:221
 #: includes/admin/class-bc-templates.php:178
 #: includes/admin/class-bc-templates.php:221
 msgid "AM"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:183
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:226
 #: includes/admin/class-bc-templates.php:183
 #: includes/admin/class-bc-templates.php:226
 msgid "PM"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:187
 #: includes/admin/class-bc-templates.php:187
 msgid "Leave empty to be available immediately."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:190
 #: includes/admin/class-bc-templates.php:190
 msgid "Scheduled End Date (GMT)"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:232
 #: includes/admin/class-bc-templates.php:232
 msgid "Folder"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:243
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:585
 #: includes/admin/class-bc-templates.php:243
 #: includes/admin/class-bc-templates.php:585
 msgid "Tags"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:251
 #: includes/admin/class-bc-templates.php:251
 msgid "Add Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:254
 #: includes/admin/class-bc-templates.php:254
 msgid "Create New Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:264
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:273
 #: includes/admin/class-bc-templates.php:264
 #: includes/admin/class-bc-templates.php:273
 msgid "Remove Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:282
 #: includes/admin/class-bc-templates.php:282
 msgid "Poster (Sugg. 480x360px)"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:299
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:322
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:337
+#: brightcove-video-connect/includes/class-bc-setup.php:374
 #: includes/admin/class-bc-templates.php:299
 #: includes/admin/class-bc-templates.php:322
-#: includes/admin/class-bc-templates.php:337 includes/class-bc-setup.php:371
+#: includes/admin/class-bc-templates.php:337 includes/class-bc-setup.php:374
 msgid "Select File"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:305
 #: includes/admin/class-bc-templates.php:305
 msgid "Thumbnail (Sugg. 120x90px)"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:331
 #: includes/admin/class-bc-templates.php:331
 msgid "Closed Captions"
 msgstr ""
 
-#: includes/admin/class-bc-templates.php:335 includes/class-bc-setup.php:369
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:335
+#: brightcove-video-connect/includes/class-bc-setup.php:372
+#: includes/admin/class-bc-templates.php:335 includes/class-bc-setup.php:372
 msgid "Add Another Caption"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:342
 #: includes/admin/class-bc-templates.php:342
 msgid "Add another remote caption file"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:344
 #: includes/admin/class-bc-templates.php:344
 msgid "Use a remote caption file instead"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:355
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:391
 #: includes/admin/class-bc-templates.php:355
 #: includes/admin/class-bc-templates.php:391
 msgid "Language"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:366
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:400
 #: includes/admin/class-bc-templates.php:366
 #: includes/admin/class-bc-templates.php:400
 msgid "Label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:373
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:405
 #: includes/admin/class-bc-templates.php:373
 #: includes/admin/class-bc-templates.php:405
 msgid "Default (Auto Display)"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:378
 #: includes/admin/class-bc-templates.php:378
 msgid "Remove Caption"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:385
 #: includes/admin/class-bc-templates.php:385
 msgid "File Source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:410
 #: includes/admin/class-bc-templates.php:410
 msgid "Delete Caption"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:419
 #: includes/admin/class-bc-templates.php:419
 msgid "Change History"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:420
 #: includes/admin/class-bc-templates.php:420
 msgid "Nothing yet ..."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:437
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:509
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1387
 #: includes/admin/class-bc-templates.php:437
 #: includes/admin/class-bc-templates.php:509
 #: includes/admin/class-bc-templates.php:1387
 msgid "Save and Sync Changes"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:476
 #: includes/admin/class-bc-templates.php:476
 msgid "Close media panel"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:486
 #: includes/admin/class-bc-templates.php:486
 msgid "Upload Files"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:489
 #: includes/admin/class-bc-templates.php:489
 msgid "In-Page Experiences"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:490
 #: includes/admin/class-bc-templates.php:490
 msgid "Video Experience"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:491
 #: includes/admin/class-bc-templates.php:491
 msgid "Playlist Experience"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:501
 #: includes/admin/class-bc-templates.php:501
 msgid "selected"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:501
 #: includes/admin/class-bc-templates.php:501
 msgid "Edit Selection"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:501
 #: includes/admin/class-bc-templates.php:501
 msgid "Clear"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:510
 #: includes/admin/class-bc-templates.php:510
 msgid "Insert Into Post"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:517
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:606
 #: includes/admin/class-bc-templates.php:517
 #: includes/admin/class-bc-templates.php:606
 msgid "Drop files to upload"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:543
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:577
 #: includes/admin/class-bc-templates.php:543
 #: includes/admin/class-bc-templates.php:577
 msgid "File Name"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:544
 #: includes/admin/class-bc-templates.php:544
 msgid "Size"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:545
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:589
 #: includes/admin/class-bc-templates.php:545
 #: includes/admin/class-bc-templates.php:589
 msgid "Source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:546
 #: includes/admin/class-bc-templates.php:546
 msgid "Progress"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:553
 #: includes/admin/class-bc-templates.php:553
 msgid "Start Upload"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:615
 #: includes/admin/class-bc-templates.php:615
 msgid "Upload Limit Exceeded"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:618
 #: includes/admin/class-bc-templates.php:618
 msgid "Drop files anywhere to upload"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:620
 #: includes/admin/class-bc-templates.php:620
 msgid "Select Files"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:635
 #: includes/admin/class-bc-templates.php:635
 msgid "Maximum upload file size: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:639
 #: includes/admin/class-bc-templates.php:639
 msgid ""
 "Please reference the readme.txt file of this plugin for further information "
 "on upload file size limits."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:671
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1039
 #: includes/admin/class-bc-templates.php:671
 #: includes/admin/class-bc-templates.php:1039
 msgid "Video"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:676
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1044
 #: includes/admin/class-bc-templates.php:676
 #: includes/admin/class-bc-templates.php:1044
 msgid "Smart"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:689
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:731
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:734
 #: includes/admin/class-bc-templates.php:689
 #: includes/admin/class-bc-templates.php:731
 #: includes/admin/class-bc-templates.php:734
 msgid "Preview"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:745
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:878
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:956
 #: includes/admin/class-bc-templates.php:745
 #: includes/admin/class-bc-templates.php:878
 #: includes/admin/class-bc-templates.php:956
 msgid "Source: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:750
 #: includes/admin/class-bc-templates.php:750
 msgid "Video ID: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:755
 #: includes/admin/class-bc-templates.php:755
 msgid "Video URL: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:771
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1079
 #: includes/admin/class-bc-templates.php:771
 #: includes/admin/class-bc-templates.php:1079
 msgid "Video Player: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:782
 #: includes/admin/class-bc-templates.php:782
 msgid "Application Id: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:789
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1090
 #: includes/admin/class-bc-templates.php:789
 #: includes/admin/class-bc-templates.php:1090
 msgid "Autoplay: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:796
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1097
 #: includes/admin/class-bc-templates.php:796
 #: includes/admin/class-bc-templates.php:1097
 msgid "Mute: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:803
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1104
 #: includes/admin/class-bc-templates.php:803
 #: includes/admin/class-bc-templates.php:1104
 msgid "Plays in line: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:809
 #: includes/admin/class-bc-templates.php:809
 msgid "Audio Language Detection: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:815
 #: includes/admin/class-bc-templates.php:815
 msgid "Enable Picture in Picture: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:821
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:908
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:986
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1111
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1201
 #: includes/admin/class-bc-templates.php:821
 #: includes/admin/class-bc-templates.php:908
 #: includes/admin/class-bc-templates.php:986
@@ -732,6 +971,10 @@ msgstr ""
 msgid "Embed Style: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:824
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:911
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:989
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1204
 #: includes/admin/class-bc-templates.php:824
 #: includes/admin/class-bc-templates.php:911
 #: includes/admin/class-bc-templates.php:989
@@ -739,6 +982,11 @@ msgstr ""
 msgid "JavaScript"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:825
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:912
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:990
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1114
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1205
 #: includes/admin/class-bc-templates.php:825
 #: includes/admin/class-bc-templates.php:912
 #: includes/admin/class-bc-templates.php:990
@@ -747,6 +995,10 @@ msgstr ""
 msgid "iFrame"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:829
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:916
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:994
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1132
 #: includes/admin/class-bc-templates.php:829
 #: includes/admin/class-bc-templates.php:916
 #: includes/admin/class-bc-templates.php:994
@@ -754,6 +1006,10 @@ msgstr ""
 msgid "Sizing: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:832
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:919
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:997
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1135
 #: includes/admin/class-bc-templates.php:832
 #: includes/admin/class-bc-templates.php:919
 #: includes/admin/class-bc-templates.php:997
@@ -761,6 +1017,10 @@ msgstr ""
 msgid "Responsive"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:833
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:920
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:998
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1136
 #: includes/admin/class-bc-templates.php:833
 #: includes/admin/class-bc-templates.php:920
 #: includes/admin/class-bc-templates.php:998
@@ -768,16 +1028,24 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:837
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1140
 #: includes/admin/class-bc-templates.php:837
 #: includes/admin/class-bc-templates.php:1140
 msgid "Aspect Ratio: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:842
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1145
 #: includes/admin/class-bc-templates.php:842
 #: includes/admin/class-bc-templates.php:1145
 msgid "Custom"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:846
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:924
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1002
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1149
 #: includes/admin/class-bc-templates.php:846
 #: includes/admin/class-bc-templates.php:924
 #: includes/admin/class-bc-templates.php:1002
@@ -785,6 +1053,10 @@ msgstr ""
 msgid "Width: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:851
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:929
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1007
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1154
 #: includes/admin/class-bc-templates.php:851
 #: includes/admin/class-bc-templates.php:929
 #: includes/admin/class-bc-templates.php:1007
@@ -792,6 +1064,11 @@ msgstr ""
 msgid "Height: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:856
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:934
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1012
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1159
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1209
 #: includes/admin/class-bc-templates.php:856
 #: includes/admin/class-bc-templates.php:934
 #: includes/admin/class-bc-templates.php:1012
@@ -800,6 +1077,11 @@ msgstr ""
 msgid "Shortcode"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:859
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:937
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1015
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1162
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1212
 #: includes/admin/class-bc-templates.php:859
 #: includes/admin/class-bc-templates.php:937
 #: includes/admin/class-bc-templates.php:1015
@@ -808,6 +1090,11 @@ msgstr ""
 msgid "Auto generate"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:860
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:938
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1016
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1163
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1213
 #: includes/admin/class-bc-templates.php:860
 #: includes/admin/class-bc-templates.php:938
 #: includes/admin/class-bc-templates.php:1016
@@ -816,131 +1103,170 @@ msgstr ""
 msgid "Manual"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:883
 #: includes/admin/class-bc-templates.php:883
 msgid "Video IDs: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:895
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:973
 #: includes/admin/class-bc-templates.php:895
 #: includes/admin/class-bc-templates.php:973
 msgid "Experience Player: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:961
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1062
 #: includes/admin/class-bc-templates.php:961
 #: includes/admin/class-bc-templates.php:1062
 msgid "Playlist ID: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1066
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1190
 #: includes/admin/class-bc-templates.php:1066
 #: includes/admin/class-bc-templates.php:1190
 msgid "Account Name: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1067
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1191
 #: includes/admin/class-bc-templates.php:1067
 #: includes/admin/class-bc-templates.php:1191
 msgid "Created At: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1068
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1192
 #: includes/admin/class-bc-templates.php:1068
 #: includes/admin/class-bc-templates.php:1192
 msgid "Updated At: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1069
 #: includes/admin/class-bc-templates.php:1069
 msgid "Playlist Type: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1121
 #: includes/admin/class-bc-templates.php:1121
 msgid "JavaScript Horizontal"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1128
 #: includes/admin/class-bc-templates.php:1128
 msgid "JavaScript Vertical"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1186
 #: includes/admin/class-bc-templates.php:1186
 msgid "Experience ID: "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1228
 #: includes/admin/class-bc-templates.php:1228
 msgid "Filter by source"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1244
 #: includes/admin/class-bc-templates.php:1244
 msgid "Filter by tag"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1246
 #: includes/admin/class-bc-templates.php:1246
 msgid "All tags"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1252
 #: includes/admin/class-bc-templates.php:1252
 msgid "Filter by folder"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1254
 #: includes/admin/class-bc-templates.php:1254
 msgid "All folders"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1261
 #: includes/admin/class-bc-templates.php:1261
 msgid "Filter by state"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1264
 #: includes/admin/class-bc-templates.php:1264
 msgid "All states"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1268
 #: includes/admin/class-bc-templates.php:1268
 msgid "Filter by label"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1270
 #: includes/admin/class-bc-templates.php:1270
 msgid "All Labels"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1282
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1295
 #: includes/admin/class-bc-templates.php:1282
 #: includes/admin/class-bc-templates.php:1295
 msgid "Please note that you can create new Experiences only from Brightcove."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1287
 #: includes/admin/class-bc-templates.php:1287
 msgid "Leave videos unselected for default Experience behavior."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1303
 #: includes/admin/class-bc-templates.php:1303
 msgid "Please note that you can create new playlists only from Brightcove."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1308
 #: includes/admin/class-bc-templates.php:1308
 msgid "Hide Empty Playlists"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1311
 #: includes/admin/class-bc-templates.php:1311
 msgid "Delete Selected"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1316
 #: includes/admin/class-bc-templates.php:1316
 msgid "Search Media"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1317
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1318
 #: includes/admin/class-bc-templates.php:1317
 #: includes/admin/class-bc-templates.php:1318
 msgid "Search"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1319
 #: includes/admin/class-bc-templates.php:1319
 msgid "help"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1327
 #: includes/admin/class-bc-templates.php:1327
 msgid "the Brightcove Documentation page."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1328
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1336
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1344
 #: includes/admin/class-bc-templates.php:1328
 #: includes/admin/class-bc-templates.php:1336
 #: includes/admin/class-bc-templates.php:1344
 msgid "Dismiss this notice."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1335
 #: includes/admin/class-bc-templates.php:1335
 msgid ""
 "This video was not able to be inserted into the page. Please try again "
@@ -948,131 +1274,162 @@ msgid ""
 "information, please visit "
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1335
 #: includes/admin/class-bc-templates.php:1335
 msgid "the Brightcove Status page."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1343
 #: includes/admin/class-bc-templates.php:1343
 msgid "Search exact word or phrases by wrapping search in quotes."
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:1343
 #: includes/admin/class-bc-templates.php:1343
 msgid "Example:\"My Favorite Video\""
 msgstr ""
 
+#: brightcove-video-connect/includes/api/class-bc-api.php:239
 #: includes/api/class-bc-api.php:239
 msgid "API says permission denied, check your client ID and client secret"
 msgstr ""
 
+#: brightcove-video-connect/includes/api/class-bc-api.php:264
 #: includes/api/class-bc-api.php:264
 msgid "An unspecified error has occurred."
 msgstr ""
 
+#: brightcove-video-connect/includes/api/class-bc-oauth.php:112
 #: includes/api/class-bc-oauth.php:112
 #. translators: %1$s: client_id, %2$s: client_secret
 msgid "There is a problem with your Brightcove %1$s or %2$s"
 msgstr ""
 
+#: brightcove-video-connect/includes/api/class-bc-oauth.php:131
 #: includes/api/class-bc-oauth.php:131
 msgid "oAuth API did not return us an access token"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:168
 #: includes/class-bc-accounts.php:168
 msgid "New Account"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:203
 #: includes/class-bc-accounts.php:203
 msgid ""
 "Account credentials are invalid. Please ensure you are using all the "
 "correct information from Brightcove Video Cloud Studio to secure a token."
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:220
 #: includes/class-bc-accounts.php:220
 msgid "Unable to update this account via WP-CLI."
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:252
 #: includes/class-bc-accounts.php:252
 msgid "The specified Brightcove Account has not been configured in WordPress"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:599
 #: includes/class-bc-accounts.php:599
 msgid "Brightcove WordPress plugin test video"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:601
 #: includes/class-bc-accounts.php:601
 msgid "create videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:606
 #: includes/class-bc-accounts.php:606
 msgid "Brightcove WordPress plugin test video renamed"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:609
 #: includes/class-bc-accounts.php:609
 msgid "modify videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:613
 #: includes/class-bc-accounts.php:613
 msgid "Brightcove WordPress plugin test playlist"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:615
 #: includes/class-bc-accounts.php:615
 msgid "create playlists"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:624
 #: includes/class-bc-accounts.php:624
 msgid "modify playlists"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:629
 #: includes/class-bc-accounts.php:629
 msgid "delete playlists"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:635
 #: includes/class-bc-accounts.php:635
 msgid "delete videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:643
 #: includes/class-bc-accounts.php:643
 msgid "fetch players"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:684
 #: includes/class-bc-accounts.php:684
 msgid "Invalid account credentials"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:690
 #: includes/class-bc-accounts.php:690
 msgid "Supplied account doesn't have the following permissions: "
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-accounts.php:692
 #: includes/class-bc-accounts.php:692
 msgid "Please use an account that has these permissions."
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-labels.php:43
 #: includes/class-bc-labels.php:43
 msgid "Label added"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-labels.php:54
 #: includes/class-bc-labels.php:54
 msgid "Labels refreshed"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-labels.php:65
 #: includes/class-bc-labels.php:65
 msgid "Label deleted"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-labels.php:76
 #: includes/class-bc-labels.php:76
 msgid "Label Updated"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-logging.php:34
 #: includes/class-bc-logging.php:34
 msgid "Binary content is not supported by the Logging mechanism."
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-logging.php:43
 #: includes/class-bc-logging.php:43
 msgid ""
 "You must provide a file path and name to use <pre>file</pre> mode. Writing "
 "to the syslog instead."
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-logging.php:49
 #: includes/class-bc-logging.php:49
 #. Translators: %s is the file.
 msgid ""
@@ -1080,6 +1437,7 @@ msgid ""
 "instead."
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-logging.php:56
 #: includes/class-bc-logging.php:56
 #. Translators: %s is the file.
 msgid ""
@@ -1087,815 +1445,1016 @@ msgid ""
 "Writing to the syslog instead."
 msgstr ""
 
-#: includes/class-bc-setup.php:247
+#: brightcove-video-connect/includes/class-bc-setup.php:250
+#: includes/class-bc-setup.php:250
 msgid "Brightcove Media"
 msgstr ""
 
-#: includes/class-bc-setup.php:311
+#: brightcove-video-connect/includes/class-bc-setup.php:314
+#: includes/class-bc-setup.php:314
 msgid "Allowed Files"
 msgstr ""
 
-#: includes/class-bc-setup.php:324
+#: brightcove-video-connect/includes/class-bc-setup.php:327
+#: includes/class-bc-setup.php:327
 msgid ""
 "Deleting this video will prevent it from showing in any existing posts. Are "
 "you sure you want to delete?"
 msgstr ""
 
-#: includes/class-bc-setup.php:325
+#: brightcove-video-connect/includes/class-bc-setup.php:328
+#: includes/class-bc-setup.php:328
 msgid ""
 "We are currently performing a sync of your new Brightcove source, you may "
 "not see all videos and playlists until that is complete."
 msgstr ""
 
-#: includes/class-bc-setup.php:326
+#: brightcove-video-connect/includes/class-bc-setup.php:329
+#: includes/class-bc-setup.php:329
 msgid "Successfully uploaded file with name %%s%%."
 msgstr ""
 
-#: includes/class-bc-setup.php:327
+#: brightcove-video-connect/includes/class-bc-setup.php:330
+#: includes/class-bc-setup.php:330
 msgid ""
 "We were unable to upload the file with name %%s%%. Please try reuploading "
 "it again."
 msgstr ""
 
-#: includes/class-bc-setup.php:367
+#: brightcove-video-connect/includes/class-bc-setup.php:370
+#: includes/class-bc-setup.php:370
 msgid ""
 "This file is not the proper format. Please use .vtt files, for more "
 "information visit"
 msgstr ""
 
-#: includes/class-bc-setup.php:370
+#: brightcove-video-connect/includes/class-bc-setup.php:373
+#: includes/class-bc-setup.php:373
 msgid "Add another remote file"
 msgstr ""
 
-#: includes/class-bc-setup.php:372
+#: brightcove-video-connect/includes/class-bc-setup.php:375
+#: includes/class-bc-setup.php:375
 msgid "Use a remote file instead"
 msgstr ""
 
-#: includes/class-bc-setup.php:373
+#: brightcove-video-connect/includes/class-bc-setup.php:376
+#: includes/class-bc-setup.php:376
 msgid ""
 "Sorry! We weren't able to reach the Brightcove API even after trying a few "
 "times. Please try refreshing the page."
 msgstr ""
 
-#: includes/class-bc-setup.php:488
+#: brightcove-video-connect/includes/class-bc-setup.php:499
+#: includes/class-bc-setup.php:499
 msgid ""
 "It looks like one or more of your accounts API authentication changed "
 "recently. Please update your settings "
 msgstr ""
 
-#: includes/class-bc-setup.php:490 includes/class-bc-setup.php:508
+#: brightcove-video-connect/includes/class-bc-setup.php:501
+#: brightcove-video-connect/includes/class-bc-setup.php:519
+#: includes/class-bc-setup.php:501 includes/class-bc-setup.php:519
 msgid "here"
 msgstr ""
 
-#: includes/class-bc-setup.php:506
+#: brightcove-video-connect/includes/class-bc-setup.php:517
+#: includes/class-bc-setup.php:517
 msgid "Please configure Brightcove settings from"
 msgstr ""
 
-#: includes/class-bc-setup.php:526
+#: brightcove-video-connect/includes/class-bc-setup.php:537
+#: includes/class-bc-setup.php:537
 msgid "BC In Process Videos"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1321
 #: includes/class-bc-utility.php:1321
 msgid "English"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1322
 #: includes/class-bc-utility.php:1322
 msgid "Abkhaz"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1323
 #: includes/class-bc-utility.php:1323
 msgid "Afar"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1324
 #: includes/class-bc-utility.php:1324
 msgid "Afrikaans"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1325
 #: includes/class-bc-utility.php:1325
 msgid "Akan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1326
 #: includes/class-bc-utility.php:1326
 msgid "Albanian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1327
 #: includes/class-bc-utility.php:1327
 msgid "Amharic"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1328
 #: includes/class-bc-utility.php:1328
 msgid "Arabic"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1329
 #: includes/class-bc-utility.php:1329
 msgid "Aragonese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1330
 #: includes/class-bc-utility.php:1330
 msgid "Armenian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1331
 #: includes/class-bc-utility.php:1331
 msgid "Assamese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1332
 #: includes/class-bc-utility.php:1332
 msgid "Avaric"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1333
 #: includes/class-bc-utility.php:1333
 msgid "Avestan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1334
 #: includes/class-bc-utility.php:1334
 msgid "Aymara"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1335
 #: includes/class-bc-utility.php:1335
 msgid "Azerbaijani"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1336
 #: includes/class-bc-utility.php:1336
 msgid "Bambara"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1337
 #: includes/class-bc-utility.php:1337
 msgid "Bashkir"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1338
 #: includes/class-bc-utility.php:1338
 msgid "Basque"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1339
 #: includes/class-bc-utility.php:1339
 msgid "Belarusian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1340
 #: includes/class-bc-utility.php:1340
 msgid "Bengali"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1341
 #: includes/class-bc-utility.php:1341
 msgid "Bihari"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1342
 #: includes/class-bc-utility.php:1342
 msgid "Bislama"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1343
 #: includes/class-bc-utility.php:1343
 msgid "Bosnian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1344
 #: includes/class-bc-utility.php:1344
 msgid "Breton"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1345
 #: includes/class-bc-utility.php:1345
 msgid "Bulgarian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1346
 #: includes/class-bc-utility.php:1346
 msgid "Burmese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1347
 #: includes/class-bc-utility.php:1347
 msgid "Catalan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1348
 #: includes/class-bc-utility.php:1348
 msgid "Chomorro"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1349
 #: includes/class-bc-utility.php:1349
 msgid "Chechen"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1350
 #: includes/class-bc-utility.php:1350
 msgid "Chichewa"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1351
 #: includes/class-bc-utility.php:1351
 msgid "Chinese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1352
 #: includes/class-bc-utility.php:1352
 msgid "Chuvash"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1353
 #: includes/class-bc-utility.php:1353
 msgid "Cornish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1354
 #: includes/class-bc-utility.php:1354
 msgid "Corsican"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1355
 #: includes/class-bc-utility.php:1355
 msgid "Cree"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1356
 #: includes/class-bc-utility.php:1356
 msgid "Croatian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1357
 #: includes/class-bc-utility.php:1357
 msgid "Czech"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1358
 #: includes/class-bc-utility.php:1358
 msgid "Danish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1359
 #: includes/class-bc-utility.php:1359
 msgid "Divehi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1360
 #: includes/class-bc-utility.php:1360
 msgid "Dutch"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1361
 #: includes/class-bc-utility.php:1361
 msgid "Dzongkha"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1362
 #: includes/class-bc-utility.php:1362
 msgid "Esperanto"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1363
 #: includes/class-bc-utility.php:1363
 msgid "Estonian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1364
 #: includes/class-bc-utility.php:1364
 msgid "Ewe"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1365
 #: includes/class-bc-utility.php:1365
 msgid "Faroese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1366
 #: includes/class-bc-utility.php:1366
 msgid "Fijian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1367
 #: includes/class-bc-utility.php:1367
 msgid "Finnish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1368
 #: includes/class-bc-utility.php:1368
 msgid "French"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1369
 #: includes/class-bc-utility.php:1369
 msgid "Fula"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1370
 #: includes/class-bc-utility.php:1370
 msgid "Galician"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1371
 #: includes/class-bc-utility.php:1371
 msgid "Georgian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1372
 #: includes/class-bc-utility.php:1372
 msgid "German"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1373
 #: includes/class-bc-utility.php:1373
 msgid "Greek"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1374
 #: includes/class-bc-utility.php:1374
 msgid "Guarani"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1375
 #: includes/class-bc-utility.php:1375
 msgid "Gujarati"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1376
 #: includes/class-bc-utility.php:1376
 msgid "Haitian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1377
 #: includes/class-bc-utility.php:1377
 msgid "Hausa"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1378
 #: includes/class-bc-utility.php:1378
 msgid "Hebrew"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1379
 #: includes/class-bc-utility.php:1379
 msgid "Herero"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1380
 #: includes/class-bc-utility.php:1380
 msgid "Hindi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1381
 #: includes/class-bc-utility.php:1381
 msgid "Hiri Motu"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1382
 #: includes/class-bc-utility.php:1382
 msgid "Hungarian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1383
 #: includes/class-bc-utility.php:1383
 msgid "Interlingua"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1384
 #: includes/class-bc-utility.php:1384
 msgid "Indonesian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1385
 #: includes/class-bc-utility.php:1385
 msgid "Irish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1386
 #: includes/class-bc-utility.php:1386
 msgid "Igbo"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1387
 #: includes/class-bc-utility.php:1387
 msgid "Inupiaq"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1388
 #: includes/class-bc-utility.php:1388
 msgid "Icelandic"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1389
 #: includes/class-bc-utility.php:1389
 msgid "Italian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1390
 #: includes/class-bc-utility.php:1390
 msgid "Inuktitut"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1391
 #: includes/class-bc-utility.php:1391
 msgid "Japanese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1392
 #: includes/class-bc-utility.php:1392
 msgid "Javanese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1393
 #: includes/class-bc-utility.php:1393
 msgid "Kalaallisut"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1394
 #: includes/class-bc-utility.php:1394
 msgid "Kannada"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1395
 #: includes/class-bc-utility.php:1395
 msgid "Kanuri"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1396
 #: includes/class-bc-utility.php:1396
 msgid "Kashmiri"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1397
 #: includes/class-bc-utility.php:1397
 msgid "Kazakh"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1398
 #: includes/class-bc-utility.php:1398
 msgid "Khmer"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1399
 #: includes/class-bc-utility.php:1399
 msgid "Kikuyu"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1400
 #: includes/class-bc-utility.php:1400
 msgid "Kinyarwanda"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1401
 #: includes/class-bc-utility.php:1401
 msgid "Kyrgyz"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1402
 #: includes/class-bc-utility.php:1402
 msgid "Komi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1403
 #: includes/class-bc-utility.php:1403
 msgid "Kongo"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1404
 #: includes/class-bc-utility.php:1404
 msgid "Korean"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1405
 #: includes/class-bc-utility.php:1405
 msgid "Kurdish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1406
 #: includes/class-bc-utility.php:1406
 msgid "Kwanyama"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1407
 #: includes/class-bc-utility.php:1407
 msgid "Latin"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1408
 #: includes/class-bc-utility.php:1408
 msgid "Luxembourgish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1409
 #: includes/class-bc-utility.php:1409
 msgid "Ganda"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1410
 #: includes/class-bc-utility.php:1410
 msgid "Limburgish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1411
 #: includes/class-bc-utility.php:1411
 msgid "Lingala"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1412
 #: includes/class-bc-utility.php:1412
 msgid "Lao"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1413
 #: includes/class-bc-utility.php:1413
 msgid "Lithuanian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1414
 #: includes/class-bc-utility.php:1414
 msgid "Luba-Katanga"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1415
 #: includes/class-bc-utility.php:1415
 msgid "Latvian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1416
 #: includes/class-bc-utility.php:1416
 msgid "Manx"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1417
 #: includes/class-bc-utility.php:1417
 msgid "Macedonian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1418
 #: includes/class-bc-utility.php:1418
 msgid "Malagasy"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1419
 #: includes/class-bc-utility.php:1419
 msgid "Malay"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1420
 #: includes/class-bc-utility.php:1420
 msgid "Malayalam"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1421
 #: includes/class-bc-utility.php:1421
 msgid "Maltese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1422
 #: includes/class-bc-utility.php:1422
 msgid "Maori"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1423
 #: includes/class-bc-utility.php:1423
 msgid "Marathi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1424
 #: includes/class-bc-utility.php:1424
 msgid "Marshallese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1425
 #: includes/class-bc-utility.php:1425
 msgid "Mongolian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1426
 #: includes/class-bc-utility.php:1426
 msgid "Nauruan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1427
 #: includes/class-bc-utility.php:1427
 msgid "Navajo"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1428
 #: includes/class-bc-utility.php:1428
 msgid "Northern Ndebele"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1429
 #: includes/class-bc-utility.php:1429
 msgid "Nepali"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1430
 #: includes/class-bc-utility.php:1430
 msgid "Ndonga"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1431
 #: includes/class-bc-utility.php:1431
 msgid "Norwegian Bokmal"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1432
 #: includes/class-bc-utility.php:1432
 msgid "Norwegian Nyorsk"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1433
 #: includes/class-bc-utility.php:1433
 msgid "Norwegian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1434
 #: includes/class-bc-utility.php:1434
 msgid "Nuosu"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1435
 #: includes/class-bc-utility.php:1435
 msgid "Southern Ndebele"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1436
 #: includes/class-bc-utility.php:1436
 msgid "Occitan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1437
 #: includes/class-bc-utility.php:1437
 msgid "Ojibwe"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1438
 #: includes/class-bc-utility.php:1438
 msgid "Oromo"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1439
 #: includes/class-bc-utility.php:1439
 msgid "Oriya"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1440
 #: includes/class-bc-utility.php:1440
 msgid "Ossetian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1441
 #: includes/class-bc-utility.php:1441
 msgid "Panjabi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1442
 #: includes/class-bc-utility.php:1442
 msgid "Pali"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1443
 #: includes/class-bc-utility.php:1443
 msgid "Persian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1444
 #: includes/class-bc-utility.php:1444
 msgid "Polish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1445
 #: includes/class-bc-utility.php:1445
 msgid "Pashto"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1446
 #: includes/class-bc-utility.php:1446
 msgid "Portuguese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1447
 #: includes/class-bc-utility.php:1447
 msgid "Quechua"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1448
 #: includes/class-bc-utility.php:1448
 msgid "Romanian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1449
 #: includes/class-bc-utility.php:1449
 msgid "Romanish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1450
 #: includes/class-bc-utility.php:1450
 msgid "Russian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1451
 #: includes/class-bc-utility.php:1451
 msgid "Sanskrit"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1452
 #: includes/class-bc-utility.php:1452
 msgid "Sardinian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1453
 #: includes/class-bc-utility.php:1453
 msgid "Sindhi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1454
 #: includes/class-bc-utility.php:1454
 msgid "Northern Sami"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1455
 #: includes/class-bc-utility.php:1455
 msgid "Samoan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1456
 #: includes/class-bc-utility.php:1456
 msgid "Sango"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1457
 #: includes/class-bc-utility.php:1457
 msgid "Serbian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1458
 #: includes/class-bc-utility.php:1458
 msgid "Scottish Gaelic"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1459
 #: includes/class-bc-utility.php:1459
 msgid "Shona"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1460
 #: includes/class-bc-utility.php:1460
 msgid "Sinhala"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1461
 #: includes/class-bc-utility.php:1461
 msgid "Slovak"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1462
 #: includes/class-bc-utility.php:1462
 msgid "Slovene"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1463
 #: includes/class-bc-utility.php:1463
 msgid "Somali"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1464
 #: includes/class-bc-utility.php:1464
 msgid "Southern Sotho"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1465
 #: includes/class-bc-utility.php:1465
 msgid "Spanish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1466
 #: includes/class-bc-utility.php:1466
 msgid "Sudanese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1467
 #: includes/class-bc-utility.php:1467
 msgid "Swahili"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1468
 #: includes/class-bc-utility.php:1468
 msgid "Swati"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1469
 #: includes/class-bc-utility.php:1469
 msgid "Swedish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1470
 #: includes/class-bc-utility.php:1470
 msgid "Tamil"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1471
 #: includes/class-bc-utility.php:1471
 msgid "Telugu"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1472
 #: includes/class-bc-utility.php:1472
 msgid "Tajik"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1473
 #: includes/class-bc-utility.php:1473
 msgid "Thai"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1474
 #: includes/class-bc-utility.php:1474
 msgid "Tigrinya"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1475
 #: includes/class-bc-utility.php:1475
 msgid "Tibetan"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1476
 #: includes/class-bc-utility.php:1476
 msgid "Turkmen"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1477
 #: includes/class-bc-utility.php:1477
 msgid "Tagalog"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1478
 #: includes/class-bc-utility.php:1478
 msgid "Tswana"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1479
 #: includes/class-bc-utility.php:1479
 msgid "Tonga"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1480
 #: includes/class-bc-utility.php:1480
 msgid "Turkish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1481
 #: includes/class-bc-utility.php:1481
 msgid "Tsonga"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1482
 #: includes/class-bc-utility.php:1482
 msgid "Tatar"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1483
 #: includes/class-bc-utility.php:1483
 msgid "Twi"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1484
 #: includes/class-bc-utility.php:1484
 msgid "Tahitian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1485
 #: includes/class-bc-utility.php:1485
 msgid "Uyghur"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1486
 #: includes/class-bc-utility.php:1486
 msgid "Ukrainian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1487
 #: includes/class-bc-utility.php:1487
 msgid "Urdu"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1488
 #: includes/class-bc-utility.php:1488
 msgid "Uzbek"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1489
 #: includes/class-bc-utility.php:1489
 msgid "Venda"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1490
 #: includes/class-bc-utility.php:1490
 msgid "Vietnamese"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1491
 #: includes/class-bc-utility.php:1491
 msgid "Volapuk"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1492
 #: includes/class-bc-utility.php:1492
 msgid "Walloon"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1493
 #: includes/class-bc-utility.php:1493
 msgid "Welsh"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1494
 #: includes/class-bc-utility.php:1494
 msgid "Wolof"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1495
 #: includes/class-bc-utility.php:1495
 msgid "Western Frisian"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1496
 #: includes/class-bc-utility.php:1496
 msgid "Xhosa"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1497
 #: includes/class-bc-utility.php:1497
 msgid "Yiddish"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1498
 #: includes/class-bc-utility.php:1498
 msgid "Yoruba"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1499
 #: includes/class-bc-utility.php:1499
 msgid "Zhuang"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-utility.php:1500
 #: includes/class-bc-utility.php:1500
 msgid "Zulu"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-video-upload.php:70
 #: includes/class-bc-video-upload.php:70
 msgid "Invalid account"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-video-upload.php:78
 #: includes/class-bc-video-upload.php:78
 msgid "Video type is not supported"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-video-upload.php:90
 #: includes/class-bc-video-upload.php:90
 #. translators: %s is the error message.
 msgid "VIDEO UPLOAD ERROR: %s"
 msgstr ""
 
+#: brightcove-video-connect/includes/class-bc-video-upload.php:111
 #: includes/class-bc-video-upload.php:111
 msgid "Unable to create a video on brightcove side"
 msgstr ""
 
+#: brightcove-video-connect/includes/sync/class-bc-videos.php:202
 #: includes/sync/class-bc-videos.php:202
 msgid "The video has not been created in WordPress"
 msgstr ""
 
+#: brightcove-video-connect/includes/sync/class-bc-videos.php:210
 #: includes/sync/class-bc-videos.php:210
 #. Translators: #%d is the video ID.
 msgid "BC WordPress: Video with ID #%d has been created"
@@ -1923,6 +2482,7 @@ msgstr ""
 msgid "http://10up.com"
 msgstr ""
 
+#: brightcove-video-connect/includes/admin/class-bc-templates.php:619
 #: includes/admin/class-bc-templates.php:619
 msgctxt "Uploader: Drop files here - or - Select Files"
 msgid "or"

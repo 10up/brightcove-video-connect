@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [2.8.3] - 2022-08-03
+
+### Fixed
+- Playlist experience not rendering correctly in frontend
+- Prevent API calls when Brightcove has not been configured yet
+- Customization options hidden when switching embed type in in-page experiences
+
+### Fixed
+
 ## [2.8.2] - 2022-03-16
 
 ### Fixed
@@ -411,6 +420,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.3]: https://github.com/10up/brightcove-video-connect/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/10up/brightcove-video-connect/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/10up/brightcove-video-connect/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/10up/brightcove-video-connect/compare/2.7.0...2.8.0
