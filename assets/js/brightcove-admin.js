@@ -1857,9 +1857,9 @@ var MediaDetailsView = BrightcoveView.extend({
 		$sizingField.show();
 		$sizingDiv.show();
 
-		if ($sizing === 'responsive' && $embedStyle === 'javascript') {
+		if ($sizing === 'responsive' && $embedStyle === 'in-page') {
 			$height.attr('readonly', true);
-		} else if ($sizing === 'fixed' && $embedStyle === 'javascript') {
+		} else if ($sizing === 'fixed' && $embedStyle === 'in-page') {
 			$height.removeAttr('readonly');
 			$width.removeAttr('readonly');
 		} else {
