@@ -13,6 +13,6 @@ var UploadModel = Backbone.Model.extend({
 		var k = 1000;
 		var sizes = ['Bytes', 'KB', 'MB', 'GB'];
 		var i = Math.floor(Math.log(bytes) / Math.log(k));
-		return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+		return (bytes / k ** i).toPrecision(3) + ' ' + sizes[i];
 	},
 });
