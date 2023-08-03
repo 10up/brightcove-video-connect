@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 6.1.1
-Stable tag: 2.8.2
+Tested up to: 6.2.2
+Stable tag: 2.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,12 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 15. Brightcove Block and Block Settings.
 
 == Changelog ==
+
+= 2.8.3 =
+
+* Playlist experience not rendering correctly in frontend
+* Prevent API calls when Brightcove has not been configured yet
+* Customization options hidden when switching embed type in in-page experiences
 
 = 2.8.2 =
 
