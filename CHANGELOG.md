@@ -11,8 +11,6 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Prevent API calls when Brightcove has not been configured yet
 - Customization options hidden when switching embed type in in-page experiences
 
-### Fixed
-
 ## [2.8.2] - 2022-03-16
 
 ### Fixed
