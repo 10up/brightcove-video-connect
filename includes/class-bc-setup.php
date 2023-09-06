@@ -83,6 +83,7 @@ class BC_Setup {
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
+		add_filter( 'http_request_args', array( 'BC_Setup', 'maybe_add_brightcove_version_to_user_agent' ) );
 
 		// Show admin notice only if there are not sources.
 		add_action( 'admin_notices', array( 'BC_Setup', 'bc_admin_notices' ) );
@@ -567,5 +568,27 @@ class BC_Setup {
 
 		// Kill the response immediately
 		die;
+	}
+
+	/**
+	 * Conditionally add the Brightcove Video Connect version to the User Agent string.
+	 *
+	 * @since 2.8.4
+	 * @param string $args Original request arguments.
+	 * @return string
+	 */
+	public static function maybe_add_brightcove_version_to_user_agent( $args ) {
+		if ( empty( $args['is_brightcove_request'] ) || empty( $args['user-agent'] ) ) {
+			return $args;
+		}
+
+		$end_part           = '; ' . get_bloginfo( 'url' );
+		$args['user-agent'] = str_replace(
+			$end_part,
+			' (BrightcoveVideoConnect/' . BRIGHTCOVE_VERSION . ')' . $end_part,
+			$args['user-agent']
+		);
+
+		return $args;
 	}
 }

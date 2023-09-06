@@ -66,7 +66,8 @@ class BC_Oauth_API {
 		$this->client_id     = $client_id;
 		$this->client_secret = $client_secret;
 		$this->http_headers  = array(
-			'headers' => array(
+			'is_brightcove_request' => true,
+			'headers'               => array(
 				'Content-type'  => 'application/json',
 				'Authorization' => sprintf( 'Basic %s', base64_encode( $this->client_id . ':' . $this->client_secret ) ), // phpcs:ignore
 			),
