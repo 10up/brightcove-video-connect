@@ -4,11 +4,11 @@
 
 	const { blockEditor, editor } = wp;
 	const BlockControls = blockEditor.BlockControls || editor.BlockControls;
+	const { Button, Dashicon } = components;
 
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
 		Placeholder = components.Placeholder,
-		IconButton = components.IconButton,
 		userPermission = !!bcBlock.userPermission,
 		InspectorControls = wp.blockEditor.InspectorControls,
 		TextControl = components.TextControl;
@@ -256,15 +256,19 @@
 				el(
 					'div',
 					{ className: 'components-toolbar' },
-					el(IconButton, {
-						className:
-							'brightcove-add-media components-icon-button components-toolbar__control',
-						label: videoId.playlist_id
-							? __('Change Playlist', 'brightcove')
-							: __('Change Video', 'brightcove'),
-						icon: 'edit',
-						'data-target': '#' + target,
-					}),
+					el(
+						Button,
+						{
+							className:
+								'brightcove-add-media components-icon-button components-toolbar__control',
+							label: videoId.playlist_id
+								? __('Change Playlist', 'brightcove')
+								: __('Change Video', 'brightcove'),
+
+							'data-target': '#' + target,
+						},
+						el(Dashicon, { icon: 'edit' }),
+					),
 				),
 			);
 
