@@ -4,7 +4,7 @@
 
 	const { blockEditor, editor } = wp;
 	const BlockControls = blockEditor.BlockControls || editor.BlockControls;
-	const { Button, Dashicon } = components;
+	const { Button, Dashicon, ToolbarGroup, ToolbarButton } = components;
 
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
@@ -250,27 +250,47 @@
 			jQuery(document).on('change', '#' + target, onSelectVideo);
 
 			// Set up our controls
-			var controls = el(
-				BlockControls,
-				{ key: 'controls' },
-				el(
-					'div',
-					{ className: 'components-toolbar' },
+			if (typeof ToolbarGroup === 'function') {
+				var controls = el(
+					BlockControls,
+					{},
 					el(
-						Button,
-						{
+						ToolbarGroup,
+						{},
+						el(ToolbarButton, {
 							className:
 								'brightcove-add-media components-icon-button components-toolbar__control',
 							label: videoId.playlist_id
 								? __('Change Playlist', 'brightcove')
 								: __('Change Video', 'brightcove'),
-
+							icon: 'edit',
 							'data-target': '#' + target,
-						},
-						el(Dashicon, { icon: 'edit' }),
+						}),
 					),
-				),
-			);
+				);
+			} else {
+				var controls = el(
+					BlockControls,
+					{ key: 'controls' },
+					el(
+						'div',
+						{ className: 'components-toolbar' },
+						el(
+							Button,
+							{
+								className:
+									'brightcove-add-media components-icon-button components-toolbar__control',
+								label: videoId.playlist_id
+									? __('Change Playlist', 'brightcove')
+									: __('Change Video', 'brightcove'),
+
+								'data-target': '#' + target,
+							},
+							el(Dashicon, { icon: 'edit' }),
+						),
+					),
+				);
+			}
 
 			// If no video has been selected yet, show the selection view
 			if (
