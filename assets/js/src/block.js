@@ -1,11 +1,13 @@
 /* global wp, bctiny, bcBlock */
-(function (blocks, element, components, editor) {
+(function (blocks, element, components) {
 	const { __, sprintf } = wp.i18n;
+
+	const { blockEditor, editor } = wp;
+	const BlockControls = blockEditor.BlockControls || editor.BlockControls;
 
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
 		Placeholder = components.Placeholder,
-		BlockControls = editor.BlockControls,
 		IconButton = components.IconButton,
 		userPermission = !!bcBlock.userPermission,
 		InspectorControls = wp.blockEditor.InspectorControls,
@@ -654,4 +656,4 @@
 			return null;
 		},
 	});
-})(window.wp.blocks, window.wp.element, window.wp.components, window.wp.editor);
+})(window.wp.blocks, window.wp.element, window.wp.components);
