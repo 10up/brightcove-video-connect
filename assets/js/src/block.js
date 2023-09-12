@@ -2,8 +2,7 @@
 (function (blocks, element, components) {
 	const { __, sprintf } = wp.i18n;
 
-	const { blockEditor, editor } = wp;
-	const BlockControls = blockEditor.BlockControls || editor.BlockControls;
+	const { BlockControls } = wp.blockEditor;
 	const { Button, Dashicon, ToolbarGroup, ToolbarButton } = components;
 
 	var el = element.createElement,
