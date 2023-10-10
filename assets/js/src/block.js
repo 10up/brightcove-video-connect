@@ -1,12 +1,13 @@
 /* global wp, bctiny, bcBlock */
-(function (blocks, element, components, editor) {
+(function (blocks, element, components) {
 	const { __, sprintf } = wp.i18n;
+
+	const { BlockControls } = wp.blockEditor;
+	const { Button, Dashicon, ToolbarGroup, ToolbarButton } = components;
 
 	var el = element.createElement,
 		registerBlockType = blocks.registerBlockType,
 		Placeholder = components.Placeholder,
-		BlockControls = editor.BlockControls,
-		IconButton = components.IconButton,
 		userPermission = !!bcBlock.userPermission,
 		InspectorControls = wp.blockEditor.InspectorControls,
 		TextControl = components.TextControl;
@@ -248,23 +249,47 @@
 			jQuery(document).on('change', '#' + target, onSelectVideo);
 
 			// Set up our controls
-			var controls = el(
-				BlockControls,
-				{ key: 'controls' },
-				el(
-					'div',
-					{ className: 'components-toolbar' },
-					el(IconButton, {
-						className:
-							'brightcove-add-media components-icon-button components-toolbar__control',
-						label: videoId.playlist_id
-							? __('Change Playlist', 'brightcove')
-							: __('Change Video', 'brightcove'),
-						icon: 'edit',
-						'data-target': '#' + target,
-					}),
-				),
-			);
+			if (typeof ToolbarGroup === 'function') {
+				var controls = el(
+					BlockControls,
+					{},
+					el(
+						ToolbarGroup,
+						{},
+						el(ToolbarButton, {
+							className:
+								'brightcove-add-media components-icon-button components-toolbar__control',
+							label: videoId.playlist_id
+								? __('Change Playlist', 'brightcove')
+								: __('Change Video', 'brightcove'),
+							icon: 'edit',
+							'data-target': '#' + target,
+						}),
+					),
+				);
+			} else {
+				var controls = el(
+					BlockControls,
+					{ key: 'controls' },
+					el(
+						'div',
+						{ className: 'components-toolbar' },
+						el(
+							Button,
+							{
+								className:
+									'brightcove-add-media components-icon-button components-toolbar__control',
+								label: videoId.playlist_id
+									? __('Change Playlist', 'brightcove')
+									: __('Change Video', 'brightcove'),
+
+								'data-target': '#' + target,
+							},
+							el(Dashicon, { icon: 'edit' }),
+						),
+					),
+				);
+			}
 
 			// If no video has been selected yet, show the selection view
 			if (
@@ -654,4 +679,4 @@
 			return null;
 		},
 	});
-})(window.wp.blocks, window.wp.element, window.wp.components, window.wp.editor);
+})(window.wp.blocks, window.wp.element, window.wp.components);
