@@ -526,8 +526,8 @@ var MediaDetailsView = BrightcoveView.extend({
 		options = _.extend({}, options, this.model.toJSON());
 		// options.duration = this.model.getReadableDuration();
 		options.duration = '0:05';
-		options.updated_at_readable = this.model.getReadableDate('updatedAt');
-		options.created_at_readable = this.model.getReadableDate('createdAt');
+		options.updated_at_readable = this.model.getReadableDate('updated_at');
+		options.created_at_readable = this.model.getReadableDate('created_at');
 		options.account_name = this.model.getAccountName();
 
 		this.template = wp.template('brightcove-media-item-details-' + this.mediaType);
