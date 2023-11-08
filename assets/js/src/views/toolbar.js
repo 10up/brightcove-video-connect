@@ -76,6 +76,9 @@ var ToolbarView = BrightcoveView.extend({
 	toggleToolbar: function () {
 		var template = wp.template('brightcove-tooltip-notice');
 
+		// Remove any existing tooltip notice
+		$('#js-tooltip-notice').remove();
+
 		// Throw a notice to the user that the file is not the correct format
 		$('.brightcove.media-frame-router').before(template);
 		// Allow the user to dismiss the notice
