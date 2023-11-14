@@ -939,7 +939,7 @@ class BC_Admin_Media_API {
 			$default = ( isset( $caption['default'] ) && 'checked' === $caption['default'] );
 
 			$source = wp_parse_url( $caption['source'] );
-			if ( 0 === strpos( $source['host'], 'brightcove' ) ) {
+			if ( 0 === strpos( $source['host'], 'brightcove' ) && false === strpos( $source['host'], '.test' ) ) {
 				// If the hostname starts with "brightcove," assume this media has already been ingested and add to old captions.
 				$old_captions[] = new BC_Text_Track( $url, $lang, 'captions', $label, $default );
 				continue;
@@ -957,10 +957,14 @@ class BC_Admin_Media_API {
 		}
 
 		// Push the new captions to Brightcove
-		$this->cms_api->text_track_upload( $video_id, $new_captions );
+		$has_caption_uploaded = $this->cms_api->text_track_upload( $video_id, $new_captions );
 
 		// Restore our global, default account
 		$bc_accounts->restore_default_account();
+
+		if ( false === $has_caption_uploaded ) {
+			wp_send_json_error( esc_html__( 'Failed to upload caption.', 'brightcove' ) );
+		}
 	}
 
 	/**

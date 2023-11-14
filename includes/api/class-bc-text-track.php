@@ -21,7 +21,7 @@ class BC_Text_Track {
 	 *
 	 * @var string
 	 */
-	protected $src_lang;
+	protected $srclang;
 
 	/**
 	 * How the VTT file is meant to be used
@@ -61,8 +61,8 @@ class BC_Text_Track {
 	 * @param bool   $default  Set the default language for captions/subtitles
 	 */
 	public function __construct( $url, $language = 'en-US', $kind = 'captions', $label = '', $default = false ) {
-		$this->url      = esc_url_raw( $url );
-		$this->src_lang = sanitize_text_field( $language );
+		$this->url     = esc_url_raw( $url );
+		$this->srclang = sanitize_text_field( $language );
 		if ( ! in_array( $kind, array( 'captions', 'subtitles', 'descriptions', 'chapters', 'metadata' ), true ) ) {
 			$this->kind = 'captions';
 		} else {
@@ -79,10 +79,10 @@ class BC_Text_Track {
 	 */
 	public function to_array() {
 		$data = array(
-			'url'      => $this->url,
-			'src_lang' => $this->src_lang,
-			'kind'     => $this->kind,
-			'default'  => $this->default,
+			'url'     => $this->url,
+			'srclang' => $this->srclang,
+			'kind'    => $this->kind,
+			'default' => $this->default,
 		);
 
 		if ( ! empty( $this->label ) ) {
@@ -100,7 +100,7 @@ class BC_Text_Track {
 	public function to_array_patch() {
 		$data = array(
 			'src'       => $this->url,
-			'src_lang'  => $this->src_lang,
+			'srclang'   => $this->srclang,
 			'kind'      => $this->kind,
 			'default'   => $this->default,
 			'mime_type' => $this->mime_type,
