@@ -4,7 +4,32 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
-## [2.8.3] - 2022-08-03
+<!--
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+-->
+
+## [2.8.4] - 2023-11-30
+
+### Added
+- Brightcove version to user agent string. Props [@felipeelia](https://github.com/felipeelia) via [#341](https://github.com/10up/brightcove-video-connect/pull/341).
+
+### Changed
+- Use `wp.blockEditor.BlockControls` if available. Props [@felipeelia](https://github.com/felipeelia), [@JakePT](https://github.com/JakePT), and [@oscarssanchez](https://github.com/oscarssanchez) via [#342](https://github.com/10up/brightcove-video-connect/pull/342).
+
+### Fixed
+- Empty "Created At:" and "Updated At:" in playlists. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS) via [#349](https://github.com/10up/brightcove-video-connect/pull/349).
+- Help notices being displayed more than once. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS) via [#350](https://github.com/10up/brightcove-video-connect/pull/350).
+- Caption upload. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS) via [#351](https://github.com/10up/brightcove-video-connect/pull/351).
+
+### Security
+- Bumped `@babel/traverse` from 7.22.8 to 7.23.2. Props [@dependabot](https://github.com/dependabot) via [#343](https://github.com/10up/brightcove-video-connect/pull/343).
+
+## [2.8.3] - 2023-08-03
 
 ### Fixed
 - Playlist experience not rendering correctly in frontend
@@ -418,6 +443,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.4]: https://github.com/10up/brightcove-video-connect/compare/2.8.3...2.8.4
 [2.8.3]: https://github.com/10up/brightcove-video-connect/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/10up/brightcove-video-connect/compare/2.8.1...2.8.2
 [2.8.1]: https://github.com/10up/brightcove-video-connect/compare/2.8.0...2.8.1

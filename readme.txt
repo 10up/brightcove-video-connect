@@ -4,8 +4,8 @@ Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisW
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, 10up, videos, video
 Requires at least: 4.2
-Tested up to: 6.2.2
-Stable tag: 2.8.3
+Tested up to: 6.4
+Stable tag: 2.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,27 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 15. Brightcove Block and Block Settings.
 
 == Changelog ==
+
+= 2.8.4 - 2023-11-30 =
+
+__Added:__
+
+* Brightcove version to user agent string. Props [@felipeelia](https://github.com/felipeelia).
+
+__Changed:__
+
+* Use `wp.blockEditor.BlockControls` if available. Props [@felipeelia](https://github.com/felipeelia), [@JakePT](https://github.com/JakePT), and [@oscarssanchez](https://github.com/oscarssanchez).
+
+__Fixed:__
+
+* Empty "Created At:" and "Updated At:" in playlists. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS).
+* Help notices being displayed more than once. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS).
+* Caption upload. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS).
+
+__Security:__
+
+* Bumped `@babel/traverse` from 7.22.8 to 7.23.2. Props [@dependabot](https://github.com/dependabot).
+
 
 = 2.8.3 =
 

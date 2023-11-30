@@ -199,7 +199,8 @@ abstract class BC_API {
 		}
 
 		$args = array(
-			'headers' => $headers,
+			'is_brightcove_request' => true,
+			'headers'               => $headers,
 		);
 
 		switch ( $method ) {
