@@ -894,6 +894,9 @@ var ToolbarView = BrightcoveView.extend({
 	toggleToolbar: function () {
 		var template = wp.template('brightcove-tooltip-notice');
 
+		// Remove any existing tooltip notice
+		$('#js-tooltip-notice').remove();
+
 		// Throw a notice to the user that the file is not the correct format
 		$('.brightcove.media-frame-router').before(template);
 		// Allow the user to dismiss the notice
@@ -2264,8 +2267,8 @@ var MediaDetailsView = BrightcoveView.extend({
 		options = _.extend({}, options, this.model.toJSON());
 		// options.duration = this.model.getReadableDuration();
 		options.duration = '0:05';
-		options.updated_at_readable = this.model.getReadableDate('updatedAt');
-		options.created_at_readable = this.model.getReadableDate('createdAt');
+		options.updated_at_readable = this.model.getReadableDate('updated_at');
+		options.created_at_readable = this.model.getReadableDate('created_at');
 		options.account_name = this.model.getAccountName();
 
 		this.template = wp.template('brightcove-media-item-details-' + this.mediaType);
