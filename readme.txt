@@ -40,6 +40,27 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 2.8.4 - 2023-11-30 =
+
+__Added:__
+
+* Brightcove version to user agent string. Props [@felipeelia](https://github.com/felipeelia).
+
+__Changed:__
+
+* Use `wp.blockEditor.BlockControls` if available. Props [@felipeelia](https://github.com/felipeelia), [@JakePT](https://github.com/JakePT), and [@oscarssanchez](https://github.com/oscarssanchez).
+
+__Fixed:__
+
+* Empty "Created At:" and "Updated At:" in playlists. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS).
+* Help notices being displayed more than once. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS).
+* Caption upload. Props [@burhandodhy](https://github.com/burhandodhy) and [@MARQAS](https://github.com/MARQAS).
+
+__Security:__
+
+* Bumped `@babel/traverse` from 7.22.8 to 7.23.2. Props [@dependabot](https://github.com/dependabot).
+
+
 = 2.8.3 =
 
 * Playlist experience not rendering correctly in frontend
