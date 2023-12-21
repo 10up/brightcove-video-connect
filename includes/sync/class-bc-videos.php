@@ -54,7 +54,7 @@ class BC_Videos {
 		$update_data = array();
 
 		if ( array_key_exists( 'name', $sanitized_post_data ) && '' !== $sanitized_post_data['name'] ) {
-			$update_data['name'] = utf8_uri_encode( sanitize_text_field( $sanitized_post_data['name'] ) );
+			$update_data['name'] = utf8_uri_encode( wp_kses_post( $sanitized_post_data['name'] ) );
 		}
 
 		if ( array_key_exists( 'description', $sanitized_post_data ) && ! empty( $sanitized_post_data['description'] ) ) {
