@@ -249,8 +249,9 @@ class BC_Admin_Media_API {
 
 		} elseif ( 'videos' === $_POST['type'] ) {
 			$type_msg = 'video';
-			if ( 'variant' === $_POST['sub_type'] ) {
-				$status = $this->videos->update_bc_video( $updated_data, sanitize_text_field( $_POST['sub_type'] ) );
+			$sub_type = $_POST['sub_type'] ?? '';
+			if ( 'variant' === $sub_type ) {
+				$status = $this->videos->update_bc_video( $updated_data, sanitize_text_field( $sub_type ) );
 			} else {
 				$status = $this->videos->update_bc_video( $updated_data );
 
