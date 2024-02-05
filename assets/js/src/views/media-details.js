@@ -30,11 +30,17 @@ var MediaDetailsView = BrightcoveView.extend({
 
 	triggerEditMedia: function (event) {
 		event.preventDefault();
+		if (event.target.getAttribute('disabled') !== null) {
+			return;
+		}
 		wpbc.broadcast.trigger('edit:media', this.model, this.mediaType);
 	},
 
 	triggerPreviewMedia: function (event) {
 		event.preventDefault();
+		if (event.target.getAttribute('disabled') !== null) {
+			return;
+		}
 		var shortcode = $('#shortcode').val();
 		wpbc.broadcast.trigger('preview:media', this.model, shortcode);
 	},
