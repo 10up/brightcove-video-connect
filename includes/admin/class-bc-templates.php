@@ -685,8 +685,8 @@ class BC_Admin_Templates {
 					<# } #>
 				</div>
 				<div class="media-actions">
-					<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></button>
+					<button class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></button>
 				</div>
 			</div>
 		</script>
@@ -724,14 +724,14 @@ class BC_Admin_Templates {
 
 				<div class="media-actions">
 					<# if ('preview' === data.detailsMode) { #>
-					<a href="#" class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove back"><?php esc_html_e( 'Back', 'brightcove' ); ?></button>
 					<# } else { #>
 					<# if ( data.images && data.images.thumbnail && data.images.thumbnail.src ) { #>
-					<a href="#" class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					<a href="#" class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove edit"><?php esc_html_e( 'Edit', 'brightcove' ); ?></button>
+					<button class="button media-button brightcove preview"><?php esc_html_e( 'Preview', 'brightcove' ); ?></button>
 					<# } else { #>
-					<a href="#" class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></a>
-					<a href="#" class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></a>
+					<button class="button media-button brightcove edit" disabled><?php esc_html_e( 'Edit', 'brightcove' ); ?></button>
+					<button class="button media-button brightcove preview" disabled><?php esc_html_e( 'Preview', 'brightcove' ); ?></button>
 					<# } #>
 					<# } #>
 				</div>
