@@ -310,7 +310,7 @@ class BC_Utility {
 			if ( is_array( $value ) ) {
 				$args[ $index ] = self::sanitize_payload_args_recursive( $value );
 			} else {
-				$args[ $index ] = utf8_uri_encode( sanitize_text_field( $value ) );
+				$args[ $index ] = sanitize_text_field( $value );
 			}
 		}
 
@@ -329,7 +329,7 @@ class BC_Utility {
 			return self::sanitize_payload_args_recursive( $item );
 		}
 
-		return utf8_uri_encode( sanitize_text_field( $item ) );
+		return sanitize_text_field( $item );
 	}
 
 	/**
