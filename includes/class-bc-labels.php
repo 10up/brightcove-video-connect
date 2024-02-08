@@ -137,8 +137,15 @@ class BC_Labels {
 		) {
 			$label_name = sanitize_text_field( $_POST['label-name'] );
 			$label_path = ! empty( $_POST['label-path'] ) ? $_POST['label-path'] : '';
-			$this->cms_api->add_label( $label_name, $label_path );
-			wp_safe_redirect( admin_url( 'admin.php?page=brightcove-labels&add_label=1&refresh_labels=1' ) );
+
+			$redirect_url = admin_url( 'admin.php?page=brightcove-labels&refresh_labels=1' );
+
+			if ( ! empty( $label_name ) || ! empty( $label_path ) ) {
+				$this->cms_api->add_label( $label_name, $label_path );
+				$redirect_url = add_query_arg( 'add_label', '1', $redirect_url );
+			}
+
+			wp_safe_redirect( $redirect_url);
 			exit;
 		}
 	}
