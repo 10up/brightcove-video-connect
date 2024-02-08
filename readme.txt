@@ -1,6 +1,6 @@
 === Brightcove Video Connect ===
 
-Contributors: oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
+Contributors: brightcove, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
 Donate link: https://supporters.eff.org/donate
 Tags: brightcove, videos, video
 Requires at least: 4.2
