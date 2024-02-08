@@ -1,8 +1,8 @@
 === Brightcove Video Connect ===
 
-Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
+Contributors: oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
 Donate link: https://supporters.eff.org/donate
-Tags: brightcove, 10up, videos, video
+Tags: brightcove, videos, video
 Requires at least: 4.2
 Tested up to: 6.4
 Stable tag: 2.8.4
@@ -14,7 +14,7 @@ Brightcove integration plugin, manage your Brightcove video cloud from within Wo
 == Description ==
 
 Are you looking to handle your Brightcove Video and Playlist library natively from within WordPress or use Brightcove's Gallery In-Page video experiences?
-With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
+With this plugin, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
 
 == Installation and Usage and FAQ ==
 
