@@ -145,7 +145,7 @@ class BC_Labels {
 				$redirect_url = add_query_arg( 'add_label', '1', $redirect_url );
 			}
 
-			wp_safe_redirect( $redirect_url);
+			wp_safe_redirect( $redirect_url );
 			exit;
 		}
 	}
