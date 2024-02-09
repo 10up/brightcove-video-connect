@@ -1,13 +1,12 @@
 === Brightcove Video Connect ===
 
-Contributors: brightcove, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
-Donate link: https://supporters.eff.org/donate
-Tags: brightcove, videos, video
-Requires at least: 4.2
-Tested up to: 6.4
-Stable tag: 2.8.4
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:      brightcove, 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
+Donate link:       https://supporters.eff.org/donate
+Tags:              brightcove, videos, video
+Tested up to:      6.4
+Stable tag:        2.8.4
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs
 
