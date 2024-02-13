@@ -12,9 +12,6 @@ var VideoEditView = BrightcoveView.extend({
 		'click    .caption-secondary-fields .delete': 'removeCaptionRow',
 		'click    .add-remote-caption': 'addCaptionRow',
 		'change   .brightcove-variant': 'changeVariant',
-		'click    .add-bc-label': 'addLabelRow',
-		'keypress .brightcove-labels': 'labelAutocomplete',
-		'click    .bc-label-secondary-fields .delete': 'removeLabelRow',
 	},
 
 	/**
@@ -175,75 +172,6 @@ var VideoEditView = BrightcoveView.extend({
 		// Remove the preview image
 		container.removeClass('active');
 		image.empty();
-	},
-
-	/**
-	 * Add a label row
-	 *
-	 * @param {Event} evnt
-	 * @param {Object} media
-	 */
-	addLabelRow: function (evnt, media) {
-		var source = undefined;
-		if (media) {
-			source = media.url;
-		}
-
-		this.addLabel(source);
-	},
-
-	/**
-	 * Adds a label
-	 *
-	 * @param source
-	 * @param language
-	 * @param label
-	 * @param defaultcap
-	 */
-	addLabel: function (source, language, label, defaultcap) {
-		let newRow = $(document.getElementById('js-bc-label-empty-row')).clone(),
-			container = document.getElementById('js-bc-labels');
-
-		// Clean up our cloned row
-		newRow.find('input').prop('disabled', false).val('');
-		newRow.removeAttr('id');
-		newRow.removeClass('empty-row');
-
-		// Append our new row to the container
-		$(container).append(newRow);
-	},
-
-	/**
-	 * Fires the autocomplete function
-	 *
-	 * @param {Event} evnt
-	 */
-	labelAutocomplete: function (evnt) {
-		jQuery('.brightcove-labels').autocomplete({
-			source: wpbc.preload.labels,
-			select: function () {
-				$(this).parent('.bc-label-repeater.empty-row').removeClass('empty-row');
-			},
-			appendTo: '.media-modal',
-		});
-	},
-
-	/**
-	 * Removes a label row
-	 * @param {Event} evnt
-	 */
-	removeLabelRow: function (evnt) {
-		evnt.preventDefault();
-
-		let label = evnt.currentTarget,
-			container = $(label).parents('.bc-label-repeater'),
-			source = container.find('.brightcove-labels');
-
-		// Empty the input fields
-		$(source).val('');
-
-		// Remove the container entirely
-		container.remove();
 	},
 
 	/**
@@ -455,17 +383,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('captions', captions);
 
 		// Labels
-		var labels = [];
-		this.$el
-			.find('.bc-label-repeater.repeater-row')
-			.not('.empty-row')
-			.each(function () {
-				var label = $(this),
-					Name = label.find('.brightcove-labels').val();
-
-				labels.push(Name);
-			});
-
+		var labels = this.$el.find('.brightcove-labels').val() || [];
 		this.model.set('labels', labels);
 
 		// Custom fields
@@ -591,6 +509,8 @@ var VideoEditView = BrightcoveView.extend({
 		this.$el.html(this.template(options));
 
 		this.$('.brightcove-datetime').datepicker();
+
+		this.$('.brightcove-labels').select2();
 
 		this.renderCustomFields();
 

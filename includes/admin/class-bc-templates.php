@@ -255,25 +255,14 @@ class BC_Admin_Templates {
 								</a>
 							</div>
 							<div id="js-bc-labels">
-								<# _.each( data.labels, function( label ) { #>
-								<div id="js-caption-fields" class="bc-label-repeater repeater-row">
-									<input type="text" class="brightcove-labels" value="{{label}}">
-
-									<div class="bc-label-secondary-fields">
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
-								<# }); #>
-								<div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
-									<input id="" type="text" class="brightcove-labels" value=""/>
-									<div class="bc-label-secondary-fields">
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
+								<select class="brightcove-labels" multiple name="labels">
+									<# _.each( wpbc.preload.labels, function( label ) { #>
+									<option
+										<# if ( (data.labels)?.includes(label) ) { #>selected<# } #>
+										value="{{label}}">{{label}}
+									</option>
+									<# }); #>
+								</select>
 							</div>
 						</div>
 					</div>
