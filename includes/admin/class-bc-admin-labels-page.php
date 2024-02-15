@@ -35,7 +35,7 @@ class BC_Admin_Labels_Page {
 	 * Renders html of the edit labels page
 	 */
 	public function render_edit_label_page() {
-		$label_name = isset( $_GET['update_label'] ) ? $_GET['update_label'] : '';
+		$label_name = isset( $_GET['update_label'] ) ? $_GET['update_label'] : ''; // phpcs:ignore WordPress.Security.NonceVerification
 		?>
 		<div class="wrap">
 			<h2>
@@ -47,7 +47,7 @@ class BC_Admin_Labels_Page {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="validate">
 				<?php wp_nonce_field( 'brightcove-edit-label', 'brightcove-edit-label-nonce' ); ?>
 				<input type="hidden" name="action" value="brightcove-edit-label">
-				<input type="hidden" name="label-path" value="<?php esc_attr_e( $label_name, 'brightcove' ); ?>">
+				<input type="hidden" name="label-path" value="<?php echo esc_attr( $label_name ); ?>">
 				<table class="form-table">
 					<tbody>
 						<tr class="form-field form-required term-name-wrap">
