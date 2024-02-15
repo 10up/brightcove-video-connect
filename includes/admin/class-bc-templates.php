@@ -21,7 +21,8 @@ class BC_Admin_Templates {
 	 * Adds all templates for Backbone application
 	 */
 	public function add_templates() {
-		global $pagenow; ?>
+		global $pagenow;
+		?>
 
 		<?php /* Used by views/media-manager.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-media">
