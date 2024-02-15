@@ -35,7 +35,7 @@ class BC_Admin_Labels_Page {
 	 * Renders html of the edit labels page
 	 */
 	public function render_edit_label_page() {
-		$label_name = $_GET['update_label'] ?? '';
+		$label_name = isset( $_GET['update_label'] ) ? $_GET['update_label'] : '';
 		?>
 		<div class="wrap">
 			<h2>
