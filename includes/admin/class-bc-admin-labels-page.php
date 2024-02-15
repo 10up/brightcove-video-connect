@@ -53,7 +53,7 @@ class BC_Admin_Labels_Page {
 						<tr class="form-field form-required term-name-wrap">
 							<th scope="row"><label for="name"><?php esc_html_e( 'Label', 'brightcove' ); ?></label></th>
 							<td>
-								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( basename( trim( $label_name, '/' ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore WordPress.Security.NonceVerification ?>
+								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( basename( trim( $label_name, '/' ) ) ); ?>" size="40" aria-required="true">
 								<p class="description"><?php esc_html_e( 'Enter the new label name.', 'brightcove' ); ?></p>
 							</td>
 						</tr>
