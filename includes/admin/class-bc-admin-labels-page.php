@@ -35,6 +35,7 @@ class BC_Admin_Labels_Page {
 	 * Renders html of the edit labels page
 	 */
 	public function render_edit_label_page() {
+		$label_name = $_GET['update_label'] ?? '';
 		?>
 		<div class="wrap">
 			<h2>
@@ -46,13 +47,13 @@ class BC_Admin_Labels_Page {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="validate">
 				<?php wp_nonce_field( 'brightcove-edit-label', 'brightcove-edit-label-nonce' ); ?>
 				<input type="hidden" name="action" value="brightcove-edit-label">
-				<input type="hidden" name="label-path" value="<?php echo ! empty( $_GET['update_label'] ) ? esc_attr( $_GET['update_label'] ) : ''; // phpcs:ignore ?>">
+				<input type="hidden" name="label-path" value="<?php esc_attr_e( $label_name, 'brightcove' ); ?>">
 				<table class="form-table">
 					<tbody>
 						<tr class="form-field form-required term-name-wrap">
-							<th scope="row"><label for="name">Label</label></th>
+							<th scope="row"><label for="name"><?php esc_html_e( 'Label', 'brightcove' ); ?></label></th>
 							<td>
-								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( basename( trim( $_GET['update_label'], '/' ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore WordPress.Security.NonceVerification ?>
+								<input name="label-update" id="name" type="text" value="<?php echo esc_attr( basename( trim( $label_name, '/' ) ) ); ?>" size="40" aria-required="true"> <?php // phpcs:ignore WordPress.Security.NonceVerification ?>
 								<p class="description"><?php esc_html_e( 'Enter the new label name.', 'brightcove' ); ?></p>
 							</td>
 						</tr>
