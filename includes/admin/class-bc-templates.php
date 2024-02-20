@@ -1310,7 +1310,7 @@ class BC_Admin_Templates {
 						</div>
 						<# } #>
 
-						<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
+						<# if( data.mediaType === 'playlists' ) { #>
 							<div class="notice notice-warning">
 								<p>
 									<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
