@@ -21,11 +21,24 @@ class BC_Admin_Templates {
 	 * Adds all templates for Backbone application
 	 */
 	public function add_templates() {
+		global $pagenow;
 		?>
 
 		<?php /* Used by views/media-manager.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-media">
-			<div id="brightcove-media-frame-router" class="brightcove media-frame-router"></div>
+			<?php if ( 'admin.php' === $pagenow ) : ?>
+				<div class="brightcove brightcove-notices">
+					<# if( data.mediaType === 'playlists' ) { #>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+					<# } #>
+				</div>
+			<?php endif; ?>
+			<div id="brightcove-media-frame-router" class="brightcove media-frame-router">
+			</div>
 			<div class="brightcove-message message hidden"></div>
 			<div id="brightcove-media-frame-content" class="brightcove media-frame-content">
 				<span id="js-media-loading" class="spinner"></span>
@@ -1275,34 +1288,37 @@ class BC_Admin_Templates {
 							<# }); #>
 					</select>
 					<# }#>
-
-					<# if( data.mediaType === 'videoexperience' ) { #>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<# } #>
-
-					<# if ( data.mediaType === 'playlistexperience' ) { #>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<# } #>
-
-					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
+					<?php if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) : ?>
+						<# if( data.mediaType === 'videoexperience' ) { #>
 						<div class="notice notice-warning">
 							<p>
-								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+								<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
 							</p>
 						</div>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<# } #>
+
+						<# if ( data.mediaType === 'playlistexperience' ) { #>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<# } #>
+
+						<# if( data.mediaType === 'playlists' ) { #>
+							<div class="notice notice-warning">
+								<p>
+									<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+								</p>
+							</div>
+						<# } #>
+					<?php endif; ?>
+					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
 						<p>
 							<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
 							<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
