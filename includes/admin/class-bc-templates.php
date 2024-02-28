@@ -764,7 +764,6 @@ class BC_Admin_Templates {
 						?>
 
 						<label for="video-player">
-							<#  console.log(wpbc.players[data.account_id]);  #>
 							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
 						</label>
 						<select name="video-player" id="video-player" class="right-col">
@@ -1076,8 +1075,6 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
 						</label>
 						<select name="video-player" id="video-player" class="right-col">
-
-						<#  console.log(wpbc.players[data.account_id]);  #>
 							<# _.each( wpbc.players[data.account_id], function ( player ) { #>
 								<# if ( player.is_playlist ) { #>
 									<option value="{{ player.id }}">{{ player.name }}</option>
