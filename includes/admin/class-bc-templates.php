@@ -251,13 +251,13 @@ class BC_Admin_Templates {
 								<ul class="bc-labels-list">
 									<# _.each( data.labels, function( label ) { #>
 									<li>
-										<button class="remove-label" aria-label="<?php esc_html_e( 'Remove Label', 'brightcove' ); ?>" data-label="{{label}}"><span aria-hidden="true">×</span></button>
+										<button class="remove-label" aria-label="<?php esc_html_e( 'Remove label: ', 'brightcove' ); ?>{{label}}" data-label="{{label}}"><span aria-hidden="true">×</span></button>
 										<span class="label-name">{{label}}</span>
 									</li>
 									<# }); #>
 								</ul>
 							<div class="add-labels-container">
-								<select class="brightcove-labels" name="labels">
+								<select class="brightcove-labels" name="labels" aria-label="<?php esc_html_e( 'Select Label', 'brightcove' ); ?>">
 									<option><?php esc_html_e( 'Select Label', 'brightcove' ); ?></option>
 									<# _.each( wpbc.preload.labels, function( label ) { #>
 									<option

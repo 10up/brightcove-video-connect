@@ -504,7 +504,7 @@ var VideoEditView = BrightcoveView.extend({
 		elem.selectedIndex = 0;
 
 		const listItem = `<li>
-											<button class="remove-label" aria-label="Remove Label" data-label="${value}"><span aria-hidden="true">×</span></button>
+											<button class="remove-label" aria-label="Remove label: ${value}" data-label="${value}"><span aria-hidden="true">×</span></button>
 											<span class="label-name">${value}</span>
 										</li>`;
 
