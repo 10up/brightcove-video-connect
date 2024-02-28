@@ -12,6 +12,8 @@ var VideoEditView = BrightcoveView.extend({
 		'click    .caption-secondary-fields .delete': 'removeCaptionRow',
 		'click    .add-remote-caption': 'addCaptionRow',
 		'change   .brightcove-variant': 'changeVariant',
+		'click    .bc-labels-list .remove-label': 'removeLabel',
+		'click 		.add-bc-label': 'addLabel',
 	},
 
 	/**
@@ -383,7 +385,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('captions', captions);
 
 		// Labels
-		var labels = this.$el.find('.brightcove-labels').val() || [];
+		const labels = this.$el.find('.brightcove-labels-value').val()?.split(',') || [];
 		this.model.set('labels', labels);
 
 		// Custom fields
@@ -488,6 +490,53 @@ var VideoEditView = BrightcoveView.extend({
 	},
 
 	/**
+	 * Adds a label.
+	 * @param {Event} event
+	 */
+	addLabel: function (event) {
+		event.preventDefault();
+
+		const elem = this.el.querySelector('.brightcove-labels');
+		const labelsValElem = this.el.querySelector('.brightcove-labels-value');
+		const value = elem.value;
+
+		elem.querySelector('option[value="' + value + '"]').setAttribute('disabled', true);
+		elem.selectedIndex = 0;
+
+		const listItem = `<li>
+											<button class="remove-label" aria-label="Remove Label" data-label="${value}"><span aria-hidden="true">×</span></button>
+											<span class="label-name">${value}</span>
+										</li>`;
+
+		this.el.querySelector('.bc-labels-list').insertAdjacentHTML('beforeend', listItem);
+
+		labelsValElem.value = labelsValElem.value ? labelsValElem.value + ',' + value : value;
+	},
+
+	/**
+	 * Removes a label.
+	 * @param {Event} event
+	 */
+	removeLabel: function (event) {
+		event.preventDefault();
+
+		const label = event.currentTarget.dataset.label;
+
+		const labelsValElem = this.el.querySelector('.brightcove-labels-value');
+		const labelElem = this.el.querySelector('.brightcove-labels');
+		const selectedLabels = labelsValElem.value.split(',');
+
+		var index = selectedLabels.indexOf(label);
+		if (index > -1) {
+			selectedLabels.splice(index, 1);
+		}
+
+		labelsValElem.value = selectedLabels.join(',');
+		labelElem.querySelector('option[value="' + label + '"]').removeAttribute('disabled');
+		event.currentTarget.parentElement.remove();
+	},
+
+	/**
 	 * Render the actual view for the Video Edit screen.
 	 *
 	 * @param {Object} options
@@ -510,7 +559,9 @@ var VideoEditView = BrightcoveView.extend({
 
 		this.$('.brightcove-datetime').datepicker();
 
-		this.$('.brightcove-labels').select2();
+		// console.log(options);
+		// this.$('.add-bc-label').on('click', this.addLabel.bind(this));
+		// this.$('.brightcove-labels').select2({ dropdownAutoWidth: true });
 
 		this.renderCustomFields();
 

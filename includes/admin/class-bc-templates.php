@@ -246,23 +246,30 @@ class BC_Admin_Templates {
 					<div class="setting labels">
 						<span class="name"><?php esc_html_e( 'Labels', 'brightcove' ); ?></span>
 						<div class="setting-content">
-							<div>
-								<button class="button-secondary add-bc-label">
-									<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
-								</button>
-								<a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
-									<?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
-								</a>
-							</div>
-							<div id="js-bc-labels">
-								<select class="brightcove-labels" multiple name="labels">
+							<div class="bc-labels-container">
+								<input type="hidden" class="brightcove-labels-value" value="{{data.labels}}">
+								<ul class="bc-labels-list">
+									<# _.each( data.labels, function( label ) { #>
+									<li>
+										<button class="remove-label" aria-label="<?php esc_html_e( 'Remove Label', 'brightcove' ); ?>" data-label="{{label}}"><span aria-hidden="true">×</span></button>
+										<span class="label-name">{{label}}</span>
+									</li>
+									<# }); #>
+								</ul>
+							<div class="add-labels-container">
+								<select class="brightcove-labels" name="labels">
+									<option><?php esc_html_e( 'Select Label', 'brightcove' ); ?></option>
 									<# _.each( wpbc.preload.labels, function( label ) { #>
 									<option
-										<# if ( (data.labels)?.includes(label) ) { #>selected<# } #>
+										<# if ( (data.labels)?.includes(label) ) { #>disabled<# } #>
 										value="{{label}}">{{label}}
 									</option>
 									<# }); #>
 								</select>
+								<button class="button-secondary add-bc-label">
+									<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
+								</button>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -757,6 +764,7 @@ class BC_Admin_Templates {
 						?>
 
 						<label for="video-player">
+							<#  console.log(wpbc.players[data.account_id]);  #>
 							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
 						</label>
 						<select name="video-player" id="video-player" class="right-col">
@@ -1068,6 +1076,8 @@ class BC_Admin_Templates {
 							<?php esc_html_e( 'Video Player: ', 'brightcove' ); ?>
 						</label>
 						<select name="video-player" id="video-player" class="right-col">
+
+						<#  console.log(wpbc.players[data.account_id]);  #>
 							<# _.each( wpbc.players[data.account_id], function ( player ) { #>
 								<# if ( player.is_playlist ) { #>
 									<option value="{{ player.id }}">{{ player.name }}</option>
