@@ -13,7 +13,7 @@ var VideoEditView = BrightcoveView.extend({
 		'click    .add-remote-caption': 'addCaptionRow',
 		'change   .brightcove-variant': 'changeVariant',
 		'click    .bc-labels-list .remove-label': 'removeLabel',
-		'click 		.add-bc-label': 'addLabel',
+		'click    .bc-add-label': 'addLabel',
 	},
 
 	/**
@@ -521,7 +521,6 @@ var VideoEditView = BrightcoveView.extend({
 		event.preventDefault();
 
 		const label = event.currentTarget.dataset.label;
-
 		const labelsValElem = this.el.querySelector('.brightcove-labels-value');
 		const labelElem = this.el.querySelector('.brightcove-labels');
 		const selectedLabels = labelsValElem.value.split(',');
@@ -558,10 +557,6 @@ var VideoEditView = BrightcoveView.extend({
 		this.$el.html(this.template(options));
 
 		this.$('.brightcove-datetime').datepicker();
-
-		// console.log(options);
-		// this.$('.add-bc-label').on('click', this.addLabel.bind(this));
-		// this.$('.brightcove-labels').select2({ dropdownAutoWidth: true });
 
 		this.renderCustomFields();
 
