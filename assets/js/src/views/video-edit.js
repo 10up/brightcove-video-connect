@@ -385,7 +385,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('captions', captions);
 
 		// Labels
-		const labels = this.$el.find('.brightcove-labels-value').val()?.split(',') || [];
+		const labels = this.$el.find('.bc-labels-value').val()?.split(',') || [];
 		this.model.set('labels', labels);
 
 		// Custom fields
@@ -497,7 +497,7 @@ var VideoEditView = BrightcoveView.extend({
 		event.preventDefault();
 
 		const elem = this.el.querySelector('.brightcove-labels');
-		const labelsValElem = this.el.querySelector('.brightcove-labels-value');
+		const labelsValElem = this.el.querySelector('.bc-labels-value');
 		const value = elem.value;
 
 		elem.querySelector('option[value="' + value + '"]').setAttribute('disabled', true);
@@ -521,7 +521,7 @@ var VideoEditView = BrightcoveView.extend({
 		event.preventDefault();
 
 		const label = event.currentTarget.dataset.label;
-		const labelsValElem = this.el.querySelector('.brightcove-labels-value');
+		const labelsValElem = this.el.querySelector('.bc-labels-value');
 		const labelElem = this.el.querySelector('.brightcove-labels');
 		const selectedLabels = labelsValElem.value.split(',');
 

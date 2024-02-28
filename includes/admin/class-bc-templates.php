@@ -247,7 +247,7 @@ class BC_Admin_Templates {
 						<span class="name"><?php esc_html_e( 'Labels', 'brightcove' ); ?></span>
 						<div class="setting-content">
 							<div class="bc-labels-container">
-								<input type="hidden" class="brightcove-labels-value" value="{{data.labels}}">
+								<input type="hidden" class="bc-labels-value" value="{{data.labels}}">
 								<ul class="bc-labels-list">
 									<# _.each( data.labels, function( label ) { #>
 									<li>
@@ -266,7 +266,7 @@ class BC_Admin_Templates {
 									</option>
 									<# }); #>
 								</select>
-								<button class="button-secondary add-bc-label">
+								<button class="button-secondary bc-add-label">
 									<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
 								</button>
 							</div>
