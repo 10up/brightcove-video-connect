@@ -390,7 +390,6 @@ class BC_Setup {
 		);
 
 		$dependencies = array(
-			'jquery-ui-autocomplete',
 			'jquery',
 			'backbone',
 			'wp-backbone',
