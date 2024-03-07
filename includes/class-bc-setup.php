@@ -505,7 +505,7 @@ class BC_Setup {
 
 			$notices[] = array(
 				'message' => sprintf(
-					// translators: %1$s: URL 1, %2$s: URL 2
+					// translators: %1$s: Update settings URL, %2$s: Force refresh URL.
 					esc_html__( 'It looks like one or more of your accounts API authentication has changed recently. Please update your settings <a href="%1$s"><strong>here</strong></a>. Or click <a href="%2$s"><strong>here</strong></a> to try again.', 'brightcove' ),
 					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
 					esc_url( $force_refresh_url )
