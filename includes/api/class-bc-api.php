@@ -123,7 +123,7 @@ abstract class BC_API {
 			$successful_response_codes = array( 200, 201, 202, 204 );
 
 			/**
-			 * Filter whether to cache the api response.
+			 * Filter whether to cache the api fail response.
 			 *
 			 * @since 2.8.5
 			 * @hook brightcove_cache_api_fail_response
@@ -147,10 +147,10 @@ abstract class BC_API {
 	 * Sends the request to the remote server using the appropriate method and
 	 * logs any errors in the event of failures.
 	 *
-	 * @param string  $url                  the endpoint to connect to
-	 * @param string  $method               the http method to use
-	 * @param array   $data                 array of further data to send to the server
-	 * @param boolean $force_new_token      whether or not to force obtaining a new oAuth token
+	 * @param string  $url             the endpoint to connect to
+	 * @param string  $method          the http method to use
+	 * @param array   $data            array of further data to send to the server
+	 * @param boolean $force_new_token whether or not to force obtaining a new oAuth token
 	 * @param boolean $cache_fail_response  whether or not to cache the api fail response
 	 *
 	 * @return mixed the return data from the call of false if a failure occurred
