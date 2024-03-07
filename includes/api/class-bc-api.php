@@ -131,7 +131,7 @@ abstract class BC_API {
 			 * @param {string} $url The URL of the request.
 			 * @param {array} $args The arguments of the request.
 			 *
-			 * @return bool Whether to cache the response.
+			 * @return bool Whether to cache the fail response.
 			 */
 			$cache_fail_response = apply_filters( 'brightcove_cache_api_fail_response', $cache_fail_response, $url, $args );
 
