@@ -745,13 +745,7 @@ class BC_Utility {
 		$type       = sanitize_text_field( $type );
 		$expiration = absint( $expiration );
 
-		$transient_value = get_transient( $key );
-
-		if ( false === $transient_value ) {
-			return set_transient( $key, $value, $expiration );
-		}
-
-		return true; // already cached
+		return set_transient( $key, $value, $expiration );
 	}
 
 	/**
