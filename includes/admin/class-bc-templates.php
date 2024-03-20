@@ -21,11 +21,24 @@ class BC_Admin_Templates {
 	 * Adds all templates for Backbone application
 	 */
 	public function add_templates() {
+		global $pagenow;
 		?>
 
 		<?php /* Used by views/media-manager.js */ ?>
 		<script type="text/html" id="tmpl-brightcove-media">
-			<div id="brightcove-media-frame-router" class="brightcove media-frame-router"></div>
+			<?php if ( 'admin.php' === $pagenow ) : ?>
+				<div class="brightcove brightcove-notices">
+					<# if( data.mediaType === 'playlists' ) { #>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+					<# } #>
+				</div>
+			<?php endif; ?>
+			<div id="brightcove-media-frame-router" class="brightcove media-frame-router">
+			</div>
 			<div class="brightcove-message message hidden"></div>
 			<div id="brightcove-media-frame-content" class="brightcove media-frame-content">
 				<span id="js-media-loading" class="spinner"></span>
@@ -246,34 +259,30 @@ class BC_Admin_Templates {
 					<div class="setting labels">
 						<span class="name"><?php esc_html_e( 'Labels', 'brightcove' ); ?></span>
 						<div class="setting-content">
-							<div>
-								<button class="button-secondary add-bc-label">
+							<div class="bc-labels-container">
+								<input type="hidden" class="bc-labels-value" value="{{data.labels}}">
+								<ul class="bc-labels-list">
+									<# _.each( data.labels, function( label ) { #>
+									<li>
+										<button class="remove-label" aria-label="<?php esc_html_e( 'Remove label: ', 'brightcove' ); ?>{{label}}" data-label="{{label}}"><span aria-hidden="true">×</span></button>
+										<span class="label-name">{{label}}</span>
+									</li>
+									<# }); #>
+								</ul>
+							<div class="add-labels-container">
+								<select class="brightcove-labels" name="labels" aria-label="<?php esc_html_e( 'Select Label', 'brightcove' ); ?>">
+									<option><?php esc_html_e( 'Select Label', 'brightcove' ); ?></option>
+									<# _.each( wpbc.preload.labels, function( label ) { #>
+									<option
+										<# if ( (data.labels)?.includes(label) ) { #>disabled<# } #>
+										value="{{label}}">{{label}}
+									</option>
+									<# }); #>
+								</select>
+								<button class="button-secondary bc-add-label">
 									<?php esc_html_e( 'Add Label', 'brightcove' ); ?>
 								</button>
-								<a class="button-secondary" href="<?php echo esc_url( admin_url() . 'admin.php?page=brightcove-labels' ); ?>">
-									<?php esc_html_e( 'Create New Label', 'brightcove' ); ?>
-								</a>
 							</div>
-							<div id="js-bc-labels">
-								<# _.each( data.labels, function( label ) { #>
-								<div id="js-caption-fields" class="bc-label-repeater repeater-row">
-									<input type="text" class="brightcove-labels" value="{{label}}">
-
-									<div class="bc-label-secondary-fields">
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
-								<# }); #>
-								<div id="js-bc-label-empty-row" class="bc-label-repeater repeater-row empty-row">
-									<input id="" type="text" class="brightcove-labels" value=""/>
-									<div class="bc-label-secondary-fields">
-										<div class="action-row">
-											<a href="#" class="delete"><?php esc_html_e( 'Remove Label', 'brightcove' ); ?></a>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -1275,34 +1284,37 @@ class BC_Admin_Templates {
 							<# }); #>
 					</select>
 					<# }#>
-
-					<# if( data.mediaType === 'videoexperience' ) { #>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<# } #>
-
-					<# if ( data.mediaType === 'playlistexperience' ) { #>
-					<div class="notice notice-warning">
-						<p>
-							<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
-						</p>
-					</div>
-					<# } #>
-
-					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
+					<?php if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) : ?>
+						<# if( data.mediaType === 'videoexperience' ) { #>
 						<div class="notice notice-warning">
 							<p>
-								<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+								<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
 							</p>
 						</div>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Leave videos unselected for default Experience behavior.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<# } #>
+
+						<# if ( data.mediaType === 'playlistexperience' ) { #>
+						<div class="notice notice-warning">
+							<p>
+								<?php esc_html_e( 'Please note that you can create new Experiences only from Brightcove.', 'brightcove' ); ?>
+							</p>
+						</div>
+						<# } #>
+
+						<# if( data.mediaType === 'playlists' ) { #>
+							<div class="notice notice-warning">
+								<p>
+									<?php esc_html_e( 'Please note that you can create new playlists only from Brightcove.', 'brightcove' ); ?>
+								</p>
+							</div>
+						<# } #>
+					<?php endif; ?>
+					<# if( data.mediaType === 'playlists' || data.mediaType === 'playlistexperience' ) { #>
 						<p>
 							<input type="checkbox" name="brightcove-empty-playlists" id="brightcove-empty-playlists" class="brightcove-empty-playlists attachment-filters">
 							<label for="brightcove-empty-playlists"><?php esc_html_e( 'Hide Empty Playlists', 'brightcove' ); ?></label>
