@@ -1920,11 +1920,11 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "10up"
+msgid "Brightcove"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://10up.com"
+msgid "https://brightcove.com"
 msgstr ""
 
 #: includes/admin/class-bc-templates.php:619

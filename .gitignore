@@ -4,3 +4,4 @@ node_modules
 release
 .sass-cache
 vendor
+.DS_Store
