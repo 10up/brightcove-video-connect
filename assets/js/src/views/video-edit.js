@@ -385,7 +385,8 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('captions', captions);
 
 		// Labels
-		const labels = this.$el.find('.bc-labels-value').val()?.split(',') || [];
+		let labels = this.$el.find('.bc-labels-value').val();
+		labels = labels !== '' ? labels.split(',') : [];
 		this.model.set('labels', labels);
 
 		// Custom fields
