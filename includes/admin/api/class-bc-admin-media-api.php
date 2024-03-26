@@ -173,7 +173,7 @@ class BC_Admin_Media_API {
 
 		$labels = array();
 		if ( isset( $_POST['labels'] ) ) {
-			foreach ( $_POST['labels'] as $label ) {
+			foreach ( array_filter( $_POST['labels'] ) as $label ) {
 				$labels[] = sanitize_text_field( $label );
 			}
 		}
