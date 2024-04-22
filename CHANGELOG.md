@@ -118,7 +118,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Video and Playlist experiences displays wrong block settings. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#250](https://github.com/10up/brightcove-video-connect/pull/250).
 - Update attribute type from int to string. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#246](https://github.com/10up/brightcove-video-connect/pull/246).
 - Pass sizing attribute to determine if responsiveness should be enabled. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#249](https://github.com/10up/brightcove-video-connect/pull/249).
-- Fix broken Brightcove experiences embedding. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#248](https://github.com/10up/brightcove-video-connect/pull/248)
+- Fix broken Brightcove experiences embedding. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#248](https://github.com/10up/brightcove-video-connect/pull/248).
 
 ## [2.5.0] - 2021-12-21
 
