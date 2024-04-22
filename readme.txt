@@ -60,7 +60,6 @@ __Fixed:__
 * Limit API calls on unwanted admin pages. Props [@burhandodhy](https://github.com/burhandodhy).
 * Video update API fails when labels are empty. Props [@burhandodhy](https://github.com/burhandodhy).
 
-
 = 2.8.4 - 2023-11-30 =
 
 __Added:__
