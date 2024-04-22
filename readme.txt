@@ -49,7 +49,7 @@ __Changed:__
 
 __Fixed:__
 
-* Change null to `''` for better support with PHP 8.2 and WP 6.2+. Props [@jonnynews](https://github.com/jonnynews).
+* First parameter type of add_submenu_page() when no parent slug is sent. Props [@jonnynews](https://github.com/jonnynews).
 * Display error message when the previous request is aborted. Props [@burhandodhy](https://github.com/burhandodhy).
 * PHP warning while editing a label. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia).
 * PHP warning while saving a video. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia).

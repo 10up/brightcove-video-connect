@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Update readme and assets. Props [@jeffpaul](https://github.com/jeffpaul) via [#375](https://github.com/10up/brightcove-video-connect/pull/375).
 
 ### Fixed
-- Change null to `''` for better support with PHP 8.2 and WP 6.2+. Props [@jonnynews](https://github.com/jonnynews) via [#365](https://github.com/10up/brightcove-video-connect/pull/365).
+- First parameter type of add_submenu_page() when no parent slug is sent. Props [@jonnynews](https://github.com/jonnynews) via [#365](https://github.com/10up/brightcove-video-connect/pull/365).
 - Display error message when the previous request is aborted. Props [@burhandodhy](https://github.com/burhandodhy) via [#368](https://github.com/10up/brightcove-video-connect/pull/368).
 - PHP warning while editing a label. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia) via [#369](https://github.com/10up/brightcove-video-connect/pull/369).
 - PHP warning while saving a video. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia) via [#370](https://github.com/10up/brightcove-video-connect/pull/370).
