@@ -270,7 +270,6 @@ class BC_Setup {
 	 * @return array|false
 	 */
 	public static function preload_params() {
-
 		global $bc_accounts;
 
 		$tags = new BC_Tags();
@@ -283,8 +282,7 @@ class BC_Setup {
 
 		if ( BC_Utility::current_user_can_brightcove() ) {
 
-			$cms_api         = new BC_CMS_API();
-			$admin_media_api = new BC_Admin_Media_API();
+			$cms_api = new BC_CMS_API();
 
 			if ( false !== strpos( $uri, BC_Admin_Menu::get_playlists_page_uri_component() ) ) {
 				$type                = 'playlists';
@@ -298,7 +296,9 @@ class BC_Setup {
 		$params['nonce']   = wp_create_nonce( '_bc_ajax_search_nonce' );
 		$params['tags']    = $tags->get_tags();
 		$params['folders'] = array();
-		if ( BC_Utility::current_user_can_brightcove() ) {
+
+		$current_page = get_current_screen();
+		if ( BC_Utility::current_user_can_brightcove() && ( 'post' === $current_page->id || false !== strpos( $current_page->id, 'brightcove_page' ) ) ) {
 			$params['folders'] = $cms_api->fetch_folders();
 			$params['labels']  = $cms_api->get_account_labels();
 		}
@@ -342,7 +342,6 @@ class BC_Setup {
 		$params['defaultAccountId'] = ! empty( $default_account['account_id'] ) ? $default_account['account_id'] : '';
 
 		return $params;
-
 	}
 
 	/**
@@ -355,19 +354,11 @@ class BC_Setup {
 
 		$suffix = BC_Utility::get_suffix();
 
-		$player_api = new BC_Player_Management_API2();
-		$players    = $player_api->get_all_players();
-
-		$experiences_api = new BC_Experiences_API();
-		$experiences     = $experiences_api->get_experiences();
-
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => self::preload_params(),
 			'wp_version'     => $wp_version,
 			'languages'      => BC_Utility::languages(),
-			'players'        => $players,
-			'experiences'    => $experiences,
 			'str_badformat'  => esc_html__( 'This file is not the proper format. Please use .vtt files, for more information visit', 'brightcove' ),
 			'badformat_link' => esc_url( 'https://support.brightcove.com/en/video-cloud/docs/adding-captions-videos#captionsfile' ),
 			'str_addcaption' => esc_html__( 'Add Another Caption', 'brightcove' ),
@@ -377,6 +368,18 @@ class BC_Setup {
 			'str_apifailure' => esc_html__( "Sorry! We weren't able to reach the Brightcove API even after trying a few times. Please try refreshing the page.", 'brightcove' ),
 			'posts_per_page' => absint( apply_filters( 'brightcove_posts_per_page', 100 ) ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 		);
+
+		$current_page = get_current_screen();
+		if ( 'post' === $current_page->id ) {
+			$player_api = new BC_Player_Management_API2();
+			$players    = $player_api->get_all_players();
+
+			$experiences_api = new BC_Experiences_API();
+			$experiences     = $experiences_api->get_experiences();
+
+			$js_variable['experiences'] = $experiences;
+			$js_variable['players']     = $players;
+		}
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js', array(), BRIGHTCOVE_VERSION, false );
 
@@ -390,7 +393,6 @@ class BC_Setup {
 		);
 
 		$dependencies = array(
-			'jquery-ui-autocomplete',
 			'jquery',
 			'backbone',
 			'wp-backbone',
@@ -471,7 +473,6 @@ class BC_Setup {
 		}
 
 		return $mime_types;
-
 	}
 
 	/**
@@ -494,12 +495,20 @@ class BC_Setup {
 		}
 
 		if ( count( $bc_accounts->get_sanitized_all_accounts() ) > 0 && empty( $players ) && is_array( $players ) ) {
+			$force_refresh_url = add_query_arg(
+				[
+					'bc_refresh' => 1,
+					'nonce'      => wp_create_nonce( 'bc_refresh' ),
+				],
+				admin_url( 'admin.php?page=brightcove-sources' )
+			);
+
 			$notices[] = array(
 				'message' => sprintf(
-					'%s <a href="%s"><strong>%s</strong></a>',
-					esc_html__( 'It looks like one or more of your accounts API authentication changed recently. Please update your settings ', 'brightcove' ),
+					// translators: %1$s: Update settings URL, %2$s: Force refresh URL.
+					esc_html__( 'It looks like one or more of your accounts API authentication has changed recently. Please update your settings <a href="%1$s"><strong>here</strong></a>. Or click <a href="%2$s"><strong>here</strong></a> to try again.', 'brightcove' ),
 					esc_url( admin_url( 'admin.php?page=brightcove-sources' ) ),
-					esc_html__( 'here', 'brightcove' )
+					esc_url( $force_refresh_url )
 				),
 				'type'    => 'error',
 			);

@@ -3,11 +3,11 @@
   "private": true,
   "title": "brightcove-video-connect",
   "description": "A Brightcove plugin for WordPress.",
-  "version": "2.8.4",
+  "version": "2.8.5",
   "homepage": "https://wordpress.org/plugins/brightcove-video-connect/",
   "author": {
-    "name": "10up",
-    "email": "sales@10up.com"
+    "name": "Brightcove",
+    "email": "sales@brightcove.com"
   },
   "scripts": {
     "watch": "grunt watch",

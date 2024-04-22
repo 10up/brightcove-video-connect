@@ -173,7 +173,7 @@ class BC_Admin_Media_API {
 
 		$labels = array();
 		if ( isset( $_POST['labels'] ) ) {
-			foreach ( $_POST['labels'] as $label ) {
+			foreach ( array_filter( $_POST['labels'] ) as $label ) {
 				$labels[] = sanitize_text_field( $label );
 			}
 		}
@@ -249,8 +249,9 @@ class BC_Admin_Media_API {
 
 		} elseif ( 'videos' === $_POST['type'] ) {
 			$type_msg = 'video';
-			if ( 'variant' === $_POST['sub_type'] ) {
-				$status = $this->videos->update_bc_video( $updated_data, sanitize_text_field( $_POST['sub_type'] ) );
+			$sub_type = isset( $_POST['sub_type'] ) ? sanitize_text_field( $_POST['sub_type'] ) : '';
+			if ( 'variant' === $sub_type ) {
+				$status = $this->videos->update_bc_video( $updated_data, $sub_type );
 			} else {
 				$status = $this->videos->update_bc_video( $updated_data );
 
