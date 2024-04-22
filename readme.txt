@@ -43,9 +43,9 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 __Changed:__
 
-* Update documentation and assets. Props [@jeffpaul](https://github.com/jeffpaul).
 * Add Select field for labels. Props [@burhandodhy](https://github.com/burhandodhy).
 * Cache the API response and display a message from where user can retry the API again. Props [@burhandodhy](https://github.com/burhandodhy) and [@jonnynews](https://github.com/jonnynews).
+* Update readme and assets. Props [@jeffpaul](https://github.com/jeffpaul).
 
 __Fixed:__
 

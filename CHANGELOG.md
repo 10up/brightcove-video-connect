@@ -16,9 +16,9 @@ All notable changes to this project will be documented in this file, per [the Ke
 ## [2.8.5] - 2023-04-22
 
 ### Changed
-- Update documentation and assets. Props [@jeffpaul](https://github.com/jeffpaul) via [#375](https://github.com/10up/brightcove-video-connect/pull/375).
 - Add Select field for labels. Props [@burhandodhy](https://github.com/burhandodhy) via [#378](https://github.com/10up/brightcove-video-connect/pull/378).
 - Cache the API response and display a message from where user can retry the API again. Props [@burhandodhy](https://github.com/burhandodhy) and [@jonnynews](https://github.com/jonnynews) via [#380](https://github.com/10up/brightcove-video-connect/pull/380).
+- Update readme and assets. Props [@jeffpaul](https://github.com/jeffpaul) via [#375](https://github.com/10up/brightcove-video-connect/pull/375).
 
 ### Fixed
 - Change null to `''` for better support with PHP 8.2 and WP 6.2+. Props [@jonnynews](https://github.com/jonnynews) via [#365](https://github.com/10up/brightcove-video-connect/pull/365).
