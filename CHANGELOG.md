@@ -13,6 +13,25 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Security
 -->
 
+## [2.8.5] - 2023-04-22
+
+### Changed
+- Update documentation and assets. Props [@jeffpaul](https://github.com/jeffpaul) via [#375](https://github.com/10up/brightcove-video-connect/pull/375).
+- Add Select field for labels. Props [@burhandodhy](https://github.com/burhandodhy) via [#378](https://github.com/10up/brightcove-video-connect/pull/378).
+- Cache the API response and display a message from where user can retry the API again. Props [@burhandodhy](https://github.com/burhandodhy) and [@jonnynews](https://github.com/jonnynews) via [#380](https://github.com/10up/brightcove-video-connect/pull/380).
+
+### Fixed
+- Change null to `''` for better support with PHP 8.2 and WP 6.2+. Props [@jonnynews](https://github.com/jonnynews) via [#365](https://github.com/10up/brightcove-video-connect/pull/365).
+- Display error message when the previous request is aborted. Props [@burhandodhy](https://github.com/burhandodhy) via [#368](https://github.com/10up/brightcove-video-connect/pull/368).
+- PHP warning while editing a label. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia) via [#369](https://github.com/10up/brightcove-video-connect/pull/369).
+- PHP warning while saving a video. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia) via [#370](https://github.com/10up/brightcove-video-connect/pull/370).
+- Move playlist notice above controls bar. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia) via [#371](https://github.com/10up/brightcove-video-connect/pull/371).
+- Clicking on the "Edit" and "Preview" buttons for the inactive videos breakes the layout. Props [@burhandodhy](https://github.com/burhandodhy) and [@felipeelia](https://github.com/felipeelia) via [#372](https://github.com/10up/brightcove-video-connect/pull/372).
+- Add support for special characters. Props [@burhandodhy](https://github.com/burhandodhy) and [@cr0ybot](https://github.com/cr0ybot) via [#373](https://github.com/10up/brightcove-video-connect/pull/373).
+- Search box alignment in Media modal. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia) via [#376](https://github.com/10up/brightcove-video-connect/pull/376).
+- Limit API calls on unwanted admin pages. Props [@burhandodhy](https://github.com/burhandodhy) via [#379](https://github.com/10up/brightcove-video-connect/pull/379).
+- Video update API fails when labels are empty. Props [@burhandodhy](https://github.com/burhandodhy) via [#381](https://github.com/10up/brightcove-video-connect/pull/381).
+
 ## [2.8.4] - 2023-11-30
 
 ### Added
@@ -99,7 +118,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Video and Playlist experiences displays wrong block settings. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#250](https://github.com/10up/brightcove-video-connect/pull/250).
 - Update attribute type from int to string. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#246](https://github.com/10up/brightcove-video-connect/pull/246).
 - Pass sizing attribute to determine if responsiveness should be enabled. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#249](https://github.com/10up/brightcove-video-connect/pull/249).
-- Fix broken Brightcove experiences embedding. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#248](https://github.com/10up/brightcove-video-connect/pull/248)  
+- Fix broken Brightcove experiences embedding. Props [@Rahmon](https://github.com/Rahmon), and [@oscarssanchez](https://github.com/oscarssanchez) via [#248](https://github.com/10up/brightcove-video-connect/pull/248)
 
 ## [2.5.0] - 2021-12-21
 
@@ -136,7 +155,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Breaking Changes
 - BC_Utility API changed:
   - See `set_cache_item` and `delete_cache_item` in `includes/class-bc-utility.php`.
-  - Removed `remove_deleted_players` function. 
+  - Removed `remove_deleted_players` function.
 ### Fixed
 - Undefined index warnings. Props [@sanketio](https://github.com/sanketio) via [#197](https://github.com/10up/brightcove-video-connect/pull/197).
 - Typo for the `$allowedtags` global used in conjunction with wp_kses. Props [@theskinnyghost](https://github.com/theskinnyghost) via [#203](https://github.com/10up/brightcove-video-connect/pull/203).
@@ -443,6 +462,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.5]: https://github.com/10up/brightcove-video-connect/compare/2.8.4...2.8.5
 [2.8.4]: https://github.com/10up/brightcove-video-connect/compare/2.8.3...2.8.4
 [2.8.3]: https://github.com/10up/brightcove-video-connect/compare/2.8.2...2.8.3
 [2.8.2]: https://github.com/10up/brightcove-video-connect/compare/2.8.1...2.8.2
