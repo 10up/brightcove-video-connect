@@ -130,7 +130,9 @@ div.brightcove-uploader div.brightcove-messages .updated {
   .media-frame:not(.hide-menu) .media-frame-menu {
     width: 300px; } }
 
-.brightcove.media-frame-menu .attachment-detail .playlist-details label.experiencelabel, .brightcove.media-frame-menu .attachment-detail .video-details label.experiencelabel, select.experienceplayer {
+.brightcove.media-frame-menu .attachment-detail .playlist-details label.experiencelabel,
+.brightcove.media-frame-menu .attachment-detail .video-details label.experiencelabel,
+select.experienceplayer {
   width: 100%; }
 
 .bc-page-icon {
@@ -634,14 +636,40 @@ div.brightcove-uploader div.brightcove-messages .updated {
     .brightcove.video-edit .caption-secondary-fields label:nth-child(1) {
       padding-right: 1em; }
     .brightcove.video-edit .caption-secondary-fields label span,
-    .brightcove.video-edit .caption-secondary-fields label input[type="text"],
+    .brightcove.video-edit .caption-secondary-fields label input[type='text'],
     .brightcove.video-edit .caption-secondary-fields label select {
       margin: 0;
       min-width: 100%;
       text-align: left;
       width: 100%; }
-    .brightcove.video-edit .caption-secondary-fields label input[type="checkbox"] {
+    .brightcove.video-edit .caption-secondary-fields label input[type='checkbox'] {
       margin: auto; }
+
+.brightcove.video-edit .bc-labels-list {
+  margin: 0;
+  text-align: left; }
+  .brightcove.video-edit .bc-labels-list li {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #8c8f94;
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    white-space: nowrap; }
+  .brightcove.video-edit .bc-labels-list button {
+    background-color: #f6f7f7;
+    border-bottom-left-radius: 4px;
+    border-right: 1px solid #8c8f94;
+    border-top-left-radius: 4px;
+    border: none;
+    cursor: pointer;
+    padding: 10px; }
+  .brightcove.video-edit .bc-labels-list span {
+    float: none; }
+  .brightcove.video-edit .bc-labels-list .label-name {
+    padding: 10px; }
+
+.brightcove.video-edit .add-labels-container select {
+  margin-left: 0; }
 
 .playlist-edit.brightcove.attachment-details {
   width: 100%;
