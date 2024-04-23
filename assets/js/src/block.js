@@ -43,7 +43,7 @@
 			var autoplay = props.attributes.autoplay || '';
 			var playsinline = props.attributes.playsinline || '';
 			var pictureinpicture = props.attributes.picture_in_picture || '';
-			var languageDetection = props.attributes.language_detection || '';
+			var language_detection = props.attributes.language_detection || '';
 			var applicationId = props.attributes.application_id || '';
 			var embed = props.attributes.embed || '';
 			var mute = props.attributes.mute || '';
@@ -204,7 +204,7 @@
 					mute: '',
 					playsinline: '',
 					picture_in_picture: '',
-					languageDetection: '',
+					language_detection: '',
 					embed: attrs.named.embed,
 					sizing: attrs.named.sizing,
 					aspect_ratio: attrs.named.aspect_ratio,
@@ -546,7 +546,7 @@
 						!isExperience &&
 							el(components.CheckboxControl, {
 								label: __('Enable Language Detection', 'brightcove'),
-								checked: languageDetection,
+								checked: language_detection,
 								onChange: function (value) {
 									props.setAttributes({
 										...props.attributes,
@@ -554,7 +554,7 @@
 									});
 								},
 							}),
-						languageDetection === 'languagedetection' ||
+						language_detection === 'languagedetection' ||
 							pictureinpicture === 'pictureinpicture'
 							? el(
 									components.Disabled,
