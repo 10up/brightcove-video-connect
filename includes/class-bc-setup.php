@@ -298,7 +298,7 @@ class BC_Setup {
 		$params['folders'] = array();
 
 		$current_page = get_current_screen();
-		if ( BC_Utility::current_user_can_brightcove() && ( 'post' === $current_page->id || false !== strpos( $current_page->id, 'brightcove_page' ) ) ) {
+		if ( BC_Utility::current_user_can_brightcove() && ( $current_page && ( 'post' === $current_page->base || false !== strpos( $current_page->id, 'brightcove_page' ) ) ) ) {
 			$params['folders'] = $cms_api->fetch_folders();
 			$params['labels']  = $cms_api->get_account_labels();
 		}
@@ -370,7 +370,7 @@ class BC_Setup {
 		);
 
 		$current_page = get_current_screen();
-		if ( 'post' === $current_page->id ) {
+		if ( $current_page && 'post' === $current_page->base ) {
 			$player_api = new BC_Player_Management_API2();
 			$players    = $player_api->get_all_players();
 
