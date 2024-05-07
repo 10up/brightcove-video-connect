@@ -204,7 +204,7 @@
 					mute: '',
 					playsinline: '',
 					picture_in_picture: '',
-					languageDetection: '',
+					language_detection: '',
 					embed: attrs.named.embed,
 					sizing: attrs.named.sizing,
 					aspect_ratio: attrs.named.aspect_ratio,
