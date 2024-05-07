@@ -39,6 +39,13 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
+= 2.8.6 - 2023-05-07 =
+
+__Fixed:__
+
+- Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews).
+- Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc).
+
 = 2.8.5 - 2023-04-22 =
 
 __Changed:__
