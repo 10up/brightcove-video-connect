@@ -4,7 +4,7 @@ Contributors:      brightcove, 10up, oscarssanchez, collinsinternet, ivankk, tec
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, videos, video
 Tested up to:      6.5
-Stable tag:        2.8.5
+Stable tag:        2.8.6
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
