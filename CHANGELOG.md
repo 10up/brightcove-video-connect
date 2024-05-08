@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 - Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews) via [#389](https://github.com/10up/brightcove-video-connect/pull/389).
 - Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc) via [#390](https://github.com/10up/brightcove-video-connect/pull/390).
-- Bugfix: combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz/oscarssanchezz) via [#392](https://github.com/10up/brightcove-video-connect/pull/392).
+- Combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz) via [#392](https://github.com/10up/brightcove-video-connect/pull/392).
 
 ## [2.8.5] - 2024-04-22
 

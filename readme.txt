@@ -45,7 +45,7 @@ __Fixed:__
 
 * Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews).
 * Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc).
-* Bugfix: combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz/oscarssanchezz).
+* Combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz).
 
 = 2.8.5 - 2024-04-22 =
 
