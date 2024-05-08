@@ -439,8 +439,9 @@ class BC_CMS_API extends BC_API {
 			// If Post variables are being escaped, the encoded quote do not return the intended results from the API.
 			$query = stripslashes( $query );
 
-			$args['q'] = sanitize_text_field( $query );
-
+			// Per Brightcove API documentation, the query string should have + to play well with combined queries.
+			// See: https://apis.support.brightcove.com/cms/searching/cms-and-playback-apis-video-search-v2.html
+			$args['q'] = '+' . sanitize_text_field( $query );
 		}
 
 		if ( isset( $args['q'] ) && false === strpos( $args['q'], 'id:' ) ) {
