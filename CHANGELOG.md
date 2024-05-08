@@ -13,15 +13,15 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Security
 -->
 
-## [2.8.6] - 2023-05-07
+## [2.8.6] - 2024-05-08
 
 ### Fixed
 
 - Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews) via [#389](https://github.com/10up/brightcove-video-connect/pull/389).
 - Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc) via [#390](https://github.com/10up/brightcove-video-connect/pull/390).
+- Bugfix: combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz/oscarssanchezz) via [#392](https://github.com/10up/brightcove-video-connect/pull/392).
 
-
-## [2.8.5] - 2023-04-22
+## [2.8.5] - 2024-04-22
 
 ### Changed
 - Add Select field for labels. Props [@burhandodhy](https://github.com/burhandodhy) via [#378](https://github.com/10up/brightcove-video-connect/pull/378).

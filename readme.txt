@@ -39,14 +39,15 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
-= 2.8.6 - 2023-05-07 =
+= 2.8.6 - 2024-05-08 =
 
 __Fixed:__
 
-- Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews).
-- Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc).
+* Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews).
+* Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc).
+* Bugfix: combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz/oscarssanchezz).
 
-= 2.8.5 - 2023-04-22 =
+= 2.8.5 - 2024-04-22 =
 
 __Changed:__
 
