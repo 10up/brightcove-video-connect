@@ -19,7 +19,7 @@
 			'brightcove',
 		),
 		icon: 'video-alt3',
-		category: 'common',
+		category: 'media',
 		supports: {
 			inserter: userPermission,
 			html: false,
