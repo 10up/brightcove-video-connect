@@ -1162,7 +1162,7 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="<?php echo esc_url( $src ); ?>"><?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
+				<script src="<?php echo esc_url( $src ); ?>"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>
