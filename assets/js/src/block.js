@@ -170,11 +170,21 @@
 			}, [pictureinpicture]);
 
 			// Sanitize the IDs we need
-			var sanitizeIds = function (id) {
-				if (id?.indexOf('ref:') === 0) {
-					return id;
+			var sanitizeIds = function (ids) {
+				if (!ids) {
+					return ids;
 				}
-				return id?.replace(/\D/g, '');
+
+				return ids
+					.split(',')
+					.map(function (id) {
+						id = id.trim();
+						if (id.indexOf('ref:') === 0) {
+							return id;
+						}
+						return id.replace(/\D/g, '');
+					})
+					.join(',');
 			};
 
 			/**
