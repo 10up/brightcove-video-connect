@@ -167,29 +167,7 @@ var MediaDetailsView = BrightcoveView.extend({
 			width = $('#width').val(),
 			height = $('#height').val(),
 			units = 'px',
-			minWidth = '0px',
-			maxWidth = width + units,
 			shortcode;
-
-		if (aspectRatio === '16:9') {
-			paddingTop = '56';
-		} else if (aspectRatio === '4:3') {
-			paddingTop = '75';
-		} else {
-			paddingTop = (height / width) * 100;
-		}
-
-		if (sizing === 'responsive') {
-			width = '100%';
-			height = '100%';
-		} else {
-			width += units;
-			height += units;
-
-			if (embedStyle === 'iframe') {
-				minWidth = width;
-			}
-		}
 
 		shortcode =
 			'[bc_video video_id="' +
@@ -206,8 +184,6 @@ var MediaDetailsView = BrightcoveView.extend({
 			'%" autoplay="' +
 			autoplay +
 			'" ' +
-			'min_width="' +
-			minWidth +
 			'" playsinline="' +
 			playsinline +
 			'" picture_in_picture="' +
@@ -216,15 +192,14 @@ var MediaDetailsView = BrightcoveView.extend({
 			languagedetection +
 			'" application_id="' +
 			applicationId +
-			'" max_width="' +
-			maxWidth +
-			'" ' +
 			'mute="' +
 			mute +
 			'" width="' +
 			width +
+			units +
 			'" height="' +
 			height +
+			units +
 			'" aspect_ratio="' +
 			aspectRatio +
 			'" sizing="' +
@@ -248,25 +223,10 @@ var MediaDetailsView = BrightcoveView.extend({
 
 		var experienceId = $('#video-player').val(),
 			embedStyle = $('input[name="embed-style"]:checked').val(),
-			sizing = $('input[name="sizing"]:checked').val(),
 			width = $('#width').val(),
 			height = $('#height').val(),
 			units = 'px',
-			minWidth = '0px',
-			maxWidth = width + units,
 			shortcode;
-
-		if (sizing === 'responsive') {
-			width = '100%';
-			height = '100%';
-		} else {
-			width += units;
-			height += units;
-
-			if (embedStyle === 'iframe') {
-				minWidth = width;
-			}
-		}
 
 		shortcode =
 			'[bc_experience experience_id="' +
@@ -276,15 +236,12 @@ var MediaDetailsView = BrightcoveView.extend({
 			'" ' +
 			'embed="' +
 			embedStyle +
-			'" min_width="' +
-			minWidth +
-			'" max_width="' +
-			maxWidth +
-			'" ' +
 			'width="' +
 			width +
+			units +
 			'" height="' +
 			height +
+			units +
 			'" ' +
 			'video_ids="' +
 			videoIds +

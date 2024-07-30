@@ -66,11 +66,11 @@ class BC_In_Page_Experience_Shortcode {
 				<div data-experience="<?php echo esc_attr( $atts['in_page_experience_id'] ); ?>"></div>
 				<script src="<?php echo esc_url( $published_url ); // phpcs:ignore ?>"></script>
 			<?php else : ?>
-				<iframe 
-				src="<?php echo esc_url( $published_url ); ?>" 
-				allow="autoplay; fullscreen; geolocation; encrypted-media" 
-				allowfullscreen 
-				webkitallowfullscreen 
+				<iframe
+				src="<?php echo esc_url( $published_url ); ?>"
+				allow="autoplay; fullscreen; geolocation; encrypted-media"
+				allowfullscreen
+				webkitallowfullscreen
 				mozallowfullscreen
 				style="<?php echo esc_attr( $style ); ?>">
 				</iframe>
@@ -80,6 +80,6 @@ class BC_In_Page_Experience_Shortcode {
 
 		$html = ob_get_clean();
 
-		return apply_filters( 'brightcove_in_page_experience_html', $html, $atts['experience_id'] );
+		return apply_filters( 'brightcove_in_page_experience_html', $html, $atts['in_page_experience_id'] );
 	}
 }
