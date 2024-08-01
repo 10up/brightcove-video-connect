@@ -183,7 +183,6 @@ var MediaDetailsView = BrightcoveView.extend({
 			paddingTop +
 			'%" autoplay="' +
 			autoplay +
-			'" ' +
 			'" playsinline="' +
 			playsinline +
 			'" picture_in_picture="' +
@@ -192,6 +191,7 @@ var MediaDetailsView = BrightcoveView.extend({
 			languagedetection +
 			'" application_id="' +
 			applicationId +
+			'" ' +
 			'mute="' +
 			mute +
 			'" width="' +
@@ -236,7 +236,7 @@ var MediaDetailsView = BrightcoveView.extend({
 			'" ' +
 			'embed="' +
 			embedStyle +
-			'width="' +
+			'" width="' +
 			width +
 			units +
 			'" height="' +
