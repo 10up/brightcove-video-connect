@@ -25,12 +25,12 @@
     "postenv:start": "./tests/bin/initialize.sh"
   },
   "devDependencies": {
-    "@10up/cypress-wp-utils": "github:10up/cypress-wp-utils#build",
+    "@10up/cypress-wp-utils": "^0.4.0",
     "@10up/eslint-config": "^2.3.5",
     "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.5",
-    "@wordpress/env": "^5.2.0",
-    "cypress": "^10.8.0",
+    "@wordpress/env": "^10.5.0",
+    "cypress": "^13.13.3",
     "eslint": "^7.28.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
