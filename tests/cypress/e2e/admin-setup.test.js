@@ -6,16 +6,19 @@ describe("Plugin Setup Tests", () => {
   });
 
   it("Brightcove Video Connect can be activated and deactivated", () => {
+    cy.login();
     cy.activatePlugin("brightcove-video-connect");
     cy.deactivatePlugin("brightcove-video-connect");
   });
 
   it("Display admin notice asking to configure the plugin displays when activating the plugin for the first time", () => {
+    cy.login();
     cy.activatePlugin("brightcove-video-connect");
     cy.get('.configure-brightcove').should('exist');
   });
 
   it( "Can successfully connect to Brightcove", () => {
+    cy.login();
     cy.visitAdminPage('?page=page-brightcove-edit-source');
     cy.get('#source-name').type('Cypress');
     cy.get('#source-account-id').type(Cypress.env('brightcoveAccountId'));
