@@ -73,18 +73,19 @@ var VideoEditView = BrightcoveView.extend({
 	openMediaManager: function (evnt) {
 		evnt.preventDefault();
 
-		var elem = $(evnt.currentTarget).parents('.setting'),
-			editor = elem.data('editor'),
-			mediaManager = (wp.media.frames.brightcove = wp.media()),
-			that = this,
-			options = {
-				state: 'insert',
-				title: wp.media.view.l10n.addMedia,
-				multiple: false,
-			};
+		const options = {
+			title: wp.media.view.l10n.addMedia,
+			multiple: false,
+			library: {
+				type: ['image/jpeg', 'image/png'],
+			},
+		};
+
+		const mediaManager = wp.media(options);
+		const that = this;
 
 		// Open the media manager
-		mediaManager.open(editor, options);
+		mediaManager.open();
 
 		// Listen for selection of media
 		mediaManager.on('select', function () {
@@ -587,15 +588,6 @@ var VideoEditView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'spinner:off', function () {
 			spinner.removeClass('is-active').addClass('hidden');
 		});
-
-		// If there's already a poster or thumbnail set, display it
-		if (this.model.get('poster')) {
-			this.displayAttachment('poster');
-		}
-
-		if (this.model.get('thumbnail')) {
-			this.displayAttachment('thumbnail');
-		}
 
 		// Captions
 		if (this.model.get('captions')) {
