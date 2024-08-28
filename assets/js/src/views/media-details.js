@@ -23,9 +23,10 @@ var MediaDetailsView = BrightcoveView.extend({
 		'change #languagedetection': 'toggleIframe',
 		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]':
 			'toggleExperienceUnits',
-		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
+		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #height':
 			'generateShortcode',
 		'change #generate-shortcode': 'toggleShortcodeGeneration',
+		'change #width': 'calculateHeight',
 	},
 
 	triggerEditMedia: function (event) {
@@ -56,7 +57,6 @@ var MediaDetailsView = BrightcoveView.extend({
 
 	toggleUnits: function (event) {
 		var value = $('#aspect-ratio').val();
-
 		if (value === 'custom') {
 			$('#height').removeAttr('readonly');
 		} else {
@@ -131,6 +131,23 @@ var MediaDetailsView = BrightcoveView.extend({
 		}
 	},
 
+	/**
+	 * Calculate height based on aspect ratio.
+	 */
+	calculateHeight: function (event) {
+		const aspectRatio = $('#aspect-ratio').val();
+		const width = $('#width').val();
+
+		if (aspectRatio === 'custom') {
+			return;
+		}
+
+		const height = aspectRatio === '16:9' ? width / (16 / 9) : width / (4 / 3);
+		$('#height').val(height);
+
+		this.generateShortcode();
+	},
+
 	generateShortcode: function () {
 		switch (this.mediaType) {
 			case 'videos':
@@ -163,7 +180,6 @@ var MediaDetailsView = BrightcoveView.extend({
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
 			aspectRatio = $('#aspect-ratio').val(),
-			paddingTop = '',
 			width = $('#width').val(),
 			height = $('#height').val(),
 			units = 'px',
@@ -180,8 +196,9 @@ var MediaDetailsView = BrightcoveView.extend({
 			'embed="' +
 			embedStyle +
 			'" padding_top="' +
-			paddingTop +
-			'%" autoplay="' +
+			height +
+			units +
+			'" autoplay="' +
 			autoplay +
 			'" playsinline="' +
 			playsinline +

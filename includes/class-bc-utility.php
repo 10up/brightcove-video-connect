@@ -928,6 +928,7 @@ class BC_Utility {
 		$width          = sanitize_text_field( $atts['width'] );
 		$sizing         = sanitize_text_field( $atts['sizing'] );
 		$min_width      = sanitize_text_field( $atts['min_width'] );
+		$padding_top    = sanitize_text_field( $atts['padding_top'] );
 		$autoplay       = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
 		$mute           = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
 		$embed          = sanitize_text_field( $atts['embed'] );
@@ -969,21 +970,19 @@ class BC_Utility {
 			else :
 				?>
 				<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $width ); ?>;">
-					<video-js
-							id="<?php echo esc_attr( $id ); ?>"
-							data-video-id="<?php echo esc_attr( $id ); ?>" data-account="<?php echo esc_attr( $account_id ); ?>"
-							data-player="<?php echo esc_attr( $player_id ); ?>"
-							data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
-							data-embed="default" class="video-js"
-							data-application-id="<?php echo esc_attr( $application_id ); ?>"
-							controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
-							style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
-					</video-js>
+					<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
+						<video-js
+								id="<?php echo esc_attr( $id ); ?>"
+								data-video-id="<?php echo esc_attr( $id ); ?>" data-account="<?php echo esc_attr( $account_id ); ?>"
+								data-player="<?php echo esc_attr( $player_id ); ?>"
+								data-usage="<?php echo esc_attr( self::get_usage_data() ); ?>javascript"
+								data-embed="default" class="video-js"
+								data-application-id="<?php echo esc_attr( $application_id ); ?>"
+								controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
+								style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+						</video-js>
 
 						<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
-						<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
-					</div>
-					<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
 					</div>
 				</div>
 				<?php
@@ -1031,13 +1030,15 @@ class BC_Utility {
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $width ); ?>;">
-				<iframe
-					src="<?php echo esc_url( $iframe_src ); ?>"
-					allowfullscreen
-					webkitallowfullscreen
-					mozallowfullscreen
-					style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
-				</iframe>
+				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
+					<iframe
+							src="<?php echo esc_url( $iframe_src ); ?>"
+							allowfullscreen
+							webkitallowfullscreen
+							mozallowfullscreen
+							style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+					</iframe>
+				</div>
 			</div>
 		<?php endif; ?>
 		<!-- End of Brightcove Player -->
@@ -1078,6 +1079,7 @@ class BC_Utility {
 		$sizing      = sanitize_text_field( $atts['sizing'] );
 		$min_width   = sanitize_text_field( $atts['min_width'] );
 		$max_width   = sanitize_text_field( $atts['max_width'] );
+		$padding_top = sanitize_text_field( $atts['padding_top'] );
 		$autoplay    = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
 		$mute        = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
 		$embed       = sanitize_text_field( $atts['embed'] );
@@ -1232,13 +1234,15 @@ class BC_Utility {
 			?>
 
 			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
-				<iframe
-					src="<?php echo esc_url( $iframesrc ); ?>"
-					allowfullscreen
-					webkitallowfullscreen
-					mozallowfullscreen
-					style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
-				</iframe>
+				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
+					<iframe
+							src="<?php echo esc_url( $iframesrc ); ?>"
+							allowfullscreen
+							webkitallowfullscreen
+							mozallowfullscreen
+							style="width: <?php echo 'responsive' !== $sizing ? esc_attr( $width ) : '100%'; ?>; height: <?php echo esc_attr( $height ); ?>; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
+					</iframe>
+				</div>
 			</div>
 		<?php else : ?>
 
