@@ -113,6 +113,9 @@ var ToolbarView = BrightcoveView.extend({
 	foldersChanged: function (event) {
 		this.model.set('old_folder_id', this.model.get('folder_id'));
 		this.model.set('folder_id', event.target.value);
+		// hide search field if video folder is selected
+		this.$el.find('#media-search-input, #media-search').toggle(event.target.value === 'all');
+
 		wpbc.broadcast.trigger('change:folder', event.target.value);
 	},
 
