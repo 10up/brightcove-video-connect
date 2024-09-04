@@ -207,7 +207,7 @@ class BC_Admin_Media_API {
 				$history = isset( $_POST['history'] ) ? json_decode( wp_unslash( $_POST['history'] ), true ) : [];
 
 				$user    = wp_get_current_user();
-				$history = array_merge( array( sprintf( '%s - %s', $user->user_login, gmdate( 'Y-m-d H:i:s', time() ) ) ), $history );
+				$history = array_merge( array( sprintf( '%s - %s', $user->user_login, wp_date( 'Y-m-d H:i:s' ) ) ), $history );
 
 				$history                   = array_filter( $history );
 				$custom['_change_history'] = wp_json_encode( $history );
