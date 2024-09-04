@@ -414,7 +414,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('custom_fields', custom);
 		this.model.set('custom', custom_fields);
 
-		const history = document.querySelector('.brightcove-change-history').value;
+		const history = this.el.querySelector('.brightcove-change-history').value;
 		const historyJson = JSON.stringify(history.split('\n').map((line) => line.trim()));
 		this.model.set('_change_history', historyJson);
 
