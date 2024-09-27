@@ -931,6 +931,9 @@ var ToolbarView = BrightcoveView.extend({
 	foldersChanged: function (event) {
 		this.model.set('old_folder_id', this.model.get('folder_id'));
 		this.model.set('folder_id', event.target.value);
+		// hide search field if video folder is selected
+		this.$el.find('#media-search-input, #media-search').toggle(event.target.value === 'all');
+
 		wpbc.broadcast.trigger('change:folder', event.target.value);
 	},
 
@@ -1764,9 +1767,10 @@ var MediaDetailsView = BrightcoveView.extend({
 		'change #languagedetection': 'toggleIframe',
 		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]':
 			'toggleExperienceUnits',
-		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height':
+		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #height':
 			'generateShortcode',
 		'change #generate-shortcode': 'toggleShortcodeGeneration',
+		'change #width': 'calculateHeight',
 	},
 
 	triggerEditMedia: function (event) {
@@ -1797,7 +1801,6 @@ var MediaDetailsView = BrightcoveView.extend({
 
 	toggleUnits: function (event) {
 		var value = $('#aspect-ratio').val();
-
 		if (value === 'custom') {
 			$('#height').removeAttr('readonly');
 		} else {
@@ -1872,6 +1875,23 @@ var MediaDetailsView = BrightcoveView.extend({
 		}
 	},
 
+	/**
+	 * Calculate height based on aspect ratio.
+	 */
+	calculateHeight: function (event) {
+		const aspectRatio = $('#aspect-ratio').val();
+		const width = $('#width').val();
+
+		if (aspectRatio === 'custom') {
+			return;
+		}
+
+		const height = aspectRatio === '16:9' ? width / (16 / 9) : width / (4 / 3);
+		$('#height').val(height);
+
+		this.generateShortcode();
+	},
+
 	generateShortcode: function () {
 		switch (this.mediaType) {
 			case 'videos':
@@ -1904,33 +1924,10 @@ var MediaDetailsView = BrightcoveView.extend({
 			embedStyle = $('input[name="embed-style"]:checked').val(),
 			sizing = $('input[name="sizing"]:checked').val(),
 			aspectRatio = $('#aspect-ratio').val(),
-			paddingTop = '',
 			width = $('#width').val(),
 			height = $('#height').val(),
 			units = 'px',
-			minWidth = '0px',
-			maxWidth = width + units,
 			shortcode;
-
-		if (aspectRatio === '16:9') {
-			paddingTop = '56';
-		} else if (aspectRatio === '4:3') {
-			paddingTop = '75';
-		} else {
-			paddingTop = (height / width) * 100;
-		}
-
-		if (sizing === 'responsive') {
-			width = '100%';
-			height = '100%';
-		} else {
-			width += units;
-			height += units;
-
-			if (embedStyle === 'iframe') {
-				minWidth = width;
-			}
-		}
 
 		shortcode =
 			'[bc_video video_id="' +
@@ -1943,12 +1940,10 @@ var MediaDetailsView = BrightcoveView.extend({
 			'embed="' +
 			embedStyle +
 			'" padding_top="' +
-			paddingTop +
-			'%" autoplay="' +
+			height +
+			units +
+			'" autoplay="' +
 			autoplay +
-			'" ' +
-			'min_width="' +
-			minWidth +
 			'" playsinline="' +
 			playsinline +
 			'" picture_in_picture="' +
@@ -1957,15 +1952,15 @@ var MediaDetailsView = BrightcoveView.extend({
 			languagedetection +
 			'" application_id="' +
 			applicationId +
-			'" max_width="' +
-			maxWidth +
 			'" ' +
 			'mute="' +
 			mute +
 			'" width="' +
 			width +
+			units +
 			'" height="' +
 			height +
+			units +
 			'" aspect_ratio="' +
 			aspectRatio +
 			'" sizing="' +
@@ -1989,25 +1984,10 @@ var MediaDetailsView = BrightcoveView.extend({
 
 		var experienceId = $('#video-player').val(),
 			embedStyle = $('input[name="embed-style"]:checked').val(),
-			sizing = $('input[name="sizing"]:checked').val(),
 			width = $('#width').val(),
 			height = $('#height').val(),
 			units = 'px',
-			minWidth = '0px',
-			maxWidth = width + units,
 			shortcode;
-
-		if (sizing === 'responsive') {
-			width = '100%';
-			height = '100%';
-		} else {
-			width += units;
-			height += units;
-
-			if (embedStyle === 'iframe') {
-				minWidth = width;
-			}
-		}
 
 		shortcode =
 			'[bc_experience experience_id="' +
@@ -2017,15 +1997,12 @@ var MediaDetailsView = BrightcoveView.extend({
 			'" ' +
 			'embed="' +
 			embedStyle +
-			'" min_width="' +
-			minWidth +
-			'" max_width="' +
-			maxWidth +
-			'" ' +
-			'width="' +
+			'" width="' +
 			width +
+			units +
 			'" height="' +
 			height +
+			units +
 			'" ' +
 			'video_ids="' +
 			videoIds +
@@ -2904,18 +2881,19 @@ var VideoEditView = BrightcoveView.extend({
 	openMediaManager: function (evnt) {
 		evnt.preventDefault();
 
-		var elem = $(evnt.currentTarget).parents('.setting'),
-			editor = elem.data('editor'),
-			mediaManager = (wp.media.frames.brightcove = wp.media()),
-			that = this,
-			options = {
-				state: 'insert',
-				title: wp.media.view.l10n.addMedia,
-				multiple: false,
-			};
+		const options = {
+			title: wp.media.view.l10n.addMedia,
+			multiple: false,
+			library: {
+				type: ['image/jpeg', 'image/png'],
+			},
+		};
+
+		const mediaManager = wp.media(options);
+		const that = this;
 
 		// Open the media manager
-		mediaManager.open(editor, options);
+		mediaManager.open();
 
 		// Listen for selection of media
 		mediaManager.on('select', function () {
@@ -3244,6 +3222,10 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('custom_fields', custom);
 		this.model.set('custom', custom_fields);
 
+		const history = this.el.querySelector('.brightcove-change-history').value;
+		const historyJson = JSON.stringify(history.split('\n').map((line) => line.trim()));
+		this.model.set('_change_history', historyJson);
+
 		this.model
 			.save()
 			.done(function () {
@@ -3402,7 +3384,7 @@ var VideoEditView = BrightcoveView.extend({
 			history = JSON.parse(history);
 
 			_.each(history, function (item) {
-				historyStr += item.user + ' - ' + item.time + '\n';
+				historyStr += item + '\n';
 			});
 
 			if (historyStr !== '') {
@@ -3418,15 +3400,6 @@ var VideoEditView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'spinner:off', function () {
 			spinner.removeClass('is-active').addClass('hidden');
 		});
-
-		// If there's already a poster or thumbnail set, display it
-		if (this.model.get('poster')) {
-			this.displayAttachment('poster');
-		}
-
-		if (this.model.get('thumbnail')) {
-			this.displayAttachment('thumbnail');
-		}
 
 		// Captions
 		if (this.model.get('captions')) {
