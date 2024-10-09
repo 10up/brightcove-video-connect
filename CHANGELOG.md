@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Security
 -->
 
-## [2.8.7] - 2024-09-30
+## [2.8.7] - 2024-10-09
 
 ### Fixed
 - Add missing script close tag. Props [@burhandodhy](https://github.com/burhandodhy) via [#397](https://github.com/10up/brightcove-video-connect/pull/397).

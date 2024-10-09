@@ -39,7 +39,7 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 
 == Changelog ==
 
-= 2.8.7 - 2024-09-30 =
+= 2.8.7 - 2024-10-09 =
 
 __Fixed:__
 
