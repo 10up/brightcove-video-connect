@@ -13,6 +13,20 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Security
 -->
 
+## [2.8.7] - 2024-10-09
+
+### Fixed
+- Add missing script close tag. Props [@burhandodhy](https://github.com/burhandodhy) via [#397](https://github.com/10up/brightcove-video-connect/pull/397).
+- Selecting multiple videos while embedding a Video Experience results in error. Props [@burhandodhy](https://github.com/burhandodhy) via [#398](https://github.com/10up/brightcove-video-connect/pull/398).
+- Single Video Player Embed appears very different in the block editor. Props [@burhandodhy](https://github.com/burhandodhy) via [#399](https://github.com/10up/brightcove-video-connect/pull/399).
+- E2E tests. Props [@burhandodhy](https://github.com/burhandodhy) via [#400](https://github.com/10up/brightcove-video-connect/pull/400).
+- Calculate the padding based on the Aspect ratio. [@burhandodhy](https://github.com/burhandodhy) via [#402](https://github.com/10up/brightcove-video-connect/pull/402).
+- Video Save History. Props [@burhandodhy](https://github.com/burhandodhy) via [#404](https://github.com/10up/brightcove-video-connect/pull/404).
+
+### Changed
+- Allow only png and jpg images for thumbnail and poster. Props [@burhandodhy](https://github.com/burhandodhy) via [#401](https://github.com/10up/brightcove-video-connect/pull/401).
+- Hide search field if video folder is selected. Props [@burhandodhy](https://github.com/burhandodhy) via [#403](https://github.com/10up/brightcove-video-connect/pull/403).
+
 ## [2.8.6] - 2024-05-08
 
 ### Fixed
@@ -470,6 +484,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.7]: https://github.com/10up/brightcove-video-connect/compare/2.8.6...2.8.7
 [2.8.6]: https://github.com/10up/brightcove-video-connect/compare/2.8.5...2.8.6
 [2.8.5]: https://github.com/10up/brightcove-video-connect/compare/2.8.4...2.8.5
 [2.8.4]: https://github.com/10up/brightcove-video-connect/compare/2.8.3...2.8.4
