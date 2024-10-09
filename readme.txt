@@ -3,8 +3,8 @@
 Contributors:      brightcove, 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, videos, video
-Tested up to:      6.5
-Stable tag:        2.8.6
+Tested up to:      6.6
+Stable tag:        2.8.7
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,22 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 15. Brightcove Block and Block Settings.
 
 == Changelog ==
+
+= 2.8.7 - 2024-10-09 =
+
+__Fixed:__
+
+* Add missing script close tag. Props [@burhandodhy](https://github.com/burhandodhy).
+* Selecting multiple videos while embedding a Video Experience results in error. Props [@burhandodhy](https://github.com/burhandodhy).
+* Single Video Player Embed appears very different in the block editor. Props [@burhandodhy](https://github.com/burhandodhy).
+* E2E tests. Props [@burhandodhy](https://github.com/burhandodhy).
+* Calculate the padding based on the Aspect ratio. [@burhandodhy](https://github.com/burhandodhy).
+* Video Save History. Props [@burhandodhy](https://github.com/burhandodhy).
+
+__Changed:__
+
+* Allow only png and jpg images for thumbnail and poster. Props [@burhandodhy](https://github.com/burhandodhy).
+* Hide search field if video folder is selected. Props [@burhandodhy](https://github.com/burhandodhy).
 
 = 2.8.6 - 2024-05-08 =
 

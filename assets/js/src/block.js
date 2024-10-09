@@ -38,8 +38,6 @@
 			var playlistId = props.attributes.playlist_id || '';
 			var experienceId = props.attributes.experience_id || '';
 			var videoIds = props.attributes.video_ids || '';
-			var minWidth = props.attributes.min_width || '';
-			var paddingTop = props.attributes.padding_top || '';
 			var autoplay = props.attributes.autoplay || '';
 			var playsinline = props.attributes.playsinline || '';
 			var pictureinpicture = props.attributes.picture_in_picture || '';
@@ -50,11 +48,8 @@
 			var sizing = props.attributes.sizing || 'responsive';
 			var aspectRatio = props.attributes.aspect_ratio || '16:9';
 
-			var width = props.attributes.width || '640px';
-			var height = props.attributes.height || '360px';
-
-			const maxHeight = props.attributes.max_height || height;
-			const maxWidth = props.attributes.max_width || width;
+			const width = props.attributes.width || '640px';
+			const height = props.attributes.height || '360px';
 
 			const inPageExperienceId = props.attributes.in_page_experience_id || '';
 
@@ -72,90 +67,22 @@
 			}, [aspectRatio]);
 
 			element.useEffect(() => {
-				if (sizing === 'responsive' && maxWidth && !inPageExperienceId) {
-					props.setAttributes({ ...props.attributes, width: maxWidth || '640px' });
-				}
-			}, [sizing, width, maxWidth, inPageExperienceId]);
-
-			element.useEffect(() => {
-				if (!maxHeight) {
-					let newMaxHeight;
+				if (!experienceId) {
+					let newHeight;
 					if (aspectRatio === '16:9') {
-						newMaxHeight = '360px';
+						newHeight = parseInt(parseInt(width, 10) * (9 / 16), 10) + 'px';
 					} else if (aspectRatio === '4:3') {
-						newMaxHeight = '480px';
+						newHeight = parseInt(parseInt(width, 10) * (3 / 4), 10) + 'px';
 					} else {
-						newMaxHeight = height;
+						newHeight = height;
 					}
 
 					props.setAttributes({
 						...props.attributes,
-						max_height: height === '100%' && newMaxHeight ? newMaxHeight : height,
+						height: newHeight,
 					});
 				}
-			}, []);
-
-			element.useEffect(() => {
-				if (sizing === 'responsive' && height !== '100%' && !inPageExperienceId) {
-					let newMaxHeight;
-					if (aspectRatio === '16:9') {
-						newMaxHeight = '360px';
-					} else if (aspectRatio === '4:3') {
-						newMaxHeight = '480px';
-					} else {
-						newMaxHeight = height;
-					}
-
-					props.setAttributes({
-						...props.attributes,
-						height: '100%',
-						max_height: newMaxHeight,
-					});
-				}
-			}, [height, sizing, aspectRatio, inPageExperienceId]);
-
-			element.useEffect(() => {
-				if (sizing === 'responsive' && !maxHeight && !inPageExperienceId) {
-					let newMaxHeight;
-					if (aspectRatio === '16:9') {
-						newMaxHeight = '360px';
-					} else if (aspectRatio === '4:3') {
-						newMaxHeight = '480px';
-					} else {
-						newMaxHeight = height;
-					}
-
-					props.setAttributes({
-						...props.attributes,
-						max_height: newMaxHeight,
-					});
-				}
-			}, [maxHeight, sizing, aspectRatio, height, inPageExperienceId]);
-
-			element.useEffect(() => {
-				if (
-					sizing === 'fixed' &&
-					(width === '100%' || height === '100%') &&
-					!inPageExperienceId
-				) {
-					props.setAttributes({
-						...props.attributes,
-						width: width === '100%' ? maxWidth : undefined,
-						height: height === '100%' ? maxHeight : undefined,
-					});
-				}
-			}, [width, sizing, height, maxWidth, maxHeight, inPageExperienceId]);
-
-			element.useEffect(() => {
-				if (aspectRatio === 'custom') {
-					const padding_top =
-						typeof maxHeight === 'number' && typeof maxWidth === 'number'
-							? `${(maxHeight / maxWidth) * 100}%`
-							: '56%';
-
-					props.setAttributes({ ...props.attributes, padding_top });
-				}
-			}, [maxWidth, maxHeight, aspectRatio]);
+			}, [width, sizing, aspectRatio, height, experienceId]);
 
 			element.useEffect(() => {
 				if (embed === 'in-page-horizontal' || embed === 'in-page-vertical') {
@@ -170,11 +97,21 @@
 			}, [pictureinpicture]);
 
 			// Sanitize the IDs we need
-			var sanitizeIds = function (id) {
-				if (id?.indexOf('ref:') === 0) {
-					return id;
+			var sanitizeIds = function (ids) {
+				if (!ids) {
+					return ids;
 				}
-				return id?.replace(/\D/g, '');
+
+				return ids
+					.split(',')
+					.map(function (id) {
+						id = id.trim();
+						if (id.indexOf('ref:') === 0) {
+							return id;
+						}
+						return id.replace(/\D/g, '');
+					})
+					.join(',');
 			};
 
 			/**
@@ -360,14 +297,6 @@
 					playlistId;
 			}
 
-			if (typeof height === 'undefined') {
-				height = maxHeight || 250;
-			}
-
-			if (typeof width === 'undefined') {
-				width = maxWidth || 500;
-			}
-
 			const players = wpbc.players[accountId]
 				.filter((player) => {
 					return playlistId ? player.is_playlist : !player.is_playlist;
@@ -473,7 +402,12 @@
 				userPermission ? controls : '',
 				el('iframe', {
 					src: src,
-					style: { height: height, width: width, display: 'block', margin: '0 auto' },
+					style: {
+						height: height,
+						width: width,
+						display: 'block',
+						margin: '0 auto',
+					},
 					allowFullScreen: true,
 					key: 'iframe',
 				}),
@@ -589,40 +523,9 @@
 									},
 								],
 								onChange: function (value) {
-									let height;
-									let padding_top;
-
-									if (value === '16:9') {
-										height = '360px';
-										padding_top = '56%';
-									} else if (value === '4:3') {
-										height = '480px';
-										padding_top = '75%';
-									} else {
-										const maxHeightNumber =
-											maxHeight && Number(maxHeight?.replace(/[^0-9]/g, ''));
-										const maxWidthNumber =
-											maxWidth && Number(maxWidth?.replace(/[^0-9]/g, ''));
-										const isMaxHeightNumber =
-											typeof maxHeightNumber === 'number';
-										const isMaxWidthNumber = typeof maxWidthNumber === 'number';
-
-										height = isMaxHeightNumber ? maxHeight : undefined;
-
-										padding_top =
-											isMaxHeightNumber &&
-											isMaxWidthNumber &&
-											maxHeightNumber > 0
-												? `${(maxHeightNumber / maxWidthNumber) * 100}%`
-												: '56%';
-									}
-
 									props.setAttributes({
 										...props.attributes,
 										aspect_ratio: value,
-										height,
-										max_height: height,
-										padding_top,
 									});
 								},
 							}),
@@ -632,17 +535,10 @@
 								type: 'number',
 								value: width?.replace(/[^0-9]/g, ''),
 								onChange: function (value) {
-									let width = `${value}px`;
-									const max_width = width;
-
-									if (sizing === 'responsive') {
-										width = '100%';
-									}
-
+									const newWidth = `${value}px`;
 									props.setAttributes({
 										...props.attributes,
-										width,
-										max_width,
+										width: newWidth,
 									});
 								},
 							}),
@@ -650,23 +546,13 @@
 							el(components.TextControl, {
 								label: __('Height', 'brightcove'),
 								type: 'number',
-								value:
-									sizing === 'fixed'
-										? height?.replace(/[^0-9]/g, '')
-										: maxHeight?.replace(/[^0-9]/g, ''),
+								value: height?.replace(/[^0-9]/g, ''),
 								disabled: isHeightFieldDisabled,
 								onChange: function (value) {
 									let height = `${value}px`;
-									const max_height = height;
-
-									if (sizing === 'responsive') {
-										height = '100%';
-									}
-
 									props.setAttributes({
 										...props.attributes,
 										height,
-										max_height,
 									});
 								},
 							}),
