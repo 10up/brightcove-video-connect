@@ -780,14 +780,16 @@ class BC_CMS_API extends BC_API {
 		}
 
 		/**
-		 * Filter the videos folders.
+		 * Filters the video folders.
 		 *
 		 * @since 2.8.8
 		 *
-		 * @param array $folders Array of folder ID and name.
-		 * @param int   $account_id The account ID.
+		 * @param array $folders    An array of folders.
+		 * @param int   $account_id The ID of the account.
+		 *
+		 * @return array The modified array of folders.
 		 */
-		return apply_filters( 'brightcove_videos_folders', $folders, $this->get_account_id() );
+		return apply_filters( 'brightcove_video_folders', $folders, $this->get_account_id() );
 	}
 
 	/**
