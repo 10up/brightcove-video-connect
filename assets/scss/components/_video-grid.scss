@@ -381,3 +381,14 @@
 	}
 
 }
+
+.brightcove__folder-name {
+	background: $grey;
+	bottom: 0;
+	color: $white;
+	left: 0;
+	padding: 3px 10px;
+	position: absolute;
+	text-align: left;
+	width: fit-content;
+}

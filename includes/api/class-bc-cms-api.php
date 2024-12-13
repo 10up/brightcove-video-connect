@@ -78,7 +78,6 @@ class BC_CMS_API extends BC_API {
 		}
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists' ), 'JSON_POST', $data );
-
 	}
 
 	/**
@@ -112,7 +111,6 @@ class BC_CMS_API extends BC_API {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -131,7 +129,6 @@ class BC_CMS_API extends BC_API {
 		$playlist_id = sanitize_title_with_dashes( $playlist_id );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists/' . $playlist_id ), 'DELETE' );
-
 	}
 
 	/**
@@ -150,7 +147,6 @@ class BC_CMS_API extends BC_API {
 		$playlist_id = sanitize_title_with_dashes( $playlist_id );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/playlists/' . $playlist_id ) );
-
 	}
 
 	/**
@@ -183,7 +179,6 @@ class BC_CMS_API extends BC_API {
 		}
 
 		return $results;
-
 	}
 
 	/**
@@ -239,7 +234,6 @@ class BC_CMS_API extends BC_API {
 		$data['name'] = utf8_uri_encode( sanitize_text_field( $name ) );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos' ), 'POST', $data );
-
 	}
 
 	/**
@@ -265,7 +259,6 @@ class BC_CMS_API extends BC_API {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -284,7 +277,6 @@ class BC_CMS_API extends BC_API {
 		$video_id = sanitize_title_with_dashes( $video_id );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id ), 'DELETE' );
-
 	}
 
 	/**
@@ -321,7 +313,6 @@ class BC_CMS_API extends BC_API {
 		$video_id = sanitize_title_with_dashes( $video_id );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/images' ) );
-
 	}
 
 	/**
@@ -341,7 +332,6 @@ class BC_CMS_API extends BC_API {
 		$video_id = sanitize_title_with_dashes( $video_id );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/references' ) );
-
 	}
 
 	/**
@@ -360,7 +350,6 @@ class BC_CMS_API extends BC_API {
 		$video_id = sanitize_title_with_dashes( $video_id );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id . '/sources' ) );
-
 	}
 
 	/**
@@ -493,7 +482,6 @@ class BC_CMS_API extends BC_API {
 		}
 
 		return $results;
-
 	}
 
 	/**
@@ -516,7 +504,6 @@ class BC_CMS_API extends BC_API {
 		$data = BC_Utility::sanitize_payload_args_recursive( $args );
 
 		return $this->send_request( esc_url_raw( self::CMS_BASE_URL . $this->get_account_id() . '/videos/' . $video_id ), 'PATCH', $data );
-
 	}
 
 	/**
@@ -775,7 +762,7 @@ class BC_CMS_API extends BC_API {
 	 * @return array
 	 */
 	public function fetch_folders() {
-		$cache_key = 'BCFolders_' . $this->get_account_id();
+		$cache_key = sprintf( 'BCFolders_%s_%s', BRIGHTCOVE_VERSION, $this->get_account_id() );
 		$folders   = get_transient( $cache_key );
 		$folders   = false;
 		if ( false === $folders ) {
@@ -784,14 +771,23 @@ class BC_CMS_API extends BC_API {
 
 			if ( $request && ! is_wp_error( $request ) ) {
 				foreach ( $request as $folder ) {
-					$folders[ $folder['id'] ] = $folder['name'];
+					$folders[ $folder['id'] ] = [
+						'name' => $folder['name'],
+					];
 				}
-
 				set_transient( $cache_key, $folders, 600 );
 			}
 		}
 
-		return $folders;
+		/**
+		 * Filter the videos folders.
+		 *
+		 * @since 2.8.8
+		 *
+		 * @param array $folders Array of folder ID and name.
+		 * @param int   $account_id The account ID.
+		 */
+		return apply_filters( 'brightcove_videos_folders', $folders, $this->get_account_id() );
 	}
 
 	/**
@@ -906,6 +902,5 @@ class BC_CMS_API extends BC_API {
 		}
 
 		return $results;
-
 	}
 }
