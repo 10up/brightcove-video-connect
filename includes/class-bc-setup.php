@@ -353,8 +353,6 @@ class BC_Setup {
 	public static function brightcove_enqueue_assets() {
 		global $wp_version;
 
-		$suffix = BC_Utility::get_suffix();
-
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => self::preload_params(),
@@ -410,7 +408,6 @@ class BC_Setup {
 			'jquery-ui-datepicker',
 		);
 
-		// wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION, true );
 		wp_register_script( 'brightcove-admin', Utility\script_url( 'admin', 'admin' ), $dependencies, Utility\get_asset_info( 'admin', 'version' ), true );
 
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
@@ -433,7 +430,7 @@ class BC_Setup {
 		wp_register_style( 'brightcove-video-connect', Utility\style_url( 'admin-style', 'admin' ), [], Utility\get_asset_info( 'admin-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-video-connect' );
 
-		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/jquery-ui-datepicker' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
+		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/lib/jquery-ui-datepicker' . $suffix . '.css' ), [], BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'jquery-ui-datepicker-style' );
 	}
 
