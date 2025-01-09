@@ -244,3 +244,5 @@ var MediaModel = Backbone.Model.extend({
 		wpbc.broadcast.trigger('spinner:off');
 	},
 });
+
+export default MediaModel;

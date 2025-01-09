@@ -1,3 +1,5 @@
+import BrightcoveView from './brightcove';
+
 var MediaView = BrightcoveView.extend({
 	tagName: 'li',
 	className: 'attachment brightcove',
@@ -52,9 +54,7 @@ var MediaView = BrightcoveView.extend({
 	render: function () {
 		var options = this.model.toJSON();
 		options.duration = this.model.getReadableDuration();
-		options.updated_at_readable = options.updatedAt
-			? this.model.getReadableDate('updatedAt')
-			: this.model.getReadableDate('updated_at');
+		options.updated_at_readable = options.updatedAt ? this.model.getReadableDate('updatedAt') : this.model.getReadableDate('updated_at');
 		options.account_name = this.model.getAccountName();
 		options.height = this.model.getReadableDate('height');
 
@@ -95,3 +95,5 @@ var MediaView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('playlist:remove', this);
 	},
 });
+
+export default MediaView;

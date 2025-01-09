@@ -16,3 +16,5 @@ var UploadModel = Backbone.Model.extend({
 		return (bytes / k ** i).toPrecision(3) + ' ' + sizes[i];
 	},
 });
+
+export default UploadModel;

@@ -1,3 +1,7 @@
+import BrightcoveView from './brightcove';
+
+const $ = jQuery;
+
 var MediaDetailsView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'media-details',
@@ -21,8 +25,7 @@ var MediaDetailsView = BrightcoveView.extend({
 		'change #autoplay': 'toggleAutoplay',
 		'change #pictureinpicture': 'toggleIframe',
 		'change #languagedetection': 'toggleIframe',
-		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]':
-			'toggleExperienceUnits',
+		'change .experience-details input[name="sizing"],.experience-details input[name="embed-style"]': 'toggleExperienceUnits',
 		'change #video-player, #applicationid, #autoplay, #pictureinpicture, #languagedetection, #playsinline, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #height':
 			'generateShortcode',
 		'change #generate-shortcode': 'toggleShortcodeGeneration',
@@ -77,10 +80,7 @@ var MediaDetailsView = BrightcoveView.extend({
 
 	toggleIframe: function (event) {
 		var $iframeRadioButton = $('#embed-style-iframe'),
-			notAllowedOptions = [
-				$('#pictureinpicture').is(':checked'),
-				$('#languagedetection').is(':checked'),
-			];
+			notAllowedOptions = [$('#pictureinpicture').is(':checked'), $('#languagedetection').is(':checked')];
 
 		if (notAllowedOptions.includes(true)) {
 			$iframeRadioButton.prop('checked', false);
@@ -91,9 +91,7 @@ var MediaDetailsView = BrightcoveView.extend({
 	},
 
 	toggleAutoplay: function (event) {
-		return $('#autoplay').is(':checked')
-			? this.toggleAutoplayOptions(true)
-			: this.toggleAutoplayOptions(false);
+		return $('#autoplay').is(':checked') ? this.toggleAutoplayOptions(true) : this.toggleAutoplayOptions(false);
 	},
 
 	toggleAutoplayOptions: function (value) {
@@ -472,9 +470,7 @@ var MediaDetailsView = BrightcoveView.extend({
 
 	toggleShortcodeGeneration: function () {
 		var method = $('#generate-shortcode').val(),
-			$fields = $(
-				'#video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units',
-			);
+			$fields = $('#video-player, #autoplay, #mute, input[name="embed-style"], input[name="sizing"], #aspect-ratio, #width, #height, #units');
 
 		if (method === 'manual') {
 			$('#shortcode').removeAttr('readonly');
@@ -522,3 +518,5 @@ var MediaDetailsView = BrightcoveView.extend({
 		return this;
 	},
 });
+
+export default MediaDetailsView;

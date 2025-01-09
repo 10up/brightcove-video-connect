@@ -41,8 +41,10 @@
 
 define( 'BRIGHTCOVE_VERSION', '2.8.7' );
 define( 'BRIGHTCOVE_URL', plugin_dir_url( __FILE__ ) );
-define( 'BRIGHTCOVE_PATH', dirname( __FILE__ ) . '/' );
-define( 'BRIGHTCOVE_BASENAME', plugin_basename( __FILE__ ) );
+define( 'BRIGHTCOVE_PATH', plugin_dir_path( __FILE__ ) );
+define( 'BRIGHTCOVE_INC', BRIGHTCOVE_PATH . 'includes/' );
+define( 'BRIGHTCOVE_DIST_URL', BRIGHTCOVE_URL . 'dist/' );
+define( 'BRIGHTCOVE_DIST_PATH', BRIGHTCOVE_PATH . 'dist/' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once BRIGHTCOVE_PATH . 'cli/class-brightcove-cli.php';
@@ -63,6 +65,7 @@ function brightcove_deactivate() {
 	BC_Utility::deactivate();
 }
 
+require_once BRIGHTCOVE_INC . '/utility.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-playlist-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-video-shortcode.php';
 require_once BRIGHTCOVE_PATH . 'includes/class-bc-experiences-shortcode.php';

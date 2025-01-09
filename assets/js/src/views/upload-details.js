@@ -1,3 +1,5 @@
+import BrightcoveView from './brightcove';
+
 var UploadDetailsView = BrightcoveView.extend({
 	className: 'brightcove-pending-upload-details attachment-details',
 	tagName: 'div',
@@ -48,3 +50,5 @@ var UploadDetailsView = BrightcoveView.extend({
 		this.$el.html(this.template(options));
 	},
 });
+
+export default UploadDetailsView;

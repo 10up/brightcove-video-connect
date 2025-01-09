@@ -1,3 +1,5 @@
+const $ = jQuery;
+
 var BrightcoveView = wp.Backbone.View.extend({
 	subviews: null,
 
@@ -44,3 +46,5 @@ var BrightcoveView = wp.Backbone.View.extend({
 		wpbc.broadcast.trigger('close:modal');
 	},
 });
+
+export default BrightcoveView;

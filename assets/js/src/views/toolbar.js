@@ -2,6 +2,9 @@
  * This is the toolbar to handle sorting, filtering, searching and grid/list
  * view toggles. State is captured in the brightcove-media-manager model.
  */
+
+import BrightcoveView from './brightcove';
+
 var ToolbarView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'media-toolbar wp-filter',
@@ -160,3 +163,5 @@ var ToolbarView = BrightcoveView.extend({
 		}
 	},
 });
+
+export default ToolbarView;

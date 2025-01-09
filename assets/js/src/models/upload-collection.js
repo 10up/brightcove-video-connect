@@ -1,6 +1,7 @@
 /**
  * Collection model to contain pending uploads
  */
+import UploadModel from './upload';
 
 var UploadModelCollection = Backbone.Collection.extend({
 	initialize: function (options) {
@@ -17,3 +18,5 @@ var UploadModelCollection = Backbone.Collection.extend({
 		);
 	},
 });
+
+export default UploadModelCollection;

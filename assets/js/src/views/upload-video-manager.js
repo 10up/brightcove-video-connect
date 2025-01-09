@@ -1,3 +1,12 @@
+
+import BrightcoveView from './brightcove';
+import UploadModelCollection from '../models/upload-collection';
+import UploadWindowView from './upload-window'
+import UploadView from './upload';
+import UploadDetailsView from './upload-details';
+
+const $ = jQuery;
+
 var UploadVideoManagerView = BrightcoveView.extend({
 	className: 'brightcove-file-uploader',
 
@@ -28,6 +37,7 @@ var UploadVideoManagerView = BrightcoveView.extend({
 	},
 
 	resetUploads: function () {
+		let model;
 		while ((model = this.collection.first())) {
 			this.collection.remove(model);
 		}
@@ -110,3 +120,5 @@ var UploadVideoManagerView = BrightcoveView.extend({
 		}
 	},
 });
+
+export default UploadVideoManagerView;

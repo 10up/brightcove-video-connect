@@ -1,4 +1,8 @@
-UploadWindowView = BrightcoveView.extend({
+import BrightcoveView from './brightcove';
+
+const $ = jQuery;
+
+const UploadWindowView = BrightcoveView.extend({
 	className: 'uploader-window',
 	template: wp.template('brightcove-uploader-window'),
 
@@ -130,11 +134,7 @@ UploadWindowView = BrightcoveView.extend({
 	},
 
 	uploaderBeforeUpload: function (up, file) {
-		up.settings.multipart_params = _.defaults(
-			wpbc.uploads[file.id],
-			wpbc.preload.plupload.multipart_params,
-			{ nonce: wpbc.preload.nonce },
-		);
+		up.settings.multipart_params = _.defaults(wpbc.uploads[file.id], wpbc.preload.plupload.multipart_params, { nonce: wpbc.preload.nonce });
 	},
 
 	uploaderFileUploaded: function (up, file, response) {
@@ -155,3 +155,5 @@ UploadWindowView = BrightcoveView.extend({
 		}
 	},
 });
+
+export default UploadWindowView;

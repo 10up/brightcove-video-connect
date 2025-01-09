@@ -1,3 +1,5 @@
+import BrightcoveView from './brightcove';
+
 var UploadView = BrightcoveView.extend({
 	className: 'brightcove-pending-upload',
 	tagName: 'tr',
@@ -11,11 +13,7 @@ var UploadView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'pendingUpload:selectedRow', this.otherToggledRow);
 		this.listenTo(wpbc.broadcast, 'uploader:uploadProgress', this.uploadProgress);
 		this.listenTo(wpbc.broadcast, 'uploader:getParams', this.getParams);
-		this.listenTo(
-			wpbc.broadcast,
-			'uploader:successfulUploadIngest',
-			this.successfulUploadIngest,
-		);
+		this.listenTo(wpbc.broadcast, 'uploader:successfulUploadIngest', this.successfulUploadIngest);
 		this.listenTo(wpbc.broadcast, 'uploader:failedUploadIngest', this.failedUploadIngest);
 
 		var options = {
@@ -64,10 +62,7 @@ var UploadView = BrightcoveView.extend({
 	failedUploadIngest: function (file) {
 		// Make sure we're acting on the right file.
 		if (file.id === this.model.get('id')) {
-			wpbc.broadcast.trigger(
-				'uploader:errorMessage',
-				wpbc.preload.messages.unableToUpload.replace('%%s%%', this.model.get('fileName')),
-			);
+			wpbc.broadcast.trigger('uploader:errorMessage', wpbc.preload.messages.unableToUpload.replace('%%s%%', this.model.get('fileName')));
 			this.render();
 		}
 	},
@@ -75,10 +70,7 @@ var UploadView = BrightcoveView.extend({
 	successfulUploadIngest: function (file) {
 		// Make sure we're acting on the right file.
 		if (file.id === this.model.get('id')) {
-			wpbc.broadcast.trigger(
-				'uploader:successMessage',
-				wpbc.preload.messages.successUpload.replace('%%s%%', this.model.get('fileName')),
-			);
+			wpbc.broadcast.trigger('uploader:successMessage', wpbc.preload.messages.successUpload.replace('%%s%%', this.model.get('fileName')));
 			this.render();
 		}
 	},
@@ -122,3 +114,5 @@ var UploadView = BrightcoveView.extend({
 		}
 	},
 });
+
+export default UploadView;

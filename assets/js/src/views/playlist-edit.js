@@ -1,3 +1,6 @@
+import BrightcoveView from './brightcove';
+import MediaCollectionView from './media-collection';
+
 var PlaylistEditView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'playlist-edit brightcove attachment-details',
@@ -72,11 +75,7 @@ var PlaylistEditView = BrightcoveView.extend({
 			this.registerSubview(this.playlistVideosView);
 			this.registerSubview(this.libraryVideosView);
 
-			this.listenTo(
-				wpbc.broadcast,
-				'playlist:changed',
-				_.throttle(this.playlistChanged, 300),
-			);
+			this.listenTo(wpbc.broadcast, 'playlist:changed', _.throttle(this.playlistChanged, 300));
 			this.listenTo(wpbc.broadcast, 'insert:shortcode', this.insertShortcode);
 		}
 
@@ -104,3 +103,5 @@ var PlaylistEditView = BrightcoveView.extend({
 		wpbc.requests = [];
 	},
 });
+
+export default PlaylistEditView;

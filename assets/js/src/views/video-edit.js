@@ -1,3 +1,7 @@
+import BrightcoveView from './brightcove';
+
+const $ = jQuery;
+
 var VideoEditView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'video-edit brightcove attachment-details',
@@ -304,10 +308,7 @@ var VideoEditView = BrightcoveView.extend({
 			const startDateMinute = this.$el.find('.brightcove-start-date-minute').val();
 			const startDateAMPM = this.$el.find('.brightcove-start-date-am-pm').val();
 
-			this.model.set(
-				'scheduled_start_date',
-				`${startDate} ${startDateHour}:${startDateMinute}:00 ${startDateAMPM}`,
-			);
+			this.model.set('scheduled_start_date', `${startDate} ${startDateHour}:${startDateMinute}:00 ${startDateAMPM}`);
 		}
 
 		const endDate = this.$el.find('.brightcove-end-date').val();
@@ -316,10 +317,7 @@ var VideoEditView = BrightcoveView.extend({
 			const endDateMinute = this.$el.find('.brightcove-end-date-minute').val();
 			const endDateAMPM = this.$el.find('.brightcove-end-date-am-pm').val();
 
-			this.model.set(
-				'scheduled_end_date',
-				`${endDate} ${endDateHour}:${endDateMinute}:00 ${endDateAMPM}`,
-			);
+			this.model.set('scheduled_end_date', `${endDate} ${endDateHour}:${endDateMinute}:00 ${endDateAMPM}`);
 		}
 
 		const brightcoveTags = this.$el.find('.brightcove-tags');
@@ -331,7 +329,7 @@ var VideoEditView = BrightcoveView.extend({
 				brightcoveTags
 					.val()
 					.trim()
-					.replace(/(^,)|(,$)/g, ''),
+					.replace(/(^,)|(,$)/g, '')
 			);
 		}
 
@@ -394,22 +392,19 @@ var VideoEditView = BrightcoveView.extend({
 		var custom = {},
 			custom_fields = this.model.get('custom');
 
-		_.each(
-			this.$el.find('.brightcove-custom-string, .brightcove-custom-enum'),
-			function (item) {
-				var key = item.getAttribute('data-id'),
-					val = item.value.trim();
+		_.each(this.$el.find('.brightcove-custom-string, .brightcove-custom-enum'), function (item) {
+			var key = item.getAttribute('data-id'),
+				val = item.value.trim();
 
-				if (val !== '') {
-					custom[key] = val;
+			if (val !== '') {
+				custom[key] = val;
 
-					var obj = _.find(custom_fields, function (item) {
-						return item.id == key;
-					});
-					obj.value = val;
-				}
-			},
-		);
+				var obj = _.find(custom_fields, function (item) {
+					return item.id == key;
+				});
+				obj.value = val;
+			}
+		});
 
 		this.model.set('custom_fields', custom);
 		this.model.set('custom', custom_fields);
@@ -603,3 +598,5 @@ var VideoEditView = BrightcoveView.extend({
 		}
 	},
 });
+
+export default VideoEditView;

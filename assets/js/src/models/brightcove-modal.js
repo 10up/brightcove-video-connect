@@ -82,3 +82,5 @@ var BrightcoveModalModel = Backbone.Model.extend({
 		return false;
 	},
 });
+
+export default BrightcoveModalModel;

@@ -1,3 +1,15 @@
+import BrightcoveView from "./brightcove";
+import BrightcoveMediaManagerModel from './../models/brightcove-media-manager';
+import ToolbarView from './toolbar';
+import UploadVideoManagerView from './upload-video-manager';
+import MediaDetailsView from './media-details';
+import VideoEditView from './video-edit';
+import VideoPreviewView from './video-preview';
+import PlaylistEditView from './playlist-edit';
+import MediaModel from './../models/media';
+
+const $ = jQuery;
+
 var BrightcoveRouter = Backbone.Router.extend({
 	routes: {
 		'add-new-brightcove-video': 'addNew',
@@ -504,3 +516,5 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 		return this;
 	},
 });
+
+export { BrightcoveMediaManagerView, BrightcoveRouter };

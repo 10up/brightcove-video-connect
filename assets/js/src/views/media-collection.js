@@ -1,3 +1,9 @@
+import BrightcoveView from './brightcove';
+import MediaView from './media';
+import MediaCollection from '../models/media-collection';
+
+const $ = jQuery;
+
 var MediaCollectionView = BrightcoveView.extend({
 	tagName: 'ul',
 	className: 'brightcove-media attachments',
@@ -23,10 +29,7 @@ var MediaCollectionView = BrightcoveView.extend({
 		}
 
 		var scrollThreshold = 200; // How many px from bottom until we fetch the next page.
-		if (
-			!this.fetchingResults &&
-			this.el.scrollTop + this.el.clientHeight + scrollThreshold > this.el.scrollHeight
-		) {
+		if (!this.fetchingResults && this.el.scrollTop + this.el.clientHeight + scrollThreshold > this.el.scrollHeight) {
 			this.collection.pageNumber += 1;
 			this.loadMoreMediaItems();
 		}
@@ -41,10 +44,7 @@ var MediaCollectionView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'fetch:apiError', this.handleAPIError);
 
 		var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
-		this.scrollHandler = _.chain(this.scrollHandler)
-			.bind(this)
-			.throttle(scrollRefreshSensitivity)
-			.value();
+		this.scrollHandler = _.chain(this.scrollHandler).bind(this).throttle(scrollRefreshSensitivity).value();
 		this.listenTo(wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler);
 		options = options || {};
 		this.el.id = _.uniqueId('__attachments-view-');
@@ -92,7 +92,7 @@ var MediaCollectionView = BrightcoveView.extend({
 					at: this.collection.indexOf(media),
 				});
 			},
-			this,
+			this
 		);
 
 		this.listenTo(
@@ -107,16 +107,13 @@ var MediaCollectionView = BrightcoveView.extend({
 					}
 				}
 			},
-			this,
+			this
 		);
 
 		this.listenTo(this.collection, 'reset', this.render);
 
 		// Throttle the scroll handler and bind this.
-		this.scroll = _.chain(this.scroll)
-			.bind(this)
-			.throttle(this.options.refreshSensitivity)
-			.value();
+		this.scroll = _.chain(this.scroll).bind(this).throttle(this.options.refreshSensitivity).value();
 
 		this.options.scrollElement = this.options.scrollElement || this.el;
 		$(this.options.scrollElement).on('scroll', this.scroll);
@@ -227,11 +224,7 @@ var MediaCollectionView = BrightcoveView.extend({
 			scrollTop = $(document).scrollTop();
 		}
 
-		if (
-			this.collection.hasMore !== 'function' ||
-			!$(el).is(':visible') ||
-			!this.collection.hasMore()
-		) {
+		if (this.collection.hasMore !== 'function' || !$(el).is(':visible') || !this.collection.hasMore()) {
 			return;
 		}
 
@@ -318,3 +311,5 @@ var MediaCollectionView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('playlist:changed', this.videoIds);
 	},
 });
+
+export default MediaCollectionView;

@@ -5,6 +5,7 @@
  * @package Brightcove_Video_Connect
  */
 
+use Brightcove\Utility;
 /**
  * BC_Setup class
  */
@@ -409,7 +410,9 @@ class BC_Setup {
 			'jquery-ui-datepicker',
 		);
 
-		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION, true );
+		// wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION, true );
+		wp_register_script( 'brightcove-admin', Utility\script_url( 'admin', 'admin' ), $dependencies, Utility\get_asset_info( 'admin', 'version' ), true );
+
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
 		wp_enqueue_script( 'brightcove-admin' );
 
@@ -427,8 +430,9 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = BC_Utility::get_suffix();
 
-		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
+		wp_register_style( 'brightcove-video-connect', Utility\style_url( 'admin-style', 'admin' ), [], Utility\get_asset_info( 'admin-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-video-connect' );
+
 		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/jquery-ui-datepicker' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'jquery-ui-datepicker-style' );
 	}
@@ -437,11 +441,8 @@ class BC_Setup {
 	 * Enqueue frontend scripts and styles.
 	 */
 	public static function frontend_enqueue_scripts() {
-		// Use minified libraries if SCRIPT_DEBUG is turned off.
-		$suffix = BC_Utility::get_suffix();
-
 		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
-		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array(), BRIGHTCOVE_VERSION );
+		wp_register_style( 'brightcove-playlist', Utility\style_url( 'frontend-style', 'frontend' ), [], Utility\get_asset_info( 'frontend-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-playlist' );
 	}
 

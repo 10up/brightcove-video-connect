@@ -1,6 +1,11 @@
+import { BrightcoveMediaManagerView, BrightcoveRouter } from './views/brightcove-media-manager';
+import BrightcoveModalView from './views/brightcove-modal';
+
+const $ = jQuery;
+
 var App = {
 	renderMediaManager: function (mediaType) {
-		var brightcoveMediaContainer = $('.brightcove-media-' + mediaType);
+		var brightcoveMediaContainer = jQuery('.brightcove-media-' + mediaType);
 		var content_ifr = document.getElementById('content_ifr');
 		if (brightcoveMediaContainer.length) {
 			var brightcoveMediaManager = new BrightcoveMediaManagerView({

@@ -1,3 +1,6 @@
+import MediaCollection from './media-collection';
+import MediaCollectionView from './../views/media-collection';
+
 var BrightcoveMediaManagerModel = Backbone.Model.extend({
 	defaults: {
 		view: 'grid',
@@ -33,3 +36,5 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend({
 		this.set('options', options);
 	},
 });
+
+export default BrightcoveMediaManagerModel;

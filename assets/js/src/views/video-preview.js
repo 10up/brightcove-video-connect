@@ -1,3 +1,7 @@
+import BrightcoveView from './brightcove';
+
+const $ = jQuery;
+
 var VideoPreviewView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'video-preview brightcove',
@@ -33,3 +37,5 @@ var VideoPreviewView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'insert:shortcode', this.insertShortcode);
 	},
 });
+
+export default VideoPreviewView;
