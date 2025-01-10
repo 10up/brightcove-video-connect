@@ -1,19 +1,19 @@
 import BrightcoveView from './brightcove';
 import UploadModelCollection from '../models/upload-collection';
-import UploadWindowView from './upload-window'
+import UploadWindowView from './upload-window';
 import UploadView from './upload';
 import UploadDetailsView from './upload-details';
 
 const $ = jQuery;
 
-var UploadVideoManagerView = BrightcoveView.extend({
+const UploadVideoManagerView = BrightcoveView.extend({
 	className: 'brightcove-file-uploader',
 
 	events: {
 		'click .brightcove-start-upload': 'triggerUpload',
 	},
 
-	initialize: function (options) {
+	initialize(options) {
 		/**
 		 * If you're looking for the Plupload instance, you're in the wrong place, check the UploadWindowView
 		 */
@@ -35,30 +35,30 @@ var UploadVideoManagerView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'upload:video', this.resetUploads);
 	},
 
-	resetUploads: function () {
+	resetUploads() {
 		let model;
 		while ((model = this.collection.first())) {
 			this.collection.remove(model);
 		}
 	},
 
-	errorMessage: function (message) {
+	errorMessage(message) {
 		this.message(message, 'error');
 	},
 
-	successMessage: function (message) {
+	successMessage(message) {
 		this.message(message, 'success');
 	},
 
-	message: function (message, type) {
-		var messages = this.$el.find('.brightcove-messages');
-		var messageClasses = '';
+	message(message, type) {
+		const messages = this.$el.find('.brightcove-messages');
+		let messageClasses = '';
 		if (type === 'success') {
 			messageClasses = 'notice updated';
 		} else if (type === 'error') {
 			messageClasses = 'error';
 		}
-		var newMessage = $(
+		const newMessage = $(
 			'<div class="wrap"><div class="brightcove-message"><p class="message-text"></p></div></div>',
 		);
 		messages.append(newMessage);
@@ -69,7 +69,7 @@ var UploadVideoManagerView = BrightcoveView.extend({
 		});
 	},
 
-	prepareUpload: function () {
+	prepareUpload() {
 		wpbc.uploads = wpbc.uploads || {};
 		this.collection.each(function (upload) {
 			wpbc.uploads[upload.get('id')] = {
@@ -81,29 +81,29 @@ var UploadVideoManagerView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('uploader:startUpload');
 	},
 
-	fileAdded: function (model, collection) {
+	fileAdded(model, collection) {
 		// Start upload triggers progress bars under every video.
 		// Need to re-render when one model is added
 		if (this.collection.length === 1) {
 			this.render();
 		}
-		var pendingUpload = new UploadView({ model: model });
+		const pendingUpload = new UploadView({ model });
 		pendingUpload.render();
 		pendingUpload.$el.appendTo(this.$el.find('.brightcove-pending-uploads'));
 	},
 
-	triggerUpload: function () {
+	triggerUpload() {
 		wpbc.broadcast.trigger('uploader:prepareUpload');
 	},
 
-	selectedItem: function (model) {
-		this.uploadDetails = new UploadDetailsView({ model: model });
+	selectedItem(model) {
+		this.uploadDetails = new UploadDetailsView({ model });
 		this.uploadDetails.render();
 		this.$el.find('.brightcove-pending-upload-details').remove();
 		this.uploadDetails.$el.appendTo(this.$el.find('.brightcove-upload-queued-files'));
 	},
 
-	render: function (options) {
+	render(options) {
 		if (this.collection.length) {
 			this.template = wp.template('brightcove-uploader-queued-files');
 		} else {

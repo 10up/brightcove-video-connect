@@ -1,7 +1,7 @@
 import MediaCollection from './media-collection';
-import MediaCollectionView from './../views/media-collection';
+import MediaCollectionView from '../views/media-collection';
 
-var BrightcoveMediaManagerModel = Backbone.Model.extend({
+const BrightcoveMediaManagerModel = Backbone.Model.extend({
 	defaults: {
 		view: 'grid',
 		date: 'all',
@@ -13,7 +13,7 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend({
 		poster: {},
 		thumbnail: {},
 	},
-	initialize: function (options) {
+	initialize(options) {
 		_.defaults(options, this.defaults);
 
 		wp.heartbeat.enqueue(
@@ -22,7 +22,7 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend({
 			true,
 		);
 
-		var collection = new MediaCollection([], { mediaType: options.mediaType });
+		const collection = new MediaCollection([], { mediaType: options.mediaType });
 		collection.reset();
 		/* Prevent empty element from living in our collection */
 
@@ -32,7 +32,7 @@ var BrightcoveMediaManagerModel = Backbone.Model.extend({
 
 		options.preload = !!options.preload; // Whether or not a preload var was present.
 
-		this.set('media-collection-view', new MediaCollectionView({ collection: collection }));
+		this.set('media-collection-view', new MediaCollectionView({ collection }));
 		this.set('options', options);
 	},
 });

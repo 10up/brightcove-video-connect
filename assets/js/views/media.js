@@ -1,10 +1,10 @@
 import BrightcoveView from './brightcove';
 
-var MediaView = BrightcoveView.extend({
+const MediaView = BrightcoveView.extend({
 	tagName: 'li',
 	className: 'attachment brightcove',
 
-	attributes: function () {
+	attributes() {
 		return {
 			tabIndex: 0,
 			role: 'checkbox',
@@ -24,19 +24,19 @@ var MediaView = BrightcoveView.extend({
 		'click .preview': 'triggerPreviewMedia',
 	},
 
-	triggerEditMedia: function (event) {
+	triggerEditMedia(event) {
 		event.preventDefault();
 		wpbc.broadcast.trigger('edit:media', this.model);
 	},
 
-	triggerPreviewMedia: function (event) {
+	triggerPreviewMedia(event) {
 		event.preventDefault();
 		wpbc.broadcast.trigger('preview:media', this.model);
 	},
 
 	buttons: {},
 
-	initialize: function (options) {
+	initialize(options) {
 		options = options || {};
 		this.type = options.type ? options.type : 'grid';
 
@@ -51,10 +51,12 @@ var MediaView = BrightcoveView.extend({
 		this.render();
 	},
 
-	render: function () {
-		var options = this.model.toJSON();
+	render() {
+		const options = this.model.toJSON();
 		options.duration = this.model.getReadableDuration();
-		options.updated_at_readable = options.updatedAt ? this.model.getReadableDate('updatedAt') : this.model.getReadableDate('updated_at');
+		options.updated_at_readable = options.updatedAt
+			? this.model.getReadableDate('updatedAt')
+			: this.model.getReadableDate('updated_at');
 		options.account_name = this.model.getAccountName();
 		options.height = this.model.getReadableDate('height');
 
@@ -63,7 +65,7 @@ var MediaView = BrightcoveView.extend({
 		} else if (options.viewType === 'libraryPlaylists') {
 			this.template = wp.template('brightcove-playlist-edit-video-in-library');
 		} else {
-			this.template = wp.template('brightcove-media-item-' + this.type);
+			this.template = wp.template(`brightcove-media-item-${this.type}`);
 		}
 
 		options.buttons = this.buttons;
@@ -75,23 +77,23 @@ var MediaView = BrightcoveView.extend({
 		return this;
 	},
 
-	toggleDetailView: function () {
+	toggleDetailView() {
 		wpbc.broadcast.trigger('select:media', this);
 	},
 
-	videoMoveUp: function () {
+	videoMoveUp() {
 		wpbc.broadcast.trigger('playlist:moveUp', this);
 	},
 
-	videoMoveDown: function () {
+	videoMoveDown() {
 		wpbc.broadcast.trigger('playlist:moveDown', this);
 	},
 
-	videoAdd: function () {
+	videoAdd() {
 		wpbc.broadcast.trigger('playlist:add', this);
 	},
 
-	removeVideoFromPlaylist: function () {
+	removeVideoFromPlaylist() {
 		wpbc.broadcast.trigger('playlist:remove', this);
 	},
 });

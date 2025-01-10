@@ -4,7 +4,7 @@ import { BrightcoveMediaManagerView } from './brightcove-media-manager';
 
 const $ = jQuery;
 
-var BrightcoveModalView = BrightcoveView.extend({
+const BrightcoveModalView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'media-modal brightcove',
 	template: wp.template('brightcove-media-modal'),
@@ -17,9 +17,11 @@ var BrightcoveModalView = BrightcoveView.extend({
 		'click .brightcove.button.back': 'back',
 	},
 
-	initialize: function (options) {
+	initialize(options) {
 		this.model = new BrightcoveModalModel({ tab: options.tab });
-		this.brightcoveMediaManager = new BrightcoveMediaManagerView(this.model.getMediaManagerSettings());
+		this.brightcoveMediaManager = new BrightcoveMediaManagerView(
+			this.model.getMediaManagerSettings(),
+		);
 		this.registerSubview(this.brightcoveMediaManager);
 		this.listenTo(wpbc.broadcast, 'toggle:insertButton', function (state) {
 			this.toggleInsertButton(state);
@@ -27,17 +29,17 @@ var BrightcoveModalView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'close:modal', this.closeModal);
 	},
 
-	saveSync: function (evnt) {
+	saveSync(evnt) {
 		// This event is triggered when the "Save and Sync Changes" button is clicked from edit video screen.
 		wpbc.broadcast.trigger('save:media', evnt);
 	},
 
-	back: function (evnt) {
+	back(evnt) {
 		// This event is triggered when the "Back" button is clicked from edit video screen.
 		wpbc.broadcast.trigger('back:editvideo', evnt);
 	},
 
-	insertIntoPost: function (evnt) {
+	insertIntoPost(evnt) {
 		evnt.preventDefault();
 
 		// Exit if the 'button' is disabled.
@@ -52,9 +54,9 @@ var BrightcoveModalView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('insert:shortcode');
 	},
 
-	toggleInsertButton: function (state) {
-		var button = this.$el.find('.brightcove.media-button-insert'),
-			processing = $('.attachment.highlighted').find('.processing').length;
+	toggleInsertButton(state) {
+		const button = this.$el.find('.brightcove.media-button-insert');
+		const processing = $('.attachment.highlighted').find('.processing').length;
 
 		button.show();
 
@@ -71,17 +73,24 @@ var BrightcoveModalView = BrightcoveView.extend({
 		}
 	},
 
-	changeTab: function (event) {
+	changeTab(event) {
 		event.preventDefault();
 
 		if ($(event.target).hasClass('active')) {
 			return; // Clicking the already active tab
 		}
 		$(event.target).addClass('active');
-		var tab = _.without(event.target.classList, 'media-menu-item', 'brightcove')[0];
-		var tabs = ['videos', 'upload', 'playlists', 'in-page-experiences', 'video-experience', 'playlist-experience'];
+		const tab = _.without(event.target.classList, 'media-menu-item', 'brightcove')[0];
+		const tabs = [
+			'videos',
+			'upload',
+			'playlists',
+			'in-page-experiences',
+			'video-experience',
+			'playlist-experience',
+		];
 		_.each(_.without(tabs, tab), function (otherTab) {
-			$('.brightcove.media-menu-item.' + otherTab).removeClass('active');
+			$(`.brightcove.media-menu-item.${otherTab}`).removeClass('active');
 		});
 
 		if (_.contains(tabs, tab)) {
@@ -91,7 +100,7 @@ var BrightcoveModalView = BrightcoveView.extend({
 		}
 	},
 
-	closeModal: function (evnt) {
+	closeModal(evnt) {
 		// If we are in the editVideo mode, switch back to the video view.
 		if (wpbc.modal.brightcoveMediaManager.model.get('mode') === 'editVideo') {
 			wpbc.broadcast.trigger('start:gridview');
@@ -105,11 +114,11 @@ var BrightcoveModalView = BrightcoveView.extend({
 		$('body').removeClass('modal-open');
 	},
 
-	message: function (message) {
-		var messageContainer = this.$el.find('.brightcove-message');
+	message(message) {
+		const messageContainer = this.$el.find('.brightcove-message');
 	},
 
-	render: function (options) {
+	render(options) {
 		this.$el.html(this.template(options));
 
 		this.brightcoveMediaManager.render();
@@ -137,6 +146,5 @@ var BrightcoveModalView = BrightcoveView.extend({
 		});
 	},
 });
-
 
 export default BrightcoveModalView;

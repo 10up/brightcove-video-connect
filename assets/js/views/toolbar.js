@@ -5,7 +5,7 @@
 
 import BrightcoveView from './brightcove';
 
-var ToolbarView = BrightcoveView.extend({
+const ToolbarView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'media-toolbar wp-filter',
 	template: wp.template('brightcove-media-toolbar'),
@@ -26,12 +26,12 @@ var ToolbarView = BrightcoveView.extend({
 		'input #media-search-input': 'handleEmptySearchInput',
 	},
 
-	render: function () {
-		var mediaType = this.model.get('mediaType');
-		var options = {
+	render() {
+		const mediaType = this.model.get('mediaType');
+		const options = {
 			accounts: wpbc.preload.accounts,
 			dates: {},
-			mediaType: mediaType,
+			mediaType,
 			tags: wpbc.preload.tags,
 			folders: wpbc.preload.folders,
 			labels: wpbc.preload.labels,
@@ -40,8 +40,8 @@ var ToolbarView = BrightcoveView.extend({
 			account: this.model.get('account'),
 		};
 
-		var dates = wpbc.preload.dates;
-		var date_var = this.model.get('date');
+		const { dates } = wpbc.preload;
+		const date_var = this.model.get('date');
 		/* @todo: find out if this is working */
 		if (
 			dates !== undefined &&
@@ -52,7 +52,7 @@ var ToolbarView = BrightcoveView.extend({
 		}
 
 		this.$el.html(this.template(options));
-		var spinner = this.$el.find('.spinner');
+		const spinner = this.$el.find('.spinner');
 		this.listenTo(wpbc.broadcast, 'spinner:on', function () {
 			spinner.addClass('is-active').removeClass('hidden');
 		});
@@ -62,22 +62,22 @@ var ToolbarView = BrightcoveView.extend({
 	},
 
 	// List view Selected
-	toggleList: function () {
+	toggleList() {
 		this.trigger('viewType', 'list');
 		this.$el.find('.view-list').addClass('current');
 		this.$el.find('.view-grid').removeClass('current');
 	},
 
 	// Grid view Selected
-	toggleGrid: function () {
+	toggleGrid() {
 		this.trigger('viewType', 'grid');
 		this.$el.find('.view-grid').addClass('current');
 		this.$el.find('.view-list').removeClass('current');
 	},
 
 	// Toggle toolbar help
-	toggleToolbar: function () {
-		var template = wp.template('brightcove-tooltip-notice');
+	toggleToolbar() {
+		const template = wp.template('brightcove-tooltip-notice');
 
 		// Remove any existing tooltip notice
 		$('#js-tooltip-notice').remove();
@@ -95,7 +95,7 @@ var ToolbarView = BrightcoveView.extend({
 	},
 
 	// Brightcove source changed
-	sourceChanged: function (event) {
+	sourceChanged(event) {
 		// Store the currently selected account on the model.
 		this.model.set('account', event.target.value);
 		wpbc.broadcast.trigger('change:activeAccount', event.target.value);
@@ -105,15 +105,15 @@ var ToolbarView = BrightcoveView.extend({
 			event.target.options[event.target.selectedIndex].getAttribute('data-hash');
 	},
 
-	datesChanged: function (event) {
+	datesChanged(event) {
 		wpbc.broadcast.trigger('change:date', event.target.value);
 	},
 
-	tagsChanged: function (event) {
+	tagsChanged(event) {
 		wpbc.broadcast.trigger('change:tag', event.target.value);
 	},
 
-	foldersChanged: function (event) {
+	foldersChanged(event) {
 		this.model.set('old_folder_id', this.model.get('folder_id'));
 		this.model.set('folder_id', event.target.value);
 		// hide search field if video folder is selected
@@ -122,38 +122,38 @@ var ToolbarView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('change:folder', event.target.value);
 	},
 
-	labelsChanged: function (event) {
+	labelsChanged(event) {
 		this.model.set('oldLabelPath', this.model.get('labelPath'));
 		this.model.set('labelPath', event.target.value);
 		wpbc.broadcast.trigger('change:label', event.target.value);
 	},
 
-	emptyPlaylistsChanged: function (event) {
-		var emptyPlaylists = $(event.target).prop('checked');
+	emptyPlaylistsChanged(event) {
+		const emptyPlaylists = $(event.target).prop('checked');
 		wpbc.broadcast.trigger('change:emptyPlaylists', emptyPlaylists);
 	},
 
-	enterHandler: function (event) {
+	enterHandler(event) {
 		if (event.keyCode === 13) {
 			this.searchHandler(event);
 		}
 	},
 
-	handleEmptySearchInput: function (event) {
+	handleEmptySearchInput(event) {
 		if (this.model.get('search') && !event.target.value) {
 			this.model.set('search', '');
 			wpbc.broadcast.trigger('change:searchTerm', '');
 		}
 	},
 
-	stateChanged: function (event) {
+	stateChanged(event) {
 		this.model.set('oldState', 'oldstate');
 		this.model.set('state', 'newstate');
 		wpbc.broadcast.trigger('change:stateChanged', event.target.value);
 	},
 
-	searchHandler: function (event) {
-		var searchTerm = $('#media-search-input').val();
+	searchHandler(event) {
+		const searchTerm = $('#media-search-input').val();
 
 		if (searchTerm.length > 2 && searchTerm !== this.model.get('search')) {
 			this.model.set('search', searchTerm);

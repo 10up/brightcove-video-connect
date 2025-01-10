@@ -1,25 +1,25 @@
-import BrightcoveView from "./brightcove";
-import BrightcoveMediaManagerModel from './../models/brightcove-media-manager';
+import BrightcoveView from './brightcove';
+import BrightcoveMediaManagerModel from '../models/brightcove-media-manager';
 import ToolbarView from './toolbar';
 import UploadVideoManagerView from './upload-video-manager';
 import MediaDetailsView from './media-details';
 import VideoEditView from './video-edit';
 import VideoPreviewView from './video-preview';
 import PlaylistEditView from './playlist-edit';
-import MediaModel from './../models/media';
+import MediaModel from '../models/media';
 
 const $ = jQuery;
 
-var BrightcoveRouter = Backbone.Router.extend({
+const BrightcoveRouter = Backbone.Router.extend({
 	routes: {
 		'add-new-brightcove-video': 'addNew',
 	},
-	addNew: function () {
+	addNew() {
 		wpbc.broadcast.trigger('upload:video');
 	},
 });
 
-var BrightcoveMediaManagerView = BrightcoveView.extend({
+const BrightcoveMediaManagerView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'brightcove-media',
 
@@ -29,12 +29,12 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 			 */
 	},
 
-	scrollHandler: function () {
+	scrollHandler() {
 		wpbc.broadcast.trigger('scroll:mediaGrid');
 	},
 
-	initialize: function (options) {
-		var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
+	initialize(options) {
+		const scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
 		this.scrollHandler = _.chain(this.scrollHandler)
 			.bind(this)
 			.throttle(scrollRefreshSensitivity)
@@ -92,7 +92,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 		});
 
 		this.listenTo(wpbc.broadcast, 'change:emptyPlaylists', function (hideEmptyPlaylists) {
-			var mediaCollectionView = this.model.get('media-collection-view');
+			const mediaCollectionView = this.model.get('media-collection-view');
 			this.model.set('mode', 'manager');
 
 			_.each(mediaCollectionView.collection.models, function (playlistModel) {
@@ -181,7 +181,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 		});
 
 		this.listenTo(wpbc.broadcast, 'edit:media', function (model) {
-			var mediaType = this.model.get('mediaType');
+			const mediaType = this.model.get('mediaType');
 
 			if (mediaType === 'videos') {
 				// We just hit the edit button with the edit window already open.
@@ -193,7 +193,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 				var messages = this.$el.find('.brightcove-message');
 				messages.addClass('hidden');
 
-				this.editView = new VideoEditView({ model: model });
+				this.editView = new VideoEditView({ model });
 
 				this.registerSubview(this.editView);
 				this.model.set('mode', 'editVideo');
@@ -208,7 +208,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 				var messages = this.$el.find('.brightcove-message');
 				messages.addClass('hidden');
 
-				this.editView = new VideoEditView({ model: model });
+				this.editView = new VideoEditView({ model });
 
 				this.registerSubview(this.editView);
 				this.model.set('mode', 'editVideo');
@@ -219,7 +219,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 					return true;
 				}
 
-				this.editView = new PlaylistEditView({ model: model });
+				this.editView = new PlaylistEditView({ model });
 
 				this.registerSubview(this.editView);
 				this.model.set('mode', 'editPlaylist');
@@ -228,7 +228,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 		});
 
 		this.listenTo(wpbc.broadcast, 'preview:media', function (model, shortcode) {
-			var mediaType = this.model.get('mediaType');
+			const mediaType = this.model.get('mediaType');
 
 			if (mediaType === 'videos') {
 				// We just hit the preview button with the preview window already open.
@@ -236,7 +236,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 					return true;
 				}
 
-				this.previewView = new VideoPreviewView({ model: model, shortcode: shortcode });
+				this.previewView = new VideoPreviewView({ model, shortcode });
 
 				this.registerSubview(this.previewView);
 				this.model.set('mode', 'previewVideo');
@@ -264,12 +264,12 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 				mediaView.model.set('isSelected', mediaView.$el.hasClass('highlighted'));
 
 				// Collect the selected models and extract their IDs.
-				var selected = _.filter(mediaView.model.collection.models, function (model) {
-						return model.get('isSelected');
-					}),
-					selectedIds = _.map(selected, function (model) {
-						return model.get('id');
-					});
+				const selected = _.filter(mediaView.model.collection.models, function (model) {
+					return model.get('isSelected');
+				});
+				const selectedIds = _.map(selected, function (model) {
+					return model.get('id');
+				});
 
 				this.detailsView.model.set('id', selectedIds);
 
@@ -331,8 +331,8 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 	 * Clear the preview view and remove highlighted class from previous
 	 * selected video.
 	 */
-	clearPreview: function () {
-		var messages = $('.brightcove-message');
+	clearPreview() {
+		const messages = $('.brightcove-message');
 		messages.addClass('hidden');
 
 		if (this.detailsView instanceof MediaDetailsView) {
@@ -342,13 +342,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 		this.model.get('media-collection-view').$el.find('.highlighted').removeClass('highlighted');
 	},
 
-	startGridView: function () {
+	startGridView() {
 		this.model.set('mode', 'manager');
 		this.render();
 	},
 
-	message: function (message, type, permanent) {
-		var messages = this.$el.find('.brightcove-message');
+	message(message, type, permanent) {
+		const messages = this.$el.find('.brightcove-message');
 
 		if (type === 'success') {
 			messages.addClass('updated');
@@ -358,7 +358,7 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 			messages.removeClass('updated');
 		}
 
-		var newMessage = $('<p></p>');
+		const newMessage = $('<p></p>');
 		newMessage.text(message);
 
 		messages.html(newMessage);
@@ -379,13 +379,13 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 	},
 
 	// Make notices dismissible, mimics core function, fades them empties.
-	makeNoticesDismissible: function () {
+	makeNoticesDismissible() {
 		$('.notice.is-dismissible').each(function () {
-			var $el = $(this),
-				$button = $(
-					'<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>',
-				),
-				btnText = commonL10n.dismiss || '';
+			const $el = $(this);
+			const $button = $(
+				'<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>',
+			);
+			const btnText = commonL10n.dismiss || '';
 
 			// Ensure plain text
 			$button.find('.screen-reader-text').text(btnText);
@@ -408,20 +408,20 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 		});
 	},
 
-	showUploader: function () {
+	showUploader() {
 		this.model.set('mode', 'uploader');
 		this.render();
 	},
 
-	permanentMessage: function (message) {
+	permanentMessage(message) {
 		this.message(message, 'error', true);
 	},
 
-	render: function () {
-		var options = this.model.get('options');
-		var contentContainer;
+	render() {
+		const options = this.model.get('options');
+		let contentContainer;
 
-		var mode = this.model.get('mode');
+		const mode = this.model.get('mode');
 
 		// Nuke all registered subviews
 		_.invoke(this.subviews, 'remove');
@@ -444,12 +444,12 @@ var BrightcoveMediaManagerView = BrightcoveView.extend({
 			this.toolbar.$el.appendTo(this.$el.find('.media-frame-router'));
 
 			// Add the Media views to the media manager
-			var mediaCollectionView = this.model.get('media-collection-view');
+			const mediaCollectionView = this.model.get('media-collection-view');
 
 			mediaCollectionView.render();
 			mediaCollectionView.delegateEvents();
 
-			var mediaCollectionContainer = this.$el.find('.media-frame-content');
+			const mediaCollectionContainer = this.$el.find('.media-frame-content');
 
 			mediaCollectionContainer.on('scroll', this.scrollHandler);
 			mediaCollectionView.$el.appendTo(mediaCollectionContainer);

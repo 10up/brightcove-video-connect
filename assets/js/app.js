@@ -4,11 +4,11 @@ import BrightcoveModalView from './views/brightcove-modal';
 const $ = jQuery;
 
 var App = {
-	renderMediaManager: function (mediaType) {
-		var brightcoveMediaContainer = $('.brightcove-media-' + mediaType);
-		var content_ifr = document.getElementById('content_ifr');
+	renderMediaManager(mediaType) {
+		const brightcoveMediaContainer = $(`.brightcove-media-${mediaType}`);
+		const content_ifr = document.getElementById('content_ifr');
 		if (brightcoveMediaContainer.length) {
-			var brightcoveMediaManager = new BrightcoveMediaManagerView({
+			const brightcoveMediaManager = new BrightcoveMediaManagerView({
 				el: brightcoveMediaContainer,
 				date: 'all',
 				embedType: 'page',
@@ -17,14 +17,14 @@ var App = {
 				search: '',
 				accounts: 'all',
 				tags: 'all',
-				mediaType: mediaType,
+				mediaType,
 				viewType: 'grid',
 			});
 			brightcoveMediaManager.render();
 		}
 	},
 
-	load: function () {
+	load() {
 		wpbc.requests = [];
 		wpbc.responses = {};
 		wpbc.broadcast = _.extend({}, Backbone.Events); // pubSub object
@@ -32,10 +32,10 @@ var App = {
 		this.loaded();
 	},
 
-	loaded: function () {
-		var brightcoveModalContainer = $('.brightcove-modal');
+	loaded() {
+		const brightcoveModalContainer = $('.brightcove-modal');
 
-		var router = new BrightcoveRouter();
+		const router = new BrightcoveRouter();
 		wpbc.triggerModal = function () {
 			if (!wpbc.modal) {
 				wpbc.modal = new BrightcoveModalView({
@@ -52,7 +52,7 @@ var App = {
 			$('body').addClass('modal-open');
 		};
 
-		var bc_sanitize_ids = function (id) {
+		const bc_sanitize_ids = function (id) {
 			return id.replace(/\D/g, '');
 		};
 
@@ -87,7 +87,7 @@ var App = {
 		});
 
 		$('a.brightcove-action-delete-source').on('click', function (e) {
-			var message = $(this).data('alert-message');
+			const message = $(this).data('alert-message');
 			if (!confirm(message)) {
 				return false;
 			}
@@ -97,7 +97,7 @@ var App = {
 
 jQuery(document).ready(function () {
 	App.load();
-	var router = new BrightcoveRouter();
+	const router = new BrightcoveRouter();
 	if (!Backbone.History.started) {
 		Backbone.history.start();
 	}

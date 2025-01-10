@@ -4,9 +4,9 @@ var MediaCollection = Backbone.Collection.extend({
 	model: MediaModel,
 	/**
 	 * @param {Array} [models=[]] Array of models used to populate the collection.
-	 * @param {Object} [options={}]
+	 * @param {object} [options={}]
 	 */
-	initialize: function (models, options) {
+	initialize(models, options) {
 		options = options || {};
 		if (options.activeAccount) {
 			this.activeAccount = options.activeAccount;
@@ -16,7 +16,11 @@ var MediaCollection = Backbone.Collection.extend({
 
 		this.pageNumber = this.pageNumber || 1;
 
-		if (!this.mediaType && (this.mediaCollectionViewType === 'existingPlaylists' || this.mediaCollectionViewType === 'libraryPlaylists')) {
+		if (
+			!this.mediaType &&
+			(this.mediaCollectionViewType === 'existingPlaylists' ||
+				this.mediaCollectionViewType === 'libraryPlaylists')
+		) {
 			this.mediaType = 'videos';
 		}
 
@@ -55,13 +59,17 @@ var MediaCollection = Backbone.Collection.extend({
 
 		this.listenTo(wpbc.broadcast, 'change:activeAccount', function (accountId) {
 			this.activeAccount = accountId;
-			wp.heartbeat.enqueue('brightcove_heartbeat', { accountId: accountId }, true);
+			wp.heartbeat.enqueue('brightcove_heartbeat', { accountId }, true);
 			this.fetch();
 		});
 
 		jQuery(document).on('heartbeat-tick.brightcove_heartbeat', function (event, data) {
 			if (data.hasOwnProperty('brightcove_heartbeat')) {
-				wp.heartbeat.enqueue('brightcove_heartbeat', { accountId: data.brightcove_heartbeat.account_id }, true);
+				wp.heartbeat.enqueue(
+					'brightcove_heartbeat',
+					{ accountId: data.brightcove_heartbeat.account_id },
+					true,
+				);
 			}
 		});
 
@@ -116,8 +124,8 @@ var MediaCollection = Backbone.Collection.extend({
 			this.killPendingRequests();
 			if (settings.mediaType !== this.mediaType) {
 				this.mediaType = settings.mediaType;
-				var preload = wpbc.preload[this.mediaType];
-				var model;
+				const preload = wpbc.preload[this.mediaType];
+				let model;
 				// Remove all models from the collection
 				while ((model = this.first())) {
 					this.remove(model);
@@ -131,7 +139,7 @@ var MediaCollection = Backbone.Collection.extend({
 		});
 	},
 
-	killPendingRequests: function () {
+	killPendingRequests() {
 		// Kill all pending requests
 		_.each(wpbc.requests, function (request) {
 			request.abort();
@@ -140,7 +148,7 @@ var MediaCollection = Backbone.Collection.extend({
 		wpbc.requests = [];
 	},
 
-	checksum: function (object) {
+	checksum(object) {
 		if (!_.isString(object)) {
 			if (_.isFunction(object.toJSON)) {
 				object = object.toJSON();
@@ -148,9 +156,9 @@ var MediaCollection = Backbone.Collection.extend({
 				object = JSON.stringify(object);
 			}
 		}
-		var checksum = 0x12345678;
+		let checksum = 0x12345678;
 
-		for (var i = 0; i < object.length; i++) {
+		for (let i = 0; i < object.length; i++) {
 			checksum += object.charCodeAt(i) * (i + 1);
 		}
 
@@ -160,13 +168,14 @@ var MediaCollection = Backbone.Collection.extend({
 	/**
 	 * Overrides Backbone.Collection.sync
 	 *
-	 * @param {String} method
+	 * @param {string} method
 	 * @param {Backbone.Model} model
-	 * @param {Object} [options={}]
+	 * @param {object} [options={}]
 	 * @returns {Promise}
 	 */
-	sync: function (method, model, options) {
-		var args, fallback;
+	sync(method, model, options) {
+		let args;
+		let fallback;
 
 		// Overload the read method so Media.fetch() functions correctly.
 		if (method === 'read') {
@@ -191,7 +200,18 @@ var MediaCollection = Backbone.Collection.extend({
 				type: this.mediaType || 'videos',
 			});
 
-			var previousRequest = _.pick(options.data, 'account', 'dates', 'posts_per_page', 'search', 'tags', 'type', 'folder_id', 'tagName', 'state');
+			const previousRequest = _.pick(
+				options.data,
+				'account',
+				'dates',
+				'posts_per_page',
+				'search',
+				'tags',
+				'type',
+				'folder_id',
+				'tagName',
+				'state',
+			);
 
 			// Determine if we're infinite scrolling or not.
 			this.additionalRequest = _.isEqual(previousRequest, wpbc.previousRequest);
@@ -209,23 +229,26 @@ var MediaCollection = Backbone.Collection.extend({
 
 			options.data.query = args;
 
-			if (!_.contains(['libraryPlaylists', 'existingPlaylists'], this.mediaCollectionViewType)) {
+			if (
+				!_.contains(['libraryPlaylists', 'existingPlaylists'], this.mediaCollectionViewType)
+			) {
 				this.killPendingRequests();
 			}
 
-			var requestChecksum = this.checksum(options.data);
+			const requestChecksum = this.checksum(options.data);
 
 			if (!_.isUndefined(wpbc.responses[requestChecksum])) {
 				this.parse({ data: wpbc.responses[requestChecksum] }, 'cached');
 				return true;
 			}
 
-			var request = jQuery.ajax({
-				type: 'POST',
-				url: wp.ajax.settings.url,
-				context: this,
-				data: options.data,
-			})
+			const request = jQuery
+				.ajax({
+					type: 'POST',
+					url: wp.ajax.settings.url,
+					context: this,
+					data: options.data,
+				})
 				.done(function (response, status, request) {
 					this.parse(response, status, request, requestChecksum);
 				})
@@ -245,7 +268,7 @@ var MediaCollection = Backbone.Collection.extend({
 		return fallback.sync.apply(this, arguments);
 	},
 
-	fetchFail: function (response, textStatus) {
+	fetchFail(response, textStatus) {
 		if (this.pageNumber > 1) {
 			this.pageNumber--;
 		}
@@ -261,20 +284,23 @@ var MediaCollection = Backbone.Collection.extend({
 	 *
 	 * See trac ticket #24753
 	 *
-	 * @param {Object|Array} resp The raw response Object/Array.
-	 * @param {Object} xhr
+	 * @param {object | Array} resp The raw response Object/Array.
+	 * @param {object} xhr
 	 * @returns {Array} The array of model attributes to be added to the
 	 *   collection
 	 */
-	parse: function (response, status, request, checksum) {
+	parse(response, status, request, checksum) {
 		wpbc.broadcast.trigger('fetch:finished');
 		wpbc.broadcast.trigger('spinner:off');
-		if (!_.contains(['success', 'cached'], status) || (status !== 'cached' && !response.success)) {
+		if (
+			!_.contains(['success', 'cached'], status) ||
+			(status !== 'cached' && !response.success)
+		) {
 			wpbc.broadcast.trigger('fetch:apiError');
 			return false;
 		}
 
-		var data = response.data;
+		let { data } = response;
 
 		if (status === 'success') {
 			wpbc.responses[checksum] = data;
@@ -302,10 +328,12 @@ var MediaCollection = Backbone.Collection.extend({
 			wpbc.broadcast.trigger('videoEdit:message', 'No videos found.', 'error', true);
 		}
 
-		var allMedia = _.map(
+		const allMedia = _.map(
 			data,
 			function (attrs) {
-				var id, media, newAttributes;
+				let id;
+				let media;
+				let newAttributes;
 
 				if (attrs instanceof Backbone.Model) {
 					id = attrs.get('id');
@@ -314,7 +342,7 @@ var MediaCollection = Backbone.Collection.extend({
 					id = attrs.id;
 				}
 
-				media = this.findWhere({ id: id });
+				media = this.findWhere({ id });
 				if (!media) {
 					media = this.add(attrs);
 				} else {
@@ -328,7 +356,7 @@ var MediaCollection = Backbone.Collection.extend({
 				media.set('viewType', this.mediaCollectionViewType);
 				return media;
 			},
-			this
+			this,
 		);
 
 		if (this.additionalRequest) {

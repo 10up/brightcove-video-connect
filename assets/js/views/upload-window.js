@@ -6,25 +6,25 @@ const UploadWindowView = BrightcoveView.extend({
 	className: 'uploader-window',
 	template: wp.template('brightcove-uploader-window'),
 
-	initialize: function (options) {
+	initialize(options) {
 		_.bindAll(this, 'uploaderFilesAdded');
 		this.listenTo(wpbc.broadcast, 'uploader:queuedFilesAdded', this.hide);
 		this.listenTo(wpbc.broadcast, 'uploader:startUpload', this.uploaderStartUpload);
 		this.listenTo(wpbc.broadcast, 'uploader:clear', this.resetUploads);
 	},
 
-	render: function (options) {
+	render(options) {
 		this.$el.html(this.template(options));
 		_.defer(_.bind(this.afterRender, this));
 	},
 
-	resetUploads: function () {
+	resetUploads() {
 		if (this.uploader && this.uploader.files) {
 			this.uploader.files = []; // Reset pending uploads
 		}
 	},
 
-	afterRender: function () {
+	afterRender() {
 		this.uploader = new plupload.Uploader(_.defaults(this.options, wpbc.preload.plupload));
 
 		// Uploader has neither .on nor .listenTo
@@ -40,17 +40,17 @@ const UploadWindowView = BrightcoveView.extend({
 		this.uploader.init();
 		$('html').on('dragenter', _.bind(this.show, this));
 		/* the following dropzone function code is taken from the wp.Uploader code */
-		var drop_element = wpbc.preload.plupload.drop_element.replace(/[^a-zA-Z0-9-]+/g, '');
-		var dropzone = $('#' + drop_element);
+		const drop_element = wpbc.preload.plupload.drop_element.replace(/[^a-zA-Z0-9-]+/g, '');
+		const dropzone = $(`#${drop_element}`);
 		dropzone.on('dropzone:leave', _.bind(this.hide, this));
 	},
 
-	uploaderAfterInit: function (uploader) {
-		var drop_element = wpbc.preload.plupload.drop_element.replace(/[^a-zA-Z0-9-]+/g, '');
-		var timer,
-			active,
-			dragdrop,
-			dropzone = $('#' + drop_element);
+	uploaderAfterInit(uploader) {
+		const drop_element = wpbc.preload.plupload.drop_element.replace(/[^a-zA-Z0-9-]+/g, '');
+		let timer;
+		let active;
+		let dragdrop;
+		const dropzone = $(`#${drop_element}`);
 
 		dragdrop = uploader.features.dragdrop;
 
@@ -92,8 +92,8 @@ const UploadWindowView = BrightcoveView.extend({
 		});
 	},
 
-	show: function () {
-		var $el = this.$el.show();
+	show() {
+		const $el = this.$el.show();
 
 		// Ensure that the animation is triggered by waiting until
 		// the transparent element is painted into the DOM.
@@ -102,8 +102,8 @@ const UploadWindowView = BrightcoveView.extend({
 		});
 	},
 
-	hide: function () {
-		var $el = this.$el.css({ opacity: 0 });
+	hide() {
+		const $el = this.$el.css({ opacity: 0 });
 
 		wp.media.transition($el).done(function () {
 			// Transition end events are subject to race conditions.
@@ -121,24 +121,28 @@ const UploadWindowView = BrightcoveView.extend({
 		}, 500);
 	},
 
-	uploaderFilesAdded: function (uploader, queuedFiles) {
+	uploaderFilesAdded(uploader, queuedFiles) {
 		wpbc.broadcast.trigger('uploader:queuedFilesAdded', queuedFiles);
 	},
 
-	uploaderStartUpload: function () {
+	uploaderStartUpload() {
 		this.uploader.start();
 	},
 
-	uploaderUploadProgress: function (up, file) {
+	uploaderUploadProgress(up, file) {
 		wpbc.broadcast.trigger('uploader:uploadProgress', file);
 	},
 
-	uploaderBeforeUpload: function (up, file) {
-		up.settings.multipart_params = _.defaults(wpbc.uploads[file.id], wpbc.preload.plupload.multipart_params, { nonce: wpbc.preload.nonce });
+	uploaderBeforeUpload(up, file) {
+		up.settings.multipart_params = _.defaults(
+			wpbc.uploads[file.id],
+			wpbc.preload.plupload.multipart_params,
+			{ nonce: wpbc.preload.nonce },
+		);
 	},
 
-	uploaderFileUploaded: function (up, file, response) {
-		var status = JSON.parse(response.response);
+	uploaderFileUploaded(up, file, response) {
+		const status = JSON.parse(response.response);
 		wpbc.broadcast.trigger('uploader:fileUploaded', file);
 		if (status.data.upload === 'success' && status.data.ingest === 'success') {
 			if (status.data.videoDetails) {

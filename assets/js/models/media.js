@@ -2,7 +2,7 @@
  * Media model for Media CPT
  */
 
-var MediaModel = Backbone.Model.extend({
+const MediaModel = Backbone.Model.extend({
 	/**
 	 * Copied largely from WP Attachment sync function
 	 * Triggered when attachment details change
@@ -10,12 +10,12 @@ var MediaModel = Backbone.Model.extend({
 	 *
 	 * @param {string} method
 	 * @param {wp.media.model.Media} model
-	 * @param {Object} [options={}]
+	 * @param {object} [options={}]
 	 *
 	 * @returns {Promise}
 	 */
-	sync: function (method, model, options) {
-		var accountHash = null;
+	sync(method, model, options) {
+		let accountHash = null;
 
 		// Set the accountHash to the wpbc.preload.accounts[*] where the account_id
 		// matches this media objects account_id.
@@ -74,7 +74,7 @@ var MediaModel = Backbone.Model.extend({
 				language: this.get('language'),
 			});
 
-			var video_ids = this.get('video_ids');
+			const video_ids = this.get('video_ids');
 			if (video_ids) {
 				options.data.playlist_id = this.id;
 				options.data.playlist_videos = video_ids;
@@ -97,7 +97,7 @@ var MediaModel = Backbone.Model.extend({
 		}
 		if (method === 'delete') {
 			options = options || {};
-			var self = this;
+			const self = this;
 
 			options.data = _.extend(options.data || {}, {
 				account: accountHash,
@@ -139,11 +139,11 @@ var MediaModel = Backbone.Model.extend({
 	/**
 	 * Convert date strings into Date objects.
 	 *
-	 * @param {Object} resp The raw response object, typically returned by fetch()
-	 * @returns {Object} The modified response object, which is the attributes hash
+	 * @param {object} resp The raw response object, typically returned by fetch()
+	 * @returns {object} The modified response object, which is the attributes hash
 	 *    to be set on the model.
 	 */
-	parse: function (resp) {
+	parse(resp) {
 		if (!resp) {
 			return resp;
 		}
@@ -153,9 +153,9 @@ var MediaModel = Backbone.Model.extend({
 		return resp;
 	},
 
-	getAccountName: function () {
-		var account_id = this.get('account_id');
-		var matchingAccount = _.findWhere(wpbc.preload.accounts, {
+	getAccountName() {
+		const account_id = this.get('account_id');
+		const matchingAccount = _.findWhere(wpbc.preload.accounts, {
 			account_id: this.get('account_id'),
 		});
 		return undefined === matchingAccount
@@ -163,8 +163,8 @@ var MediaModel = Backbone.Model.extend({
 			: matchingAccount.account_name;
 	},
 
-	getSelectedAccountName: function () {
-		var elt = document.getElementById('brightcove-media-source');
+	getSelectedAccountName() {
+		const elt = document.getElementById('brightcove-media-source');
 
 		if (elt.selectedIndex === -1) {
 			return 'unavailable';
@@ -173,54 +173,50 @@ var MediaModel = Backbone.Model.extend({
 		return elt.options[elt.selectedIndex].text;
 	},
 
-	getReadableDuration: function () {
-		var duration = this.get('duration');
+	getReadableDuration() {
+		let duration = this.get('duration');
 
 		if (duration) {
 			duration = Number(duration / 1000);
-			var hours = Math.floor(duration / 3600);
-			var minutes = Math.floor((duration % 3600) / 60);
-			var seconds = Math.floor((duration % 3600) % 60);
-			return (
-				(hours > 0 ? hours + ':' + (minutes < 10 ? '0' : '') : '') +
-				minutes +
-				':' +
-				(seconds < 10 ? '0' : '') +
-				seconds
-			);
+			const hours = Math.floor(duration / 3600);
+			const minutes = Math.floor((duration % 3600) / 60);
+			const seconds = Math.floor((duration % 3600) % 60);
+			return `${(hours > 0 ? `${hours}:${minutes < 10 ? '0' : ''}` : '') + minutes}:${
+				seconds < 10 ? '0' : ''
+			}${seconds}`;
 		}
 		return duration;
 	},
 
-	getReadableDate: function (field) {
-		var updated_at = this.get(field);
+	getReadableDate(field) {
+		const updated_at = this.get(field);
 
 		if (updated_at) {
-			var date = new Date(updated_at);
+			const date = new Date(updated_at);
 
-			var hour = date.getHours();
-			var min = date.getMinutes();
-			var year = date.getFullYear();
-			var mon = date.getMonth() + 1;
-			var day = date.getDate();
-			var ampm = hour >= 12 ? 'pm' : 'am';
+			let hour = date.getHours();
+			let min = date.getMinutes();
+			const year = date.getFullYear();
+			const mon = date.getMonth() + 1;
+			const day = date.getDate();
+			const ampm = hour >= 12 ? 'pm' : 'am';
 
 			hour %= 12;
 			hour = hour || 12;
 
-			min = min < 10 ? '0' + min : min;
+			min = min < 10 ? `0${min}` : min;
 
-			var readableDate = year + '/' + mon + '/' + day + ' - ' + hour + ':' + min + ' ' + ampm;
+			const readableDate = `${year}/${mon}/${day} - ${hour}:${min} ${ampm}`;
 			return readableDate;
 		}
 		return updated_at;
 	},
 
-	successFunction: function (message) {
+	successFunction(message) {
 		wpbc.broadcast.trigger('videoEdit:message', message, 'success');
 		wpbc.broadcast.trigger('spinner:off');
 		if (_.isArray(this.get('video_ids')) && wpbc.preload && wpbc.preload.playlists) {
-			var id = this.get('id');
+			const id = this.get('id');
 			_.each(
 				wpbc.preload.playlists,
 				function (playlist, index) {
@@ -239,7 +235,7 @@ var MediaModel = Backbone.Model.extend({
 		}
 	},
 
-	failFunction: function (message) {
+	failFunction(message) {
 		wpbc.broadcast.trigger('videoEdit:message', message, 'error');
 		wpbc.broadcast.trigger('spinner:off');
 	},

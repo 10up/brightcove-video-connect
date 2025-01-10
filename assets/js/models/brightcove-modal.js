@@ -2,10 +2,10 @@
  * Media model for Media CPT
  */
 
-var BrightcoveModalModel = Backbone.Model.extend({
-	getMediaManagerSettings: function () {
-		var tab = this.get('tab');
-		var settings = {
+const BrightcoveModalModel = Backbone.Model.extend({
+	getMediaManagerSettings() {
+		const tab = this.get('tab');
+		const settings = {
 			upload: {
 				accounts: 'all',
 				date: 'all',

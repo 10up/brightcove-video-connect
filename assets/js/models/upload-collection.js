@@ -3,12 +3,12 @@
  */
 import UploadModel from './upload';
 
-var UploadModelCollection = Backbone.Collection.extend({
-	initialize: function (options) {
+const UploadModelCollection = Backbone.Collection.extend({
+	initialize(options) {
 		this.listenTo(wpbc.broadcast, 'uploader:queuedFilesAdded', this.queuedFilesAdded);
 	},
 
-	queuedFilesAdded: function (queuedFiles) {
+	queuedFilesAdded(queuedFiles) {
 		_.each(
 			queuedFiles,
 			function (queuedFile) {

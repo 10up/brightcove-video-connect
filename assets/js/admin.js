@@ -1,5 +1,5 @@
-import  './views/brightcove';
-import  './views/toolbar';
+import './views/brightcove';
+import './views/toolbar';
 
 import './views/upload-video-manager';
 import './views/brightcove-media-manager';

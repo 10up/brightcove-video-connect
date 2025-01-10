@@ -4,7 +4,7 @@ import MediaCollection from '../models/media-collection';
 
 const $ = jQuery;
 
-var MediaCollectionView = BrightcoveView.extend({
+const MediaCollectionView = BrightcoveView.extend({
 	tagName: 'ul',
 	className: 'brightcove-media attachments',
 
@@ -17,25 +17,28 @@ var MediaCollectionView = BrightcoveView.extend({
 		scroll: 'scrollHandler',
 	},
 
-	loadMoreMediaItems: function () {
+	loadMoreMediaItems() {
 		this.fetchingResults = true;
 		this.collection.fetch();
 	},
 
-	scrollHandler: function () {
+	scrollHandler() {
 		// We don't fetch for videos in an existing playlist
 		if (this.collection.mediaCollectionViewType === 'existingPlaylists') {
 			return;
 		}
 
-		var scrollThreshold = 200; // How many px from bottom until we fetch the next page.
-		if (!this.fetchingResults && this.el.scrollTop + this.el.clientHeight + scrollThreshold > this.el.scrollHeight) {
+		const scrollThreshold = 200; // How many px from bottom until we fetch the next page.
+		if (
+			!this.fetchingResults &&
+			this.el.scrollTop + this.el.clientHeight + scrollThreshold > this.el.scrollHeight
+		) {
 			this.collection.pageNumber += 1;
 			this.loadMoreMediaItems();
 		}
 	},
 
-	initialize: function (options) {
+	initialize(options) {
 		this.fetchingResults = false;
 		this.listenTo(wpbc.broadcast, 'fetch:finished', function () {
 			this.fetchingResults = false;
@@ -43,8 +46,11 @@ var MediaCollectionView = BrightcoveView.extend({
 
 		this.listenTo(wpbc.broadcast, 'fetch:apiError', this.handleAPIError);
 
-		var scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
-		this.scrollHandler = _.chain(this.scrollHandler).bind(this).throttle(scrollRefreshSensitivity).value();
+		const scrollRefreshSensitivity = wp.media.isTouchDevice ? 300 : 200;
+		this.scrollHandler = _.chain(this.scrollHandler)
+			.bind(this)
+			.throttle(scrollRefreshSensitivity)
+			.value();
 		this.listenTo(wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler);
 		options = options || {};
 		this.el.id = _.uniqueId('__attachments-view-');
@@ -92,7 +98,7 @@ var MediaCollectionView = BrightcoveView.extend({
 					at: this.collection.indexOf(media),
 				});
 			},
-			this
+			this,
 		);
 
 		this.listenTo(
@@ -107,13 +113,16 @@ var MediaCollectionView = BrightcoveView.extend({
 					}
 				}
 			},
-			this
+			this,
 		);
 
 		this.listenTo(this.collection, 'reset', this.render);
 
 		// Throttle the scroll handler and bind this.
-		this.scroll = _.chain(this.scroll).bind(this).throttle(this.options.refreshSensitivity).value();
+		this.scroll = _.chain(this.scroll)
+			.bind(this)
+			.throttle(this.options.refreshSensitivity)
+			.value();
 
 		this.options.scrollElement = this.options.scrollElement || this.el;
 		$(this.options.scrollElement).on('scroll', this.scroll);
@@ -130,11 +139,11 @@ var MediaCollectionView = BrightcoveView.extend({
 		}
 	},
 
-	handleAPIError: function () {
+	handleAPIError() {
 		this.el.innerText = wpbc.str_apifailure;
 	},
 
-	render: function () {
+	render() {
 		// hide the spinner when content has finished loading
 		this.listenTo(wpbc.broadcast, 'spinner:off', function () {
 			$('#js-media-loading').css('display', 'none');
@@ -152,19 +161,19 @@ var MediaCollectionView = BrightcoveView.extend({
 		}, this);
 	},
 
-	setViewType: function (type) {
+	setViewType(type) {
 		this.collection.each(function (mediaModel) {
 			mediaModel.set('view', type);
 		}, this);
 	},
 
-	bindEvents: function () {
+	bindEvents() {
 		this.$window.off(this.resizeEvent).on(this.resizeEvent, _.debounce(this.setColumns, 50));
 	},
 
-	setColumns: function () {
-		var prev = this.columns,
-			width = this.$el.width();
+	setColumns() {
+		const prev = this.columns;
+		const width = this.$el.width();
 
 		if (width) {
 			this.columns = Math.min(Math.round(width / this.options.idealColumnWidth), 12) || 1;
@@ -179,9 +188,9 @@ var MediaCollectionView = BrightcoveView.extend({
 	 * @param {wp.media.model.Video} attachment
 	 * @returns {wp.media.View}
 	 */
-	createMediaView: function (attachment) {
+	createMediaView(attachment) {
 		attachment.set('viewType', this.collection.mediaCollectionViewType);
-		var view = new MediaView({
+		const view = new MediaView({
 			controller: this.controller,
 			model: attachment,
 			collection: this.collection,
@@ -192,7 +201,7 @@ var MediaCollectionView = BrightcoveView.extend({
 		return view;
 	},
 
-	prepare: function () {
+	prepare() {
 		// Create all of the Video views, and replace
 		// the list in a single DOM operation.
 		if (this.collection.length) {
@@ -205,17 +214,17 @@ var MediaCollectionView = BrightcoveView.extend({
 		}
 	},
 
-	ready: function () {
+	ready() {
 		// Trigger the scroll event to check if we're within the
 		// threshold to query for additional attachments.
 		this.scroll();
 	},
 
-	scroll: function () {
-		var view = this,
-			el = this.options.scrollElement,
-			scrollTop = el.scrollTop,
-			toolbar;
+	scroll() {
+		const view = this;
+		let el = this.options.scrollElement;
+		let { scrollTop } = el;
+		let toolbar;
 
 		// The scroll event occurs on the document, but the element
 		// that should be checked is the document body.
@@ -224,7 +233,11 @@ var MediaCollectionView = BrightcoveView.extend({
 			scrollTop = $(document).scrollTop();
 		}
 
-		if (this.collection.hasMore !== 'function' || !$(el).is(':visible') || !this.collection.hasMore()) {
+		if (
+			this.collection.hasMore !== 'function' ||
+			!$(el).is(':visible') ||
+			!this.collection.hasMore()
+		) {
 			return;
 		}
 
@@ -243,9 +256,9 @@ var MediaCollectionView = BrightcoveView.extend({
 		}
 	},
 
-	videoMoveUp: function (videoView) {
-		var model = videoView.model;
-		var index = this.collection.indexOf(model);
+	videoMoveUp(videoView) {
+		const { model } = videoView;
+		const index = this.collection.indexOf(model);
 		if (index > 0) {
 			this.collection.remove(model, { silent: true }); // silence this to stop excess event triggers
 			this.collection.add(model, { at: index - 1 });
@@ -254,9 +267,9 @@ var MediaCollectionView = BrightcoveView.extend({
 		this.playlistChanged();
 	},
 
-	videoMoveDown: function (videoView) {
-		var model = videoView.model;
-		var index = this.collection.indexOf(model);
+	videoMoveDown(videoView) {
+		const { model } = videoView;
+		const index = this.collection.indexOf(model);
 		if (index < this.collection.models.length) {
 			this.collection.remove(model, { silent: true }); // silence this to stop excess event triggers
 			this.collection.add(model, { at: index + 1 });
@@ -265,8 +278,8 @@ var MediaCollectionView = BrightcoveView.extend({
 		this.playlistChanged();
 	},
 
-	videoRemove: function (videoView) {
-		var model = videoView.model;
+	videoRemove(videoView) {
+		const { model } = videoView;
 		if (this.collection.indexOf(model) === -1) {
 			// this is the library model
 			this.collection.add(model);
@@ -278,14 +291,14 @@ var MediaCollectionView = BrightcoveView.extend({
 		this.render();
 	},
 
-	videoAdd: function (videoView) {
+	videoAdd(videoView) {
 		/**
 		 * Video add is heard by two collections, the one containing the videos for the playlists
 		 * and the one containing the videos that we can add to them.
 		 * We handle the add by adding from the collection where it doesn't exist (the playlist) and removing
 		 * where it does (the library).
 		 */
-		var model = videoView.model;
+		const { model } = videoView;
 		if (this.collection.indexOf(model) === -1) {
 			// this is the playlist collection
 			this.collection.add(model);
@@ -297,8 +310,8 @@ var MediaCollectionView = BrightcoveView.extend({
 		}
 	},
 
-	playlistChanged: function () {
-		var videoIds = [];
+	playlistChanged() {
+		const videoIds = [];
 		this.collection.each(function (video) {
 			videoIds.push(video.id);
 		});
@@ -307,7 +320,7 @@ var MediaCollectionView = BrightcoveView.extend({
 		this.syncPlaylist();
 	},
 
-	syncPlaylist: function () {
+	syncPlaylist() {
 		wpbc.broadcast.trigger('playlist:changed', this.videoIds);
 	},
 });

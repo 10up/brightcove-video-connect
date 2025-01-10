@@ -2,7 +2,7 @@ import BrightcoveView from './brightcove';
 
 const $ = jQuery;
 
-var VideoEditView = BrightcoveView.extend({
+const VideoEditView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'video-edit brightcove attachment-details',
 	template: wp.template('brightcove-video-edit'),
@@ -24,9 +24,9 @@ var VideoEditView = BrightcoveView.extend({
 	 * Changes template variant based on current variant.
 	 * @param event
 	 */
-	changeVariant: function (event) {
-		const valueSelected = this.$el.find('.brightcove-variant').val(),
-			options = this.model.toJSON();
+	changeVariant(event) {
+		const valueSelected = this.$el.find('.brightcove-variant').val();
+		const options = this.model.toJSON();
 
 		let template;
 
@@ -35,12 +35,12 @@ var VideoEditView = BrightcoveView.extend({
 			$('.brightcove-variant-details').replaceWith(template(options));
 			this.setCustomFields(options.custom_fields);
 		} else {
-			let variantIndex = options.variants
+			const variantIndex = options.variants
 				.map(function (variant) {
 					return variant.language;
 				})
 				.indexOf(valueSelected);
-			let variant = options.variants[variantIndex];
+			const variant = options.variants[variantIndex];
 			variant.variantList = options.variants;
 			variant.valueSelected = valueSelected;
 
@@ -51,7 +51,7 @@ var VideoEditView = BrightcoveView.extend({
 		this.renderCustomFields();
 	},
 
-	back: function (event) {
+	back(event) {
 		event.preventDefault();
 
 		// Exit if the 'button' is disabled.
@@ -61,7 +61,7 @@ var VideoEditView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('start:gridview');
 	},
 
-	deleteVideo: function () {
+	deleteVideo() {
 		if (confirm(wpbc.preload.messages.confirmDelete)) {
 			wpbc.broadcast.trigger('spinner:on');
 			this.model.set('mediaType', 'videos');
@@ -74,7 +74,7 @@ var VideoEditView = BrightcoveView.extend({
 	 *
 	 * @param {Event} evnt
 	 */
-	openMediaManager: function (evnt) {
+	openMediaManager(evnt) {
 		evnt.preventDefault();
 
 		const options = {
@@ -93,8 +93,8 @@ var VideoEditView = BrightcoveView.extend({
 
 		// Listen for selection of media
 		mediaManager.on('select', function () {
-			var media = mediaManager.state().get('selection').first().toJSON(),
-				field = $(evnt).parents('.setting');
+			const media = mediaManager.state().get('selection').first().toJSON();
+			const field = $(evnt).parents('.setting');
 
 			// Set the selected attachment to the correct field
 			that.setAttachment(media, field);
@@ -107,16 +107,16 @@ var VideoEditView = BrightcoveView.extend({
 	/**
 	 * Set the hidden input to the ID of the selected attachment.
 	 *
-	 * @param {Object} media
-	 * @param {String} field
+	 * @param {object} media
+	 * @param {string} field
 	 * @returns {boolean}
 	 */
-	setAttachment: function (media, field) {
-		var field = field.prevObject[0].currentTarget,
-			field = $(field).prev('input'),
-			attachment = field.parents('.attachment'),
-			preview = attachment.find('.-image'),
-			ThumbnailOrPoster = ['brightcove-poster', 'brightcove-thumbnail'];
+	setAttachment(media, field) {
+		var field = field.prevObject[0].currentTarget;
+		var field = $(field).prev('input');
+		const attachment = field.parents('.attachment');
+		const preview = attachment.find('.-image');
+		const ThumbnailOrPoster = ['brightcove-poster', 'brightcove-thumbnail'];
 
 		// Perform different setup actions based on the type of upload
 		if (ThumbnailOrPoster.includes(field.attr('class'))) {
@@ -128,7 +128,7 @@ var VideoEditView = BrightcoveView.extend({
 			};
 
 			// Set up our preview image
-			var image = document.createElement('img');
+			const image = document.createElement('img');
 
 			// Set image properties
 			image.src = media.sizes.full.url;
@@ -142,7 +142,7 @@ var VideoEditView = BrightcoveView.extend({
 			if (media.subtype === 'vtt') {
 				this.addCaptionRow(false, media);
 			} else {
-				var template = wp.template('brightcove-badformat-notice');
+				const template = wp.template('brightcove-badformat-notice');
 
 				// Throw a notice to the user that the file is not the correct format
 				$('.brightcove-media-videos').prepend(template);
@@ -168,10 +168,10 @@ var VideoEditView = BrightcoveView.extend({
 	 * @param {Event} evnt
 	 * @returns {boolean}
 	 */
-	removeAttachment: function (evnt) {
-		var container = $(evnt.currentTarget).parents('.attachment'),
-			image = container.find('.-image'),
-			field = container.next('input');
+	removeAttachment(evnt) {
+		const container = $(evnt.currentTarget).parents('.attachment');
+		const image = container.find('.-image');
+		const field = container.next('input');
 
 		// Empty the field
 		field.val('');
@@ -185,15 +185,15 @@ var VideoEditView = BrightcoveView.extend({
 	 * Add a caption row
 	 *
 	 * @param {Event} evnt
-	 * @param {Object} media
+	 * @param {object} media
 	 */
-	addCaptionRow: function (evnt, media) {
+	addCaptionRow(evnt, media) {
 		// If using the add remote file link, prevent the page from jumping to the top
 		if (evnt) {
 			evnt.preventDefault();
 		}
 
-		var source = undefined;
+		let source;
 		if (media) {
 			source = media.url;
 		}
@@ -201,10 +201,10 @@ var VideoEditView = BrightcoveView.extend({
 		this.addCaption(source);
 	},
 
-	addCaption: function (source, language, label, defaultcap) {
-		var newRow = $(document.getElementById('js-caption-empty-row')).clone(),
-			container = document.getElementById('js-captions'),
-			captionUrl = document.getElementById('js-caption-url');
+	addCaption(source, language, label, defaultcap) {
+		const newRow = $(document.getElementById('js-caption-empty-row')).clone();
+		const container = document.getElementById('js-captions');
+		const captionUrl = document.getElementById('js-caption-url');
 
 		// Clean up our cloned row
 		newRow.find('input').prop('disabled', false);
@@ -239,15 +239,15 @@ var VideoEditView = BrightcoveView.extend({
 	 *
 	 * @param {Event} evnt
 	 */
-	removeCaptionRow: function (evnt) {
+	removeCaptionRow(evnt) {
 		evnt.preventDefault();
 
-		var caption = evnt.currentTarget,
-			container = $(caption).parents('.caption-repeater'),
-			source = container.find('.brightcove-captions'),
-			language = container.find('.brightcove-captions-launguage'),
-			label = container.find('.brightcove-captions-label'),
-			defaultcap = container.find('.brightcove-captions-default');
+		const caption = evnt.currentTarget;
+		const container = $(caption).parents('.caption-repeater');
+		const source = container.find('.brightcove-captions');
+		const language = container.find('.brightcove-captions-launguage');
+		const label = container.find('.brightcove-captions-label');
+		const defaultcap = container.find('.brightcove-captions-default');
 
 		// Empty the input fields
 		$(source).val('');
@@ -265,9 +265,9 @@ var VideoEditView = BrightcoveView.extend({
 	/**
 	 * Updates the caption text based on number of captions
 	 */
-	updateCaptionText: function () {
-		var button = $('.captions .button-secondary'),
-			link = $('.add-remote-caption');
+	updateCaptionText() {
+		const button = $('.captions .button-secondary');
+		const link = $('.add-remote-caption');
 
 		if (document.getElementsByClassName('caption-repeater').length > 1) {
 			button.text(wpbc.str_addcaption);
@@ -278,12 +278,12 @@ var VideoEditView = BrightcoveView.extend({
 		}
 	},
 
-	saveSync: function (evnt) {
+	saveSync(evnt) {
 		evnt.preventDefault();
 
-		var $mediaFrame = $(evnt.currentTarget).parents('.media-modal'),
-			$allButtons = $mediaFrame.find('.button, .button-link'),
-			SELF = this;
+		const $mediaFrame = $(evnt.currentTarget).parents('.media-modal');
+		const $allButtons = $mediaFrame.find('.button, .button-link');
+		const SELF = this;
 
 		// Exit if the 'button' is disabled.
 		if ($allButtons.hasClass('disabled')) {
@@ -308,7 +308,10 @@ var VideoEditView = BrightcoveView.extend({
 			const startDateMinute = this.$el.find('.brightcove-start-date-minute').val();
 			const startDateAMPM = this.$el.find('.brightcove-start-date-am-pm').val();
 
-			this.model.set('scheduled_start_date', `${startDate} ${startDateHour}:${startDateMinute}:00 ${startDateAMPM}`);
+			this.model.set(
+				'scheduled_start_date',
+				`${startDate} ${startDateHour}:${startDateMinute}:00 ${startDateAMPM}`,
+			);
 		}
 
 		const endDate = this.$el.find('.brightcove-end-date').val();
@@ -317,7 +320,10 @@ var VideoEditView = BrightcoveView.extend({
 			const endDateMinute = this.$el.find('.brightcove-end-date-minute').val();
 			const endDateAMPM = this.$el.find('.brightcove-end-date-am-pm').val();
 
-			this.model.set('scheduled_end_date', `${endDate} ${endDateHour}:${endDateMinute}:00 ${endDateAMPM}`);
+			this.model.set(
+				'scheduled_end_date',
+				`${endDate} ${endDateHour}:${endDateMinute}:00 ${endDateAMPM}`,
+			);
 		}
 
 		const brightcoveTags = this.$el.find('.brightcove-tags');
@@ -329,7 +335,7 @@ var VideoEditView = BrightcoveView.extend({
 				brightcoveTags
 					.val()
 					.trim()
-					.replace(/(^,)|(,$)/g, '')
+					.replace(/(^,)|(,$)/g, ''),
 			);
 		}
 
@@ -348,15 +354,15 @@ var VideoEditView = BrightcoveView.extend({
 		}
 
 		// Captions
-		var captions = [];
+		const captions = [];
 		this.$el
 			.find('.caption-repeater.repeater-row')
 			.not('.empty-row')
 			.each(function () {
-				var caption = $(this),
-					fileName = caption.find('.brightcove-captions').val(),
-					extension = fileName.split('?')[0], // if the URL has a query string, strip it before validating filetype
-					extension = extension.split('.').pop();
+				const caption = $(this);
+				const fileName = caption.find('.brightcove-captions').val();
+				var extension = fileName.split('?')[0]; // if the URL has a query string, strip it before validating filetype
+				var extension = extension.split('.').pop();
 
 				if (extension === 'vtt') {
 					captions.push({
@@ -366,7 +372,7 @@ var VideoEditView = BrightcoveView.extend({
 						default: caption.find('.brightcove-captions-default').attr('checked'),
 					});
 				} else {
-					var template = wp.template('brightcove-badformat-notice');
+					const template = wp.template('brightcove-badformat-notice');
 
 					// Throw a notice to the user that the file is not the correct format
 					$('.brightcove-media-videos').prepend(template);
@@ -389,22 +395,25 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('labels', labels);
 
 		// Custom fields
-		var custom = {},
-			custom_fields = this.model.get('custom');
+		const custom = {};
+		const custom_fields = this.model.get('custom');
 
-		_.each(this.$el.find('.brightcove-custom-string, .brightcove-custom-enum'), function (item) {
-			var key = item.getAttribute('data-id'),
-				val = item.value.trim();
+		_.each(
+			this.$el.find('.brightcove-custom-string, .brightcove-custom-enum'),
+			function (item) {
+				const key = item.getAttribute('data-id');
+				const val = item.value.trim();
 
-			if (val !== '') {
-				custom[key] = val;
+				if (val !== '') {
+					custom[key] = val;
 
-				var obj = _.find(custom_fields, function (item) {
-					return item.id == key;
-				});
-				obj.value = val;
-			}
-		});
+					const obj = _.find(custom_fields, function (item) {
+						return item.id == key;
+					});
+					obj.value = val;
+				}
+			},
+		);
 
 		this.model.set('custom_fields', custom);
 		this.model.set('custom', custom_fields);
@@ -418,9 +427,9 @@ var VideoEditView = BrightcoveView.extend({
 			.done(function () {
 				if ($mediaFrame.length > 0) {
 					// Update the tag dropdown and wpbc.preload.tags with any new tag values.
-					var tagInput = $mediaFrame.find('.brightcove-tags').val(),
-						editTags,
-						newTags;
+					const tagInput = $mediaFrame.find('.brightcove-tags').val();
+					let editTags;
+					let newTags;
 
 					if (tagInput) {
 						editTags = tagInput.split(',');
@@ -452,10 +461,10 @@ var VideoEditView = BrightcoveView.extend({
 	/**
 	 * Renders the "Custom fields" from a video/variant.
 	 */
-	renderCustomFields: function () {
-		var customContainer = this.$el.find('#brightcove-custom-fields'),
-			stringTmp = wp.template('brightcove-video-edit-custom-string'),
-			enumTmp = wp.template('brightcove-video-edit-custom-enum');
+	renderCustomFields() {
+		const customContainer = this.$el.find('#brightcove-custom-fields');
+		const stringTmp = wp.template('brightcove-video-edit-custom-string');
+		const enumTmp = wp.template('brightcove-video-edit-custom-enum');
 		_.each(this.model.get('custom'), function (custom) {
 			if (custom.id === '_change_history') {
 				return;
@@ -473,13 +482,13 @@ var VideoEditView = BrightcoveView.extend({
 
 	/**
 	 * In order to switch models accordingly to render a video/variant, we update the current model custom fields.
-	 * @param {array} custom_fields
+	 * @param {Array} custom_fields
 	 */
-	setCustomFields: function (custom_fields) {
-		let custom = this.model.get('custom');
+	setCustomFields(custom_fields) {
+		const custom = this.model.get('custom');
 
 		custom.forEach((customField) => {
-			let CustomFieldsKeys = Object.keys(custom_fields);
+			const CustomFieldsKeys = Object.keys(custom_fields);
 			CustomFieldsKeys.forEach((index) => {
 				if (customField.id === index) {
 					customField.value = custom_fields[index];
@@ -494,14 +503,14 @@ var VideoEditView = BrightcoveView.extend({
 	 * Adds a label.
 	 * @param {Event} event
 	 */
-	addLabel: function (event) {
+	addLabel(event) {
 		event.preventDefault();
 
 		const elem = this.el.querySelector('.brightcove-labels');
 		const labelsValElem = this.el.querySelector('.bc-labels-value');
-		const value = elem.value;
+		const { value } = elem;
 
-		elem.querySelector('option[value="' + value + '"]').setAttribute('disabled', true);
+		elem.querySelector(`option[value="${value}"]`).setAttribute('disabled', true);
 		elem.selectedIndex = 0;
 
 		const listItem = `<li>
@@ -511,37 +520,37 @@ var VideoEditView = BrightcoveView.extend({
 
 		this.el.querySelector('.bc-labels-list').insertAdjacentHTML('beforeend', listItem);
 
-		labelsValElem.value = labelsValElem.value ? labelsValElem.value + ',' + value : value;
+		labelsValElem.value = labelsValElem.value ? `${labelsValElem.value},${value}` : value;
 	},
 
 	/**
 	 * Removes a label.
 	 * @param {Event} event
 	 */
-	removeLabel: function (event) {
+	removeLabel(event) {
 		event.preventDefault();
 
-		const label = event.currentTarget.dataset.label;
+		const { label } = event.currentTarget.dataset;
 		const labelsValElem = this.el.querySelector('.bc-labels-value');
 		const labelElem = this.el.querySelector('.brightcove-labels');
 		const selectedLabels = labelsValElem.value.split(',');
 
-		var index = selectedLabels.indexOf(label);
+		const index = selectedLabels.indexOf(label);
 		if (index > -1) {
 			selectedLabels.splice(index, 1);
 		}
 
 		labelsValElem.value = selectedLabels.join(',');
-		labelElem.querySelector('option[value="' + label + '"]').removeAttribute('disabled');
+		labelElem.querySelector(`option[value="${label}"]`).removeAttribute('disabled');
 		event.currentTarget.parentElement.remove();
 	},
 
 	/**
 	 * Render the actual view for the Video Edit screen.
 	 *
-	 * @param {Object} options
+	 * @param {object} options
 	 */
-	render: function (options) {
+	render(options) {
 		this.listenTo(wpbc.broadcast, 'save:media', this.saveSync);
 		this.listenTo(wpbc.broadcast, 'back:editvideo', this.back);
 
@@ -562,16 +571,16 @@ var VideoEditView = BrightcoveView.extend({
 		this.renderCustomFields();
 
 		// Render the change history
-		var history = this.model.get('history');
+		let history = this.model.get('history');
 
 		if (history !== undefined) {
-			var historyStr = '';
+			let historyStr = '';
 
 			// Parse our fetched JSON object
 			history = JSON.parse(history);
 
 			_.each(history, function (item) {
-				historyStr += item + '\n';
+				historyStr += `${item}\n`;
 			});
 
 			if (historyStr !== '') {
@@ -580,7 +589,7 @@ var VideoEditView = BrightcoveView.extend({
 		}
 
 		// Configure a spinner to provide feedback during updates
-		var spinner = this.$el.find('.spinner');
+		const spinner = this.$el.find('.spinner');
 		this.listenTo(wpbc.broadcast, 'spinner:on', function () {
 			spinner.addClass('is-active').removeClass('hidden');
 		});
@@ -590,9 +599,9 @@ var VideoEditView = BrightcoveView.extend({
 
 		// Captions
 		if (this.model.get('captions')) {
-			var captions = this.model.get('captions');
-			for (var i = 0, l = captions.length; i < l; i++) {
-				var caption = captions[i];
+			const captions = this.model.get('captions');
+			for (let i = 0, l = captions.length; i < l; i++) {
+				const caption = captions[i];
 				this.addCaption(caption.source, caption.language, caption.label, caption.default);
 			}
 		}

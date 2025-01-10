@@ -3,7 +3,7 @@
  */
 jQuery(document).ready(function ($) {
 	jQuery('.brightcove-service-error .notice-dismiss').click(function () {
-		var data = {
+		const data = {
 			action: 'bc_status_dismiss',
 			nonce: bcStatus.nonce,
 		};
@@ -12,14 +12,14 @@ jQuery(document).ready(function ($) {
 		$.ajax({
 			url: ajaxurl,
 			type: 'POST',
-			data: data,
-			complete: function (response) {
+			data,
+			complete(response) {
 				if (response.responseJSON.success === true) {
-					var date = new Date();
+					const date = new Date();
 					date.setTime(date.getTime() + 300 * 1000);
-					var expires = '; expires=' + date.toGMTString();
+					const expires = `; expires=${date.toGMTString()}`;
 
-					document.cookie = 'bc-status-dismissed=' + true + expires + '; path=/';
+					document.cookie = `bc-status-dismissed=${true}${expires}; path=/`;
 				}
 			},
 		});

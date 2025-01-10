@@ -63,7 +63,6 @@ README.md
 .git
 .gitignore
 node_modules
-Gruntfile.js
 package.json" "$SVNPATH/trunk/"
 
 echo "Changing directory to SVN and committing to trunk"

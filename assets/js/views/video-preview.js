@@ -1,19 +1,21 @@
+/* global jQuery, wpbc, ajaxurl */
+
 import BrightcoveView from './brightcove';
 
 const $ = jQuery;
 
-var VideoPreviewView = BrightcoveView.extend({
+const VideoPreviewView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'video-preview brightcove',
 	template: wp.template('brightcove-video-preview'),
 	shortcode: '',
 
-	initialize: function (options) {
+	initialize(options) {
 		this.shortcode = options.shortcode;
 	},
 
-	render: function (options) {
-		var that = this;
+	render(options) {
+		const that = this;
 
 		options = options || {};
 		options.id = this.model.get('id');
@@ -29,7 +31,7 @@ var VideoPreviewView = BrightcoveView.extend({
 				video_id: options.id,
 				account_id: options.account_id,
 			},
-			success: function (results) {
+			success(results) {
 				that.$el.html(results.data);
 			},
 		});

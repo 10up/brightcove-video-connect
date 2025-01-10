@@ -1,27 +1,27 @@
 const $ = jQuery;
 
-var BrightcoveView = wp.Backbone.View.extend({
+const BrightcoveView = wp.Backbone.View.extend({
 	subviews: null,
 
-	registerSubview: function (view) {
+	registerSubview(view) {
 		this.subviews = this.subviews || [];
 		this.subviews.push(view);
 	},
 
-	remove: function () {
+	remove() {
 		_.invoke(this.subviews, 'remove');
 		wp.Backbone.View.prototype.remove.call(this);
 	},
 
-	insertShortcode: function () {
+	insertShortcode() {
 		if (!this.model) {
 			return;
 		}
 
-		var shortcode = wpbc.shortcode;
+		const { shortcode } = wpbc;
 
 		if (undefined === this.mediaType) {
-			var template = wp.template('brightcove-mediatype-notice');
+			const template = wp.template('brightcove-mediatype-notice');
 
 			// Throw a notice to the user that the file is not the correct format
 			$('#lost-connection-notice').before(template);

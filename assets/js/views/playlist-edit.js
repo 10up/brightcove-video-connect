@@ -1,7 +1,7 @@
 import BrightcoveView from './brightcove';
 import MediaCollectionView from './media-collection';
 
-var PlaylistEditView = BrightcoveView.extend({
+const PlaylistEditView = BrightcoveView.extend({
 	tagName: 'div',
 	className: 'playlist-edit brightcove attachment-details',
 	template: wp.template('brightcove-playlist-edit'),
@@ -12,26 +12,26 @@ var PlaylistEditView = BrightcoveView.extend({
 		'change .brightcove-name': 'updatedName',
 	},
 
-	deleteVideo: function (event) {
+	deleteVideo(event) {
 		event.preventDefault();
 		this.model.set('mediaType', 'videos');
 		this.model.destroy();
 	},
 
-	updatedName: function (event) {
-		var name = this.model.get('name');
+	updatedName(event) {
+		const name = this.model.get('name');
 		if (name !== event.target.value) {
 			this.model.set('name', event.target.value);
 			this.model.save();
 		}
 	},
 
-	back: function (event) {
+	back(event) {
 		event.preventDefault();
 		wpbc.broadcast.trigger('start:gridview');
 	},
 
-	saveSync: function (event) {
+	saveSync(event) {
 		event.preventDefault();
 		this.model.set('name', this.$el.find('.brightcove-name').val());
 		this.model.set('description', this.$el.find('.brightcove-description').val());
@@ -41,14 +41,14 @@ var PlaylistEditView = BrightcoveView.extend({
 		this.model.save();
 	},
 
-	initialize: function () {
+	initialize() {
 		this.listenTo(wpbc.broadcast, 'tabChange', function () {
 			_.invoke(this.subviews, 'remove');
 		});
 		wpbc.broadcast.trigger('spinner:off');
 	},
 
-	render: function (options) {
+	render(options) {
 		options = this.model.toJSON();
 		this.$el.html(this.template(options));
 		this.spinner = this.$el.find('.spinner');
@@ -75,7 +75,11 @@ var PlaylistEditView = BrightcoveView.extend({
 			this.registerSubview(this.playlistVideosView);
 			this.registerSubview(this.libraryVideosView);
 
-			this.listenTo(wpbc.broadcast, 'playlist:changed', _.throttle(this.playlistChanged, 300));
+			this.listenTo(
+				wpbc.broadcast,
+				'playlist:changed',
+				_.throttle(this.playlistChanged, 300),
+			);
 			this.listenTo(wpbc.broadcast, 'insert:shortcode', this.insertShortcode);
 		}
 
@@ -88,13 +92,13 @@ var PlaylistEditView = BrightcoveView.extend({
 		});
 	},
 
-	playlistChanged: function (videoIds) {
+	playlistChanged(videoIds) {
 		this.killPendingRequests();
 		this.model.set('video_ids', videoIds);
 		this.model.save();
 	},
 
-	killPendingRequests: function () {
+	killPendingRequests() {
 		// Kill all pending requests
 		_.each(wpbc.requests, function (request) {
 			request.abort();

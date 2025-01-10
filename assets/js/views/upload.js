@@ -1,6 +1,6 @@
 import BrightcoveView from './brightcove';
 
-var UploadView = BrightcoveView.extend({
+const UploadView = BrightcoveView.extend({
 	className: 'brightcove-pending-upload',
 	tagName: 'tr',
 	template: wp.template('brightcove-pending-upload'),
@@ -9,14 +9,18 @@ var UploadView = BrightcoveView.extend({
 		click: 'toggleRow',
 	},
 
-	initialize: function () {
+	initialize() {
 		this.listenTo(wpbc.broadcast, 'pendingUpload:selectedRow', this.otherToggledRow);
 		this.listenTo(wpbc.broadcast, 'uploader:uploadProgress', this.uploadProgress);
 		this.listenTo(wpbc.broadcast, 'uploader:getParams', this.getParams);
-		this.listenTo(wpbc.broadcast, 'uploader:successfulUploadIngest', this.successfulUploadIngest);
+		this.listenTo(
+			wpbc.broadcast,
+			'uploader:successfulUploadIngest',
+			this.successfulUploadIngest,
+		);
 		this.listenTo(wpbc.broadcast, 'uploader:failedUploadIngest', this.failedUploadIngest);
 
-		var options = {
+		const options = {
 			fileName: this.model.get('name'),
 			tags: '',
 			accounts: wpbc.preload.accounts, // All accounts.
@@ -32,11 +36,11 @@ var UploadView = BrightcoveView.extend({
 		this.listenTo(this.model, 'change:account', this.render);
 	},
 
-	render: function (options) {
+	render(options) {
 		options = options || {};
 		options.fileName = this.model.get('fileName');
 		options.size = this.model.humanReadableSize();
-		var sourceHash = this.model.get('account');
+		const sourceHash = this.model.get('account');
 		options.accountName = wpbc.preload.accounts[sourceHash].account_name;
 		options.percent = this.model.get('percent');
 		options.activeUpload = this.model.get('activeUpload');
@@ -55,22 +59,28 @@ var UploadView = BrightcoveView.extend({
 		}
 	},
 
-	getParams: function (fileId) {
+	getParams(fileId) {
 		wpbc.broadcast.trigger('uploader:params', 'abcde');
 	},
 
-	failedUploadIngest: function (file) {
+	failedUploadIngest(file) {
 		// Make sure we're acting on the right file.
 		if (file.id === this.model.get('id')) {
-			wpbc.broadcast.trigger('uploader:errorMessage', wpbc.preload.messages.unableToUpload.replace('%%s%%', this.model.get('fileName')));
+			wpbc.broadcast.trigger(
+				'uploader:errorMessage',
+				wpbc.preload.messages.unableToUpload.replace('%%s%%', this.model.get('fileName')),
+			);
 			this.render();
 		}
 	},
 
-	successfulUploadIngest: function (file) {
+	successfulUploadIngest(file) {
 		// Make sure we're acting on the right file.
 		if (file.id === this.model.get('id')) {
-			wpbc.broadcast.trigger('uploader:successMessage', wpbc.preload.messages.successUpload.replace('%%s%%', this.model.get('fileName')));
+			wpbc.broadcast.trigger(
+				'uploader:successMessage',
+				wpbc.preload.messages.successUpload.replace('%%s%%', this.model.get('fileName')),
+			);
 			this.render();
 		}
 	},
@@ -80,21 +90,19 @@ var UploadView = BrightcoveView.extend({
 	 * Re-render if we thought we were but we no longer are.
 	 * @param file Fired from UploadProgress on plUpload
 	 */
-	uploadProgress: function (file) {
+	uploadProgress(file) {
 		// Make sure we're acting on the right file.
 		if (file.id === this.model.get('id')) {
 			this.model.set('activeUpload', true);
 			this.model.set('percent', file.percent);
 			this.render();
-		} else {
-			if (this.model.get('activeUpload')) {
-				this.model.unset('activeUpload');
-				this.render();
-			}
+		} else if (this.model.get('activeUpload')) {
+			this.model.unset('activeUpload');
+			this.render();
 		}
 	},
 
-	toggleRow: function (event) {
+	toggleRow(event) {
 		this.$el.toggleClass('selected');
 		if (this.$el.hasClass('selected')) {
 			this.model.set('selected', true);
@@ -104,7 +112,7 @@ var UploadView = BrightcoveView.extend({
 		}
 	},
 
-	otherToggledRow: function (cid) {
+	otherToggledRow(cid) {
 		// Ignore broadcast from self
 		if (cid !== this.cid) {
 			this.$el.removeClass('selected');
