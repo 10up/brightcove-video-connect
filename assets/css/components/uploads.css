@@ -1,0 +1,83 @@
+.brightcove-file-uploader {
+	text-align: center;
+}
+
+.brightcove-upload-queued-files {
+	border: 1px solid #ddd;
+	display: table;
+	width: calc(100% - 20px);
+}
+
+.brightcove-pending-upload {
+
+	td {
+		cursor: pointer;
+
+		&:nth-child(1) {
+			width: 35%;
+		}
+
+		&:nth-child(2) {
+			width: 10%;
+		}
+
+		&:nth-child(3) {
+			width: 20%;
+		}
+
+		&:nth-child(4) {
+			width: 35%;
+		}
+	}
+}
+
+.brightcove-pending-upload.selected {
+	background-color: #35a3ca; /* copied from sidebar menu */
+	td {
+		color: #fff;
+	}
+}
+
+.ingest-success {
+	background-color: #00adff; /* just for display to see if it worked */
+}
+
+.upload-success {
+	color: #003148; /* nuke me with better styling */
+}
+
+.brightcove-pending-upload-details {
+	background-color: #f3f3f3;
+	display: table-cell;
+	padding: 20px;
+	text-align: left;
+	vertical-align: top;
+	width: 30%;
+}
+
+.pending-uploads {
+	background-color: #fff;
+	display: table-cell;
+	text-align: left;
+	vertical-align: top;
+	width: 70%;
+
+	table.widefat {
+		border: 0;
+	}
+
+	.brightcove-start-upload {
+		margin-bottom: 10px;
+		margin-left: 10px;
+	}
+}
+
+.brightcove-media,
+.brightcove-media-videos {
+
+	.spinner {
+		float: none;
+		margin: 5px 0;
+		vertical-align: top;
+	}
+}

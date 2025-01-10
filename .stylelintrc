@@ -1,0 +1,4 @@
+{
+	"extends": ["@10up/stylelint-config"],
+	"ignoreFiles": ["vendor/*.css"]
+}

@@ -1,0 +1,134 @@
+.bc-page-icon {
+	padding-right: 5px;
+	padding-top: 5px;
+}
+
+.notice {
+	margin: 5px 20px 2px 0;
+}
+
+.brightcove-media-videos .error {
+	margin: 5px 20px 10px 0;
+	text-align: left;
+}
+
+.brightcove.media-frame-content,
+.brightcove-media.playlist {
+	border-bottom: none;
+	border-right: 1px solid #ddd;
+	border-top: none;
+	float: left;
+	margin-right: 30px;
+	padding-right: 20px;
+	position: static;
+	width: calc(100% - 370px);
+
+	.video-preview {
+		padding-bottom: 56.25%;
+		position: relative;
+
+		iframe {
+			height: 100%;
+			position: absolute;
+			width: 100%;
+		}
+	}
+
+	.brightcove-buttons {
+		float: right;
+		margin-top: 20px;
+	}
+
+	&.edit-view {
+		border-right: none;
+		height: auto;
+		width: calc(100% - 20px);
+	}
+
+	.video-edit {
+		max-width: 721px;
+		padding: 5px;
+	}
+}
+
+.brightcove-buttons {
+
+	.delete {
+		color: #a00;
+		display: inline-block;
+		padding-top: 6px;
+
+		&:hover {
+			color: red;
+		}
+	}
+}
+
+.brightcove.media-frame-router {
+	height: auto;
+	left: 0;
+	position: relative;
+	top: auto;
+
+	a.brightcove-toolbar {
+		margin-left: 1em;
+	}
+}
+
+.brightcove.media-frame-menu {
+	bottom: auto;
+	float: left;
+	left: inherit;
+	left: auto;
+	padding-top: 0;
+	position: relative;
+	right: auto;
+	top: auto;
+	width: 300px;
+
+	.brightcove-buttons {
+
+		&::after {
+			clear: both;
+			content: "";
+			display: table;
+		}
+	}
+
+	.more-actions {
+		float: right;
+	}
+}
+
+.brightcove.media-toolbar {
+	padding: 0;
+
+	.wp-filter {
+		padding: 0 16px;
+	}
+
+	.media-toolbar-secondary {
+		margin: 8px;
+	}
+}
+
+@media screen and (max-width: 780px) {
+
+	.brightcove.media-toolbar {
+
+		.brightcove.media-toolbar-secondary {
+			margin: 4px;
+		}
+	}
+}
+
+@media screen and (min-width: 1500px) {
+
+	.brightcove.media-frame-content,
+	.brightcove-media.playlist {
+
+		.video-preview {
+			padding-bottom: 43.25%;
+		}
+	}
+}

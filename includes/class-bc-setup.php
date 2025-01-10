@@ -5,6 +5,7 @@
  * @package Brightcove_Video_Connect
  */
 
+use Brightcove\Utility;
 /**
  * BC_Setup class
  */
@@ -124,9 +125,9 @@ class BC_Setup {
 		if ( function_exists( 'register_block_type' ) ) {
 			wp_register_script(
 				'brightcove-block',
-				BRIGHTCOVE_URL . 'assets/js/src/block.js',
-				array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-i18n' ),
-				filemtime( BRIGHTCOVE_PATH . 'assets/js/src/block.js' ),
+				Utility\script_url( 'block', 'admin' ),
+				Utility\get_asset_info( 'block', 'dependencies' ),
+				Utility\get_asset_info( 'block', 'version' ),
 				true
 			);
 
@@ -352,8 +353,6 @@ class BC_Setup {
 	public static function brightcove_enqueue_assets() {
 		global $wp_version;
 
-		$suffix = BC_Utility::get_suffix();
-
 		$js_variable = array(
 			'path'           => esc_url( BRIGHTCOVE_URL . 'assets/js/src/' ),
 			'preload'        => self::preload_params(),
@@ -383,7 +382,7 @@ class BC_Setup {
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js', array(), BRIGHTCOVE_VERSION, false );
 
-		wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ), BRIGHTCOVE_VERSION, true );
+		wp_enqueue_script( 'tinymce_preview', Utility\script_url( 'tinymce', 'admin' ), array( 'mce-view' ), Utility\get_asset_info( 'tinymce', 'version' ), true );
 		wp_localize_script(
 			'tinymce_preview',
 			'bctiny',
@@ -409,7 +408,8 @@ class BC_Setup {
 			'jquery-ui-datepicker',
 		);
 
-		wp_register_script( 'brightcove-admin', esc_url( BRIGHTCOVE_URL . 'assets/js/brightcove-admin' . $suffix . '.js' ), $dependencies, BRIGHTCOVE_VERSION, true );
+		wp_register_script( 'brightcove-admin', Utility\script_url( 'admin', 'admin' ), $dependencies, Utility\get_asset_info( 'admin', 'version' ), true );
+
 		wp_localize_script( 'brightcove-admin', 'wpbc', $js_variable );
 		wp_enqueue_script( 'brightcove-admin' );
 
@@ -427,9 +427,10 @@ class BC_Setup {
 		// Use minified libraries if SCRIPT_DEBUG is turned off.
 		$suffix = BC_Utility::get_suffix();
 
-		wp_register_style( 'brightcove-video-connect', esc_url( BRIGHTCOVE_URL . 'assets/css/brightcove_video_connect' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
+		wp_register_style( 'brightcove-video-connect', Utility\style_url( 'admin-style', 'admin' ), [], Utility\get_asset_info( 'admin-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-video-connect' );
-		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/jquery-ui-datepicker' . $suffix . '.css' ), array(), BRIGHTCOVE_VERSION );
+
+		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/vendor/jquery-ui-datepicker' . $suffix . '.css' ), [], BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'jquery-ui-datepicker-style' );
 	}
 
@@ -437,11 +438,8 @@ class BC_Setup {
 	 * Enqueue frontend scripts and styles.
 	 */
 	public static function frontend_enqueue_scripts() {
-		// Use minified libraries if SCRIPT_DEBUG is turned off.
-		$suffix = BC_Utility::get_suffix();
-
 		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
-		wp_register_style( 'brightcove-playlist', BRIGHTCOVE_URL . 'assets/css/brightcove_playlist' . $suffix . '.css', array(), BRIGHTCOVE_VERSION );
+		wp_register_style( 'brightcove-playlist', Utility\style_url( 'playlist-style', 'frontend' ), [], Utility\get_asset_info( 'playlist-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-playlist' );
 	}
 

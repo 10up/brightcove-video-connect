@@ -1,0 +1,104 @@
+import { BrightcoveMediaManagerView, BrightcoveRouter } from './views/brightcove-media-manager';
+import BrightcoveModalView from './views/brightcove-modal';
+
+const $ = jQuery;
+
+var App = {
+	renderMediaManager(mediaType) {
+		const brightcoveMediaContainer = $(`.brightcove-media-${mediaType}`);
+		const content_ifr = document.getElementById('content_ifr');
+		if (brightcoveMediaContainer.length) {
+			const brightcoveMediaManager = new BrightcoveMediaManagerView({
+				el: brightcoveMediaContainer,
+				date: 'all',
+				embedType: 'page',
+				preload: true,
+				mode: 'manager',
+				search: '',
+				accounts: 'all',
+				tags: 'all',
+				mediaType,
+				viewType: 'grid',
+			});
+			brightcoveMediaManager.render();
+		}
+	},
+
+	load() {
+		wpbc.requests = [];
+		wpbc.responses = {};
+		wpbc.broadcast = _.extend({}, Backbone.Events); // pubSub object
+
+		this.loaded();
+	},
+
+	loaded() {
+		const brightcoveModalContainer = $('.brightcove-modal');
+
+		const router = new BrightcoveRouter();
+		wpbc.triggerModal = function () {
+			if (!wpbc.modal) {
+				wpbc.modal = new BrightcoveModalView({
+					el: brightcoveModalContainer,
+					tab: 'videos',
+				});
+				wpbc.modal.render();
+				wpbc.modal.$el.find('.spinner').addClass('is-active');
+			} else {
+				wpbc.modal.$el.show();
+			}
+
+			// Prevent body scrolling by adding a class to 'body'.
+			$('body').addClass('modal-open');
+		};
+
+		const bc_sanitize_ids = function (id) {
+			return id.replace(/\D/g, '');
+		};
+
+		// Load the appropriate media type manager into the container element,
+		// We only support loading one per page.
+		_.each(['videos', 'playlists'], function (mediaType) {
+			App.renderMediaManager(mediaType);
+		});
+
+		$('.account-toggle-button').on('click', function (event) {
+			event.preventDefault();
+			$(this).hide();
+			$('.brightcove-account-row.hidden').show();
+		});
+
+		$('.brightcove-add-new-video').on('click', function (e) {
+			e.preventDefault();
+			router.navigate('add-new-brightcove-video', { trigger: true });
+		});
+
+		$(document).on('click', '.brightcove-add-media', function (e) {
+			e.preventDefault();
+			wpbc.triggerModal();
+			wpbc.modal.target = e.currentTarget.dataset.target;
+		});
+
+		$(document).keyup(function (e) {
+			if (e.keyCode === 27) {
+				// Close modal on ESCAPE if it's open.
+				wpbc.broadcast.trigger('close:modal');
+			}
+		});
+
+		$('a.brightcove-action-delete-source').on('click', function (e) {
+			const message = $(this).data('alert-message');
+			if (!confirm(message)) {
+				return false;
+			}
+		});
+	},
+};
+
+jQuery(document).ready(function () {
+	App.load();
+	const router = new BrightcoveRouter();
+	if (!Backbone.History.started) {
+		Backbone.history.start();
+	}
+});

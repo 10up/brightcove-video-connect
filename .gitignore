@@ -3,5 +3,6 @@
 node_modules
 release
 .sass-cache
-vendor
+/vendor
 .DS_Store
+/dist
