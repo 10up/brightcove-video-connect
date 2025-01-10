@@ -5,3 +5,4 @@ release
 .sass-cache
 vendor
 .DS_Store
+/dist

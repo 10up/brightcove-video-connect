@@ -125,9 +125,9 @@ class BC_Setup {
 		if ( function_exists( 'register_block_type' ) ) {
 			wp_register_script(
 				'brightcove-block',
-				BRIGHTCOVE_URL . 'assets/js/src/block.js',
-				array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-i18n' ),
-				filemtime( BRIGHTCOVE_PATH . 'assets/js/src/block.js' ),
+				Utility\script_url( 'block', 'admin' ),
+				Utility\get_asset_info( 'block', 'dependencies' ),
+				Utility\get_asset_info( 'block', 'version' ),
 				true
 			);
 
@@ -382,7 +382,7 @@ class BC_Setup {
 
 		wp_register_script( 'brightcove', '//sadmin.brightcove.com/js/BrightcoveExperiences.js', array(), BRIGHTCOVE_VERSION, false );
 
-		wp_enqueue_script( 'tinymce_preview', esc_url( BRIGHTCOVE_URL . 'assets/js/src/tinymce.js' ), array( 'mce-view' ), BRIGHTCOVE_VERSION, true );
+		wp_enqueue_script( 'tinymce_preview', Utility\script_url( 'tinymce', 'admin' ), array( 'mce-view' ), Utility\get_asset_info( 'tinymce', 'version' ), true );
 		wp_localize_script(
 			'tinymce_preview',
 			'bctiny',

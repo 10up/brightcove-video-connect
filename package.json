@@ -10,10 +10,11 @@
 		"email": "sales@brightcove.com"
 	},
 	"scripts": {
-		"watch": "grunt watch",
-		"build-grunt": "grunt",
-		"lint-js-grunt": "eslint assets/js/src/**",
-		"lint-js:fix": "eslint assets/js/src/** --fix",
+		"start": "10up-toolkit build --watch",
+		"build": "10up-toolkit build",
+		"format-js": "10up-toolkit format-js assets/js/",
+		"lint-js": "10up-toolkit lint-js assets/js/",
+		"lint-style": "10up-toolkit lint-style",
 		"lint-php": "composer run lint",
 		"lint-php:fix": "composer run lint-fix",
 		"cypress:open": "cypress open --config-file tests/cypress/config.js --e2e --browser chrome",
@@ -22,48 +23,27 @@
 		"env": "wp-env",
 		"env:start": "wp-env start",
 		"env:stop": "wp-env stop",
-		"postenv:start": "./tests/bin/initialize.sh",
-		"start": "10up-toolkit build --watch",
-		"build": "10up-toolkit build",
-		"format-js": "10up-toolkit format-js",
-		"lint-js": "10up-toolkit lint-js",
-		"lint-style": "10up-toolkit lint-style",
-		"test": "10up-toolkit test-unit-jest"
+		"postenv:start": "./tests/bin/initialize.sh"
 	},
 	"10up-toolkit": {
 		"devURL": "https://my-project.test",
 		"entry": {
-			"bc-status": "./assets/js/src/bc-status.js",
-			"admin"	: "./assets/js/src/admin.js",
+			"bc-status": "./assets/js/bc-status.js",
+			"admin": "./assets/js/admin.js",
+			"tinymce": "./assets/js/tinymce.js",
+			"block": "./assets/js/block.js",
 			"admin-style": "./assets/scss/admin.scss",
 			"frontend-style": "./assets/scss/brightcove_playlist.scss"
 		}
 	},
 	"devDependencies": {
 		"@10up/cypress-wp-utils": "^0.4.0",
-		"@babel/core": "^7.14.6",
 		"@wordpress/env": "^10.5.0",
 		"10up-toolkit": "^6.3.0",
-		"cypress": "^13.13.3",
-		"grunt": "^1.5.3",
-		"grunt-autoprefixer": "*",
-		"grunt-contrib-clean": "*",
-		"grunt-contrib-concat": "*",
-		"grunt-contrib-cssmin": "*",
-		"grunt-contrib-jshint": "^2.1.0",
-		"grunt-contrib-nodeunit": "*",
-		"grunt-contrib-sass": "*",
-		"grunt-contrib-uglify": "^4.0.1",
-		"grunt-contrib-watch": "*",
-		"grunt-sass": "*",
-		"grunt-sassdoc": "*",
-		"grunt-wp-i18n": "^1.0.3",
-		"load-grunt-tasks": "*",
-		"matchdep": "*",
-		"node-sass": "*"
+		"cypress": "^13.13.3"
 	},
 	"keywords": [],
 	"engines": {
-		"node": ">=16.0.0"
+		"node": ">=18.0.0"
 	}
 }
