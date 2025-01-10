@@ -26,14 +26,13 @@
 		"postenv:start": "./tests/bin/initialize.sh"
 	},
 	"10up-toolkit": {
-		"devURL": "https://my-project.test",
 		"entry": {
 			"bc-status": "./assets/js/bc-status.js",
 			"admin": "./assets/js/admin.js",
 			"tinymce": "./assets/js/tinymce.js",
 			"block": "./assets/js/block.js",
-			"admin-style": "./assets/scss/admin.scss",
-			"frontend-style": "./assets/scss/brightcove_playlist.scss"
+			"admin-style": "./assets/css/admin.css",
+			"playlist-style": "./assets/css/brightcove_playlist.css"
 		}
 	},
 	"devDependencies": {

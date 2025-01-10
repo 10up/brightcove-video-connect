@@ -1,10 +1,9 @@
-// Clearfix mixin
-@mixin clearfix() {
+@define-mixin clearfix  {
 	*zoom: 1;
 
 	&:before,
 	&:after {
-		content: " ";
+		content: ' ';
 		display: table;
 	}
 

@@ -5,7 +5,7 @@ const $ = jQuery;
 
 var App = {
 	renderMediaManager: function (mediaType) {
-		var brightcoveMediaContainer = jQuery('.brightcove-media-' + mediaType);
+		var brightcoveMediaContainer = $('.brightcove-media-' + mediaType);
 		var content_ifr = document.getElementById('content_ifr');
 		if (brightcoveMediaContainer.length) {
 			var brightcoveMediaManager = new BrightcoveMediaManagerView({

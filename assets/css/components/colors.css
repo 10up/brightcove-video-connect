@@ -1,5 +1,7 @@
-$grey : #999;
-$white : #fff;
+:root {
+	--bc-color-grey: #999;
+	--bc-color-white: #fff;
+}
 
 div.brightcove-messages {
   text-align: left;

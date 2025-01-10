@@ -119,11 +119,11 @@
 	}
 
 	.caption-secondary-fields {
-		@include clearfix();
+		@mixin clearfix;
 		clear: both;
 
 		label {
-			@include clearfix();
+			@mixin clearfix;
 			box-sizing: border-box;
 			display: block;
 			float: left;

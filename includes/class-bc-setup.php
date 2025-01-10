@@ -439,7 +439,7 @@ class BC_Setup {
 	 */
 	public static function frontend_enqueue_scripts() {
 		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
-		wp_register_style( 'brightcove-playlist', Utility\style_url( 'frontend-style', 'frontend' ), [], Utility\get_asset_info( 'frontend-style', 'version' ) );
+		wp_register_style( 'brightcove-playlist', Utility\style_url( 'playlist-style', 'frontend' ), [], Utility\get_asset_info( 'playlist-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-playlist' );
 	}
 

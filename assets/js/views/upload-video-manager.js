@@ -1,4 +1,3 @@
-
 import BrightcoveView from './brightcove';
 import UploadModelCollection from '../models/upload-collection';
 import UploadWindowView from './upload-window'
