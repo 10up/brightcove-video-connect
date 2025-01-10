@@ -4,16 +4,19 @@
 }
 
 div.brightcove-messages {
-  text-align: left;
+	text-align: left;
 	width: calc(100% - 4px);
-  .updated {
-		margin-left: 0px;
+
+	.updated {
 		margin-bottom: 15px;
-  }
+		margin-left: 0;
+	}
 }
 
-div.brightcove-uploader{
+div.brightcove-uploader {
+
 	div.brightcove-messages {
+
 		.updated {
 			margin: 20px 15px 2px;
 		}

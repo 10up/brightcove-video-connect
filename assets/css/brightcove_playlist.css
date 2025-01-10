@@ -1,7 +1,7 @@
 .brightcove-playlist {
 	background-color: white;
-	padding: 20px 20px 10px 20px;
 	font-size: 80%;
+	padding: 20px 20px 10px 20px;
 }
 
 .brightcove-playlist-masthead {}
@@ -13,30 +13,30 @@ h3.brightcove-playlist-title {
 .brightcove-playlist-description {}
 
 .brightcove-playlist-item {
+	border-top: 1px solid #eee;
 	display: table;
 	margin-bottom: 20px;
-	border-top: 1px solid #eee;
 	padding-top: 20px;
 	width: 100%;
 }
 
 .brightcove-playlist-video-order-id {
+	color: #999;
 	display: table-cell;
 	vertical-align: middle;
 	width: 20px;
-	color: #999;
 }
 
 .brightcove-playlist-video-thumbnail {
 	display: table-cell;
-  vertical-align: middle;
-  width: 40%;
-  padding-right: 20px;
+	padding-right: 20px;
+	vertical-align: middle;
+	width: 40%;
 }
 
 .brightcove-playlist-video-meta {
 	display: table-cell;
-  vertical-align: middle;
+	vertical-align: middle;
 }
 
 h4.brightcove-playlist-video-title {

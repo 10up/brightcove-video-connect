@@ -1,13 +1,13 @@
-@define-mixin clearfix  {
+@define-mixin clearfix {
 	*zoom: 1;
 
-	&:before,
-	&:after {
-		content: ' ';
+	&::before,
+	&::after {
+		content: " ";
 		display: table;
 	}
 
-	&:after {
+	&::after {
 		clear: both;
 	}
 }

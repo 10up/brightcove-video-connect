@@ -430,7 +430,7 @@ class BC_Setup {
 		wp_register_style( 'brightcove-video-connect', Utility\style_url( 'admin-style', 'admin' ), [], Utility\get_asset_info( 'admin-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-video-connect' );
 
-		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/lib/jquery-ui-datepicker' . $suffix . '.css' ), [], BRIGHTCOVE_VERSION );
+		wp_register_style( 'jquery-ui-datepicker-style', esc_url( BRIGHTCOVE_URL . 'assets/css/vendor/jquery-ui-datepicker' . $suffix . '.css' ), [], BRIGHTCOVE_VERSION );
 		wp_enqueue_style( 'jquery-ui-datepicker-style' );
 	}
 
