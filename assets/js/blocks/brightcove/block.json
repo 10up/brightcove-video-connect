@@ -1,0 +1,82 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"title": "Brightcove",
+	"description": "The Brightcove block allows you to embed videos from Brightcove.",
+	"textdomain": "brightcove",
+	"name": "bc/brightcove",
+	"icon": "video-alt3",
+	"category": "common",
+	"attributes": {
+		"account_id": {
+			"type": "string"
+		},
+		"player_id": {
+			"type": "string"
+		},
+		"video_id": {
+			"type": "string"
+		},
+		"playlist_id": {
+			"type": "string"
+		},
+		"experience_id": {
+			"type": "string"
+		},
+		"video_ids": {
+			"type": "array"
+		},
+		"embed": {
+			"type": "string"
+		},
+		"autoplay": {
+			"type": "string"
+		},
+		"mute": {
+			"type": "string"
+		},
+		"playsinline": {
+			"type": "string"
+		},
+		"picture_in_picture": {
+			"type": "string"
+		},
+		"language_detection": {
+			"type": "string"
+		},
+		"application_id": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"min_width": {
+			"type": "string"
+		},
+		"max_width": {
+			"type": "string"
+		},
+		"padding_top": {
+			"type": "string"
+		},
+		"sizing": {
+			"type": "string"
+		},
+		"aspect_ratio": {
+			"type": "string"
+		},
+		"max_height": {
+			"type": "string"
+		},
+		"in_page_experience_id": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}
