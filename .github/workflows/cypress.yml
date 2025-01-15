@@ -1,7 +1,7 @@
 name: E2E test
 
 env:
-  NODE_VERSION: "18"
+  NODE_VERSION: "20"
 
 on:
   push:
@@ -20,25 +20,33 @@ jobs:
       matrix:
         core:
           - {name: 'WP latest', version: 'latest'}
+
     steps:
-    - name: Install node
-      uses: actions/setup-node@v3
+    - name: "Install node v${{ env.NODE_VERSION }}"
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
+
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
     - name: Install dependencies
       run: npm ci
+
     - name: Composer (optional)
       run: composer install
       continue-on-error: true
+
     - name: Build (optional)
       run: npm run build
       continue-on-error: true
+
     - name: Set the core version
       run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
+
     - name: Set up WP environment
       run: npm run env:start
+
     - name: Test
       run: npm run cypress:run
       env:
