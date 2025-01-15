@@ -1,5 +1,4 @@
-name: Build with vendor-prefixed
-
+name: Build
 on:
   pull_request:
     branches:
