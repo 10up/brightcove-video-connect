@@ -11,6 +11,7 @@ on:
   pull_request:
     branches:
       - develop
+      - code-improvement # todo remove before merging into develop
 jobs:
   cypress:
     name: ${{ matrix.core.name }}
