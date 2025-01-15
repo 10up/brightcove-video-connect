@@ -1,5 +1,9 @@
 name: Linting
 
+env:
+  NODE_VERSION: "20"
+  NODE_CACHE: "${{ github.workspace }}/node_modules_cache"
+
 on:
   push:
     branches:
@@ -8,6 +12,7 @@ on:
   pull_request:
     branches:
       - develop
+      - '[0-9].[0-9x]*' # Version branches: 4.x.x, 4.1.x, 5.x
       - code-improvement # todo remove before merging into develop
 
 jobs:
@@ -15,14 +20,29 @@ jobs:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: install node v18
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v4
+
+    - name: Set standard 10up cache directories
+      run: |
+        sudo npm config set cache "${{ env.NODE_CACHE }}" --global
+
+    - name: Prepare npm cache
+      uses: actions/cache@v4
       with:
-        node-version: 18
-    - name: npm install
-      run: npm install
-    - name: eslint
+        path: ${{ env.NODE_CACHE }}
+        key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          npm-${{ env.NODE_VERSION }}-
+
+    - name: "install node v${{ env.NODE_VERSION }}"
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: npm ci
+      run: npm ci
+
+    - name: es lint
       run: npm run lint-js
 
   phpcs:
