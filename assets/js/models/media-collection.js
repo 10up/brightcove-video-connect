@@ -1,5 +1,7 @@
 import MediaModel from './media';
 
+const $ = jQuery;
+
 var MediaCollection = Backbone.Collection.extend({
 	model: MediaModel,
 	/**
@@ -63,7 +65,7 @@ var MediaCollection = Backbone.Collection.extend({
 			this.fetch();
 		});
 
-		jQuery(document).on('heartbeat-tick.brightcove_heartbeat', function (event, data) {
+		$(document).on('heartbeat-tick.brightcove_heartbeat', function (event, data) {
 			if (data.hasOwnProperty('brightcove_heartbeat')) {
 				wp.heartbeat.enqueue(
 					'brightcove_heartbeat',

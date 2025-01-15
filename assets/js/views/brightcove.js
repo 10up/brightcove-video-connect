@@ -40,7 +40,7 @@ const BrightcoveView = wp.Backbone.View.extend({
 			window.send_to_editor(shortcode);
 		} else {
 			$(wpbc.modal.target).val(shortcode);
-			$(wpbc.modal.target).change();
+			$(wpbc.modal.target).trigger('change');
 		}
 
 		wpbc.broadcast.trigger('close:modal');

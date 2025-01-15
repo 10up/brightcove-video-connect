@@ -122,97 +122,15 @@ class BC_Setup {
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
 		add_action( 'init', array( 'BC_Setup', 'register_post_types' ) );
 
-		if ( function_exists( 'register_block_type' ) ) {
-			wp_register_script(
-				'brightcove-block',
-				Utility\script_url( 'block', 'admin' ),
-				Utility\get_asset_info( 'block', 'dependencies' ),
-				Utility\get_asset_info( 'block', 'version' ),
-				true
-			);
+		wp_enqueue_script(
+			'brightcove-blocks',
+			BRIGHTCOVE_DIST_URL . 'js/blocks.js',
+			Utility\get_asset_info( 'blocks', 'dependencies' ),
+			Utility\get_asset_info( 'blocks', 'version' ),
+			true
+		);
 
-			if ( function_exists( 'wp_set_script_translations' ) ) {
-				wp_set_script_translations( 'brightcove-block', 'brightcove', plugin_basename( BRIGHTCOVE_PATH ) . '/languages/' );
-			}
-
-			wp_localize_script( 'brightcove-block', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
-
-			register_block_type(
-				'bc/brightcove',
-				array(
-					'editor_script'   => 'brightcove-block',
-					'render_callback' => array( 'BC_Setup', 'render_shortcode' ),
-					'attributes'      => array(
-						'account_id'            => array(
-							'type' => 'string',
-						),
-						'player_id'             => array(
-							'type' => 'string',
-						),
-						'video_id'              => array(
-							'type' => 'string',
-						),
-						'playlist_id'           => array(
-							'type' => 'string',
-						),
-						'experience_id'         => array(
-							'type' => 'string',
-						),
-						'video_ids'             => array(
-							'type' => 'string',
-						),
-						'embed'                 => array(
-							'type' => 'string',
-						),
-						'autoplay'              => array(
-							'type' => 'string',
-						),
-						'mute'                  => array(
-							'type' => 'string',
-						),
-						'playsinline'           => array(
-							'type' => 'string',
-						),
-						'picture_in_picture'    => array(
-							'type' => 'string',
-						),
-						'language_detection'    => array(
-							'type' => 'string',
-						),
-						'application_id'        => array(
-							'type' => 'string',
-						),
-						'height'                => array(
-							'type' => 'string',
-						),
-						'width'                 => array(
-							'type' => 'string',
-						),
-						'min_width'             => array(
-							'type' => 'string',
-						),
-						'max_width'             => array(
-							'type' => 'string',
-						),
-						'padding_top'           => array(
-							'type' => 'string',
-						),
-						'sizing'                => array(
-							'type' => 'string',
-						),
-						'aspect_ratio'          => array(
-							'type' => 'string',
-						),
-						'max_height'            => array(
-							'type' => 'string',
-						),
-						'in_page_experience_id' => array(
-							'type' => 'string',
-						),
-					),
-				)
-			);
-		}
+		wp_localize_script( 'brightcove-blocks', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
 	}
 
 	/**
