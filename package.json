@@ -30,7 +30,7 @@
 			"bc-status": "./assets/js/bc-status.js",
 			"admin": "./assets/js/admin.js",
 			"tinymce": "./assets/js/tinymce.js",
-			"block": "./assets/js/block.js",
+			"blocks": "./assets/js/blocks.js",
 			"admin-style": "./assets/css/admin.css",
 			"playlist-style": "./assets/css/brightcove_playlist.css"
 		}
