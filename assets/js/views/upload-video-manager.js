@@ -1,3 +1,5 @@
+/* global wpbc, jQuery */
+
 import BrightcoveView from './brightcove';
 import UploadModelCollection from '../models/upload-collection';
 import UploadWindowView from './upload-window';
@@ -37,6 +39,7 @@ const UploadVideoManagerView = BrightcoveView.extend({
 
 	resetUploads() {
 		let model;
+		// eslint-disable-next-line
 		while ((model = this.collection.first())) {
 			this.collection.remove(model);
 		}
@@ -81,6 +84,7 @@ const UploadVideoManagerView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('uploader:startUpload');
 	},
 
+	// eslint-disable-next-line
 	fileAdded(model, collection) {
 		// Start upload triggers progress bars under every video.
 		// Need to re-render when one model is added

@@ -1,8 +1,11 @@
+/* global Backbone */
+
 /**
  * Model to contain pending upload
  */
 
 const UploadModel = Backbone.Model.extend({
+	// eslint-disable-next-line
 	initialize(options) {},
 
 	humanReadableSize() {

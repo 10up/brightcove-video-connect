@@ -1,7 +1,10 @@
+/* global wpbc, jQuery, _ */
+
 import MediaModel from './media';
 
 const $ = jQuery;
 
+// eslint-disable-next-line
 var MediaCollection = Backbone.Collection.extend({
 	model: MediaModel,
 	/**
@@ -9,6 +12,7 @@ var MediaCollection = Backbone.Collection.extend({
 	 * @param {object} [options={}]
 	 */
 	initialize(models, options) {
+		// eslint-disable-next-line
 		options = options || {};
 		if (options.activeAccount) {
 			this.activeAccount = options.activeAccount;
@@ -66,6 +70,7 @@ var MediaCollection = Backbone.Collection.extend({
 		});
 
 		$(document).on('heartbeat-tick.brightcove_heartbeat', function (event, data) {
+			// eslint-disable-next-line
 			if (data.hasOwnProperty('brightcove_heartbeat')) {
 				wp.heartbeat.enqueue(
 					'brightcove_heartbeat',
@@ -82,6 +87,7 @@ var MediaCollection = Backbone.Collection.extend({
 
 		this.listenTo(wpbc.broadcast, 'change:tag', function (tag) {
 			if (tag === 'all') {
+				// eslint-disable-next-line
 				tag = '';
 			}
 
@@ -93,6 +99,7 @@ var MediaCollection = Backbone.Collection.extend({
 			this.old_folder_id = this.folder_id;
 
 			if (folder_id === 'all') {
+				// eslint-disable-next-line
 				folder_id = '';
 			}
 
@@ -104,6 +111,7 @@ var MediaCollection = Backbone.Collection.extend({
 			this.oldLabelPath = this.labelPath;
 
 			if (labelPath === 'all') {
+				// eslint-disable-next-line
 				labelPath = '';
 			}
 
@@ -129,6 +137,7 @@ var MediaCollection = Backbone.Collection.extend({
 				const preload = wpbc.preload[this.mediaType];
 				let model;
 				// Remove all models from the collection
+				// eslint-disable-next-line
 				while ((model = this.first())) {
 					this.remove(model);
 				}
@@ -153,8 +162,10 @@ var MediaCollection = Backbone.Collection.extend({
 	checksum(object) {
 		if (!_.isString(object)) {
 			if (_.isFunction(object.toJSON)) {
+				// eslint-disable-next-line
 				object = object.toJSON();
 			} else {
+				// eslint-disable-next-line
 				object = JSON.stringify(object);
 			}
 		}
@@ -181,6 +192,7 @@ var MediaCollection = Backbone.Collection.extend({
 
 		// Overload the read method so Media.fetch() functions correctly.
 		if (method === 'read') {
+			// eslint-disable-next-line
 			options = options || {};
 			options.data = _.extend(options.data || {}, {
 				action: 'bc_media_query',
@@ -266,7 +278,9 @@ var MediaCollection = Backbone.Collection.extend({
 		/**
 		 * Call wp.media.model.MediaCollection.sync or Backbone.sync
 		 */
+		// eslint-disable-next-line
 		fallback = MediaCollection.prototype.sync ? MediaCollection.prototype : Backbone;
+		// eslint-disable-next-line
 		return fallback.sync.apply(this, arguments);
 	},
 
@@ -291,6 +305,7 @@ var MediaCollection = Backbone.Collection.extend({
 	 * @returns {Array} The array of model attributes to be added to the
 	 *   collection
 	 */
+	// eslint-disable-next-line
 	parse(response, status, request, checksum) {
 		wpbc.broadcast.trigger('fetch:finished');
 		wpbc.broadcast.trigger('spinner:off');
@@ -337,10 +352,13 @@ var MediaCollection = Backbone.Collection.extend({
 				let media;
 				let newAttributes;
 
+				// eslint-disable-next-line
 				if (attrs instanceof Backbone.Model) {
 					id = attrs.get('id');
+					// eslint-disable-next-line
 					attrs = attrs.attributes;
 				} else {
+					// eslint-disable-next-line
 					id = attrs.id;
 				}
 

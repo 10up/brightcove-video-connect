@@ -1,3 +1,5 @@
+/* global wpbc, _ */
+
 import BrightcoveView from './brightcove';
 import MediaCollectionView from './media-collection';
 
@@ -49,6 +51,7 @@ const PlaylistEditView = BrightcoveView.extend({
 	},
 
 	render(options) {
+		// eslint-disable-next-line
 		options = this.model.toJSON();
 		this.$el.html(this.template(options));
 		this.spinner = this.$el.find('.spinner');

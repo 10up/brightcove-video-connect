@@ -1,4 +1,4 @@
-/* global wpbc,bcBlock,jQuery */
+/* global wpbc, bcBlock, jQuery */
 
 /**
  * WordPress dependencies
@@ -90,19 +90,19 @@ const BrightCoveBlockEdit = (props) => {
 				height: newHeight,
 			});
 		}
-	}, [width, sizing, aspectRatio, height, experienceId]);
+	}, [width, sizing, aspectRatio, height, experienceId]); // eslint-disable-line
 
 	useEffect(() => {
 		if (embed === 'in-page-horizontal' || embed === 'in-page-vertical') {
 			setAttributes({ ...attributes, sizing: 'fixed' });
 		}
-	}, [embed]);
+	}, [embed]); // eslint-disable-line
 
 	useEffect(() => {
 		if (pictureinpicture === 'pictureinpicture' && embed === 'iframe') {
 			setAttributes({ ...attributes, embed: 'in-page' });
 		}
-	}, [pictureinpicture]);
+	}, [pictureinpicture]); // eslint-disable-line
 
 	// Sanitize the IDs we need
 	const sanitizeIds = function (ids) {
@@ -113,7 +113,7 @@ const BrightCoveBlockEdit = (props) => {
 		return ids
 			.split(',')
 			.map(function (id) {
-				id = id.trim();
+			id = id.trim(); // eslint-disable-line
 				if (id.indexOf('ref:') === 0) {
 					return id;
 				}

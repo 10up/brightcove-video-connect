@@ -1,3 +1,5 @@
+/* global wpbc */
+
 import BrightcoveView from './brightcove';
 
 const MediaView = BrightcoveView.extend({
@@ -37,6 +39,7 @@ const MediaView = BrightcoveView.extend({
 	buttons: {},
 
 	initialize(options) {
+		// eslint-disable-next-line
 		options = options || {};
 		this.type = options.type ? options.type : 'grid';
 

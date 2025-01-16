@@ -1,3 +1,5 @@
+/* global wpbc, _, jQuery */
+
 import BrightcoveView from './brightcove';
 import BrightcoveModalModel from '../models/brightcove-modal';
 import { BrightcoveMediaManagerView } from './brightcove-media-manager';
@@ -114,7 +116,9 @@ const BrightcoveModalView = BrightcoveView.extend({
 		$('body').removeClass('modal-open');
 	},
 
+	// eslint-disable-next-line
 	message(message) {
+		// eslint-disable-next-line
 		const messageContainer = this.$el.find('.brightcove-message');
 	},
 

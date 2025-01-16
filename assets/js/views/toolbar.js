@@ -1,9 +1,13 @@
+/* global wpbc, jQuery */
+
 /**
  * This is the toolbar to handle sorting, filtering, searching and grid/list
  * view toggles. State is captured in the brightcove-media-manager model.
  */
 
 import BrightcoveView from './brightcove';
+
+const $ = jQuery;
 
 const ToolbarView = BrightcoveView.extend({
 	tagName: 'div',
@@ -152,6 +156,7 @@ const ToolbarView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('change:stateChanged', event.target.value);
 	},
 
+	// eslint-disable-next-line
 	searchHandler(event) {
 		const searchTerm = $('#media-search-input').val();
 
