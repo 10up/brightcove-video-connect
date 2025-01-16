@@ -48,6 +48,10 @@ jobs:
   phpcs:
     name: PHP Lint
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2', '8.3']
 
     steps:
       - name: Checkout
@@ -64,4 +68,4 @@ jobs:
         run: composer install
 
       - name: PHPCS check
-        run: './vendor/bin/phpcs . -q --report=checkstyle --warning-severity=6 --runtime-set testVersion 5.6- | cs2pr'
+        run: "./vendor/bin/phpcs . -q --report=checkstyle --warning-severity=6 --runtime-set testVersion ${{ matrix.php }}- | cs2pr
