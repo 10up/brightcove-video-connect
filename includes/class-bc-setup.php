@@ -82,6 +82,7 @@ class BC_Setup {
 
 		add_action( 'admin_enqueue_scripts', array( 'BC_Setup', 'admin_enqueue_scripts' ) );
 		add_action( 'enqueue_block_editor_assets', [ 'BC_Setup', 'enqueue_block_editor_assets' ] );
+		add_action( 'init', array( 'BC_Setup', 'register_block' ), 20 );
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
@@ -365,6 +366,20 @@ class BC_Setup {
 		);
 
 		wp_localize_script( 'brightcove-blocks', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
+	}
+
+	/**
+	 * Register the Brightcove block.
+	 */
+	public static function register_block() {
+		register_block_type(
+			BRIGHTCOVE_PATH . 'assets/js/blocks/brightcove',
+			[
+				'render_callback' => function ( $attributes ) {
+					return BC_Setup::render_shortcode( $attributes );
+				},
+			]
+		);
 	}
 
 	/**
