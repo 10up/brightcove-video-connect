@@ -38,7 +38,7 @@
 	},
 	"devDependencies": {
 		"@10up/cypress-wp-utils": "^0.4.0",
-		"@wordpress/env": "^10.5.0",
+		"@wordpress/env": "^10.16.0",
 		"10up-toolkit": "^6.3.0",
 		"cypress": "^13.13.3"
 	},
