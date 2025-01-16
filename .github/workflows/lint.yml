@@ -58,6 +58,7 @@ jobs:
         with:
           php-version: '8.2'
           coverage: none
+          tools: cs2pr
 
       - name: composer install
         run: composer install
