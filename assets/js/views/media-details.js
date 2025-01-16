@@ -1,3 +1,5 @@
+/* global wpbc, jQuery, _ */
+
 import BrightcoveView from './brightcove';
 
 const $ = jQuery;
@@ -44,11 +46,11 @@ const MediaDetailsView = BrightcoveView.extend({
 		wpbc.broadcast.trigger('preview:media', this.model, shortcode);
 	},
 
-	triggerCancelPreviewMedia(event) {
+	triggerCancelPreviewMedia() {
 		wpbc.broadcast.trigger('cancelPreview:media', this.mediaType);
 	},
 
-	togglePlaylistSizing(event) {
+	togglePlaylistSizing() {
 		const embedStyle = $('.playlist-details input[name="embed-style"]:checked').val();
 		const $sizing = $('#sizing-fixed, #sizing-responsive');
 
@@ -59,7 +61,7 @@ const MediaDetailsView = BrightcoveView.extend({
 		}
 	},
 
-	toggleUnits(event) {
+	toggleUnits() {
 		const value = $('#aspect-ratio').val();
 		if (value === 'custom') {
 			$('#height').removeAttr('readonly');
@@ -79,7 +81,7 @@ const MediaDetailsView = BrightcoveView.extend({
 		}
 	},
 
-	toggleIframe(event) {
+	toggleIframe() {
 		const $iframeRadioButton = $('#embed-style-iframe');
 		const notAllowedOptions = [
 			$('#pictureinpicture').is(':checked'),
@@ -94,7 +96,7 @@ const MediaDetailsView = BrightcoveView.extend({
 		}
 	},
 
-	toggleAutoplay(event) {
+	toggleAutoplay() {
 		return $('#autoplay').is(':checked')
 			? this.toggleAutoplayOptions(true)
 			: this.toggleAutoplayOptions(false);
@@ -109,7 +111,7 @@ const MediaDetailsView = BrightcoveView.extend({
 		$mute.prop('disabled', value);
 	},
 
-	toggleExperienceUnits(event) {
+	toggleExperienceUnits() {
 		const $sizingField = $('input[name="sizing"]:checked');
 		const $sizing = $sizingField.val();
 		const $embedStyle = $('input[name="embed-style"]:checked').val();
@@ -138,8 +140,9 @@ const MediaDetailsView = BrightcoveView.extend({
 	/**
 	 * Calculate height based on aspect ratio.
 	 */
-	calculateHeight(event) {
+	calculateHeight() {
 		const aspectRatio = $('#aspect-ratio').val();
+		// eslint-disable-next-line
 		const width = $('#width').val();
 
 		if (aspectRatio === 'custom') {
@@ -188,18 +191,14 @@ const MediaDetailsView = BrightcoveView.extend({
 		const width = $('#width').val();
 		const height = $('#height').val();
 		const units = 'px';
-		let shortcode;
 
-		shortcode =
+		// eslint-disable-next-line
+		let shortcode =
 			`[bc_video video_id="${videoId}" account_id="${accountId}" player_id="${playerId}" ` +
-			`embed="${embedStyle}" padding_top="${height}${units}" autoplay="${
-				autoplay
-			}" playsinline="${playsinline}" picture_in_picture="${
+			`embed="${embedStyle}" padding_top="${height}${units}" autoplay="${autoplay}" playsinline="${playsinline}" picture_in_picture="${
 				pictureinpicture
 			}" language_detection="${languagedetection}" application_id="${applicationId}" ` +
-			`mute="${mute}" width="${width}${units}" height="${height}${units}" aspect_ratio="${
-				aspectRatio
-			}" sizing="${sizing}"` +
+			`mute="${mute}" width="${width}${units}" height="${height}${units}" aspect_ratio="${aspectRatio}" sizing="${sizing}"` +
 			` ]`;
 
 		$('#shortcode').val(shortcode);
@@ -224,6 +223,7 @@ const MediaDetailsView = BrightcoveView.extend({
 		const units = 'px';
 		let shortcode;
 
+		// eslint-disable-next-line
 		shortcode =
 			`[bc_experience experience_id="${experienceId}" account_id="${accountId}" ` +
 			`embed="${embedStyle}" width="${width}${units}" height="${height}${units}" ` +
@@ -254,23 +254,15 @@ const MediaDetailsView = BrightcoveView.extend({
 
 		if (embedStyle === 'in-page-vertical') {
 			shortcode =
-				`[bc_playlist playlist_id="${playlistId}" account_id="${accountId}" player_id="${
-					playerId
-				}" ` +
-				`embed="in-page-vertical" autoplay="${autoplay}" playsinline="${
-					playsinline
-				}" mute="${mute}" ` +
+				`[bc_playlist playlist_id="${playlistId}" account_id="${accountId}" player_id="${playerId}" ` +
+				`embed="in-page-vertical" autoplay="${autoplay}" playsinline="${playsinline}" mute="${mute}" ` +
 				`min_width="" max_width="" padding_top="" ` +
 				`width="${width}${units}" height="${height}${units}"` +
 				` ]`;
 		} else if (embedStyle === 'in-page-horizontal') {
 			shortcode =
-				`[bc_playlist playlist_id="${playlistId}" account_id="${accountId}" player_id="${
-					playerId
-				}" ` +
-				`embed="in-page-horizontal" autoplay="${autoplay}" playsinline="${
-					playsinline
-				}" mute="${mute}" ` +
+				`[bc_playlist playlist_id="${playlistId}" account_id="${accountId}" player_id="${playerId}" ` +
+				`embed="in-page-horizontal" autoplay="${autoplay}" playsinline="${playsinline}" mute="${mute}" ` +
 				`min_width="" max_width="" padding_top="" ` +
 				`width="${width}${units}" height="${height}${units}"` +
 				` ]`;
@@ -294,12 +286,8 @@ const MediaDetailsView = BrightcoveView.extend({
 			}
 
 			shortcode =
-				`[bc_playlist playlist_id="${playlistId}" account_id="${accountId}" player_id="${
-					playerId
-				}" ` +
-				`embed="iframe" autoplay="${autoplay}" playsinline="${playsinline}" mute="${
-					mute
-				}" ` +
+				`[bc_playlist playlist_id="${playlistId}" account_id="${accountId}" player_id="${playerId}" ` +
+				`embed="iframe" autoplay="${autoplay}" playsinline="${playsinline}" mute="${mute}" ` +
 				`min_width="${minWidth}" max_width="${maxWidth}" padding_top="${paddingTop}%" ` +
 				`width="${width}" height="${height}"` +
 				` ]`;
@@ -332,6 +320,7 @@ const MediaDetailsView = BrightcoveView.extend({
 			}
 		}
 
+		// eslint-disable-next-line
 		shortcode =
 			`[bc_experience experience_id="${experienceId}" account_id="${accountId}" ` +
 			`embed="${embedStyle}" min_width="${minWidth}" max_width="${maxWidth}" ` +
@@ -390,6 +379,7 @@ const MediaDetailsView = BrightcoveView.extend({
 	},
 
 	initialize(options) {
+		// eslint-disable-next-line
 		options = options || {};
 		this.type = options.type ? options.type : 'grid';
 		this.mediaType = options.mediaType;
@@ -401,6 +391,7 @@ const MediaDetailsView = BrightcoveView.extend({
 	 * @returns {wp.media.view.Media} Returns itself to allow chaining
 	 */
 	render(options) {
+		// eslint-disable-next-line
 		options = _.extend({}, options, this.model.toJSON());
 		// options.duration = this.model.getReadableDuration();
 		options.duration = '0:05';

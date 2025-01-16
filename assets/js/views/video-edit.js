@@ -1,3 +1,5 @@
+/* global jQuery, wpbc, _ */
+
 import BrightcoveView from './brightcove';
 
 const $ = jQuery;
@@ -22,9 +24,8 @@ const VideoEditView = BrightcoveView.extend({
 
 	/**
 	 * Changes template variant based on current variant.
-	 * @param event
 	 */
-	changeVariant(event) {
+	changeVariant() {
 		const valueSelected = this.$el.find('.brightcove-variant').val();
 		const options = this.model.toJSON();
 
@@ -62,6 +63,7 @@ const VideoEditView = BrightcoveView.extend({
 	},
 
 	deleteVideo() {
+		// eslint-disable-next-line no-restricted-globals
 		if (confirm(wpbc.preload.messages.confirmDelete)) {
 			wpbc.broadcast.trigger('spinner:on');
 			this.model.set('mediaType', 'videos');
@@ -112,7 +114,9 @@ const VideoEditView = BrightcoveView.extend({
 	 * @returns {boolean}
 	 */
 	setAttachment(media, field) {
+		// eslint-disable-next-line
 		var field = field.prevObject[0].currentTarget;
+		// eslint-disable-next-line
 		var field = $(field).prev('input');
 		const attachment = field.parents('.attachment');
 		const preview = attachment.find('.-image');
@@ -121,6 +125,7 @@ const VideoEditView = BrightcoveView.extend({
 		// Perform different setup actions based on the type of upload
 		if (ThumbnailOrPoster.includes(field.attr('class'))) {
 			// Executed if the user is uploading a poster image or thumbnail
+			// eslint-disable-next-line
 			var selectedMedia = {
 				url: media.sizes.full.url,
 				width: media.sizes.full.width,
@@ -139,6 +144,7 @@ const VideoEditView = BrightcoveView.extend({
 			preview.html(image); // .html() considered okay because auth is required to view this screen
 		} else {
 			// Executed if the user is uploading a closed caption
+			// eslint-disable-next-line
 			if (media.subtype === 'vtt') {
 				this.addCaptionRow(false, media);
 			} else {
@@ -159,6 +165,7 @@ const VideoEditView = BrightcoveView.extend({
 		}
 
 		// Add our meta to the hidden field
+		// eslint-disable-next-line
 		field.val(JSON.stringify(selectedMedia));
 	},
 
@@ -204,7 +211,6 @@ const VideoEditView = BrightcoveView.extend({
 	addCaption(source, language, label, defaultcap) {
 		const newRow = $(document.getElementById('js-caption-empty-row')).clone();
 		const container = document.getElementById('js-captions');
-		const captionUrl = document.getElementById('js-caption-url');
 
 		// Clean up our cloned row
 		newRow.find('input').prop('disabled', false);
@@ -283,7 +289,6 @@ const VideoEditView = BrightcoveView.extend({
 
 		const $mediaFrame = $(evnt.currentTarget).parents('.media-modal');
 		const $allButtons = $mediaFrame.find('.button, .button-link');
-		const SELF = this;
 
 		// Exit if the 'button' is disabled.
 		if ($allButtons.hasClass('disabled')) {
@@ -361,7 +366,9 @@ const VideoEditView = BrightcoveView.extend({
 			.each(function () {
 				const caption = $(this);
 				const fileName = caption.find('.brightcove-captions').val();
+				// eslint-disable-next-line no-var
 				var extension = fileName.split('?')[0]; // if the URL has a query string, strip it before validating filetype
+				// eslint-disable-next-line no-redeclare, no-var
 				var extension = extension.split('.').pop();
 
 				if (extension === 'vtt') {
@@ -408,6 +415,7 @@ const VideoEditView = BrightcoveView.extend({
 					custom[key] = val;
 
 					const obj = _.find(custom_fields, function (item) {
+						// eslint-disable-next-line eqeqeq
 						return item.id == key;
 					});
 					obj.value = val;
@@ -438,6 +446,7 @@ const VideoEditView = BrightcoveView.extend({
 
 					// Add any new tags to the tags object and the dropdown.
 					_.each(newTags, function (newTag) {
+						// eslint-disable-next-line no-param-reassign
 						newTag = newTag.trim();
 						if (newTag !== '') {
 							wpbc.preload.tags.push(newTag);
@@ -469,6 +478,7 @@ const VideoEditView = BrightcoveView.extend({
 			if (custom.id === '_change_history') {
 				return;
 			}
+			// eslint-disable-next-line default-case
 			switch (custom.type) {
 				case 'string':
 					customContainer.append(stringTmp(custom));
@@ -555,6 +565,7 @@ const VideoEditView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'back:editvideo', this.back);
 
 		this.listenTo(wpbc.broadcast, 'insert:shortcode', this.insertShortcode);
+		// eslint-disable-next-line no-param-reassign
 		options = this.model.toJSON();
 		options.folders = wpbc.preload.folders;
 

@@ -1,3 +1,5 @@
+/* global wpbc, jQuery, _ */
+
 import BrightcoveView from './brightcove';
 
 const $ = jQuery;
@@ -6,6 +8,7 @@ const UploadWindowView = BrightcoveView.extend({
 	className: 'uploader-window',
 	template: wp.template('brightcove-uploader-window'),
 
+	// eslint-disable-next-line
 	initialize(options) {
 		_.bindAll(this, 'uploaderFilesAdded');
 		this.listenTo(wpbc.broadcast, 'uploader:queuedFilesAdded', this.hide);
@@ -25,6 +28,7 @@ const UploadWindowView = BrightcoveView.extend({
 	},
 
 	afterRender() {
+		// eslint-disable-next-line
 		this.uploader = new plupload.Uploader(_.defaults(this.options, wpbc.preload.plupload));
 
 		// Uploader has neither .on nor .listenTo
@@ -52,6 +56,7 @@ const UploadWindowView = BrightcoveView.extend({
 		let dragdrop;
 		const dropzone = $(`#${drop_element}`);
 
+		// eslint-disable-next-line
 		dragdrop = uploader.features.dragdrop;
 
 		// Generate drag/drop helper classes.
@@ -62,6 +67,7 @@ const UploadWindowView = BrightcoveView.extend({
 		dropzone.toggleClass('supports-drag-drop', !!dragdrop);
 
 		if (!dragdrop) {
+			// eslint-disable-next-line
 			return dropzone.unbind('.wp-uploader');
 		}
 
@@ -152,7 +158,9 @@ const UploadWindowView = BrightcoveView.extend({
 			wpbc.broadcast.trigger('uploader:successfulUploadIngest', file);
 		} else {
 			file.percent = 0;
+			// eslint-disable-next-line
 			file.status = plupload.UPLOADING;
+			// eslint-disable-next-line
 			up.state = plupload.STARTED;
 			up.trigger('StateChanged');
 			wpbc.broadcast.trigger('uploader:failedUploadIngest', file);

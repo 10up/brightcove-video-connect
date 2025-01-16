@@ -1,11 +1,15 @@
+/* global jQuery, Backbone, wpbc, _ */
+
 import { BrightcoveMediaManagerView, BrightcoveRouter } from './views/brightcove-media-manager';
 import BrightcoveModalView from './views/brightcove-modal';
 
 const $ = jQuery;
 
+// eslint-disable-next-line
 var App = {
 	renderMediaManager(mediaType) {
 		const brightcoveMediaContainer = $(`.brightcove-media-${mediaType}`);
+		// eslint-disable-next-line
 		const content_ifr = document.getElementById('content_ifr');
 		if (brightcoveMediaContainer.length) {
 			const brightcoveMediaManager = new BrightcoveMediaManagerView({
@@ -52,6 +56,7 @@ var App = {
 			$('body').addClass('modal-open');
 		};
 
+		// eslint-disable-next-line
 		const bc_sanitize_ids = function (id) {
 			return id.replace(/\D/g, '');
 		};
@@ -86,8 +91,10 @@ var App = {
 			}
 		});
 
+		// eslint-disable-next-line
 		$('a.brightcove-action-delete-source').on('click', function (e) {
 			const message = $(this).data('alert-message');
+			// eslint-disable-next-line
 			if (!confirm(message)) {
 				return false;
 			}
@@ -97,6 +104,7 @@ var App = {
 
 jQuery(document).ready(function () {
 	App.load();
+	// eslint-disable-next-line
 	const router = new BrightcoveRouter();
 	if (!Backbone.History.started) {
 		Backbone.history.start();

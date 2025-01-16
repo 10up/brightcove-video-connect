@@ -11,12 +11,8 @@
 		"issues": "https://wordpress.org/support/plugin/brightcove-video-connect/"
 	},
 	"require": {
-		"php": ">=5.2.4",
-		"composer/installers": "~1.0"
-	},
-	"require-dev": {
-		"10up/phpcs-composer": "dev-master",
-		"phpcompatibility/phpcompatibility-wp": "*"
+		"php": ">=5.6",
+		"composer/installers": "^1.0 || ^2.0"
 	},
 	"scripts": {
 		"lint": "phpcs brightcove-video-connect.php includes uninstall.php",
@@ -27,5 +23,8 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"composer/installers": true
 		}
+	},
+	"require-dev": {
+		"10up/phpcs-composer": "^3.0"
 	}
 }

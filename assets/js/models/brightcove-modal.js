@@ -1,3 +1,5 @@
+/* global Backbone */
+
 /**
  * Media model for Media CPT
  */

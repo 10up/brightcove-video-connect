@@ -1,14 +1,10 @@
-name: Linting
+name: Build
 
 env:
   NODE_VERSION: "20"
   NODE_CACHE: "${{ github.workspace }}/node_modules_cache"
 
 on:
-  push:
-    branches:
-      - develop
-      - master
   pull_request:
     branches:
       - develop
@@ -16,11 +12,22 @@ on:
       - code-improvement # todo remove before merging into develop
 
 jobs:
-  eslint:
-    name: eslint
+  wordpress:
+    name: Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set PHP version
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: :php-psr
+        coverage: none
+
+    - name: composer install
+      run: composer install
 
     - name: Set standard 10up cache directories
       run: |
@@ -34,34 +41,23 @@ jobs:
         restore-keys: |
           npm-${{ env.NODE_VERSION }}-
 
-    - name: "install node v${{ env.NODE_VERSION }}"
+    - name: "Install node v${{ env.NODE_VERSION }}"
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    - name: npm ci
-      run: npm ci
+    - name: Build
+      run: |
+        npm ci
+        npm run build
 
-    - name: es lint
-      run: npm run lint-js
+    - name: Zip
+      run: npm run build:zip
 
-  phpcs:
-    name: PHP Lint
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: PHP version
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          coverage: none
-          tools: cs2pr
-
-      - name: composer install
-        run: composer install
-
-      - name: PHPCS check
-        run: './vendor/bin/phpcs . -q --report=checkstyle --warning-severity=6 --runtime-set testVersion 5.6- | cs2pr'
+    - name: Make artifacts available
+      uses: actions/upload-artifact@v4
+      with:
+        name: Plugin Zip
+        retention-days: 2
+        path: |
+          ${{ github.workspace }}/brightcove-video-connect.zip

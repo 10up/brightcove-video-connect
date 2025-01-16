@@ -1,3 +1,5 @@
+/* global wpbc, jQuery, _ */
+
 import BrightcoveView from './brightcove';
 import MediaView from './media';
 import MediaCollection from '../models/media-collection';
@@ -52,6 +54,7 @@ const MediaCollectionView = BrightcoveView.extend({
 			.throttle(scrollRefreshSensitivity)
 			.value();
 		this.listenTo(wpbc.broadcast, 'scroll:mediaGrid', this.scrollHandler);
+		// eslint-disable-next-line
 		options = options || {};
 		this.el.id = _.uniqueId('__attachments-view-');
 
@@ -241,6 +244,7 @@ const MediaCollectionView = BrightcoveView.extend({
 			return;
 		}
 
+		// eslint-disable-next-line
 		toolbar = this.views.parent.toolbar;
 
 		// Show the spinner only if we are close to the bottom.

@@ -1,7 +1,8 @@
 name: E2E test
 
 env:
-  NODE_VERSION: "18"
+  NODE_VERSION: "20"
+  NODE_CACHE: "${{ github.workspace }}/node_modules_cache"
 
 on:
   push:
@@ -11,6 +12,7 @@ on:
   pull_request:
     branches:
       - develop
+      - code-improvement # todo remove before merging into develop
 jobs:
   cypress:
     name: ${{ matrix.core.name }}
@@ -19,25 +21,45 @@ jobs:
       matrix:
         core:
           - {name: 'WP latest', version: 'latest'}
+
     steps:
-    - name: Install node
-      uses: actions/setup-node@v3
+    - name: Set standard 10up cache directories
+      run: |
+        sudo npm config set cache "${{ env.NODE_CACHE }}" --global
+
+    - name: Prepare npm cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.NODE_CACHE }}
+        key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          npm-${{ env.NODE_VERSION }}-
+
+    - name: "Install node v${{ env.NODE_VERSION }}"
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
+
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
     - name: Install dependencies
       run: npm ci
+
     - name: Composer (optional)
       run: composer install
       continue-on-error: true
+
     - name: Build (optional)
       run: npm run build
       continue-on-error: true
+
     - name: Set the core version
       run: ./tests/bin/set-core-version.js ${{ matrix.core.version }}
+
     - name: Set up WP environment
       run: npm run env:start
+
     - name: Test
       run: npm run cypress:run
       env:

@@ -17,6 +17,7 @@
 		"lint-style": "10up-toolkit lint-style",
 		"lint-php": "composer run lint",
 		"lint-php:fix": "composer run lint-fix",
+		"build:zip": "./bin/build-zip.sh",
 		"cypress:open": "cypress open --config-file tests/cypress/config.js --e2e --browser chrome",
 		"cypress:run": "cypress run --config-file tests/cypress/config.js --env brightcoveAccountId=$BRIGHTCOVE_ACCOUNT_ID,brightcoveClientId=$BRIGHTCOVE_CLIENT_ID,brightcoveClientSecret=$BRIGHTCOVE_CLIENT_SECRET",
 		"cypress:run-local": "cypress run --config-file tests/cypress/config.js",
@@ -37,7 +38,7 @@
 	},
 	"devDependencies": {
 		"@10up/cypress-wp-utils": "^0.4.0",
-		"@wordpress/env": "^10.5.0",
+		"@wordpress/env": "^10.16.0",
 		"10up-toolkit": "^6.3.0",
 		"cypress": "^13.13.3"
 	},

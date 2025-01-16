@@ -17,6 +17,7 @@ const VideoPreviewView = BrightcoveView.extend({
 	render(options) {
 		const that = this;
 
+		// eslint-disable-next-line no-param-reassign
 		options = options || {};
 		options.id = this.model.get('id');
 		options.account_id = this.model.get('account_id');

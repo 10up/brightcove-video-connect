@@ -1,3 +1,5 @@
+/* global Backbone, wpbc, _ */
+
 /**
  * Media model for Media CPT
  */
@@ -21,6 +23,7 @@ const MediaModel = Backbone.Model.extend({
 		// matches this media objects account_id.
 		_.find(
 			wpbc.preload.accounts,
+			// eslint-disable-next-line
 			function (account, hash) {
 				if (account.account_id === this.get('account_id')) {
 					accountHash = hash;
@@ -33,11 +36,13 @@ const MediaModel = Backbone.Model.extend({
 		// If the attachment does not yet have an `id`, return an instantly
 		// rejected promise. Otherwise, all of our requests will fail.
 		if (_.isUndefined(this.id)) {
+			// eslint-disable-next-line
 			return $.Deferred().rejectWith(this).promise();
 		}
 
 		// Overload the `read` request so Media.fetch() functions correctly.
 		if (method === 'read') {
+			// eslint-disable-next-line
 			options = options || {};
 			options.context = this;
 			options.data = _.extend(options.data || {}, {
@@ -50,6 +55,7 @@ const MediaModel = Backbone.Model.extend({
 			// Overload the `update` request so properties can be saved.
 		}
 		if (method === 'update') {
+			// eslint-disable-next-line
 			options = options || {};
 			options.context = this;
 			// Set the action and ID.
@@ -96,6 +102,7 @@ const MediaModel = Backbone.Model.extend({
 			// This will permanently delete an attachment.
 		}
 		if (method === 'delete') {
+			// eslint-disable-next-line
 			options = options || {};
 			const self = this;
 
@@ -133,6 +140,7 @@ const MediaModel = Backbone.Model.extend({
 		/**
 		 * Call `sync` directly on Backbone.Model
 		 */
+		// eslint-disable-next-line
 		return Backbone.Model.prototype.sync.apply(this, arguments);
 	},
 
@@ -154,6 +162,7 @@ const MediaModel = Backbone.Model.extend({
 	},
 
 	getAccountName() {
+		// eslint-disable-next-line
 		const account_id = this.get('account_id');
 		const matchingAccount = _.findWhere(wpbc.preload.accounts, {
 			account_id: this.get('account_id'),
@@ -181,9 +190,7 @@ const MediaModel = Backbone.Model.extend({
 			const hours = Math.floor(duration / 3600);
 			const minutes = Math.floor((duration % 3600) / 60);
 			const seconds = Math.floor((duration % 3600) % 60);
-			return `${(hours > 0 ? `${hours}:${minutes < 10 ? '0' : ''}` : '') + minutes}:${
-				seconds < 10 ? '0' : ''
-			}${seconds}`;
+			return `${(hours > 0 ? `${hours}:${minutes < 10 ? '0' : ''}` : '') + minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 		}
 		return duration;
 	},

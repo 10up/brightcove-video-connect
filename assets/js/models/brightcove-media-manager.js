@@ -1,3 +1,5 @@
+/* global wpbc, _, Backbone */
+
 import MediaCollection from './media-collection';
 import MediaCollectionView from '../views/media-collection';
 

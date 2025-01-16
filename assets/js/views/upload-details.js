@@ -1,3 +1,5 @@
+/* global wpbc */
+
 import BrightcoveView from './brightcove';
 
 const UploadDetailsView = BrightcoveView.extend({
@@ -11,6 +13,7 @@ const UploadDetailsView = BrightcoveView.extend({
 		'change .brightcove-media-source': 'accountChanged',
 	},
 
+	// eslint-disable-next-line
 	initialize(options) {
 		this.listenTo(wpbc.broadcast, 'pendingUpload:hideDetails', this.hide);
 		this.listenTo(wpbc.broadcast, 'uploader:fileUploaded', function (file) {
@@ -40,6 +43,7 @@ const UploadDetailsView = BrightcoveView.extend({
 	},
 
 	render(options) {
+		// eslint-disable-next-line
 		options = options || {};
 		options.fileName = this.model.get('fileName');
 		options.tags = this.model.get('tags');

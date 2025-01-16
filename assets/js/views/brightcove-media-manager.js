@@ -1,3 +1,5 @@
+/* global wpbc, jQuery, _, Backbone */
+
 import BrightcoveView from './brightcove';
 import BrightcoveMediaManagerModel from '../models/brightcove-media-manager';
 import ToolbarView from './toolbar';
@@ -81,6 +83,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			}
 		});
 
+		// eslint-disable-next-line
 		this.listenTo(wpbc.broadcast, 'cancelPreview:media', function (settings) {
 			this.clearPreview();
 			this.detailsView = undefined;
@@ -141,6 +144,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			this.model.set('labelPath', labelPath);
 		});
 
+		// eslint-disable-next-line
 		this.listenTo(wpbc.broadcast, 'change:stateChanged', function (state) {
 			this.clearPreview();
 			this.model.set('oldState', 'oldstate');
@@ -156,6 +160,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			this.showUploader();
 		});
 
+		// eslint-disable-next-line
 		this.listenTo(this.model, 'change:search', function (model, searchTerm) {
 			this.model.get('search');
 		});
@@ -180,6 +185,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			this.render();
 		});
 
+		// eslint-disable-next-line
 		this.listenTo(wpbc.broadcast, 'edit:media', function (model) {
 			const mediaType = this.model.get('mediaType');
 
@@ -190,7 +196,9 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 				}
 
 				// hide the previous notification
+				// eslint-disable-next-line
 				var messages = this.$el.find('.brightcove-message');
+				// eslint-disable-next-line
 				messages.addClass('hidden');
 
 				this.editView = new VideoEditView({ model });
@@ -205,7 +213,9 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 				}
 
 				// hide the previous notification
+				// eslint-disable-next-line
 				var messages = this.$el.find('.brightcove-message');
+				// eslint-disable-next-line
 				messages.addClass('hidden');
 
 				this.editView = new VideoEditView({ model });
@@ -227,6 +237,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			}
 		});
 
+		// eslint-disable-next-line
 		this.listenTo(wpbc.broadcast, 'preview:media', function (model, shortcode) {
 			const mediaType = this.model.get('mediaType');
 
@@ -249,6 +260,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			}
 		});
 
+		// eslint-disable-next-line
 		this.listenTo(wpbc.broadcast, 'change:searchTerm', function (mediaView) {
 			this.clearPreview();
 		});
@@ -283,6 +295,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 				}
 			} else {
 				/* If user selects same thumbnail they want to hide the details view */
+				// eslint-disable-next-line
 				if (this.detailsView && this.detailsView.model === mediaView.model) {
 					this.detailsView.$el.toggle();
 					mediaView.$el.toggleClass('highlighted');
@@ -385,6 +398,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			const $button = $(
 				'<button type="button" class="notice-dismiss"><span class="screen-reader-text"></span></button>',
 			);
+			// eslint-disable-next-line
 			const btnText = commonL10n.dismiss || '';
 
 			// Ensure plain text
@@ -506,6 +520,7 @@ const BrightcoveMediaManagerView = BrightcoveView.extend({
 			this.previewView.delegateEvents();
 			this.previewView.$el.appendTo(contentContainer);
 			this.$el.find('.brightcove.media-frame-toolbar').hide();
+			// eslint-disable-next-line
 			brightcove.createExperiences();
 		}
 

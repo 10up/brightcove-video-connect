@@ -1,3 +1,5 @@
+/* global jQuery, bcStatus, ajaxurl */
+
 /**
  * Used to provide status warnings from the Brightcove servers.
  */

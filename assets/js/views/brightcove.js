@@ -1,3 +1,5 @@
+/* global wpbc, jQuery, _ */
+
 const $ = jQuery;
 
 const BrightcoveView = wp.Backbone.View.extend({

@@ -1,3 +1,5 @@
+/* global wpbc */
+
 import BrightcoveView from './brightcove';
 
 const UploadView = BrightcoveView.extend({
@@ -37,6 +39,7 @@ const UploadView = BrightcoveView.extend({
 	},
 
 	render(options) {
+		// eslint-disable-next-line
 		options = options || {};
 		options.fileName = this.model.get('fileName');
 		options.size = this.model.humanReadableSize();
@@ -59,6 +62,7 @@ const UploadView = BrightcoveView.extend({
 		}
 	},
 
+	// eslint-disable-next-line
 	getParams(fileId) {
 		wpbc.broadcast.trigger('uploader:params', 'abcde');
 	},
@@ -102,6 +106,7 @@ const UploadView = BrightcoveView.extend({
 		}
 	},
 
+	// eslint-disable-next-line
 	toggleRow(event) {
 		this.$el.toggleClass('selected');
 		if (this.$el.hasClass('selected')) {
