@@ -355,7 +355,7 @@ class BC_Setup {
 	/**
 	 * Enqueue block editor assets.
 	 */
-	public function enqueue_block_editor_assets() {
+	public static function enqueue_block_editor_assets() {
 		wp_enqueue_script(
 			'brightcove-blocks',
 			BRIGHTCOVE_DIST_URL . 'js/blocks.js',
