@@ -24,7 +24,11 @@ The `develop` branch is the development branch which means it contains the next 
 1. Commit your changes and open a PR to `develop`.
 1. Once changes are merged, open a PR from `develop` to `master`.
 1. Test: Once changes are merged, checkout the `master` branch locally and test for functionality.
-1. Release: Once merged, draft a [new release](https://github.com/10up/brightcove-video-connect/releases/new) naming the release with the new version number, creating a new label `X.Y.Z`, and selecting as target `master`. Paste the release changelog from `CHANGELOG.md` into the body of the release and include a link to the closed issues on the [milestone](https://github.com/10up/brightcove-video-connect/#?closed=1).
+1. [Check the _Build and Tag_ action](https://github.com/10up/brightcove-video-connect/actions/workflows/build-and-tag.yml): a new tag named with the version number should've been created. It should contain all the built assets.
+1. Release: Create a [new release](https://github.com/10up/brightcove-video-connect/releases/new):
+  * **Tag**: The tag created in the previous step
+  * **Release title**: `Version X.Y.Z`
+  * **Description**: Release changelog from `CHANGELOG.md` + `See: https://github.com/10up/brightcove-video-connect/milestone/#?closed=1`
 1. SVN: Wait for the [GitHub Action](https://github.com/10up/brightcove-video-connect/actions/workflows/push-deploy.yml) to finish deploying to the WordPress.org repository. If all goes well, users with SVN commit access for that plugin will receive an emailed diff of changes.
 1. Check WordPress.org: Ensure that the changes are live on https://wordpress.org/plugins/brightcove-video-connect/. This may take a few minutes.
 1. Close milestone: Edit the [milestone](https://github.com/10up/brightcove-video-connect/milestone/#) with release date (in the `Due date (optional)` field) and link to GitHub release (in the `Description` field), then close the milestone.
