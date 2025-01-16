@@ -81,6 +81,7 @@ class BC_Setup {
 		new BC_Videos();
 
 		add_action( 'admin_enqueue_scripts', array( 'BC_Setup', 'admin_enqueue_scripts' ) );
+		add_action( 'enqueue_block_editor_assets', [ 'BC_Setup', 'enqueue_block_editor_assets' ] );
 		add_filter( 'upload_mimes', array( 'BC_Setup', 'mime_types' ) );
 		add_action( 'media_buttons', array( 'BC_Setup', 'add_brightcove_media_button' ) );
 		add_action( 'admin_footer', array( 'BC_Setup', 'add_brightcove_media_modal_container' ) );
@@ -121,16 +122,6 @@ class BC_Setup {
 
 		add_action( 'pre_get_posts', array( 'BC_Setup', 'redirect' ), 1 );
 		add_action( 'init', array( 'BC_Setup', 'register_post_types' ) );
-
-		wp_enqueue_script(
-			'brightcove-blocks',
-			BRIGHTCOVE_DIST_URL . 'js/blocks.js',
-			Utility\get_asset_info( 'blocks', 'dependencies' ),
-			Utility\get_asset_info( 'blocks', 'version' ),
-			true
-		);
-
-		wp_localize_script( 'brightcove-blocks', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
 	}
 
 	/**
@@ -359,6 +350,21 @@ class BC_Setup {
 		wp_enqueue_style( 'brightcove-pip-css', 'https://players.brightcove.net/videojs-pip/1/videojs-pip.css', [], BRIGHTCOVE_VERSION );
 		wp_register_style( 'brightcove-playlist', Utility\style_url( 'playlist-style', 'frontend' ), [], Utility\get_asset_info( 'playlist-style', 'version' ) );
 		wp_enqueue_style( 'brightcove-playlist' );
+	}
+
+	/**
+	 * Enqueue block editor assets.
+	 */
+	public function enqueue_block_editor_assets() {
+		wp_enqueue_script(
+			'brightcove-blocks',
+			BRIGHTCOVE_DIST_URL . 'js/blocks.js',
+			Utility\get_asset_info( 'blocks', 'dependencies' ),
+			Utility\get_asset_info( 'blocks', 'version' ),
+			true
+		);
+
+		wp_localize_script( 'brightcove-blocks', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
 	}
 
 	/**
