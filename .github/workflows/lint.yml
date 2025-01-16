@@ -63,4 +63,4 @@ jobs:
         run: composer install
 
       - name: PHPCS check
-        run: composer run lint
+        run: './vendor/bin/phpcs . -q --report=checkstyle --warning-severity=6 --runtime-set testVersion 7.4- | cs2pr'

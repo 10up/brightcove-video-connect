@@ -365,6 +365,8 @@ class BC_Setup {
 			true
 		);
 
+		wp_set_script_translations( 'brightcove-blocks', 'brightcove' );
+
 		wp_localize_script( 'brightcove-blocks', 'bcBlock', array( 'userPermission' => BC_Utility::current_user_can_brightcove() ) );
 	}
 

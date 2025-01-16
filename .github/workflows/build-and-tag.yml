@@ -1,4 +1,9 @@
 name: Build and Tag
+
+env:
+  NODE_VERSION: "20"
+  NODE_CACHE: "${{ github.workspace }}/node_modules_cache"
+
 on:
   push:
     branches:
@@ -22,10 +27,22 @@ jobs:
     - name: composer install
       run: composer install
 
-    - name: install node v20
+    - name: Set standard 10up cache directories
+      run: |
+        sudo npm config set cache "${{ env.NODE_CACHE }}" --global
+
+    - name: Prepare npm cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.NODE_CACHE }}
+        key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          npm-${{ env.NODE_VERSION }}-
+
+    - name: "Install node v${{ env.NODE_VERSION }}"
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: ${{ env.NODE_VERSION }}
 
     - name: Build
       run: |
