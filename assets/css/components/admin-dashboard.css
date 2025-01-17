@@ -1,0 +1,11 @@
+.wp-editor-tools .brightcove-add-media {
+
+	& img {
+		max-width: 28px;
+		vertical-align: bottom;
+	}
+}
+
+#adminmenu .toplevel_page_brightcove .wp-menu-image img {
+	padding-top: 7px;
+}

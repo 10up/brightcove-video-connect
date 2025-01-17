@@ -1,6 +1,7 @@
-.bc-page-icon {
-	padding-right: 5px;
-	padding-top: 5px;
+:is(h1, h2):has(> .bc-page-icon) {
+	align-items: center;
+	display: flex;
+	gap: 5px;
 }
 
 .notice {
