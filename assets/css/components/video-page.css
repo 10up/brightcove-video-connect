@@ -2,6 +2,10 @@
 	align-items: center;
 	display: flex;
 	gap: 5px;
+
+	& .add-new-h2 {
+		top: 0;
+	}
 }
 
 .notice {
