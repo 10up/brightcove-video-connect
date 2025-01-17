@@ -1,19 +1,19 @@
 .brightcove-modal {
 
-	.media-frame-title,
-	.media-frame-router,
-	.media-frame-content,
-	.media-frame-toolbar {
+	& .media-frame-title,
+	& .media-frame-router,
+	& .media-frame-content,
+	& .media-frame-toolbar {
 		left: 0;
 	}
 
-	.brightcove-media {
+	& .brightcove-media {
 		overflow: hidden;
 	}
 
-	.brightcove {
+	& .brightcove {
 
-		.wp-filter {
+		& .wp-filter {
 			border: 0;
 			box-shadow: none;
 			margin: 0;
@@ -21,14 +21,14 @@
 			width: 100%;
 		}
 
-		.media-toolbar-secondary {
+		& .media-toolbar-secondary {
 			min-width: 280px;
 			padding: 0;
 		}
 
-		.media-toolbar-primary.search-form {
+		& .media-toolbar-primary.search-form {
 
-			input[type="search"] {
+			& input[type="search"] {
 				float: left;
 				margin: 0;
 				padding-bottom: 0;
@@ -36,25 +36,25 @@
 			}
 		}
 
-		#media-search {
+		& #media-search {
 			float: left;
 			margin-left: 10px;
 			margin-right: 5px;
 		}
 	}
 
-	.pending-uploads {
+	& .pending-uploads {
 		display: block;
 		margin: 20px;
 		width: calc(100% - 40px);
 	}
 
-	.brightcove-upload-queued-files {
+	& .brightcove-upload-queued-files {
 		border: 0;
 		width: 100%;
 	}
 
-	.brightcove.media-frame-content {
+	& .brightcove.media-frame-content {
 		padding: 0 20px;
 		width: 100%;
 
@@ -63,13 +63,13 @@
 		}
 	}
 
-	.brightcove.video-preview {
+	& .brightcove.video-preview {
 		margin-top: 20px;
 	}
 
-	.video-preview-frame {
+	& .video-preview-frame {
 
-		.brightcove {
+		& .brightcove {
 
 			&.media-frame-content {
 				border-right: 1px solid #ddd;

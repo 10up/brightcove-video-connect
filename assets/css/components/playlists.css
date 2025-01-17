@@ -7,64 +7,64 @@
 	padding: 20px;
 	width: 100%;
 
-	.settings {
+	& .settings {
 		margin-bottom: 20px;
 		max-width: 50%;
 	}
 
-	.playlist-name {
+	& .playlist-name {
 		font-weight: 700;
 
-		span {
+		& span {
 			display: inline-block;
 			margin-left: 10px;
 			margin-right: 20px;
 		}
 
-		input {
+		& input {
 			width: 65%;
 		}
 	}
 
-	.playlist-videos-list {
+	& .playlist-videos-list {
 		border-right: 1px solid #ddd;
 		clear: both;
 	}
 
-	.playlist-add-videos-list,
-	.playlist-videos-list {
+	& .playlist-add-videos-list,
+	& .playlist-videos-list {
 		box-sizing: border-box;
 		float: left;
 		width: 50%;
 
-		h2 {
+		& h2 {
 			border-bottom: 1px solid #ddd;
 			margin-bottom: 0;
 			padding-bottom: 10px;
 			padding-left: 10px;
 		}
 
-		ul {
+		& ul {
 			height: 450px;
 			overflow: auto;
 		}
 
-		.attachment {
+		& .attachment {
 			width: 100% !important;
 		}
 
-		.thumbnail {
+		& .thumbnail {
 			float: left;
 			width: 162px;
 		}
 
-		.bc-info {
+		& .bc-info {
 			clear: none;
 			float: left;
 			margin-left: 10px;
 		}
 
-		.row-actions {
+		& .row-actions {
 			clear: both;
 			display: block;
 			left: auto;

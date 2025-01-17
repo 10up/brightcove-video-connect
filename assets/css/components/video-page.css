@@ -23,18 +23,18 @@
 	position: static;
 	width: calc(100% - 370px);
 
-	.video-preview {
+	& .video-preview {
 		padding-bottom: 56.25%;
 		position: relative;
 
-		iframe {
+		& iframe {
 			height: 100%;
 			position: absolute;
 			width: 100%;
 		}
 	}
 
-	.brightcove-buttons {
+	& .brightcove-buttons {
 		float: right;
 		margin-top: 20px;
 	}
@@ -45,7 +45,7 @@
 		width: calc(100% - 20px);
 	}
 
-	.video-edit {
+	& .video-edit {
 		max-width: 721px;
 		padding: 5px;
 	}
@@ -53,13 +53,13 @@
 
 .brightcove-buttons {
 
-	.delete {
+	& .delete {
 		color: #a00;
 		display: inline-block;
 		padding-top: 6px;
 
 		&:hover {
-			color: red;
+			color: #f00;
 		}
 	}
 }
@@ -70,7 +70,7 @@
 	position: relative;
 	top: auto;
 
-	a.brightcove-toolbar {
+	& a.brightcove-toolbar {
 		margin-left: 1em;
 	}
 }
@@ -86,7 +86,7 @@
 	top: auto;
 	width: 300px;
 
-	.brightcove-buttons {
+	& .brightcove-buttons {
 
 		&::after {
 			clear: both;
@@ -95,7 +95,7 @@
 		}
 	}
 
-	.more-actions {
+	& .more-actions {
 		float: right;
 	}
 }
@@ -103,11 +103,11 @@
 .brightcove.media-toolbar {
 	padding: 0;
 
-	.wp-filter {
+	& .wp-filter {
 		padding: 0 16px;
 	}
 
-	.media-toolbar-secondary {
+	& .media-toolbar-secondary {
 		margin: 8px;
 	}
 }
@@ -116,7 +116,7 @@
 
 	.brightcove.media-toolbar {
 
-		.brightcove.media-toolbar-secondary {
+		& .brightcove.media-toolbar-secondary {
 			margin: 4px;
 		}
 	}
@@ -127,7 +127,7 @@
 	.brightcove.media-frame-content,
 	.brightcove-media.playlist {
 
-		.video-preview {
+		& .video-preview {
 			padding-bottom: 43.25%;
 		}
 	}

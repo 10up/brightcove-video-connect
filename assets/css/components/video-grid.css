@@ -1,6 +1,6 @@
 .brightcove {
 
-	.media-toolbar {
+	& .media-toolbar {
 		height: auto;
 		position: relative;
 		right: 10px;
@@ -12,7 +12,7 @@
 		}
 	}
 
-	.media-toolbar-secondary {
+	& .media-toolbar-secondary {
 		box-sizing: border-box;
 		padding: 12px 0;
 	}
@@ -20,13 +20,13 @@
 
 .wp-core-ui {
 
-	.brightcove.attachment {
+	& .brightcove.attachment {
 		float: none;
 	}
 
-	.brightcove.attachment:focus,
-	.selected.brightcove.attachment:focus,
-	.brightcove.attachment.details:focus {
+	& .brightcove.attachment:focus,
+	& .selected.brightcove.attachment:focus,
+	& .brightcove.attachment.details:focus {
 		-webkit-box-shadow: none;
 		box-shadow: none;
 	}
@@ -35,7 +35,7 @@
 .brightcove.media-frame-content,
 .playlist-edit-container {
 
-	.spinner {
+	& .spinner {
 		display: inline-block;
 		margin: 7px;
 		visibility: visible;
@@ -45,9 +45,9 @@
 		}
 	}
 
-	.menu-visible {
+	& .menu-visible {
 
-		.highlighted .thumbnail {
+		& .highlighted .thumbnail {
 			-webkit-box-shadow: 0 0 2px 5px #5b9dd9;
 			box-shadow: 0 0 2px 5px #5b9dd9;
 			outline: none;
@@ -56,11 +56,11 @@
 
 	background-color: transparent;
 
-	ul {
+	& ul {
 		text-align: justify;
 	}
 
-	.attachment {
+	& .attachment {
 		display: inline-block;
 		margin: 0;
 		padding: 10px;
@@ -80,7 +80,7 @@
 			width: 25%;
 		}
 
-		.attachment-preview {
+		& .attachment-preview {
 			background-color: transparent;
 			box-shadow: none;
 
@@ -89,7 +89,7 @@
 			}
 		}
 
-		.thumbnail {
+		& .thumbnail {
 			margin-bottom: 10px;
 
 			overflow: hidden;
@@ -99,16 +99,16 @@
 				display: none;
 			}
 
-			img {
+			& img {
 				display: block;
 				height: auto;
 				position: relative;
 				width: 100%;
 			}
 
-			.processing {
+			& .processing {
 				background: rgba(50, 50, 50, 0.7);
-				color: #fff;
+				color: var(--bc-color-white);
 				font-size: 12px;
 				height: 100%;
 				left: 0;
@@ -118,7 +118,7 @@
 				width: 100%;
 				z-index: 9999;
 
-				span {
+				& span {
 					left: 0;
 					margin-top: -9px;
 					position: absolute;
@@ -128,8 +128,8 @@
 				}
 			}
 
-			.duration,
-			.video-count {
+			& .duration,
+			& .video-count {
 				background-color: var(--bc-color-white);
 				bottom: 0;
 				padding: 3px;
@@ -140,14 +140,14 @@
 			}
 		}
 
-		.bc-info {
+		& .bc-info {
 			clear: both;
 			display: block;
 			height: auto;
 			padding: 1px;
 			position: relative;
 
-			.bc-name {
+			& .bc-name {
 				background-color: transparent;
 				box-shadow: none !important;
 				clear: both;
@@ -159,12 +159,12 @@
 				top: 95px;
 				word-break: break-word;
 
-				div {
+				& div {
 					padding: 0;
 				}
 			}
 
-			.bc-updated {
+			& .bc-updated {
 				clear: both;
 				color: var(--bc-color-grey);
 				float: left;
@@ -173,11 +173,11 @@
 			}
 		}
 
-		.media-actions {
+		& .media-actions {
 			clear: both;
 			text-align: right;
 
-			.button {
+			& .button {
 				margin-left: 1em;
 			}
 
@@ -187,19 +187,19 @@
 		}
 	}
 
-	.brightcove-datetime-wrapper {
+	& .brightcove-datetime-wrapper {
 		display: flex;
 	}
 
-	.brightcove-datetime-colon {
+	& .brightcove-datetime-colon {
 		font-size: 14px;
 		margin-right: 0;
 		min-width: auto;
 		width: 10px;
 	}
 
-	.schedule-start-date,
-	.schedule-end-date {
+	& .schedule-start-date,
+	& .schedule-end-date {
 		margin-right: calc(4% + 7px);
 	}
 }
@@ -209,21 +209,21 @@
 
 	height: 100%;
 
-	.attachment-detail {
+	& .attachment-detail {
 
-		.thumbnail {
+		& .thumbnail {
 			clear: both;
 			position: relative;
 
-			img {
+			& img {
 				display: block;
 				height: auto;
 				max-width: 100%;
 			}
 
-			.processing {
+			& .processing {
 				background: rgba(50, 50, 50, 0.7);
-				color: #fff;
+				color: var(--bc-color-white);
 				font-size: 12px;
 				height: 100%;
 				left: 0;
@@ -233,7 +233,7 @@
 				width: 100%;
 				z-index: 9999;
 
-				span {
+				& span {
 					left: 0;
 					margin-top: -6px;
 					position: absolute;
@@ -243,15 +243,15 @@
 				}
 			}
 
-			.detail-duration,
-			.detail-video-count {
+			& .detail-duration,
+			& .detail-video-count {
 				bottom: 0;
 				padding: 0;
 				position: absolute;
 				right: 0;
 				z-index: 1000;
 
-				span {
+				& span {
 					background-color: var(--bc-color-white);
 					float: right;
 					padding: 3px;
@@ -259,15 +259,15 @@
 			}
 		}
 
-		.video-info,
-		.playlist-info,
-		.inpageexperiences-info {
+		& .video-info,
+		& .playlist-info,
+		& .inpageexperiences-info {
 			margin: 10px 0;
 			overflow: hidden;
 
-			.video-name,
-			.playlist-name,
-			.inpageexperiences-name {
+			& .video-name,
+			& .playlist-name,
+			& .inpageexperiences-name {
 				clear: both;
 				float: left;
 				font-size: 130%;
@@ -276,7 +276,7 @@
 				word-break: break-word;
 			}
 
-			.bc-video-section {
+			& .bc-video-section {
 				display: block;
 				float: left;
 				height: auto;
@@ -284,37 +284,37 @@
 				width: 100%;
 			}
 
-			.brightcove-player {
+			& .brightcove-player {
 				display: block;
 				padding: 3px 0;
 			}
 
-			.account-name,
-			.created-date,
-			.playlist-id,
-			.playlist-type,
-			.updated-date,
-			.video-created,
-			.video-long-description,
-			.video-description,
-			.video-updated {
+			& .account-name,
+			& .created-date,
+			& .playlist-id,
+			& .playlist-type,
+			& .updated-date,
+			& .video-created,
+			& .video-long-description,
+			& .video-description,
+			& .video-updated {
 				clear: both;
 				color: var(--bc-color-grey);
 				display: block;
 				float: left;
 
-				.title {
+				& .title {
 					margin-right: 5px;
 				}
 			}
 		}
 
-		.video-details,
-		.playlist-details,
-		.inpageexperiences-details {
+		& .video-details,
+		& .playlist-details,
+		& .inpageexperiences-details {
 
-			.left-col,
-			label {
+			& .left-col,
+			& label {
 				clear: left;
 				display: inline-block;
 				float: left;
@@ -322,30 +322,30 @@
 				width: 100px;
 			}
 
-			.right-col {
+			& .right-col {
 				display: inline-block;
 				float: left;
 				padding-top: 5px;
 			}
 
-			.clear {
+			& .clear {
 				clear: both;
 			}
 
-			input[type="number"] {
+			& input[type="number"] {
 				width: 20%;
 			}
 
-			input[type="checkbox"] {
+			& input[type="checkbox"] {
 				margin-left: 10px;
 			}
 
-			textarea {
+			& textarea {
 				margin-top: 10px;
 				width: 100%;
 			}
 
-			#custom {
+			& #custom {
 				display: none;
 			}
 		}
@@ -366,7 +366,7 @@
 
 	.brightcove.media-frame-content {
 
-		.attachment {
+		& .attachment {
 			padding: 20px 10px;
 		}
 	}
