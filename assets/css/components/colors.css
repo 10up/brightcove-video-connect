@@ -7,7 +7,7 @@ div.brightcove-messages {
 	text-align: left;
 	width: calc(100% - 4px);
 
-	.updated {
+	& .updated {
 		margin-bottom: 15px;
 		margin-left: 0;
 	}
@@ -15,9 +15,9 @@ div.brightcove-messages {
 
 div.brightcove-uploader {
 
-	div.brightcove-messages {
+	& div.brightcove-messages {
 
-		.updated {
+		& .updated {
 			margin: 20px 15px 2px;
 		}
 	}

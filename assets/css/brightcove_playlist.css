@@ -1,16 +1,12 @@
 .brightcove-playlist {
-	background-color: white;
+	background-color: var(--bc-color-white);
 	font-size: 80%;
 	padding: 20px 20px 10px 20px;
 }
 
-.brightcove-playlist-masthead {}
-
 h3.brightcove-playlist-title {
 	margin: 0 0 10px 0;
 }
-
-.brightcove-playlist-description {}
 
 .brightcove-playlist-item {
 	border-top: 1px solid #eee;

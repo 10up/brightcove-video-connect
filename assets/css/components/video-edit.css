@@ -1,10 +1,10 @@
 .brightcove.video-edit {
 
-	.image-preview,
-	.setting {
+	& .image-preview,
+	& .setting {
 		margin-bottom: 8px;
 
-		.description {
+		& .description {
 			margin-left: 0;
 
 			@media screen and (min-width: 900px) {
@@ -13,22 +13,22 @@
 		}
 	}
 
-	.setting-content,
-	select {
+	& .setting-content,
+	& select {
 		margin-left: 7px;
 	}
 
-	.setting-content {
+	& .setting-content {
 		float: left;
 		width: 64%;
 
-		.button-secondary {
+		& .button-secondary {
 			clear: left;
 			display: inline-block;
 		}
 	}
 
-	.attachment {
+	& .attachment {
 		cursor: pointer;
 		padding: 8px 0 0;
 		width: auto;
@@ -37,58 +37,58 @@
 			display: block;
 			max-width: 100%;
 
-			.check {
+			& .check {
 				display: block;
 				top: 9px;
 			}
 
-			.button {
+			& .button {
 				display: none;
 			}
 		}
 
-		img {
+		& img {
 			height: auto;
 			max-width: 100%;
 		}
 	}
 
-	.action-row {
+	& .action-row {
 		clear: both;
 
-		.delete {
+		& .delete {
 			color: #a00;
 			display: inline-block;
 			padding-top: 6px;
 		}
 	}
 
-	.label-repeater {
+	& .label-repeater {
 
 		&.empty-row {
 			display: none;
 		}
 	}
 
-	button.-captions,
-	.caption-url {
+	& button.-captions,
+	& .caption-url {
 		float: left;
 	}
 
-	button.-captions {
+	& button.-captions {
 		margin-right: 1em;
 	}
 
-	.caption-url {
+	& .caption-url {
 		color: #666;
 		line-height: 28px;
 	}
 
-	.add-remote-caption {
+	& .add-remote-caption {
 		line-height: 28px;
 	}
 
-	.caption-repeater {
+	& .caption-repeater {
 		border-bottom: 1px solid #d5d5d5;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
@@ -109,25 +109,25 @@
 		}
 	}
 
-	input.brightcove-captions {
+	& input.brightcove-captions {
 		clear: both;
 		margin-bottom: 0.75em;
 		width: 100%;
 	}
 
-	input.brightcove-labels {
+	& input.brightcove-labels {
 		clear: both;
 		margin-bottom: 0.2em;
 		margin-top: 0.7em;
 		width: 100%;
 	}
 
-	.caption-secondary-fields {
+	& .caption-secondary-fields {
 
 		@mixin clearfix;
 		clear: both;
 
-		label {
+		& label {
 
 			@mixin clearfix;
 			box-sizing: border-box;
@@ -140,16 +140,16 @@
 				padding-right: 1em;
 			}
 
-			span,
-			input[type="text"],
-			select {
+			& span,
+			& input[type="text"],
+			& select {
 				margin: 0;
 				min-width: 100%;
 				text-align: left;
 				width: 100%;
 			}
 
-			input[type="checkbox"] {
+			& input[type="checkbox"] {
 				margin: auto;
 			}
 		}
@@ -160,7 +160,7 @@
 		text-align: left;
 
 		& li {
-			background-color: #fff;
+			background-color: var(--bc-color-white);
 			border: 1px solid #8c8f94;
 			border-radius: 4px;
 			display: inline-block;
