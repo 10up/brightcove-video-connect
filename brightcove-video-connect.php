@@ -13,7 +13,7 @@
  * Version:           2.8.8
  * Requires at least: 4.2
  * Requires PHP:
- * Author:            Brightcove
+ * Author:            brightcove
  * Author URI:        https://brightcove.com
  * Text Domain:       brightcove
  * License:           GPLv2+
