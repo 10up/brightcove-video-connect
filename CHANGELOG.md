@@ -13,6 +13,11 @@ All notable changes to this project will be documented in this file, per [the Ke
 ### Security
 -->
 
+## [2.8.8] - 2025-03-17
+
+### Added
+- Add folder name on top of video thumbnail. Props [@burhandodhy](https://github.com/burhandodhy) via [#409](https://github.com/10up/brightcove-video-connect/pull/409).
+
 ## [2.8.7] - 2024-10-09
 
 ### Fixed
@@ -484,6 +489,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - First release
 
 [Unreleased]: https://github.com/10up/brightcove-video-connect/compare/master...develop
+[2.8.8]: https://github.com/10up/brightcove-video-connect/compare/2.8.7...2.8.8
 [2.8.7]: https://github.com/10up/brightcove-video-connect/compare/2.8.6...2.8.7
 [2.8.6]: https://github.com/10up/brightcove-video-connect/compare/2.8.5...2.8.6
 [2.8.5]: https://github.com/10up/brightcove-video-connect/compare/2.8.4...2.8.5
