@@ -3,8 +3,8 @@
 Contributors:      brightcove, 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
 Donate link:       https://supporters.eff.org/donate
 Tags:              brightcove, videos, video
-Tested up to:      6.6
-Stable tag:        2.8.7
+Tested up to:      6.7
+Stable tag:        2.8.8
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,12 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 15. Brightcove Block and Block Settings.
 
 == Changelog ==
+
+= 2.8.8 - 2024-03-17 =
+
+__Added:__
+
+* Add folder name on top of video thumbnail. Props [@burhandodhy](https://github.com/burhandodhy).
 
 = 2.8.7 - 2024-10-09 =
 
