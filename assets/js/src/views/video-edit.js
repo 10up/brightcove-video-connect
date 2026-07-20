@@ -12,9 +12,8 @@ var VideoEditView = BrightcoveView.extend({
 		'click    .caption-secondary-fields .delete': 'removeCaptionRow',
 		'click    .add-remote-caption': 'addCaptionRow',
 		'change   .brightcove-variant': 'changeVariant',
-		'click    .add-bc-label': 'addLabelRow',
-		'keypress .brightcove-labels': 'labelAutocomplete',
-		'click    .bc-label-secondary-fields .delete': 'removeLabelRow',
+		'click    .bc-labels-list .remove-label': 'removeLabel',
+		'click    .bc-add-label': 'addLabel',
 	},
 
 	/**
@@ -74,18 +73,19 @@ var VideoEditView = BrightcoveView.extend({
 	openMediaManager: function (evnt) {
 		evnt.preventDefault();
 
-		var elem = $(evnt.currentTarget).parents('.setting'),
-			editor = elem.data('editor'),
-			mediaManager = (wp.media.frames.brightcove = wp.media()),
-			that = this,
-			options = {
-				state: 'insert',
-				title: wp.media.view.l10n.addMedia,
-				multiple: false,
-			};
+		const options = {
+			title: wp.media.view.l10n.addMedia,
+			multiple: false,
+			library: {
+				type: ['image/jpeg', 'image/png'],
+			},
+		};
+
+		const mediaManager = wp.media(options);
+		const that = this;
 
 		// Open the media manager
-		mediaManager.open(editor, options);
+		mediaManager.open();
 
 		// Listen for selection of media
 		mediaManager.on('select', function () {
@@ -175,75 +175,6 @@ var VideoEditView = BrightcoveView.extend({
 		// Remove the preview image
 		container.removeClass('active');
 		image.empty();
-	},
-
-	/**
-	 * Add a label row
-	 *
-	 * @param {Event} evnt
-	 * @param {Object} media
-	 */
-	addLabelRow: function (evnt, media) {
-		var source = undefined;
-		if (media) {
-			source = media.url;
-		}
-
-		this.addLabel(source);
-	},
-
-	/**
-	 * Adds a label
-	 *
-	 * @param source
-	 * @param language
-	 * @param label
-	 * @param defaultcap
-	 */
-	addLabel: function (source, language, label, defaultcap) {
-		let newRow = $(document.getElementById('js-bc-label-empty-row')).clone(),
-			container = document.getElementById('js-bc-labels');
-
-		// Clean up our cloned row
-		newRow.find('input').prop('disabled', false).val('');
-		newRow.removeAttr('id');
-		newRow.removeClass('empty-row');
-
-		// Append our new row to the container
-		$(container).append(newRow);
-	},
-
-	/**
-	 * Fires the autocomplete function
-	 *
-	 * @param {Event} evnt
-	 */
-	labelAutocomplete: function (evnt) {
-		jQuery('.brightcove-labels').autocomplete({
-			source: wpbc.preload.labels,
-			select: function () {
-				$(this).parent('.bc-label-repeater.empty-row').removeClass('empty-row');
-			},
-			appendTo: '.media-modal',
-		});
-	},
-
-	/**
-	 * Removes a label row
-	 * @param {Event} evnt
-	 */
-	removeLabelRow: function (evnt) {
-		evnt.preventDefault();
-
-		let label = evnt.currentTarget,
-			container = $(label).parents('.bc-label-repeater'),
-			source = container.find('.brightcove-labels');
-
-		// Empty the input fields
-		$(source).val('');
-
-		// Remove the container entirely
-		container.remove();
 	},
 
 	/**
@@ -455,17 +386,8 @@ var VideoEditView = BrightcoveView.extend({
 		this.model.set('captions', captions);
 
 		// Labels
-		var labels = [];
-		this.$el
-			.find('.bc-label-repeater.repeater-row')
-			.not('.empty-row')
-			.each(function () {
-				var label = $(this),
-					Name = label.find('.brightcove-labels').val();
-
-				labels.push(Name);
-			});
-
+		let labels = this.$el.find('.bc-labels-value').val();
+		labels = labels !== '' ? labels.split(',') : [];
 		this.model.set('labels', labels);
 
 		// Custom fields
@@ -491,6 +413,10 @@ var VideoEditView = BrightcoveView.extend({
 
 		this.model.set('custom_fields', custom);
 		this.model.set('custom', custom_fields);
+
+		const history = this.el.querySelector('.brightcove-change-history').value;
+		const historyJson = JSON.stringify(history.split('\n').map((line) => line.trim()));
+		this.model.set('_change_history', historyJson);
 
 		this.model
 			.save()
@@ -570,6 +496,52 @@ var VideoEditView = BrightcoveView.extend({
 	},
 
 	/**
+	 * Adds a label.
+	 * @param {Event} event
+	 */
+	addLabel: function (event) {
+		event.preventDefault();
+
+		const elem = this.el.querySelector('.brightcove-labels');
+		const labelsValElem = this.el.querySelector('.bc-labels-value');
+		const value = elem.value;
+
+		elem.querySelector('option[value="' + value + '"]').setAttribute('disabled', true);
+		elem.selectedIndex = 0;
+
+		const listItem = `<li>
+											<button class="remove-label" aria-label="Remove label: ${value}" data-label="${value}"><span aria-hidden="true">×</span></button>
+											<span class="label-name">${value}</span>
+										</li>`;
+
+		this.el.querySelector('.bc-labels-list').insertAdjacentHTML('beforeend', listItem);
+
+		labelsValElem.value = labelsValElem.value ? labelsValElem.value + ',' + value : value;
+	},
+
+	/**
+	 * Removes a label.
+	 * @param {Event} event
+	 */
+	removeLabel: function (event) {
+		event.preventDefault();
+
+		const label = event.currentTarget.dataset.label;
+		const labelsValElem = this.el.querySelector('.bc-labels-value');
+		const labelElem = this.el.querySelector('.brightcove-labels');
+		const selectedLabels = labelsValElem.value.split(',');
+
+		var index = selectedLabels.indexOf(label);
+		if (index > -1) {
+			selectedLabels.splice(index, 1);
+		}
+
+		labelsValElem.value = selectedLabels.join(',');
+		labelElem.querySelector('option[value="' + label + '"]').removeAttribute('disabled');
+		event.currentTarget.parentElement.remove();
+	},
+
+	/**
 	 * Render the actual view for the Video Edit screen.
 	 *
 	 * @param {Object} options
@@ -604,7 +576,7 @@ var VideoEditView = BrightcoveView.extend({
 			history = JSON.parse(history);
 
 			_.each(history, function (item) {
-				historyStr += item.user + ' - ' + item.time + '\n';
+				historyStr += item + '\n';
 			});
 
 			if (historyStr !== '') {
@@ -620,15 +592,6 @@ var VideoEditView = BrightcoveView.extend({
 		this.listenTo(wpbc.broadcast, 'spinner:off', function () {
 			spinner.removeClass('is-active').addClass('hidden');
 		});
-
-		// If there's already a poster or thumbnail set, display it
-		if (this.model.get('poster')) {
-			this.displayAttachment('poster');
-		}
-
-		if (this.model.get('thumbnail')) {
-			this.displayAttachment('thumbnail');
-		}
 
 		// Captions
 		if (this.model.get('captions')) {

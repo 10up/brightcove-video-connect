@@ -31,8 +31,8 @@ class BC_Admin_Menu {
 			add_submenu_page( 'brightcove', esc_html__( 'Brightcove Labels', 'brightcove' ), esc_html__( 'Labels', 'brightcove' ), 'manage_options', 'brightcove-labels', array( $this, 'render_labels_page' ) );
 
 			// These have no parent menu slug so they don't appear in the menu
-			add_submenu_page( null, esc_html__( 'Add Source', 'brightcove' ), esc_html__( 'Add Source', 'brightcove' ), 'manage_options', 'page-brightcove-edit-source', array( $this, 'render_edit_source_page' ) );
-			add_submenu_page( null, esc_html__( 'Edit Label', 'brightcove' ), esc_html__( 'Edit Label', 'brightcove' ), 'manage_options', 'page-brightcove-edit-label', array( $this, 'render_edit_label_page' ) );
+			add_submenu_page( '', esc_html__( 'Add Source', 'brightcove' ), esc_html__( 'Add Source', 'brightcove' ), 'manage_options', 'page-brightcove-edit-source', array( $this, 'render_edit_source_page' ) );
+			add_submenu_page( '', esc_html__( 'Edit Label', 'brightcove' ), esc_html__( 'Edit Label', 'brightcove' ), 'manage_options', 'page-brightcove-edit-label', array( $this, 'render_edit_label_page' ) );
 
 			remove_submenu_page( 'brightcove', 'brightcove' );
 		}

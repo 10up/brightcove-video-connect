@@ -122,7 +122,6 @@ class BC_Utility {
 
 		// Return true as we may not have expired any videos.
 		return true;
-
 	}
 
 	/**
@@ -234,7 +233,6 @@ class BC_Utility {
 		$existing_hash = get_option( $key );
 
 		return $existing_hash !== $data_hash;
-
 	}
 
 	/**
@@ -310,7 +308,7 @@ class BC_Utility {
 			if ( is_array( $value ) ) {
 				$args[ $index ] = self::sanitize_payload_args_recursive( $value );
 			} else {
-				$args[ $index ] = utf8_uri_encode( sanitize_text_field( $value ) );
+				$args[ $index ] = sanitize_text_field( $value );
 			}
 		}
 
@@ -329,7 +327,7 @@ class BC_Utility {
 			return self::sanitize_payload_args_recursive( $item );
 		}
 
-		return utf8_uri_encode( sanitize_text_field( $item ) );
+		return sanitize_text_field( $item );
 	}
 
 	/**
@@ -685,7 +683,6 @@ class BC_Utility {
 		}
 
 		return $transient_keys;
-
 	}
 
 	/**
@@ -745,13 +742,7 @@ class BC_Utility {
 		$type       = sanitize_text_field( $type );
 		$expiration = absint( $expiration );
 
-		$transient_value = get_transient( $key );
-
-		if ( false === $transient_value ) {
-			return set_transient( $key, $value, $expiration );
-		}
-
-		return true; // already cached
+		return set_transient( $key, $value, $expiration );
 	}
 
 	/**
@@ -784,7 +775,6 @@ class BC_Utility {
 		} else {
 			return delete_transient( sanitize_key( $key ) );
 		}
-
 	}
 
 	/**
@@ -810,7 +800,6 @@ class BC_Utility {
 		$transient = get_transient( $key );
 
 		return $transient;
-
 	}
 
 	/**
@@ -939,7 +928,6 @@ class BC_Utility {
 		$width          = sanitize_text_field( $atts['width'] );
 		$sizing         = sanitize_text_field( $atts['sizing'] );
 		$min_width      = sanitize_text_field( $atts['min_width'] );
-		$max_width      = sanitize_text_field( $atts['max_width'] );
 		$padding_top    = sanitize_text_field( $atts['padding_top'] );
 		$autoplay       = ( 'autoplay' === $atts['autoplay'] ) ? 'autoplay' : '';
 		$mute           = ( 'muted' === $atts['mute'] ) ? 'muted' : '';
@@ -966,7 +954,7 @@ class BC_Utility {
 							controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>
 							data-video-id="<?php echo esc_attr( $id ); ?>"
 							data-application-id="<?php echo esc_attr( $application_id ); ?>"
-							width="<?php echo esc_attr( $width ); ?>" height="315">
+							width="<?php echo esc_attr( $width ); ?>" height="<?php echo esc_attr( $height ); ?>">
 					</video-js>
 					<script src="<?php echo esc_url( $js_src ); ?>"></script> <?php // phpcs:ignore ?>
 				</div>
@@ -981,7 +969,7 @@ class BC_Utility {
 				<?php
 			else :
 				?>
-				<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
+				<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $width ); ?>;">
 					<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 						<video-js
 								id="<?php echo esc_attr( $id ); ?>"
@@ -1041,7 +1029,7 @@ class BC_Utility {
 			);
 			?>
 
-			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $max_width ); ?>;">
+			<div style="display: block; position: relative; min-width: <?php echo esc_attr( $min_width ); ?>; max-width: <?php echo esc_attr( $width ); ?>;">
 				<div style="padding-top: <?php echo esc_attr( $padding_top ); ?>; ">
 					<iframe
 							src="<?php echo esc_url( $iframe_src ); ?>"
@@ -1168,7 +1156,7 @@ class BC_Utility {
 						class="video-js"
 						controls <?php echo esc_attr( $playsinline ); ?> <?php echo esc_attr( $autoplay ); ?> <?php echo esc_attr( $mute ); ?>>
 				</video>
-				<script src="<?php echo esc_url( $src ); ?>"><?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
+				<script src="<?php echo esc_url( $src ); ?>"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources ?>
 				<div class="playlist-wrapper">
 					<ol class="vjs-playlist vjs-csspointerevents vjs-mouse"> </ol>
 				</div>

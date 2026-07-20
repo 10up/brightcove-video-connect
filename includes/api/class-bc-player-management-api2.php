@@ -64,7 +64,7 @@ class BC_Player_Management_API2 extends BC_API {
 			$bc_accounts->set_current_account_by_id( $account_id );
 
 			$url             = esc_url_raw( self::BASE_URL . $account_id . '/players/' );
-			$account_players = $this->send_request( $url );
+			$account_players = $this->send_request( $url, 'GET', [], false, true );
 
 			if ( ! $account_players || is_wp_error( $account_players ) ) {
 				return [];

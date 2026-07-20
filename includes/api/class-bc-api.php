@@ -56,7 +56,6 @@ abstract class BC_API {
 		global $bc_accounts;
 
 		return $bc_accounts->get_account_id();
-
 	}
 
 	/**
@@ -90,7 +89,6 @@ abstract class BC_API {
 		}
 
 		return end( array_values( $this->errors ) );
-
 	}
 
 	/**
@@ -98,9 +96,10 @@ abstract class BC_API {
 	 *
 	 * @param  string $url the url to call
 	 * @param  array  $args the arguments to pass to the API call
+	 * @param  bool   $cache_fail_response whether or not to cache the api fail response
 	 * @return array|false|mixed|WP_Error
 	 */
-	private function cached_get( $url, $args ) {
+	private function cached_get( $url, $args, $cache_fail_response = false ) {
 
 		global $bc_accounts;
 
@@ -113,7 +112,9 @@ abstract class BC_API {
 		$account_id            = $bc_accounts->get_account_id();
 		$transient_key         = BC_Utility::generate_transient_key( '_brightcove_req_', $account_id . BC_Utility::get_hash_for_object( $url ) );
 		$request               = BC_Utility::get_cache_item( $transient_key );
-		if ( false === $request ) {
+		$force_refresh         = ! empty( $_GET['bc_refresh'] ) && '1' === $_GET['bc_refresh'] && ! empty( $_GET['nonce'] ) && wp_verify_nonce( $_GET['nonce'], 'bc_refresh' );
+
+		if ( false === $request || $force_refresh ) {
 			if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 				$request = vip_safe_wp_remote_get( $url, '', 3, 3, 20, $args );
 			} else {
@@ -121,7 +122,20 @@ abstract class BC_API {
 			}
 			$successful_response_codes = array( 200, 201, 202, 204 );
 
-			if ( in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes, true ) ) {
+			/**
+			 * Filter whether to cache the api fail response.
+			 *
+			 * @since 2.8.5
+			 * @hook brightcove_cache_api_fail_response
+			 * @param {bool} $cache_fail_response Whether to cache the response.
+			 * @param {string} $url The URL of the request.
+			 * @param {array} $args The arguments of the request.
+			 *
+			 * @return bool Whether to cache the fail response.
+			 */
+			$cache_fail_response = apply_filters( 'brightcove_cache_api_fail_response', $cache_fail_response, $url, $args );
+
+			if ( in_array( wp_remote_retrieve_response_code( $request ), $successful_response_codes, true ) || $cache_fail_response ) {
 				BC_Utility::set_cache_item( $transient_key, '', $request, $cache_time_in_seconds );
 			}
 		}
@@ -139,10 +153,11 @@ abstract class BC_API {
 	 * @param string  $method          the http method to use
 	 * @param array   $data            array of further data to send to the server
 	 * @param boolean $force_new_token whether or not to force obtaining a new oAuth token
+	 * @param boolean $cache_fail_response  whether or not to cache the api fail response
 	 *
 	 * @return mixed the return data from the call of false if a failure occurred
 	 */
-	protected function send_request( $url, $method = 'GET', $data = array(), $force_new_token = false ) {
+	protected function send_request( $url, $method = 'GET', $data = array(), $force_new_token = false, $cache_fail_response = false ) {
 
 		$method = strtoupper( sanitize_text_field( $method ) );
 
@@ -206,7 +221,7 @@ abstract class BC_API {
 		switch ( $method ) {
 
 			case 'GET':
-				$request = $this->cached_get( $url, $args );
+				$request = $this->cached_get( $url, $args, $cache_fail_response );
 
 				break;
 
@@ -225,7 +240,6 @@ abstract class BC_API {
 
 				$request = wp_remote_request( $url, $args );
 				break;
-
 		}
 
 		if ( 401 === wp_remote_retrieve_response_code( $request ) ) {
@@ -266,11 +280,9 @@ abstract class BC_API {
 			if ( isset( $body[0] ) && isset( $body[0]['error_code'] ) ) {
 
 				$message = $body[0]['error_code'];
-
 			} elseif ( isset( $body['message'] ) ) {
 
 				$message = $body['message'];
-
 			}
 
 			$this->errors[] = array(
@@ -285,18 +297,17 @@ abstract class BC_API {
 		if ( 204 === wp_remote_retrieve_response_code( $request ) ) {
 
 			return true;
-
 		}
 
 		if ( is_wp_error( $request ) ) {
-						$this->errors[] = array(
-							'url'   => $url,
-							'error' => $request,
-						);
+			$this->errors[] = array(
+				'url'   => $url,
+				'error' => $request,
+			);
 
-						BC_Logging::log( sprintf( 'BC API ERROR: %s', $request->get_error_message() ) );
+			BC_Logging::log( sprintf( 'BC API ERROR: %s', $request->get_error_message() ) );
 
-						return false;
+			return false;
 		}
 
 		if ( $transient_key && $body && ( ! defined( 'WP_DEBUG' ) || false === WP_DEBUG ) ) {
@@ -305,7 +316,6 @@ abstract class BC_API {
 		}
 
 		return $body;
-
 	}
 
 	/**
@@ -340,6 +350,5 @@ abstract class BC_API {
 		}
 
 		return 'Bearer ' . $token;
-
 	}
 }

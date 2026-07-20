@@ -264,14 +264,14 @@ var MediaCollection = Backbone.Collection.extend({
 		return fallback.sync.apply(this, arguments);
 	},
 
-	fetchFail: function () {
+	fetchFail: function (response, textStatus) {
 		if (this.pageNumber > 1) {
 			this.pageNumber--;
 		}
 		wpbc.broadcast.trigger('fetch:finished');
 		wpbc.broadcast.trigger('spinner:off');
-		wpbc.broadcast.trigger('fetch:apiError');
-		if (status === 'abort') {
+		if (textStatus !== 'abort') {
+			wpbc.broadcast.trigger('fetch:apiError');
 		}
 	},
 

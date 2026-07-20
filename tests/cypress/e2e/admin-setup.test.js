@@ -1,8 +1,11 @@
 describe("Plugin Setup Tests", () => {
   before(() => {
-    cy.login();
     // We start fresh before running our tests.
     cy.deleteBrightcoveOptions();
+  });
+
+  beforeEach(() => {
+    cy.login();
   });
 
   it("Brightcove Video Connect can be activated and deactivated", () => {

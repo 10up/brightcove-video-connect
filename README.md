@@ -8,7 +8,7 @@
 
 Are you looking to handle your [Brightcove](https://www.brightcove.com/en/online-video-platform) Video and Playlist library natively from within WordPress?
 
-With this plugin, developed by [10up](http://10up.com), you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
+With this plugin, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
 
 ## Support Notice
 
@@ -115,7 +115,7 @@ However, in order for it to work you need to make sure you have multiple audio t
 
 ## Support Level
 
-**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
+**Active:** Brightcove is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Changelog
 

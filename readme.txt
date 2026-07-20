@@ -1,20 +1,19 @@
 === Brightcove Video Connect ===
 
-Contributors: 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, brightcove, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
-Donate link: https://supporters.eff.org/donate
-Tags: brightcove, 10up, videos, video
-Requires at least: 4.2
-Tested up to: 6.4
-Stable tag: 2.8.4
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:      brightcove, 10up, oscarssanchez, collinsinternet, ivankk, technosailor, ChrisWiegman, tott, eduardmaghakyan, mattonomics, phoenixfireball, karinedo, foobuilder, helen, tlovett1, jonathantneal, adamsilverstein, jonbellah, sudar, bctbaldwin, rahmohn
+Donate link:       https://supporters.eff.org/donate
+Tags:              brightcove, videos, video
+Tested up to:      6.7
+Stable tag:        2.8.8
+License:           GPLv2 or later
+License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Brightcove integration plugin, manage your Brightcove video cloud from within WordPress, using the latest APIs
 
 == Description ==
 
 Are you looking to handle your Brightcove Video and Playlist library natively from within WordPress or use Brightcove's Gallery In-Page video experiences?
-With this plugin, developed by 10up.com, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
+With this plugin, you have the power to handle multiple accounts and video libraries, upload videos and add them to playlists, render shortcodes with your videos and all from within the WordPress admin interface.
 
 == Installation and Usage and FAQ ==
 
@@ -39,6 +38,57 @@ For installation, usage, and Frequently Asked Question please see the [Brightcov
 15. Brightcove Block and Block Settings.
 
 == Changelog ==
+
+= 2.8.8 - 2024-03-17 =
+
+__Added:__
+
+* Add folder name on top of video thumbnail. Props [@burhandodhy](https://github.com/burhandodhy).
+
+= 2.8.7 - 2024-10-09 =
+
+__Fixed:__
+
+* Add missing script close tag. Props [@burhandodhy](https://github.com/burhandodhy).
+* Selecting multiple videos while embedding a Video Experience results in error. Props [@burhandodhy](https://github.com/burhandodhy).
+* Single Video Player Embed appears very different in the block editor. Props [@burhandodhy](https://github.com/burhandodhy).
+* E2E tests. Props [@burhandodhy](https://github.com/burhandodhy).
+* Calculate the padding based on the Aspect ratio. [@burhandodhy](https://github.com/burhandodhy).
+* Video Save History. Props [@burhandodhy](https://github.com/burhandodhy).
+
+__Changed:__
+
+* Allow only png and jpg images for thumbnail and poster. Props [@burhandodhy](https://github.com/burhandodhy).
+* Hide search field if video folder is selected. Props [@burhandodhy](https://github.com/burhandodhy).
+
+= 2.8.6 - 2024-05-08 =
+
+__Fixed:__
+
+* Cannot use Brightcove block on custom post types. Props [@spacedmonkey](https://github.com/spacedmonkey) and [@jonnynews](https://github.com/jonnynews).
+* Typo when saving the language_detection attribute. Props [@claimableperc](https://github.com/claimableperc).
+* Combined queries with q search parameter. Props [@oscarssanchezz](https://github.com/oscarssanchezz).
+
+= 2.8.5 - 2024-04-22 =
+
+__Changed:__
+
+* Add Select field for labels. Props [@burhandodhy](https://github.com/burhandodhy).
+* Cache the API response and display a message from where user can retry the API again. Props [@burhandodhy](https://github.com/burhandodhy) and [@jonnynews](https://github.com/jonnynews).
+* Update readme and assets. Props [@jeffpaul](https://github.com/jeffpaul).
+
+__Fixed:__
+
+* First parameter type of add_submenu_page() when no parent slug is sent. Props [@jonnynews](https://github.com/jonnynews).
+* Display error message when the previous request is aborted. Props [@burhandodhy](https://github.com/burhandodhy).
+* PHP warning while editing a label. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia).
+* PHP warning while saving a video. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia).
+* Move playlist notice above controls bar. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia).
+* Clicking on the "Edit" and "Preview" buttons for the inactive videos breakes the layout. Props [@burhandodhy](https://github.com/burhandodhy) and [@felipeelia](https://github.com/felipeelia).
+* Add support for special characters. Props [@burhandodhy](https://github.com/burhandodhy) and [@cr0ybot](https://github.com/cr0ybot).
+* Search box alignment in Media modal. Props [@MARQAS](https://github.com/MARQAS) and [@felipeelia](https://github.com/felipeelia).
+* Limit API calls on unwanted admin pages. Props [@burhandodhy](https://github.com/burhandodhy).
+* Video update API fails when labels are empty. Props [@burhandodhy](https://github.com/burhandodhy).
 
 = 2.8.4 - 2023-11-30 =
 
@@ -189,7 +239,7 @@ Security
 * Bump `hosted-git-info` from 2.8.8 to 2.8.9 (props [@dependabot](https://github.com/dependabot) via [#212](https://github.com/10up/brightcove-video-connect/pull/212))
 * Bump `normalize-url` from 4.5.0 to 4.5.1 (props [@dependabot](https://github.com/dependabot) via [#213](https://github.com/10up/brightcove-video-connect/pull/213))
 
-= 2.1.4 = 
+= 2.1.4 =
 
 * Fix: Default Source field when is submitted unchecked.
 * Fix: Adjust the position of media details in the editing modal.

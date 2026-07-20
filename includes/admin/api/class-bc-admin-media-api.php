@@ -173,7 +173,7 @@ class BC_Admin_Media_API {
 
 		$labels = array();
 		if ( isset( $_POST['labels'] ) ) {
-			foreach ( $_POST['labels'] as $label ) {
+			foreach ( array_filter( $_POST['labels'] ) as $label ) {
 				$labels[] = sanitize_text_field( $label );
 			}
 		}
@@ -204,21 +204,12 @@ class BC_Admin_Media_API {
 
 			// Build out history if it's supported
 			if ( $use_history ) {
-				$history = null;
-				if ( isset( $_POST['history'] ) ) {
-					$raw     = wp_unslash( $_POST['history'] );
-					$history = json_decode( $raw, true );
-				}
-				if ( null === $history ) {
-					$history = array();
-				}
+				$history = isset( $_POST['history'] ) ? json_decode( wp_unslash( $_POST['history'] ), true ) : [];
 
-				$user      = wp_get_current_user();
-				$history[] = array(
-					'user' => $user->user_login,
-					'time' => gmdate( 'Y-m-d H:i:s', time() ),
-				);
+				$user    = wp_get_current_user();
+				$history = array_merge( array( sprintf( '%s - %s', $user->user_login, wp_date( 'Y-m-d H:i:s' ) ) ), $history );
 
+				$history                   = array_filter( $history );
 				$custom['_change_history'] = wp_json_encode( $history );
 			}
 
@@ -249,8 +240,9 @@ class BC_Admin_Media_API {
 
 		} elseif ( 'videos' === $_POST['type'] ) {
 			$type_msg = 'video';
-			if ( 'variant' === $_POST['sub_type'] ) {
-				$status = $this->videos->update_bc_video( $updated_data, sanitize_text_field( $_POST['sub_type'] ) );
+			$sub_type = isset( $_POST['sub_type'] ) ? sanitize_text_field( $_POST['sub_type'] ) : '';
+			if ( 'variant' === $sub_type ) {
+				$status = $this->videos->update_bc_video( $updated_data, $sub_type );
 			} else {
 				$status = $this->videos->update_bc_video( $updated_data );
 
@@ -588,7 +580,7 @@ class BC_Admin_Media_API {
 
 			// Get a list of videos.
 
-			for ( $i = 0; $i < $tries; $i ++ ) {
+			for ( $i = 0; $i < $tries; $i++ ) {
 				$results = $this->cms_api->video_list( $posts_per_page, $posts_per_page * ( $page - 1 ), $query_string, $bc_video_sort_field, true, $folder_id );
 
 				if ( ! is_wp_error( $results ) ) {
@@ -633,7 +625,7 @@ class BC_Admin_Media_API {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 
-			for ( $i = 0; $i < $tries; $i ++ ) {
+			for ( $i = 0; $i < $tries; $i++ ) {
 				$results = $this->cms_api->playlist_list( $query );
 
 				if ( ! is_wp_error( $results ) ) {
@@ -653,7 +645,7 @@ class BC_Admin_Media_API {
 
 			$bc_accounts->set_current_account_by_id( $account_id );
 
-			for ( $i = 0; $i < $tries; $i ++ ) {
+			for ( $i = 0; $i < $tries; $i++ ) {
 				$results = $this->experiences_api->get_experiences_by_account_id( $account_id );
 
 				if ( ! is_wp_error( $results ) ) {
@@ -671,7 +663,7 @@ class BC_Admin_Media_API {
 		}
 
 		// Get a list of available custom fields
-		for ( $i = 0; $i < $tries; $i ++ ) {
+		for ( $i = 0; $i < $tries; $i++ ) {
 			$fields = $this->cms_api->video_fields();
 
 			if ( ! is_wp_error( $fields ) ) {
